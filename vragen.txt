@@ -1,0 +1,8 @@
+- kan een issuer ook een administrator zijn?
+- hoe kunnen we van een Tag naar een andere gaan? door functies te geven voor iedere overgang of in een functies dingen te checken? 
+- is Tag een interface of een abstracte klasse?
+- Role participation?
+- mag een subsystem weten tot welk project het behoort?
+- moeten we vanuit een subsystem alle bugreports kunnen opvragen?
+- moeten/mogen we een database gebruiken?
+- relatie developer en bugreport? moet een developper weten aan welke bugreports hij werkt?
