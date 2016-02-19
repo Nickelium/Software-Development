@@ -42,7 +42,7 @@ public interface IRepository<T> {
     /**
      * Method for updating an object in the collection.
      *
-     * @param object The object to update.
+     * @param object The object to update
      * @throws RuntimeException The updating of the element failed.
      */
     void update(T object) throws RuntimeException;
