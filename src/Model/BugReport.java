@@ -3,6 +3,8 @@ package Model;
 import Model.Tags.New;
 import Model.Tags.Tag;
 
+import java.rmi.activation.ActivationGroupDesc;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class BugReport {
     private Tag tag;
     private SubSystem subsystem;
     private List<Developer> assignees;
+    private List<Comment> comments;
 
     /**
      * Constructor for a Bugreport.
@@ -31,6 +34,9 @@ public class BugReport {
         this.subsystem = subsystem;
         this.creationDate = new Date();
         this.tag = new New();
+        this.assignees = new ArrayList<Developer>();
+        this.comments = new ArrayList<Comment>();
+
     }
 
     /**
@@ -88,6 +94,15 @@ public class BugReport {
     }
 
     /**
+     * Getter to request the comments given on the bugreport.
+     *
+     * @return The list of comments given on the bugreport.
+     */
+    public List<Comment> getComments(){
+        return this.comments;
+    }
+
+    /**
      * Setter to change the description of the bugreport.
      *
      * @param description The description to which to set the bugreport.
@@ -108,9 +123,18 @@ public class BugReport {
     /**
      * Setter to change the list of assignees to the bugreport.
      *
-     * @param assignees The list of assignees to which to assign the bugreport.
+     * @param assignees The list of assignees which to assign the bugreport.
      */
     public void setAssignees(List<Developer> assignees){
         this.assignees = assignees;
+    }
+
+    /**
+     * Setter to change the list of comments given on the bugreport.
+     *
+     * @param comments The list of comments to set the bugreport to.
+     */
+    public void setComments(List<Comment> comments){
+        this.comments = comments;
     }
 }
