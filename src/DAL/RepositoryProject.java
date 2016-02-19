@@ -9,7 +9,7 @@ import Model.Project;
 
 public class RepositoryProject implements IRepository<Project>
 {
-	private List<Project> projects;
+	private static List<Project> projects;
 
 	@Override
 	public Project getOne(Predicate<Project> criteria) {
