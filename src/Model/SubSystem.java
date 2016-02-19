@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class SubSystem 
 {
@@ -12,40 +14,107 @@ public class SubSystem
 	/**
 	 * Constructoren
 	 */
-	public SubSystem();
+	public SubSystem()
+	{
+		
+	}
 	
 	/**
 	 * Getters
 	 */
-	public double getVersionID();
+	public double getVersionID()
+	{
+		return versionID;
+	}
 	
-	public String getName();
+	public String getName()
+	{
+		return name;
+	}
 	
-	public String getDescription();
+	public String getDescription()
+	{
+		return description;
+	}
 	
-	public List<SubSystem> getSubSystems();
+	public List<SubSystem> getSubSystems()
+	{
+		return new ArrayList<SubSystem>(subSystems);
+	}
 	
 	/**
 	 * Setters
 	 */
+	public void setVersionID(double newVersionID)
+	{
+		versionID = newVersionID;
+	}
 	
-	public void setVersionID(double newVersionID);
+	public void setName(String newName)
+	{
+		name = newName;
+	}
 	
-	public void setName(String newName);
-	
-	public void setDescription(String newDescription);
+	public void setDescription(String newDescription)
+	{
+		description = newDescription;
+	}
 	
 	/**
 	 * Operations
 	 */
-	public void addSubSystem(SubSystem newSubSystem);
+	public void addSubSystem(SubSystem newSubSystem)
+	{
+		if(subSystems == null)
+			subSystems = new ArrayList<SubSystem>();
+		subSystems.add(newSubSystem);
+	}
 	
-	public List<SubSystem> getAllSubSystems();
+	public List<SubSystem> getAllSubSystems()
+	{
+		List<SubSystem> list = new ArrayList<SubSystem>();
+		for(SubSystem s : subSystems)
+			list.addAll(s.getAllSubSystems());
+		return list;
+	}
+	
+	public SubSystem clone()
+	{
+		SubSystem s = null;
+		try
+		{
+			s =  (SubSystem) super.clone();
+		}
+		catch(CloneNotSupportedException | ClassCastException e)
+		{
+			e.printStackTrace(System.err);
+		}
+		
+		s.versionID = versionID;
+		s.name = name;
+		s.description = description;
+		s.subSystems =  new ArrayList<SubSystem>(subSystems);
+		
+		return s;
+	}
 	
 	/**
 	 * Destructor
 	 */
-	public void destructor();
+	public void destructor()
+	{
+		if(subSystems != null)
+		{
+			for(SubSystem s : subSystems)
+				s.destructor();
+			subSystems = null;
+		}
+		
+		versionID = 0.0;
+		name = null;
+		description = null;
+		
+	}
 	
 	
 }
