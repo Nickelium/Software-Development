@@ -12,11 +12,10 @@ public class Developer extends Issuer {
      * @param firstName The first name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
-     * @param handler The user handler.
      * @param middleName The middle name of the user.
      */
-    public Developer(String firstName, String lastName, String userName, UserHandler handler, String middleName){
-        super(firstName,lastName,userName,handler,middleName);
+    public Developer(String firstName, String lastName, String userName, String middleName){
+        super(firstName,lastName,userName,middleName);
     }
 
     /**
@@ -24,9 +23,8 @@ public class Developer extends Issuer {
      * @param firstName The first name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
-     * @param handler The user handler.
      */
-    public Developer(String firstName, String lastName, String userName, UserHandler handler){
-        super(firstName,lastName,userName,handler);
+    public Developer(String firstName, String lastName, String userName){
+        super(firstName,lastName,userName);
     }
 }
