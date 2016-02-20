@@ -16,7 +16,19 @@ public class SubSystem
 	 */
 	public SubSystem()
 	{
-		
+		this(null,null,1.0);
+	}
+	
+	public SubSystem(String newName, String newDescription)
+	{
+		this(newName, newDescription,1.0);
+	}
+	
+	public SubSystem(String newName, String newDescription, double newVersionID)
+	{
+		name = newName;
+		description = newDescription;
+		versionID = newVersionID;
 	}
 	
 	/**
@@ -63,10 +75,11 @@ public class SubSystem
 	/**
 	 * Operations
 	 */
-	public void addSubSystem(SubSystem newSubSystem)
+	public void addSubSystem(SubSystem newSubSystem) throws Exception
 	{
 		if(subSystems == null)
 			subSystems = new ArrayList<SubSystem>();
+		if(newSubSystem == this) throw new Exception();
 		subSystems.add(newSubSystem);
 	}
 	
