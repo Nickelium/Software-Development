@@ -1,5 +1,6 @@
 package DAL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -28,26 +29,31 @@ public class RepositoryProject implements IRepository<Project>
 
 	@Override
 	public List<Project> getAll() {
-		return projects;
+		return new ArrayList<Project>(projects);
 	}
 
 	@Override
 	public void insert(Project object) throws RuntimeException {
-        if (!projects.add(object)){
+        if (!projects.add(object))
             throw new RuntimeException();
-        }
 	}
 
     @Override
     public void update(Project object) throws RuntimeException {
-        if (!projects.contains(object)){
+        if (!projects.contains(object))
+        {
             throw new RuntimeException();
+        }
+        else
+        {
+        	//
         }
     }
 
 	@Override
 	public void delete(Project object) throws RuntimeException {
-		if (!projects.remove(object)){
+		if (!projects.remove(object))
+		{
             throw new RuntimeException();
         }
 		
