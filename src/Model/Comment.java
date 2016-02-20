@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +20,13 @@ public class Comment {
      *
      * @param text The text of the comment.
      * @param issuer The issuer of the comment.
+     *
+     * @throws IllegalArgumentException The given arguments are not valid.
      */
-    public Comment(String text, Issuer issuer){
+    public Comment(String text, Issuer issuer) throws IllegalArgumentException{
+        if (!isValidText(text)) throw new IllegalArgumentException("Invalid text for comment!");
+        if (!isValidIssuer(issuer)) throw new IllegalArgumentException("Invalid issuer given for comment!");
+
         this.text = text;
         this.issuer = issuer;
         this.creationDate = new Date();
@@ -37,6 +43,19 @@ public class Comment {
     }
 
     /**
+     * Checker to check if the text is a valid text for the comment.
+     *
+     * @param text The text to check.
+     *
+     * @return True if the text is not empty or not null. False otherwise.
+     */
+    public boolean isValidText(String text){
+        if (text == null)return false;
+        if (text == "")return false;
+        else return true;
+    }
+
+    /**
      * Getter to request the issuer of the comment.
      *
      * @return The issuer of the comment.
@@ -45,6 +64,16 @@ public class Comment {
         return this.issuer;
     }
 
+    /**
+     * Checker to check if the issuer is a valid issuer.
+     *
+     * @param issuer The issuer to check.
+     *
+     * @return True if the issuer is not null. False otherwise.
+     */
+    public boolean isValidIssuer(Issuer issuer){
+        return issuer != null;
+    }
     /**
      * Getter to request the creationDate of the comment;
      *
@@ -60,15 +89,33 @@ public class Comment {
      * @return The list of comments given on the comment.
      */
     public List<Comment> getComments(){
-        return this.comments;
+        return Collections.unmodifiableList(this.comments);
     }
 
     /**
-     * Setter to change the list of comments given to comment.
-     * @param comments
+     * Function for adding a comment to the list of comments.
+     *
+     * @param comment Comment to add to the list of comments.
+     *
+     * @throws RuntimeException The adding of the comment failed.
      */
-    public void setComments(List<Comment> comments){
-        this.comments = comments;
+    public void addComment(Comment comment) throws RuntimeException{
+        if (this.comments.add(comment)){
+            throw new RuntimeException("Error while adding comment!");
+        }
+    }
+
+    /**
+     * Function for removing a comment from the list of comments.
+     *
+     * @param comment Comment to remove from the list of comments.
+     *
+     * @throws RuntimeException The removal of the comment failed.
+     */
+    public void removeComment(Comment comment) throws RuntimeException{
+        if (this.comments.remove(comment)){
+            throw new RuntimeException("Error while removing comment!");
+        }
     }
 
 }
