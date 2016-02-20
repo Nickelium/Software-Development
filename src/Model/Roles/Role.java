@@ -23,7 +23,7 @@ public abstract class Role {
      *
      * @return The role name;
      */
-    abstract String getName();
+    public abstract String toString();
 
     public Developer getDeveloper(){
         return this.developer;

@@ -22,7 +22,7 @@ public class Tester extends Role {
      * @return The name of the role.
      */
     @Override
-    public String getName() {
+    public String toString() {
         return "Tester";
     }
 }
