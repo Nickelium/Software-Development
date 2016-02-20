@@ -42,10 +42,11 @@ public interface IRepository<T> {
     /**
      * Method for updating an object in the collection.
      *
+     * @param criteria The criteria on which to select te object to update.
      * @param object The object to update
      * @throws RuntimeException The updating of the element failed.
      */
-    void update(T object) throws RuntimeException;
+    void update(Predicate<T> criteria, T object) throws RuntimeException;
 
     /**
      * Method for deleting an object in the collection.
