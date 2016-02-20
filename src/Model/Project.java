@@ -8,7 +8,8 @@ public class Project
 
 	private String name;
 	private String description;
-	private Date startingDate;
+	private TheDate creationDate;
+	private TheDate startingDate;
 	private double budget;
 	
 	private List<SubSystem> subSystems;
@@ -28,7 +29,7 @@ public class Project
 		this(newName, newDescription,null,0.0);
 	}
 	
-	public Project(String newName, String newDescription, Date newStartingDate, double newBudget)
+	public Project(String newName, String newDescription, TheDate newStartingDate, double newBudget)
 	{
 		name = newName;
 		description = newDescription;
@@ -40,7 +41,6 @@ public class Project
 	 * Getters
 	 * @return
 	 */
-
 	public String getName()
 	{
 		return name;
@@ -51,7 +51,12 @@ public class Project
 		return description;
 	}
 	
-	public Date getStartingDate()
+	public TheDate getCreationDate()
+	{
+		return creationDate;
+	}
+	
+	public TheDate getStartingDate()
 	{
 		return startingDate;
 	}
@@ -79,7 +84,12 @@ public class Project
 		description = newDescription;
 	}
 	
-	public void setStartingDate(Date newStartingDate)
+	public void setCreationDate(TheDate newCreationDate)
+	{
+		creationDate = newCreationDate;
+	}
+	
+	public void setStartingDate(TheDate newStartingDate)
 	{
 		startingDate = newStartingDate;
 	}
