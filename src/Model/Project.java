@@ -10,61 +10,114 @@ public class Project
 	private TheDate creationDate;
 	private TheDate startingDate;
 	private double budget;
+	//versionID niet gebruikt in de use cases -> zelf intern te genereren ? -> hoe ? 
+	private double versionID; 
 	
 	private List<SubSystem> subSystems;
 	
-	//developer todo later
+	//leadDeveloper todo later
 	
 	/**
 	 * Constructoren
+	*/
+	
+	/**
+	 * 
+	 * Construct a new instance of Project with default values
+	 * Note: probably 'll never be used
 	 */
 	public Project()
 	{
-		this(null,null,null,0.0);
+		this(null,null,0.0);
 	}
 	
+	/**
+	 * Construct a new instance of Project with the given name and description
+	 * @param newName The name of the project
+	 * @param newDescription The description of the project
+	 */
 	public Project(String newName, String newDescription)
 	{
-		this(newName, newDescription,null,0.0);
+		this(newName, newDescription,0.0);
 	}
 	
-	public Project(String newName, String newDescription, TheDate newStartingDate, double newBudget)
+	//Init value for TheDate? -> We don't want to directly use TheDate type, therefore we pass the parameters day, month and year but initializing the instance ...
+	/**
+	 * Construct a new instance of Project with the given name and description
+	 * @param newName The name of the project
+	 * @param newDescription The description of the project
+	 * @param newBudget The budget of the project
+	 */
+	public Project(String newName, String newDescription, double newBudget)
 	{
-		name = newName;
-		description = newDescription;
-		startingDate = newStartingDate;
-		budget = newBudget;
+		setName(newName);
+		setDescription(newDescription);
+		setBudget(newBudget);
 	}
 	
 	/**
 	 * Getters
-	 * @return
+	 */
+	
+	/**
+	 * Returns the name of the project
+	 * @return The name of the project
 	 */
 	public String getName()
 	{
 		return name;
 	}
 	
+	/**
+	 * Returns the description of the project
+	 * @return The description of the project
+	 */
 	public String getDescription()
 	{
 		return description;
 	}
 	
-	public TheDate getCreationDate()
+	/**
+	 * Returns the creation date of the project
+	 * @return The creation date of the project
+	 */
+	public String getCreationDate()
 	{
-		return creationDate;
+		return creationDate.toString();
 	}
 	
-	public TheDate getStartingDate()
+	//Intern gebruik maken van TheDate type, afschermen op hoger niveau door strings te gebruiken
+	/**
+	 * Returns the starting date of the project
+	 * @return The starting date of the project
+	 */
+	public String getStartingDate()
 	{
-		return startingDate;
+		return startingDate.toString();
 	}
 	
+	/**
+	 * Returns the budget of the project
+	 * @return The budget of the project
+	 */
 	public double getBudget()
 	{
 		return budget;
 	}
 	
+	/**
+	 * Returns the version ID of the project
+	 * @return The version ID of the project
+	 */
+	public double getVersionID()
+	{
+		return versionID;
+	}
+	
+	/**
+	 * Returns the subsystems of the project
+	 * @return The subsystems of the project
+	 */
 	public List<SubSystem> getSubSystems()
 	{
 		return new ArrayList<SubSystem>(subSystems);
@@ -73,33 +126,72 @@ public class Project
 	/**
 	 * Setters
 	 */
+	
+	/**
+	 * Set the name of the project
+	 * @param newName The name of the project
+	 */
 	public void setName(String newName)
 	{
 		name = newName;
 	}
 	
+	/**
+	 * Set the description of the project
+	 * @param newDescription The description of the project
+	 */
 	public void setDescription(String newDescription)
 	{
 		description = newDescription;
 	}
 	
-	public void setCreationDate(TheDate newCreationDate)
+	/**
+	 * Set the creation date of the project
+	 * @param day The day of creation
+	 * @param month The month of creation
+	 * @param year The year of creation
+	 */
+	public void setCreationDate(int day, int month, int year)
 	{
-		creationDate = newCreationDate;
+		creationDate = new TheDate(day,month,year);
 	}
 	
-	public void setStartingDate(TheDate newStartingDate)
+	/**
+	 * Set the starting date of the project
+	 * @param day The day of start
+	 * @param month The month of start
+	 * @param year The year of start
+	 */
+	public void setStartingDate(int day, int month, int year)
 	{
-		startingDate = newStartingDate;
+		startingDate = new TheDate(day,month,year);
 	}
 	
+	/**
+	 * Set the budget of the project
+	 * @param newBudget The budget of the project
+	 */
 	public void setBudget(double newBudget)
 	{
 		budget = newBudget;
 	}
 	
 	/**
+	 * Set the version ID of the project
+	 * @param newVersionID The version ID of the project
+	 */
+	public void setVersionID(double newVersionID)
+	{
+		versionID = newVersionID;
+	}
+	
+	/**
 	 * Operations
+	 */
+	
+	/**
+	 * Add a subsystem to this project
+	 * @param s The subsystem to add
 	 */
 	public void addSubSystem(SubSystem s)
 	{
@@ -108,6 +200,10 @@ public class Project
 		subSystems.add(s);
 	}
 	
+	/**
+	 * Get recursively all the subsystems of the project
+	 * @return A list of subsystems
+	 */
 	public List<SubSystem> getAllSubSystem()
 	{
 		List<SubSystem> list = new ArrayList<SubSystem>();
@@ -118,7 +214,10 @@ public class Project
 	}
 	
 
-	@Override
+	/**
+	 * Clone a project
+	 * @return A cloned project
+	 */
 	public Project clone()
 	{
 		Project p = null;
@@ -143,6 +242,10 @@ public class Project
 	
 	/**
 	 * Destructor
+	 */
+	
+	/**
+	 * Destroy the project
 	 */
 	public void destructor()
 	{
