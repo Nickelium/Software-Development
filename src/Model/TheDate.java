@@ -4,6 +4,7 @@ import java.util.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+//Class for uniform dateformats
 public class TheDate
 {
 	static Locale locale = Locale.getDefault();
