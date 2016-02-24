@@ -5,11 +5,11 @@ import DAL.IRepository;
 /**
  * Created by Karina on 19.02.2016.
  */
-public class UserHandler {
+public class UserService {
 
     private IRepository<User> userList;
 
-    public UserHandler(IRepository<User> userList){
+    public UserService(IRepository<User> userList){
         setUserList(userList);
     }
 
