@@ -1,11 +1,12 @@
-package Model;
+package Model.BugReport;
 
+import Model.Developer;
+import Model.Issuer;
+import Model.SubSystem;
 import Model.Tags.Assigned;
 import Model.Tags.New;
 import Model.Tags.Tag;
-import com.sun.javafx.tools.ant.Application;
 
-import java.rmi.activation.ActivationGroupDesc;
 import java.util.*;
 
 /**

@@ -1,4 +1,4 @@
-package Model;
+package Model.BugReport;
 
 import java.util.UUID;
 

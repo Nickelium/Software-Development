@@ -1,12 +1,5 @@
 package Model.Tags;
 
-import Model.BugReport;
-import Model.Project;
-import Model.Roles.Programmer;
-import Model.Roles.Role;
-import Model.Roles.Tester;
-import Model.User;
-
 /**
  * Created by Tom on 19/02/16.
  */

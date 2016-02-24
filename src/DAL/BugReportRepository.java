@@ -1,8 +1,7 @@
 package DAL;
 
 import DAL.DeepCopy.DeepCopy;
-import Model.BugReport;
-import Model.Project;
+import Model.BugReport.BugReport;
 
 import java.util.List;
 import java.util.function.Predicate;
