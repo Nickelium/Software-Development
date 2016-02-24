@@ -166,7 +166,11 @@ public class SubSystem
 	{
 		List<SubSystem> list = new ArrayList<SubSystem>();
 		for(SubSystem s : subSystems)
+		{
+			list.add(s);
 			list.addAll(s.getAllSubSystems());
+		}
+		
 		return list;
 	}
 	
@@ -192,28 +196,6 @@ public class SubSystem
 		s.subSystems =  new ArrayList<SubSystem>(subSystems);
 		
 		return s;
-	}
-	
-	/**
-	 * Destructor
-	 */
-	
-	/**
-	 * Destroy the subsytem
-	 */
-	public void destructor()
-	{
-		if(subSystems != null)
-		{
-			for(SubSystem s : subSystems)
-				s.destructor();
-			subSystems = null;
-		}
-		
-		versionID = 0.0;
-		name = null;
-		description = null;
-		
 	}
 	
 	

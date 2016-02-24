@@ -21,16 +21,7 @@ public class Project
 	 * Constructoren
 	*/
 	
-	/**
-	 * 
-	 * Construct a new instance of Project with default values
-	 * Note: probably 'll never be used
-	 */
-	public Project()
-	{
-		this(null,null,0.0);
-	}
-	
+
 	/**
 	 * Construct a new instance of Project with the given name and description
 	 * @param newName The name of the project
@@ -53,6 +44,8 @@ public class Project
 		this.name = newName;
 		this.description = newDescription;
 		this.budget = newBudget;
+		
+		this.creationDate = TheDate.TheDateNow();
 	}
 	
 	/**
@@ -81,9 +74,9 @@ public class Project
 	 * Returns the creation date of the project
 	 * @return The creation date of the project
 	 */
-	public String getCreationDate()
+	public TheDate getCreationDate()
 	{
-		return creationDate.toString();
+		return creationDate;
 	}
 	
 	//Intern gebruik maken van TheDate type, afschermen op hoger niveau door strings te gebruiken
@@ -91,9 +84,9 @@ public class Project
 	 * Returns the starting date of the project
 	 * @return The starting date of the project
 	 */
-	public String getStartingDate()
+	public TheDate getStartingDate()
 	{
-		return startingDate.toString();
+		return startingDate;
 	}
 	
 	/**
@@ -150,18 +143,6 @@ public class Project
 	}
 	
 	/**
-	 * Set the creation date of the project
-	 * @param day The day of creation
-	 * @param month The month of creation
-	 * @param year The year of creation
-	 */
-	public void setCreationDate(int day, int month, int year)
-	{
-	
-		creationDate = new TheDate(day,month,year);
-	}
-	
-	/**
 	 * Set the starting date of the project
 	 * @param day The day of start
 	 * @param month The month of start
@@ -201,7 +182,7 @@ public class Project
 	public void addSubSystem(SubSystem s)
 	{
 		
-		if(subSystems == null) throw new NullPointerException();
+		if(s == null) throw new NullPointerException("The given subsystem cannot be null.");
 		
 		subSystems.add(s);
 //		if(subSystems == null )
@@ -218,8 +199,11 @@ public class Project
 	{
 		List<SubSystem> list = new ArrayList<SubSystem>();
 		for(SubSystem s : subSystems)
+		{
+			list.add(s);
 			list.addAll(s.getAllSubSystems());
-
+		}
+		
 		return list;
 	}
 	
@@ -230,48 +214,15 @@ public class Project
 	 */
 	public Project clone()
 	{
-		Project p = null;
-		try
-		{
-			p =  (Project) super.clone();
-		}
-		catch(CloneNotSupportedException | ClassCastException e)
-		{
-			e.printStackTrace(System.err);
-		}
+		Project p = new Project(name,description);
 		
-		p.name = name;
-		p.description = description;
+		p.creationDate = creationDate;
 		p.startingDate = startingDate;
 		p.budget = budget;
 		p.subSystems =  new ArrayList<SubSystem>(subSystems);
 		
 		return p;
 	}
-	
-	
-	/**
-	 * Destructor
-	 */
-	
-	/**
-	 * Destroy the project
-	 */
-	public void destructor()
-	{
-		if(subSystems != null)
-		{
-			for(SubSystem s : subSystems)
-				s.destructor();
-			subSystems = null;
-		}
-		
-		name = null;
-		description = null;
-		startingDate = null;
-		budget = 0.0;
-	}
-
 
 
 }
