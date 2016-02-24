@@ -13,7 +13,7 @@ public class Project
 	//versionID niet gebruikt in de use cases -> zelf intern te genereren ? -> hoe ? 
 	private double versionID; 
 	
-	private List<SubSystem> subSystems;
+	private List<SubSystem> subSystems = new ArrayList<SubSystem>();
 	
 	//leadDeveloper todo later
 	
@@ -50,9 +50,9 @@ public class Project
 	 */
 	public Project(String newName, String newDescription, double newBudget)
 	{
-		setName(newName);
-		setDescription(newDescription);
-		setBudget(newBudget);
+		this.name = newName;
+		this.description = newDescription;
+		this.budget = newBudget;
 	}
 	
 	/**
@@ -133,6 +133,8 @@ public class Project
 	 */
 	public void setName(String newName)
 	{
+		if(newName == null) throw new NullPointerException("The given name cannot be null.");
+		
 		name = newName;
 	}
 	
@@ -142,6 +144,8 @@ public class Project
 	 */
 	public void setDescription(String newDescription)
 	{
+		if(newDescription == null)  throw new NullPointerException("The given description cannot be null.");
+		
 		description = newDescription;
 	}
 	
@@ -153,6 +157,7 @@ public class Project
 	 */
 	public void setCreationDate(int day, int month, int year)
 	{
+	
 		creationDate = new TheDate(day,month,year);
 	}
 	
@@ -195,15 +200,20 @@ public class Project
 	 */
 	public void addSubSystem(SubSystem s)
 	{
-		if(subSystems == null )
-			subSystems = new ArrayList<SubSystem>();
+		
+		if(subSystems == null) throw new NullPointerException();
+		
 		subSystems.add(s);
+//		if(subSystems == null )
+//			subSystems = new ArrayList<SubSystem>();
+//		subSystems.add(s);
 	}
 	
 	/**
 	 * Get recursively all the subsystems of the project
 	 * @return A list of subsystems
 	 */
+	//COPY OF getubsystems()
 	public List<SubSystem> getAllSubSystem()
 	{
 		List<SubSystem> list = new ArrayList<SubSystem>();

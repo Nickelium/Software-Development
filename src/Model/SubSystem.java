@@ -11,7 +11,7 @@ public class SubSystem
 	//Same as project, how to handle versionID ?
 	private double versionID;
 	
-	private List<SubSystem> subSystems;
+	private List<SubSystem> subSystems = new ArrayList<SubSystem>();
 	
 	/**
 	 * Constructoren
@@ -108,6 +108,7 @@ public class SubSystem
 	 */
 	public void setName(String newName)
 	{
+		if(newName == null) throw new NullPointerException("The given name cannot be null.");
 		name = newName;
 	}
 	
@@ -117,6 +118,7 @@ public class SubSystem
 	 */
 	public void setDescription(String newDescription)
 	{
+		if(newDescription == null) throw new NullPointerException("The given description cannot be null.");
 		description = newDescription;
 	}
 	
@@ -131,8 +133,9 @@ public class SubSystem
 	 */
 	public void addSubSystem(SubSystem newSubSystem) throws Exception
 	{
-		if(subSystems == null)
-			subSystems = new ArrayList<SubSystem>();
+		if(newSubSystem == null) throw new NullPointerException("The given subsystem cannot be null.");
+//		if(subSystems == null)
+//			subSystems = new ArrayList<SubSystem>();
 		
 		/* QUESTIONS
 		 * As stated in the assignement, "subsystems cannot be recursively part of itself", 
@@ -151,7 +154,7 @@ public class SubSystem
 		 * NOTE: The client doesn't seems to indicate the versionID, should we self-generate these versionID's then ?
 		 * 
 		 */
-		if(newSubSystem == this) throw new Exception();
+		if(newSubSystem == this) throw new Exception("The subsystem cannot add himself to his list of subsystems.");
 		subSystems.add(newSubSystem);
 	}
 	
