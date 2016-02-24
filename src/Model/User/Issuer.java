@@ -27,4 +27,8 @@ public class Issuer extends User {
     public Issuer(String firstName, String lastName, String userName){
         super(firstName,lastName,userName);
     }
+
+    public void makeComment(){
+        // TODO
+    }
 }
