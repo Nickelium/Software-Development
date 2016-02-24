@@ -1,6 +1,7 @@
-package Model;
+package Model.User;
 
-import Handler.UserHandler;
+import Model.User.User;
+
 /**
  * Created by Karina on 19.02.2016.
  */

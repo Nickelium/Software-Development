@@ -1,6 +1,6 @@
 package Model.Roles;
 
-import Model.Developer;
+import Model.User.Developer;
 
 /**
  * Created by Tom on 19/02/16.

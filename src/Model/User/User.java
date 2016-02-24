@@ -1,5 +1,4 @@
-package Model;
-import Handler.UserHandler;
+package Model.User;
 
 /**
  * Created by Karina on 19.02.2016.
@@ -103,7 +102,6 @@ public class User {
      * @param userName A string representing the new user name of the user.
      */
     private void setUserName(String userName) {
-        // TODO: check if unique
         this.userName = userName;
     }
 }

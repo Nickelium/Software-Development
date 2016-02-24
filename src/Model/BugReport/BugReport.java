@@ -1,7 +1,7 @@
 package Model.BugReport;
 
-import Model.Developer;
-import Model.Issuer;
+import Model.User.Developer;
+import Model.User.Issuer;
 import Model.SubSystem;
 import Model.Tags.Assigned;
 import Model.Tags.New;
