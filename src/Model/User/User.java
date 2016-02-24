@@ -102,7 +102,6 @@ public class User {
      * @param userName A string representing the new user name of the user.
      */
     private void setUserName(String userName) {
-        // TODO: check if unique
         this.userName = userName;
     }
 }

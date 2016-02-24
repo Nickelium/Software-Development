@@ -1,13 +1,16 @@
 package Model.User;
-
+import java.util.Collections;
+import java.util.List;
 import DAL.IRepository;
+
+import java.util.Collection;
 
 /**
  * Created by Karina on 19.02.2016.
  */
 public class UserService {
 
-    private IRepository<User> userList;
+    private IRepository<User> repository;
 
     public UserService(IRepository<User> userList){
         setUserList(userList);
@@ -18,18 +21,27 @@ public class UserService {
      * @return An IRepository object with all users.
      */
     public IRepository<User> getUserList() {
-        return userList;
+        return repository;
     }
 
     /**
      * Sets the IRepository object with all users.
      * @param userList The new IRepository object with users.
      */
-    public void setUserList(IRepository<User> userList) {
-        this.userList = userList;
+    private void setUserList(IRepository<User> userList) {
+        this.repository = userList;
     }
 
-    public IRepository<User> getAdministrators(){
-        return userList;
+    public List<User> getAdministrators(){
+        return Collections.unmodifiableList(repository.getAllMatching((s)->s instanceof Admin));
     }
+
+    public List<User> getIssuers(){
+        return Collections.unmodifiableList(repository.getAllMatching((s)->s instanceof Issuer));
+    }
+
+    public List<User> getDeveloper(){
+        return Collections.unmodifiableList(repository.getAllMatching((s)->s instanceof Developer));
+    }
+
 }
