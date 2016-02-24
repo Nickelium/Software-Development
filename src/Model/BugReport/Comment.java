@@ -1,6 +1,7 @@
 package Model.BugReport;
 
 import Model.Issuer;
+import Model.TheDate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,10 +13,16 @@ import java.util.List;
  */
 public class Comment {
 
+    //region Attributes
+
     private String text;
     private Issuer issuer;
-    private Date creationDate;
+    private TheDate creationDate;
     private List<Comment> comments;
+
+    //endregion
+
+    //region Constructor
 
     /**
      * The constructor for a comment.
@@ -26,14 +33,18 @@ public class Comment {
      * @throws IllegalArgumentException The given arguments are not valid.
      */
     public Comment(String text, Issuer issuer) throws IllegalArgumentException{
-        if (!isValidText(text)) throw new IllegalArgumentException("Invalid text for comment!");
-        if (!isValidIssuer(issuer)) throw new IllegalArgumentException("Invalid issuer given for comment!");
+        if (!isValidText(text)) throw new IllegalArgumentException("Invalid text for comment");
+        if (issuer == null) throw new IllegalArgumentException("Invalid issuer for comment");
 
         this.text = text;
         this.issuer = issuer;
-        this.creationDate = new Date();
+        this.creationDate = new TheDate();
         this.comments = new ArrayList<Comment>();
     }
+
+    //endregion
+
+    //region Getters
 
     /**
      * Getter to request the text of the comment.
@@ -43,6 +54,38 @@ public class Comment {
     public String getText(){
         return text;
     }
+
+
+    /**
+     * Getter to request the issuer of the comment.
+     *
+     * @return The issuer of the comment.
+     */
+    public Issuer getIssuer(){
+        return this.issuer;
+    }
+
+    /**
+     * Getter to request the creationDate of the comment;
+     *
+     * @return The creationDate of the comment;
+     */
+    public TheDate getCreationDate(){
+        return this.creationDate;
+    }
+
+    /**
+     * Getter to request the list of comments given on the comment.
+     *
+     * @return The list of comments given on the comment.
+     */
+    public List<Comment> getComments(){
+        return Collections.unmodifiableList(this.comments);
+    }
+
+    //endregion
+
+    //region Checkers
 
     /**
      * Checker to check if the text is a valid text for the comment.
@@ -57,67 +100,22 @@ public class Comment {
         else return true;
     }
 
-    /**
-     * Getter to request the issuer of the comment.
-     *
-     * @return The issuer of the comment.
-     */
-    public Issuer getIssuer(){
-        return this.issuer;
-    }
+    //endregion
 
-    /**
-     * Checker to check if the issuer is a valid issuer.
-     *
-     * @param issuer The issuer to check.
-     *
-     * @return True if the issuer is not null. False otherwise.
-     */
-    public boolean isValidIssuer(Issuer issuer){
-        return issuer != null;
-    }
-    /**
-     * Getter to request the creationDate of the comment;
-     *
-     * @return The creationDate of the comment;
-     */
-    public Date getCreationDate(){
-        return this.creationDate;
-    }
-
-    /**
-     * Getter to request the list of comments given on the comment.
-     *
-     * @return The list of comments given on the comment.
-     */
-    public List<Comment> getComments(){
-        return Collections.unmodifiableList(this.comments);
-    }
+    //region Functions
 
     /**
      * Function for adding a comment to the list of comments.
      *
      * @param comment Comment to add to the list of comments.
      *
-     * @throws RuntimeException The adding of the comment failed.
+     * @throws IllegalArgumentException The comment is null
      */
-    public void addComment(Comment comment) throws RuntimeException{
-        if (this.comments.add(comment)){
-            throw new RuntimeException("Error while adding comment!");
-        }
+    public void addComment(Comment comment){
+        if (comment == null) throw new IllegalArgumentException("Comment is null");
+
+        this.comments.add(comment);
     }
 
-    /**
-     * Function for removing a comment from the list of comments.
-     *
-     * @param comment Comment to remove from the list of comments.
-     *
-     * @throws RuntimeException The removal of the comment failed.
-     */
-    public void removeComment(Comment comment) throws RuntimeException{
-        if (this.comments.remove(comment)){
-            throw new RuntimeException("Error while removing comment!");
-        }
-    }
-
+    //endregion
 }
