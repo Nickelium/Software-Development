@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import DAL.DeepCopy.DeepCopy;
 import Model.Project.Project;
+import Model.Project.SubSystem;
 import DAL.IRepository;
 
 public class ProjectRepository implements IRepository<Project>
@@ -56,5 +57,25 @@ public class ProjectRepository implements IRepository<Project>
 	@Override
 	public void deleteAll(){
 		projects.clear();
+	}
+	
+	public SubSystem getOneSubSystem(Predicate<SubSystem> criteria) 
+	{
+		List<SubSystem> subsystems = getAllSubSystems();
+		
+		for (SubSystem subsystem : subsystems)
+            if (criteria.test(subsystem))
+                return (SubSystem) DeepCopy.copy(subsystem);
+            
+        return null;
+	}
+	
+	public List<SubSystem> getAllSubSystems()
+	{
+		List<SubSystem> list = new ArrayList<>();
+		for(Project p : projects)
+			list.addAll(p.getAllSubSystem());
+		
+		return list;		
 	}
 }
