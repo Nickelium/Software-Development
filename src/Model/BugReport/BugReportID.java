@@ -9,6 +9,9 @@ public class BugReportID {
 
     private UUID Id;
 
+    /**
+     * Constructor for a BugReportId.
+     */
     public BugReportID(){
         this.Id = UUID.randomUUID();
     }

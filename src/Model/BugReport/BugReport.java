@@ -6,6 +6,7 @@ import Model.SubSystem;
 import Model.Tags.Assigned;
 import Model.Tags.New;
 import Model.Tags.Tag;
+import Model.TheDate;
 
 import java.util.*;
 
@@ -14,15 +15,22 @@ import java.util.*;
  */
 public class BugReport {
 
+    //region Attributes
+
     private BugReportID id;
     private String title;
     private String description;
-    private Date creationDate;
+    private TheDate creationDate;
     private Tag tag;
     private SubSystem subsystem;
     private Issuer creator;
     private List<Developer> assignees;
     private List<Comment> comments;
+    private List<BugReport> dependencies;
+
+    //endregion
+
+    //region Constructor
 
     /**
      * Constructor for a Bugreport.
@@ -34,23 +42,31 @@ public class BugReport {
      *
      * @throws IllegalArgumentException One or more of the specified arguments are invalid.
      */
-    public BugReport(String title, String description, SubSystem subsystem, Issuer creator) throws IllegalArgumentException {
-        if (!isValidTitle(title)) throw new IllegalArgumentException("Invalid title");
-        if (!isValidDescription(description)) throw new IllegalArgumentException("Invalid description");
-        if (!isValidSubSystem(subsystem)) throw new IllegalArgumentException("Invalid subsystem");
-        if (!isValidCreator(creator)) throw new IllegalArgumentException("Invalid creator");
+    public BugReport(String title, String description, SubSystem subsystem, Issuer creator){
+        if (title == null) throw new IllegalArgumentException("Title is null");
+        if (description == null) throw new IllegalArgumentException("Description is null");
+        if (subsystem == null) throw new IllegalArgumentException("Subsystem is null");
+        if (creator == null) throw new IllegalArgumentException("Creator is null");
 
-        this.id = new BugReportID();
         this.title = title;
         this.description = description;
         this.subsystem = subsystem;
         this.creator = creator;
-        this.creationDate = new Date();
+
+        this.id = new BugReportID();
+        this.creationDate = new TheDate();
+        //Tag on creation is New();
         this.tag = new New();
+
         this.assignees = new ArrayList<Developer>();
         this.comments = new ArrayList<Comment>();
+        this.dependencies = new ArrayList<BugReport>();
 
     }
+
+    //endregion
+
+    //region Getters
 
     /**
      * Getter to request the unique id of the bugreport.
@@ -71,6 +87,81 @@ public class BugReport {
     }
 
     /**
+     * Getter to request the description of the bugreport.
+     *
+     * @return The description of the bugreport.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * Getter to request the subsystem the bugreport is about.
+     *
+     * @return The subsystem the bugreport is about.
+     */
+    public SubSystem getSubsystem() {
+        return this.subsystem;
+    }
+
+
+    /**
+     * Getter to request the creationDate of the bugreport.
+     *
+     * @return The creationDate of the bugreport.
+     */
+    public TheDate getCreationDate() {
+        return this.creationDate;
+    }
+
+    /**
+     * Getter to request the creator of the bugreport.
+     *
+     * @return The creator of the bugreport.
+     */
+    public Issuer getCreator(){
+        return this.creator;
+    }
+
+    /**
+     * Getter to request the tag of the bugreport.
+     *
+     * @return The tag of the bugreport.
+     */
+    public Tag getTag() {
+        return tag;
+    }
+
+    /**
+     * Getter to request the developers assigned to the bugreport.
+     *
+     * @return The list of developers assigned to the bugreport
+     */
+    public List<Developer> getAssignees() {
+        return Collections.unmodifiableList(this.assignees);
+    }
+
+    /**
+     * Getter to request the comments given on the bugreport.
+     *
+     * @return The list of comments given on the bugreport.
+     */
+    public List<Comment> getComments() {
+        return Collections.unmodifiableList(this.comments);
+    }
+
+    /**
+     * Getter to request the dependencies of the bugreport.
+     *
+     * @return The list of dependencies of the bugreport.
+     */
+    public List<BugReport> getDependencies(){return Collections.unmodifiableList(this.dependencies);}
+
+    //endregion
+
+    //region Checkers
+
+    /**
      * Checker to check if the title of the bugreport is valid.
      *
      * @param title The title of the bugreport.
@@ -81,15 +172,6 @@ public class BugReport {
         if (title == null)return false;
         if (title == "") return false;
         else return true;
-    }
-
-    /**
-     * Getter to request the description of the bugreport.
-     *
-     * @return The description of the bugreport.
-     */
-    public String getDescription() {
-        return this.description;
     }
 
     /**
@@ -106,24 +188,6 @@ public class BugReport {
     }
 
     /**
-     * Getter to request the creationDate of the bugreport.
-     *
-     * @return The creationDate of the bugreport.
-     */
-    public Date getCreationDate() {
-        return this.creationDate;
-    }
-
-    /**
-     * Getter to request the subsystem the bugreport is about.
-     *
-     * @return The subsystem the bugreport is about.
-     */
-    public SubSystem getSubsystem() {
-        return this.subsystem;
-    }
-
-    /**
      * Checker to check if the subsystem of the bugreport is about is valid.
      *
      * @param subsystem The subsystem to check.
@@ -133,15 +197,6 @@ public class BugReport {
     public boolean isValidSubSystem(SubSystem subsystem){
         if (subsystem == null) return false;
         else return true;
-    }
-
-    /**
-     * Getter to request the creator of the bugreport.
-     *
-     * @return The creator of the bugreport.
-     */
-    public Issuer getCreator(){
-        return this.creator;
     }
 
     /**
@@ -156,80 +211,41 @@ public class BugReport {
         else return true;
     }
 
-    /**
-     * Getter to request the tag of the bugreport.
-     *
-     * @return The tag of the bugreport.
-     */
-    public Tag getTag() {
-        return tag;
-    }
+    //endregion
+
+    //region Setters
 
     /**
      * Setter to change the tag of the bugreport.
      *
      * @param tag The tag to which to set the bugreport.
      *
-     * @throws NullPointerException The tag given is null.
+     * @throws IllegalArgumentException The tag given is null.
      */
-    public void setTag(Tag tag) throws NullPointerException {
-        if (tag == null) throw new NullPointerException("The given tag is null!");
-
+    void setTag(Tag tag) {
+        if (tag == null) throw new IllegalArgumentException("Tag is null");
         this.tag = tag;
     }
 
-    /**
-     * Getter to request the developers assigned to the bugreport.
-     *
-     * @return The list of developers assigned to the bugreport
-     */
-    public List<Developer> getAssignees() {
-        return Collections.unmodifiableList(this.assignees);
-    }
+    //endregion
+
+    //region Functions
 
     /**
      * Function for adding an assignee to the bugreport.
      *
      * @param developer The developer to assign to the bugreport.
      *
-     * @throws RuntimeException The insertion of the element failed.
-     * @throws NullPointerException The developer given is null.
+     * @throws IllegalArgumentException The given developer is null.
      */
-    public void addAssignee(Developer developer) throws RuntimeException{
-        if (developer == null) throw new NullPointerException("Developer is null");
-        if (!this.assignees.add(developer)) {
-            throw new RuntimeException("Error while adding");
-        }
+    public void addAssignee(Developer developer)  {
+        if (developer == null) throw new IllegalArgumentException();
+
+        this.assignees.add(developer);
+
         if (this.assignees.size() == 1){
             this.setTag(new Assigned());
         }
-    }
-
-    /**
-     * Function for removing an assignee of the bugreport.
-     *
-     * @param developer The developer to remove from the assignementlist.
-     *
-     * @throws RuntimeException The removal of the developer failed or the removal removes the last assignee from the list.
-     * @throws NullPointerException The developer given is null.
-     */
-    public void removeAssignee(Developer developer) throws RuntimeException{
-        if (developer == null) throw new NullPointerException("Developer is null");
-
-        if (this.assignees.size() == 1) throw new RuntimeException("Illegal remove operation");
-
-        if (!this.assignees.remove(developer)){
-            throw new RuntimeException("Error while removing");
-        }
-    }
-
-    /**
-     * Getter to request the comments given on the bugreport.
-     *
-     * @return The list of comments given on the bugreport.
-     */
-    public List<Comment> getComments() {
-        return Collections.unmodifiableList(this.comments);
     }
 
     /**
@@ -237,29 +253,14 @@ public class BugReport {
      *
      * @param comment The comment to add to the comments.
      *
-     * @throws RuntimeException The adding of the object to the list failed.
-     * @throws NullPointerException The comment given is null.
+     * @throws IllegalArgumentException The given comment is null.
      */
-    public void addComment(Comment comment) throws RuntimeException, NullPointerException {
-        if (comment == null) throw new NullPointerException("Comment is null");
-        if (!this.comments.add(comment)) {
-            throw new RuntimeException("Error while adding");
-        }
+    public void addComment(Comment comment){
+        if (comment == null) throw new IllegalArgumentException("Comment is null");
+
+        this.comments.add(comment);
     }
 
-    /**
-     * Function to remove a comment from the list of comments.
-     *
-     * @param comment The comment to remove.
-     *
-     * @throws RuntimeException The removal of the object from the list failed.
-     * @throws NullPointerException The given comment is null.
-     */
-    public void removeComment(Comment comment) throws RuntimeException, NullPointerException {
-        if (comment == null) throw new NullPointerException("Comment is null");
-        if (!this.comments.remove(comment)) {
-            throw new RuntimeException("Error while removing");
-        }
-    }
+    //endregion
 
 }
