@@ -8,9 +8,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import Model.Project;
-import Model.SubSystem;
-import Model.TheDate;
+import Model.Project.Project;
+import Model.Project.SubSystem;
+import Model.Project.TheDate;
 
 public class ProjectTest {
 

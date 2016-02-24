@@ -1,12 +1,12 @@
 package Model.BugReport;
 
-import Model.Issuer;
-import Model.TheDate;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import Model.User.Issuer;
+import Model.Project.TheDate;
 
 /**
  * Created by Tom on 19/02/16.
@@ -38,7 +38,7 @@ public class Comment {
 
         this.text = text;
         this.issuer = issuer;
-        this.creationDate = new TheDate();
+        //this.creationDate = new TheDate();
         this.comments = new ArrayList<Comment>();
     }
 

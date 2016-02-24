@@ -6,8 +6,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import DAL.DeepCopy.DeepCopy;
+import Model.Project.Project;
 import DAL.IRepository;
-import Model.Project;
 
 public class ProjectRepository implements IRepository<Project>
 {

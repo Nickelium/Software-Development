@@ -8,8 +8,7 @@ import java.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-
-import Model.TheDate;
+import Model.Project.TheDate;
 
 public class TheDateTest {
 
