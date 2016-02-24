@@ -32,14 +32,26 @@ public class UserService {
         this.repository = userList;
     }
 
+    /**
+     * Prompts a query to the UserRepository returning all users being an instance of Admin
+     * @return A list object with all administrators saved in the UserRepository
+     */
     public List<User> getAdministrators(){
         return Collections.unmodifiableList(repository.getAllMatching((s)->s instanceof Admin));
     }
 
+    /**
+     * Prompts a query to the UserRepository returning all users being an instance of issuer
+     * @return A list object with all issuers saved in the UserRepository
+     */
     public List<User> getIssuers(){
         return Collections.unmodifiableList(repository.getAllMatching((s)->s instanceof Issuer));
     }
 
+    /**
+     * Prompts a query to the UserRepository returning all users being an instance of Developer
+     * @return A list object with all developers saved in the UserRepository
+     */
     public List<User> getDeveloper(){
         return Collections.unmodifiableList(repository.getAllMatching((s)->s instanceof Developer));
     }
