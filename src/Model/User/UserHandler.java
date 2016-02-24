@@ -1,6 +1,5 @@
-package Handler;
+package Model.User;
 
-import Model.User;
 import DAL.IRepository;
 
 /**

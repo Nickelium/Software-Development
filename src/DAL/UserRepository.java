@@ -1,9 +1,7 @@
 package DAL;
 
 import DAL.DeepCopy.DeepCopy;
-import DAL.IRepository;
-import Model.Project;
-import Model.User;
+import Model.User.User;
 
 import java.util.List;
 import java.util.function.Predicate;

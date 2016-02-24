@@ -1,6 +1,6 @@
 package Model.BugReport;
 
-import Model.Issuer;
+import Model.User.Issuer;
 
 import java.util.ArrayList;
 import java.util.Collections;
