@@ -3,6 +3,7 @@ package Model.BugReport;
 import DAL.IRepository;
 import Model.Project;
 import Model.SubSystem;
+import Model.User.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -76,10 +77,37 @@ public class BugReportService {
      * Getter for retrieving all bugReports concerning the given project.
      *
      * @param project The project for which to find the bugReports.
+     *
+     * @return A list of all the bugreports about the given project.
      */
-    public void getBugReportsForProject(Project project){
+    public List<BugReport> getBugReportsForProject(Project project){
         List<SubSystem> subsystems = project.getAllSubSystem();
-        this.bugReportRepository.getAllMatching(x -> subsystems.contains(x.getSubsystem()));
+        List<BugReport> bugReports = this.bugReportRepository.getAllMatching(x -> subsystems.contains(x.getSubsystem()));
+        return Collections.unmodifiableList(bugReports);
+    }
+
+    /**
+     * Getter for retrieving all the BugReports assigned to a specific user.
+     *
+     * @param user The user which is assigned the bugReports
+     *
+     * @return A list of all the bugReports assigned to the specified user.
+     */
+    public List<BugReport> getBugReportsAssignedToUser(User user){
+        List<BugReport> bugReports = this.bugReportRepository.getAllMatching(x -> x.getAssignees().contains(user));
+        return Collections.unmodifiableList(bugReports);
+    }
+
+    /**
+     * Getter for retrieving all the BugReports issued by a specific user.
+     *
+     * @param user The user which issued the bugReports
+     *
+     * @return A list of all the bugReports issued by the specified user.
+     */
+    public List<BugReport> getBugReportsFiledByUser(User user){
+        List<BugReport> bugReports = this.bugReportRepository.getAllMatching(x -> x.getCreator().equals(user));
+        return Collections.unmodifiableList(bugReports);
     }
 
 }
