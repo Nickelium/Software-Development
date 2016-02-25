@@ -2,8 +2,8 @@ package Model.BugReport;
 
 import Model.User.Developer;
 import Model.User.Issuer;
-import Model.Project.SubSystem;
-import Model.Project.TheDate;
+import Model.SubSystem;
+import Model.TheDate;
 import Model.Tags.Assigned;
 import Model.Tags.New;
 import Model.Tags.Tag;
@@ -259,6 +259,22 @@ public class BugReport {
         if (comment == null) throw new IllegalArgumentException("Comment is null");
 
         this.comments.add(comment);
+    }
+
+    /**
+     * Overrided the equals method to only look at the id to check for equality.
+     *
+     * @param obj The bugReport to compare this bugReport to.
+     *
+     * @return True if the id of both bugReport are the same.
+     */
+    public boolean equals(Object obj){
+        if (obj instanceof BugReport){
+            return ((BugReport) obj).getId().equals(this.getId());
+        }
+        else{
+            return false;
+        }
     }
 
     //endregion
