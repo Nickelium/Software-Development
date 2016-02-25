@@ -44,9 +44,13 @@ public class BugReportRepository implements IRepository<BugReport> {
     @Override
     public void update(Predicate<BugReport> criteria, BugReport object){
         BugReport toUpdate = this.getOne(criteria);
-        int index = this.bugreports.indexOf(toUpdate);
-        this.bugreports.remove(index);
-        this.bugreports.add(index, object);
+        if (toUpdate == null){
+            this.insert(object);
+        } else {
+            int index = this.bugreports.indexOf(toUpdate);
+            this.bugreports.remove(index);
+            this.bugreports.add(index, object);
+        }
     }
 
     @Override
