@@ -1,6 +1,9 @@
-package Model;
+package Model.Project;
 import java.util.ArrayList;
 import java.util.List;
+
+import Model.Roles.Lead;
+import Model.Roles.Role;
 
 public class Project
 {
@@ -13,9 +16,9 @@ public class Project
 	//versionID niet gebruikt in de use cases -> zelf intern te genereren ? -> hoe ? 
 	private double versionID; 
 	
-	private List<SubSystem> subSystems = new ArrayList<SubSystem>();
-	
-	//leadDeveloper todo later
+	private List<SubSystem> subSystems = new ArrayList<>();
+	private Lead leadRole;
+	private List<Role> devsRoles = new ArrayList<>();
 	
 	/**
 	 * Constructoren
@@ -32,7 +35,6 @@ public class Project
 		this(newName, newDescription,0.0);
 	}
 	
-	//Init value for TheDate? -> We don't want to directly use TheDate type, therefore we pass the parameters day, month and year but initializing the instance ...
 	/**
 	 * Construct a new instance of Project with the given name and description
 	 * @param newName The name of the project
@@ -40,6 +42,21 @@ public class Project
 	 * @param newBudget The budget of the project
 	 */
 	public Project(String newName, String newDescription, double newBudget)
+	{
+		this.name = newName;
+		this.description = newDescription;
+		this.budget = newBudget;
+		
+		this.creationDate = TheDate.TheDateNow();
+	}
+	
+	/**
+	 * Construct a new instance of Project with the given name and description
+	 * @param newName The name of the project
+	 * @param newDescription The description of the project
+	 * @param newBudget The budget of the project
+	 */
+	public Project(String newName, String newDescription, TheDate newStartingDate, double newBudget)
 	{
 		this.name = newName;
 		this.description = newDescription;
@@ -116,6 +133,16 @@ public class Project
 		return new ArrayList<SubSystem>(subSystems);
 	}
 	
+	public Lead getLeadRole()
+	{
+		return leadRole;
+	}
+	
+	public List<Role> getDevRole()
+	{
+		return devsRoles;
+	}
+	
 	/**
 	 * Setters
 	 */
@@ -165,10 +192,18 @@ public class Project
 	/**
 	 * Set the version ID of the project
 	 * @param newVersionID The version ID of the project
+	 * @throws Exception 
 	 */
-	public void setVersionID(double newVersionID)
+	public void setVersionID(double newVersionID) throws Exception
 	{
+		if(newVersionID < 0.0) throw new Exception("A version ID cannot be negative");
 		versionID = newVersionID;
+	}
+	
+	public void setLeadRole(Lead newLeadRole)
+	{
+		if(newLeadRole == null) throw new NullPointerException("The given role cannot be null");
+		leadRole = newLeadRole;
 	}
 	
 	/**
@@ -206,6 +241,8 @@ public class Project
 		
 		return list;
 	}
+	
+	
 	
 
 	/**
