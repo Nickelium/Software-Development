@@ -1,7 +1,6 @@
 package Model.User;
 import java.util.Collections;
 import java.util.List;
-import DAL.IRepository;
 
 /**
  * Created by Karina on 19.02.2016.
