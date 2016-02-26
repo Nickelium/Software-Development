@@ -4,15 +4,8 @@ package Model.Project;
 import java.util.Collections;
 import java.util.List;
 
-import DAL.IRepository;
-import Model.User.Admin;
-import Model.User.Developer;
-import Model.User.Issuer;
-import Model.User.User;
 
-
-
-public class ProjectService 
+public class ProjectService
 {
 		private IRepository<Project> projectRepository;
 		

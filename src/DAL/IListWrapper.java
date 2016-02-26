@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 /**
  * Interface for data access
  */
-public interface IRepository<T> {
+public interface IListWrapper<T> {
 
     /**
      * Method for retrieving one object in the collection matching the given criteria.
@@ -38,15 +38,6 @@ public interface IRepository<T> {
      * @throws RuntimeException The insertion of the element failed.
      */
     void insert(T object) throws RuntimeException;
-
-    /**
-     * Method for updating an object in the collection.
-     *
-     * @param criteria The criteria on which to select te object to update.
-     * @param object The object to update
-     * @throws RuntimeException The updating of the element failed.
-     */
-    void update(Predicate<T> criteria, T object) throws RuntimeException;
 
     /**
      * Method for deleting an object in the collection.
