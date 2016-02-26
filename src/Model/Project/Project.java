@@ -13,7 +13,7 @@ public class Project
 	private TheDate creationDate;
 	private TheDate startingDate;
 	private double budget;
-	//versionID niet gebruikt in de use cases -> zelf intern te genereren ? -> hoe ? 
+	
 	private double versionID; 
 	
 	private List<SubSystem> subSystems = new ArrayList<>();
@@ -24,43 +24,19 @@ public class Project
 	 * Constructoren
 	*/
 	
-
-	/**
-	 * Construct a new instance of Project with the given name and description
-	 * @param newName The name of the project
-	 * @param newDescription The description of the project
-	 */
-	public Project(String newName, String newDescription)
-	{
-		this(newName, newDescription,0.0);
-	}
-	
 	/**
 	 * Construct a new instance of Project with the given name and description
 	 * @param newName The name of the project
 	 * @param newDescription The description of the project
 	 * @param newBudget The budget of the project
 	 */
-	public Project(String newName, String newDescription, double newBudget)
+	public Project(String newName, String newDescription, TheDate newStartingDate, double newBudget, Lead newLeadRole)
 	{
-		this.name = newName;
-		this.description = newDescription;
+		setName(newName);
+		setDescription(newDescription);
+		this.startingDate = newStartingDate;
 		this.budget = newBudget;
-		
-		this.creationDate = TheDate.TheDateNow();
-	}
-	
-	/**
-	 * Construct a new instance of Project with the given name and description
-	 * @param newName The name of the project
-	 * @param newDescription The description of the project
-	 * @param newBudget The budget of the project
-	 */
-	public Project(String newName, String newDescription, TheDate newStartingDate, double newBudget)
-	{
-		this.name = newName;
-		this.description = newDescription;
-		this.budget = newBudget;
+		setLeadRole(newLeadRole);
 		
 		this.creationDate = TheDate.TheDateNow();
 	}
@@ -177,15 +153,17 @@ public class Project
 	 */
 	public void setStartingDate(int day, int month, int year)
 	{
-		startingDate = new TheDate(day,month,year);
+		TheDate tmp =  new TheDate(day,month,year);
+		if(creationDate.isBefore(tmp) || creationDate.equals(tmp)) startingDate = new TheDate(day,month,year);
 	}
 	
 	/**
 	 * Set the budget of the project
 	 * @param newBudget The budget of the project
 	 */
-	public void setBudget(double newBudget)
+	public void setBudget(double newBudget) throws Exception
 	{
+		if(newBudget < 0) throw new Exception("A budget cannot be negative");
 		budget = newBudget;
 	}
 	
@@ -229,7 +207,7 @@ public class Project
 	 * Get recursively all the subsystems of the project
 	 * @return A list of subsystems
 	 */
-	//COPY OF getubsystems()
+	
 	public List<SubSystem> getAllSubSystem()
 	{
 		List<SubSystem> list = new ArrayList<SubSystem>();
@@ -251,12 +229,12 @@ public class Project
 	 */
 	public Project clone()
 	{
-		Project p = new Project(name,description);
+		Project p = new Project(name,description, startingDate, budget, leadRole);
 		
 		p.creationDate = creationDate;
-		p.startingDate = startingDate;
-		p.budget = budget;
-		p.subSystems =  new ArrayList<SubSystem>(subSystems);
+
+		if(subSystems != null) p.subSystems =  new ArrayList<SubSystem>(subSystems);
+		if(devsRoles != null)  p.devsRoles = new ArrayList<Role>(devsRoles);
 		
 		return p;
 	}
