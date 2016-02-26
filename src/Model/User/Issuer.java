@@ -1,11 +1,16 @@
 package Model.User;
 
-import Model.User.User;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Karina on 19.02.2016.
  */
 public class Issuer extends User {
+
+    private List<Right> rights = Arrays.asList(
+            Right.makeComment
+    );
 
     /**
      * Creates a new Issuer instance using the given strings.
@@ -28,7 +33,4 @@ public class Issuer extends User {
         super(firstName,lastName,userName);
     }
 
-    public void makeComment(){
-        // TODO
-    }
 }

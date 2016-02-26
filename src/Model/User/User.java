@@ -1,9 +1,21 @@
 package Model.User;
 
+import java.util.List;
+
 /**
  * Created by Karina on 19.02.2016.
  */
 public class User {
+
+    public enum Right{
+        createProject,
+        makeComment
+    }
+
+    /**
+     * Abstract list of rights.
+     */
+    private List<Right> rights;
 
     private String firstName;
     private String middleName;
@@ -103,5 +115,14 @@ public class User {
      */
     private void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    /**
+     * Returns whether the user has a specific right.
+     * @param right The right to be checked.
+     * @return True when the user has the right.
+     */
+    public boolean hasRight(Right right){
+        return rights.contains(right);
     }
 }

@@ -2,10 +2,17 @@ package Model.User;
 
 import Model.User.User;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by Karina on 19.02.2016.
  */
 public class Admin extends User {
+
+    private List<Right> rights = Arrays.asList(
+            Right.createProject
+    );
 
     /**
      * Creates a new Admin instance using the given strings.
@@ -27,9 +34,4 @@ public class Admin extends User {
     public Admin(String firstName, String lastName, String userName){
         super(firstName,lastName,userName);
     }
-
-    public void createProject(){
-        // TODO
-    }
-
 }
