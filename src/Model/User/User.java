@@ -17,7 +17,7 @@ public class User {
      * @param userName The user name of the user.
      * @param middleName The middle name of the user.
      */
-    public User(String firstName, String lastName, String userName, String middleName){
+    User(String firstName, String lastName, String userName, String middleName){
         setFirstName(firstName);
         setLastName(lastName);
         setUserName(userName);
@@ -30,7 +30,7 @@ public class User {
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      */
-    public User(String firstName, String lastName, String userName){
+    User(String firstName, String lastName, String userName){
         setFirstName(firstName);
         setLastName(lastName);
         setUserName(userName);

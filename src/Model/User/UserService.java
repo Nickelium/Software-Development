@@ -10,8 +10,10 @@ public class UserService {
 
     private IRepository<User> repository;
 
-    public UserService(IRepository<User> userRepository){
-        setUserRepository(userRepository);
+    public UserService(){
+        // TODO add generic Repository
+        // IRepository<User> userRepository = new Repository<User>
+        // setUserRepository(userRepository);
     }
 
     /**
@@ -63,26 +65,48 @@ public class UserService {
      * Throws an IllegalArgumentException in case there already exists a User object
      * in the User Repository with the same username.
      *
-     * @param user The user object that needs to be added to the user repository.
+     * @param firstName The first name of the user.
+     * @param lastName The last name of the user.
+     * @param userName The user name of the user.
+     * @param middleName The middle name of the user.
+     *
+     * @return The newly created user.
      */
-    public void addUser(User user){
-        String userName =  user.getUserName();
-        if (!repository.getAllMatching((s)->s.getUserName() == userName).isEmpty()){
+    public User addUser(String firstName, String lastName, String userName, String middleName){
+        User user = new User(firstName,lastName,userName,middleName);
+        if (!repository.getAllMatching((s)->user.getUserName() == userName).isEmpty()){
             throw new IllegalArgumentException("This user already exists. Choose another user name.");
         } else {
             repository.insert(user);
+            return user;
         }
     }
 
+
     /**
-     * Updates a user object with given username with the instance of the user object
-     * in the user repository by calling an update statement of the repository.
+     * Adds a new user to the user repository if there doesn't exist a user object with
+     * the same username in the User Repository yet.
      *
-     * @param user the user object that needs to be updated in the user repository.
+     * @throws IllegalArgumentException
+     * Throws an IllegalArgumentException in case there already exists a User object
+     * in the User Repository with the same username.
+     *
+     * @param firstName The first name of the user.
+     * @param lastName The last name of the user.
+     * @param userName The user name of the user.
+     *
+     * @return The newly created user.
      */
-    public void updateUser(User user){
-        repository.update(((s)->s.getUserName() == user.getUserName()), user);
+    public User addUser(String firstName, String lastName, String userName){
+        User user = new User(firstName,lastName,userName);
+        if (!repository.getAllMatching((s)->user.getUserName() == userName).isEmpty()){
+            throw new IllegalArgumentException("This user already exists. Choose another user name.");
+        } else {
+            repository.insert(user);
+            return user;
+        }
     }
+
 
     /**
      * Deletes a given user object from the user repository by calling a delete
