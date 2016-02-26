@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Karina on 19.02.2016.
  */
-public class User {
+public abstract class User {
 
     public enum Right{
         createProject,
@@ -25,28 +25,15 @@ public class User {
     /**
      * Creates a new User instance using the given strings.
      * @param firstName The first name of the user.
-     * @param lastName The last name of the user.
-     * @param userName The user name of the user.
      * @param middleName The middle name of the user.
-     */
-    User(String firstName, String lastName, String userName, String middleName){
-        setFirstName(firstName);
-        setLastName(lastName);
-        setUserName(userName);
-        setMiddleName(middleName);
-    }
-
-    /**
-     * Creates a new User instance using the given strings. The middle name is initialized as the empty string.
-     * @param firstName The first name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      */
-    User(String firstName, String lastName, String userName){
+    User(String firstName, String middleName, String lastName, String userName){
         setFirstName(firstName);
+        setMiddleName(middleName);
         setLastName(lastName);
         setUserName(userName);
-        setMiddleName("");
     }
 
     // Getters
