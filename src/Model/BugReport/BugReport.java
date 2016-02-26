@@ -54,7 +54,7 @@ public class BugReport {
         this.creator = creator;
 
         this.id = new BugReportID();
-        //this.creationDate = new TheDate();
+        this.creationDate = TheDate.TheDateNow();
         //Tag on creation is New();
         this.tag = new New();
 

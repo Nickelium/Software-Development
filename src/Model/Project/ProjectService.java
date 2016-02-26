@@ -69,8 +69,9 @@ public class ProjectService
 	     * in the User Repository with the same username.
 	     *
 	     * @param user The user object that needs to be added to the user repository.
+	     * @throws Exception 
 	     */
-	    public void addSubSystemToSubSystem(SubSystem s, SubSystem toAdd)
+	    public void addSubSystemToSubSystem(SubSystem s, SubSystem toAdd) throws Exception
 	    {
 	    	s.addSubSystem(toAdd);
 	    }
@@ -81,8 +82,9 @@ public class ProjectService
 	     *
 	     * @param user the user object that needs to be updated in the user repository.
 	     */
-	    public void updateProject(Project project){
-	        projectRepository.update(((s)->s.getName() == project.getName()), project);
+	    public void updateProject(Project oldProject, Project newProject)
+	    {
+	        projectRepository.update(((s)-> s.equals(oldProject) ), newProject);
 	    }
 
 	    /**
@@ -99,5 +101,11 @@ public class ProjectService
 	    public List<SubSystem> getAllSubSystemFromProject(Project p)
 	    {
 	    	return p.getAllSubSystem();
+	    }
+	    
+	    public List<Project> getProjectsOfLeadRole(Developer dev)
+	    {
+	    	List<Project> prjList = projectRepository.getAllMatching((x)-> x.getLeadRole() != null && dev.equals(x.getLeadRole().getDeveloper()));
+	    	return Collections.unmodifiableList(prjList);
 	    }
 	}

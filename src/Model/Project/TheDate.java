@@ -1,6 +1,5 @@
 package Model.Project;
 
-
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -80,12 +79,17 @@ public class TheDate
 	public boolean equals(Object obj)
 	{
 		if(obj == null) return false;
-		if( !(obj instanceof TheDate) ) return false;
-		
-		
-		return getDay() == ((TheDate) obj).getDay() 
-				&& getMonth() == ((TheDate) obj).getMonth() 
-				&& getYear() == ((TheDate) obj).getYear();
-		
+		if( !(obj instanceof TheDate)  ) return false;
+		return date.equals(  ((TheDate)obj).date );
+	}
+	
+	public boolean isAfter(TheDate d)
+	{
+		return date.isAfter(d.date);
+	}
+	
+	public boolean isBefore(TheDate d)
+	{
+		return date.isBefore(d.date);
 	}
 }

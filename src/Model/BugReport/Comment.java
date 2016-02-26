@@ -38,7 +38,7 @@ public class Comment {
 
         this.text = text;
         this.issuer = issuer;
-        //this.creationDate = new TheDate();
+        this.creationDate = TheDate.TheDateNow();
         this.comments = new ArrayList<Comment>();
     }
 

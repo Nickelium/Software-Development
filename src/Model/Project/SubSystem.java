@@ -18,15 +18,6 @@ public class SubSystem
 	 */
 	
 	/**
-	 * Construct a new instance subsystem with default values
-	 * Note: Probably only for testing
-	 */
-	public SubSystem()
-	{
-		this(null,null,1.0);
-	}
-	
-	/**
 	 * Construct a new instance subsystem with given name and description
 	 * @param newName The name of the project
 	 * @param newDescription The description of the project
@@ -96,9 +87,11 @@ public class SubSystem
 	/**
 	 * Returns the versionID of the subsystem
 	 * @param newVersionID The versionID of the subsystem
+	 * @throws Exception 
 	 */
-	public void setVersionID(double newVersionID)
+	public void setVersionID(double newVersionID) throws Exception
 	{
+		if(newVersionID < 0) throw new Exception("The versionID cannot be negative");
 		versionID = newVersionID;
 	}
 	
@@ -180,20 +173,10 @@ public class SubSystem
 	 */
 	public SubSystem clone()
 	{
-		SubSystem s = null;
-		try
-		{
-			s =  (SubSystem) super.clone();
-		}
-		catch(CloneNotSupportedException | ClassCastException e)
-		{
-			e.printStackTrace(System.err);
-		}
+		SubSystem s = new SubSystem(name,description);
 		
 		s.versionID = versionID;
-		s.name = name;
-		s.description = description;
-		s.subSystems =  new ArrayList<SubSystem>(subSystems);
+		if(subSystems != null) s.subSystems =  new ArrayList<SubSystem>(subSystems);
 		
 		return s;
 	}
