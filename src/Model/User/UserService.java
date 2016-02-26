@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Karina on 19.02.2016.
  */
-public abstract class UserService {
+public class UserService {
 
     private IListWrapper<User> userList;
 
@@ -36,6 +36,8 @@ public abstract class UserService {
         this.userList = userList;
     }
 
+    //region get a specific group of users
+
     /**
      * Prompts a query to the User List returning all users being an instance of Admin
      * @return A list object with all administrators saved in the User List.
@@ -60,10 +62,13 @@ public abstract class UserService {
         return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Developer));
     }
 
+    //endregion
+
+    //region add users
 
     /**
-     * Adds a new user to the user userList if there doesn't exist a user object with
-     * the same username in the User List yet.
+     * Adds a new admin to the user list if there doesn't exist a user object with
+     * the same username in the user list yet.
      *
      * @throws IllegalArgumentException
      * Throws an IllegalArgumentException in case there already exists a User object
@@ -76,20 +81,15 @@ public abstract class UserService {
      *
      * @return The newly created user.
      */
-    public User addUser(String firstName, String lastName, String userName, String middleName){
-        User user = new User(firstName,lastName,userName,middleName);
-        if (!userList.getAllMatching((s)->user.getUserName() == userName).isEmpty()){
-            throw new IllegalArgumentException("This user already exists. Choose another user name.");
-        } else {
-            userList.insert(user);
-            return user;
-        }
+    public User addAdmin(String firstName, String middleName, String lastName, String userName){
+        User user = new Admin(firstName,lastName,userName,middleName);
+        add(user);
+        return user;
     }
 
-
     /**
-     * Adds a new user to the user userList if there doesn't exist a user object with
-     * the same username in the User List yet.
+     * Adds a new issuer to the user list if there doesn't exist a user object with
+     * the same username in the user list yet.
      *
      * @throws IllegalArgumentException
      * Throws an IllegalArgumentException in case there already exists a User object
@@ -98,18 +98,47 @@ public abstract class UserService {
      * @param firstName The first name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
+     * @param middleName The middle name of the user.
      *
      * @return The newly created user.
      */
-    public User addUser(String firstName, String lastName, String userName){
-        User user = new User(firstName,lastName,userName);
-        if (!userList.getAllMatching((s)->user.getUserName() == userName).isEmpty()){
+    public User addIssuer(String firstName, String middleName, String lastName, String userName){
+        User user = new Issuer(firstName,lastName,userName,middleName);
+        add(user);
+        return user;
+    }
+
+    /**
+     * Adds a new developer to the user list if there doesn't exist a user object with
+     * the same username in the user list yet.
+     *
+     * @throws IllegalArgumentException
+     * Throws an IllegalArgumentException in case there already exists a User object
+     * in the User Repository with the same username.
+     *
+     * @param firstName The first name of the user.
+     * @param lastName The last name of the user.
+     * @param userName The user name of the user.
+     * @param middleName The middle name of the user.
+     *
+     * @return The newly created user.
+     */
+    public User addDeveloper(String firstName, String middleName, String lastName, String userName){
+        User user = new Developer(firstName,lastName,userName,middleName);
+        add(user);
+        return user;
+    }
+
+
+    private void add(User user){
+        if (!userList.getAllMatching((s)->user.getUserName() == user.getUserName()).isEmpty()){
             throw new IllegalArgumentException("This user already exists. Choose another user name.");
         } else {
             userList.insert(user);
-            return user;
         }
     }
+
+    //endregions
 
 
     /**
