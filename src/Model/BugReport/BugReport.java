@@ -2,8 +2,8 @@ package Model.BugReport;
 
 import Model.User.Developer;
 import Model.User.Issuer;
-import Model.SubSystem;
-import Model.TheDate;
+import Model.Project.SubSystem;
+import Model.Project.TheDate;
 import Model.Tags.Assigned;
 import Model.Tags.New;
 import Model.Tags.Tag;
@@ -54,7 +54,7 @@ public class BugReport {
         this.creator = creator;
 
         this.id = new BugReportID();
-        //this.creationDate = new TheDate();
+        this.creationDate = TheDate.TheDateNow();
         //Tag on creation is New();
         this.tag = new New();
 

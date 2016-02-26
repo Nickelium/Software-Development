@@ -1,8 +1,8 @@
 package Model.BugReport;
 
 import DAL.IRepository;
-import Model.Project;
-import Model.SubSystem;
+import Model.Project.Project;
+import Model.Project.SubSystem;
 import Model.User.User;
 
 import java.util.Collections;
