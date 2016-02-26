@@ -1,6 +1,5 @@
 package DAL;
 
-import DAL.DeepCopy.DeepCopy;
 import Model.BugReport.BugReport;
 
 import java.util.Collections;

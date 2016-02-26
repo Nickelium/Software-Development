@@ -1,15 +1,18 @@
 package Model.Project;
 
 
+import DAL.IListWrapper;
+import Model.User.Developer;
+
 import java.util.Collections;
 import java.util.List;
 
-
+// TODO documentatie
 public class ProjectService
 {
-		private IRepository<Project> projectRepository;
+		private IListWrapper<Project> projectRepository;
 		
-		public ProjectService(IRepository<Project> projectRepository)
+		public ProjectService(IListWrapper<Project> projectRepository)
 	 	{
 	        setProjectRepository(projectRepository);
 	    }
@@ -24,9 +27,9 @@ public class ProjectService
 
 	    /**
 	     * Sets the IRepository object with all users.
-	     * @param userRepository The new IRepository object with users.
+	     * @param projectRepository The new IRepository object with users.
 	     */
-	    private void setProjectRepository(IRepository<Project> projectRepository) {
+	    private void setProjectRepository(IListWrapper<Project> projectRepository) {
 	        this.projectRepository = projectRepository;
 	    }
 
@@ -38,7 +41,7 @@ public class ProjectService
 	     * Throws an IllegalArgumentException in case there already exists a User object
 	     * in the User Repository with the same username.
 	     *
-	     * @param user The user object that needs to be added to the user repository.
+	     * @param project The user object that needs to be added to the user repository.
 	     */
 	    public void addProject(Project project)
 	    {
@@ -53,7 +56,7 @@ public class ProjectService
 	     * Throws an IllegalArgumentException in case there already exists a User object
 	     * in the User Repository with the same username.
 	     *
-	     * @param user The user object that needs to be added to the user repository.
+	     * @param project The user object that needs to be added to the user repository.
 	     */
 	    public void addSubSystemToProject(Project project, SubSystem subsystem)
 	    {
@@ -68,30 +71,30 @@ public class ProjectService
 	     * Throws an IllegalArgumentException in case there already exists a User object
 	     * in the User Repository with the same username.
 	     *
-	     * @param user The user object that needs to be added to the user repository.
+	     * @param s The user object that needs to be added to the user repository.
 	     * @throws Exception 
 	     */
 	    public void addSubSystemToSubSystem(SubSystem s, SubSystem toAdd) throws Exception
 	    {
 	    	s.addSubSystem(toAdd);
 	    }
-	    
+
 	    /**
 	     * Updates a user object with given username with the instance of the user object
 	     * in the user repository by calling an update statement of the repository.
 	     *
-	     * @param user the user object that needs to be updated in the user repository.
+	     * @param oldProject the user object that needs to be updated in the user repository.
 	     */
-	    public void updateProject(Project oldProject, Project newProject)
-	    {
-	        projectRepository.update(((s)-> s.equals(oldProject) ), newProject);
-	    }
+	    //public void updateProject(Project oldProject, Project newProject)
+	    //{
+	    //    projectRepository.update(((s)-> s.equals(oldProject)), newProject);
+	    //}
 
 	    /**
 	     * Deletes a given user object from the user repository by calling a delete
 	     * statement of the repository.
 	     *
-	     * @param user the user object that needs to be deleted from the user repository.
+	     * @param project the user object that needs to be deleted from the user repository.
 	     */
 	    public void deleteProject(Project project){
 	    	//also delete bugreport
