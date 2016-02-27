@@ -45,7 +45,7 @@ public class ProjectService
 	     */
 	    public void addProject(Project project)
 	    {
-	            projectRepository.insert(project); 
+	    	if(project != null) projectRepository.insert(project); 
 	    }
 
 	    /**
@@ -60,7 +60,7 @@ public class ProjectService
 	     */
 	    public void addSubSystemToProject(Project project, SubSystem subsystem)
 	    {
-	            project.addSubSystem(subsystem);
+	    	if(project != null && subsystem != null) project.addSubSystem(subsystem);
 	    }
 	    
 	    /**
@@ -76,7 +76,7 @@ public class ProjectService
 	     */
 	    public void addSubSystemToSubSystem(SubSystem s, SubSystem toAdd) throws Exception
 	    {
-	    	s.addSubSystem(toAdd);
+	    	if(s != null && toAdd != null)	s.addSubSystem(toAdd);
 	    }
 
 	    /**
@@ -103,12 +103,12 @@ public class ProjectService
 	    
 	    public List<SubSystem> getAllSubSystemFromProject(Project p)
 	    {
-	    	return p.getAllSubSystem();
+	    	return p != null ? p.getAllSubSystem() : null;
 	    }
 	    
 	    public List<Project> getProjectsOfLeadRole(Developer dev)
 	    {
-	    	List<Project> prjList = projectRepository.getAllMatching((x)-> x.getLeadRole() != null && dev.equals(x.getLeadRole().getDeveloper()));
+	    	List<Project> prjList = projectRepository.getAllMatching((x)-> x.getLeadRole() != null && x.getLeadRole().getDeveloper().equals(dev));
 	    	return Collections.unmodifiableList(prjList);
 	    }
 	}

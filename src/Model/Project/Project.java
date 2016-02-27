@@ -20,6 +20,8 @@ public class Project
 	private Lead leadRole;
 	private List<Role> devsRoles = new ArrayList<>();
 	
+	
+	
 	/**
 	 * Constructoren
 	*/
@@ -239,5 +241,26 @@ public class Project
 		return p;
 	}
 
+	
+	public void destructor()
+	{
+		name = null;
+		description = null;
+		creationDate = null;
+		startingDate = null;
+		budget = 0.0;
+		versionID = 0.0;
+		
+		for(SubSystem s : subSystems)
+			s.destructor();
+		subSystems = null;
+		
+		leadRole.destructor();
+		
+		for(Role devRole : devsRoles)
+			devRole.destructor();
+		
+		
+	}
 
 }

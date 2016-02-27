@@ -3,6 +3,8 @@ package Model.Project;
 import java.util.ArrayList;
 import java.util.List;
 
+import Model.BugReport.BugReport;
+
 public class SubSystem 
 {
 
@@ -12,6 +14,8 @@ public class SubSystem
 	private double versionID;
 	
 	private List<SubSystem> subSystems = new ArrayList<SubSystem>();
+	
+	private BugReport bug;
 	
 	/**
 	 * Constructoren
@@ -80,6 +84,11 @@ public class SubSystem
 		return new ArrayList<SubSystem>(subSystems);
 	}
 	
+	public BugReport getBugReport()
+	{
+		return bug;
+	}
+	
 	/**
 	 * Setters
 	 */
@@ -98,21 +107,29 @@ public class SubSystem
 	/**
 	 * Returns the name of the subsystem
 	 * @param newName The name of the subsystem
+	 * @throws Exception 
 	 */
-	public void setName(String newName)
+	public void setName(String newName) throws Exception
 	{
-		if(newName == null) throw new NullPointerException("The given name cannot be null.");
+		if(newName == null) throw new Exception("The given name cannot be null.");
 		name = newName;
 	}
 	
 	/**
 	 * Returns the description of the subsystem
 	 * @param newDescription The description of the subystem
+	 * @throws Exception 
 	 */
-	public void setDescription(String newDescription)
+	public void setDescription(String newDescription) throws Exception
 	{
-		if(newDescription == null) throw new NullPointerException("The given description cannot be null.");
+		if(newDescription == null) throw new Exception("The given description cannot be null.");
 		description = newDescription;
+	}
+	
+	public void setBugReport(BugReport newBug) throws Exception
+	{
+		if(newBug == null) throw new Exception("A bugreport cannot be null");
+		bug = newBug;
 	}
 	
 	/**
@@ -179,6 +196,20 @@ public class SubSystem
 		if(subSystems != null) s.subSystems =  new ArrayList<SubSystem>(subSystems);
 		
 		return s;
+	}
+	
+	public void destructor()
+	{
+		name = null;
+		description = null;
+		versionID = 0.0;
+		
+		for(SubSystem s : subSystems)
+			s.destructor();
+		subSystems = null;
+		
+		
+		
 	}
 	
 	

@@ -131,7 +131,7 @@ public class UserService {
 
 
     private void add(User user){
-        if (!userList.getAllMatching((s)->user.getUserName() == user.getUserName()).isEmpty()){
+        if (!userList.getAllMatching((s)->s.getUserName() == user.getUserName()).isEmpty()){
             throw new IllegalArgumentException("This user already exists. Choose another user name.");
         } else {
             userList.insert(user);
