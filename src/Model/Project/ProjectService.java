@@ -2,6 +2,8 @@ package Model.Project;
 
 
 import DAL.IListWrapper;
+import DAL.ListWrapper;
+import Model.Roles.Lead;
 import Model.User.Developer;
 
 import java.util.Collections;
@@ -12,9 +14,10 @@ public class ProjectService
 {
 		private IListWrapper<Project> projectRepository;
 		
-		public ProjectService(IListWrapper<Project> projectRepository)
+		public ProjectService()
 	 	{
-	        setProjectRepository(projectRepository);
+			IListWrapper<Project> pRepository = new ListWrapper<>();
+			setProjectRepository(pRepository);
 	    }
 
 	    /**
@@ -43,9 +46,11 @@ public class ProjectService
 	     *
 	     * @param project The user object that needs to be added to the user repository.
 	     */
-	    public void addProject(Project project)
+	    public Project addProject(String newName, String newDescription, TheDate newStartingDate, double newBudget, Lead newLeadRole)
 	    {
-	    	if(project != null) projectRepository.insert(project); 
+	    	Project prj = new Project(newName, newDescription, newStartingDate, newBudget, newLeadRole);
+	    	projectRepository.insert(prj); 
+	    	return prj;
 	    }
 
 	    /**
@@ -96,9 +101,10 @@ public class ProjectService
 	     *
 	     * @param project the user object that needs to be deleted from the user repository.
 	     */
-	    public void deleteProject(Project project){
-	    	//also delete bugreport
+	    public void deleteProject(Project project)
+	    {
 	        projectRepository.delete(project);
+	        project.destructor();
 	    }
 	    
 	    public List<SubSystem> getAllSubSystemFromProject(Project p)

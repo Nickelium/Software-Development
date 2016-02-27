@@ -46,5 +46,11 @@ public abstract class Role {
     public void setParticipation(double participation){
         this.participation = participation;
     }
+    
+    public void destructor()
+    {
+    	developer = null;
+    	participation = 0.0;
+    }
 
 }

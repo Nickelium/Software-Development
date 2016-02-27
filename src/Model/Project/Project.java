@@ -222,9 +222,6 @@ public class Project
 		return list;
 	}
 	
-	
-	
-
 	/**
 	 * Clone a project
 	 * @return A cloned project
