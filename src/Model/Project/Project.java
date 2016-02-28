@@ -152,11 +152,13 @@ public class Project
 	 * @param day The day of start
 	 * @param month The month of start
 	 * @param year The year of start
+	 * @throws Exception 
 	 */
-	public void setStartingDate(int day, int month, int year)
+	public void setStartingDate(int day, int month, int year) throws Exception
 	{
 		TheDate tmp =  new TheDate(day,month,year);
-		if(creationDate.isBefore(tmp) || creationDate.equals(tmp)) startingDate = new TheDate(day,month,year);
+		if(creationDate.isAfter(tmp)) throw new Exception("The starting date must be after or on the same date as the creation date");
+		startingDate = new TheDate(day,month,year);
 	}
 	
 	/**
@@ -177,6 +179,7 @@ public class Project
 	public void setVersionID(double newVersionID) throws Exception
 	{
 		if(newVersionID < 0.0) throw new Exception("A version ID cannot be negative");
+		if(versionID >= newVersionID) throw new Exception("Setting to a previous/smaller versionID cannot be done"); 
 		versionID = newVersionID;
 	}
 	
