@@ -125,7 +125,7 @@ public class ProjectService
 			List<Project> pList = new ArrayList<>();
 			for(Project project : projectRepository.getAll())
 				for(Role role : project.getDevsRoles())
-					if(dev.equals(role.getDeveloper())) pList.add(project);
+					if(dev.equals(role.getDeveloper()) && !pList.contains(project) ) pList.add(project);
 				
 			return pList != null ? pList : null;
 		}
