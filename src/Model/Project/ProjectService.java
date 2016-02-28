@@ -4,6 +4,7 @@ package Model.Project;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 import Model.Roles.Lead;
+import Model.Roles.Role;
 import Model.User.Developer;
 
 import java.util.ArrayList;
@@ -122,8 +123,10 @@ public class ProjectService
 		public List<Project> getProjectsWithDeveloper(Developer dev){
 			//TODO
 			List<Project> pList = new ArrayList<>();
-			for(Project project : projectRepository.getAllMatching((x) -> x.getDevsRoles().contains(dev)))
-				pList.add(project);
+			for(Project project : projectRepository.getAll())
+				for(Role role : project.getDevsRoles())
+					if(dev.equals(role.getDeveloper())) pList.add(project);
+				
 			return pList != null ? pList : null;
 		}
 	}
