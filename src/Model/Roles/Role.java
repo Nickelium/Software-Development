@@ -1,6 +1,9 @@
 package Model.Roles;
 
+import Model.Tags.Tag;
 import Model.User.Developer;
+
+import java.util.List;
 
 /**
  * Created by Tom on 19/02/16.
@@ -8,6 +11,7 @@ import Model.User.Developer;
 public abstract class Role {
     private Developer developer;
     private double participation;
+    private List<Tag> tagPermissions;
 
     /**
      * Basic constructor for all role-like objects.
@@ -45,12 +49,6 @@ public abstract class Role {
      */
     public void setParticipation(double participation){
         this.participation = participation;
-    }
-    
-    public void destructor()
-    {
-    	developer = null;
-    	participation = 0.0;
     }
 
 }
