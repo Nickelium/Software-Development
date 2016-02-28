@@ -67,4 +67,5 @@ public abstract class Role {
     public boolean canAssignTag(Tag tag){
         return this.tagPermissions.contains(tag);
     }
+
 }
