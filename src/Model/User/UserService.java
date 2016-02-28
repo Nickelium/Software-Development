@@ -20,6 +20,11 @@ public class UserService {
         setListWrapper(userList);
     }
 
+    public UserService(IListWrapper<User> listWrapperUser)
+    {
+        setListWrapper(listWrapperUser);
+    }
+    
     /**
      * Returns an list with all users.
      * @return An list with all users.
@@ -58,7 +63,7 @@ public class UserService {
      * Prompts a query to the User List returning all users being an instance of Developer
      * @return A list object with all developers saved in the UserRepository
      */
-    public List<User> getDeveloper(){
+    public List<User> getDevelopers(){
         return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Developer));
     }
 

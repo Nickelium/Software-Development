@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class UI 
@@ -17,11 +18,23 @@ public class UI
 	
 	public String readString()
 	{
+	
 		return scanner.next();
+	
 	}
 	
 	public double readDouble()
 	{
 		return scanner.nextDouble();
+	}
+	
+	public int readInt()
+	{
+		return scanner.nextInt();
+	}
+	
+	public void errorDisplay(String str)
+	{
+		System.out.println(str);
 	}
 }
