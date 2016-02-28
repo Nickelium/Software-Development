@@ -1,6 +1,5 @@
-package Model.Controller;
+package Controller;
 
-import Model.User.User;
 /**
  * Created by Karina on 26.02.2016.
  */

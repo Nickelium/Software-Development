@@ -1,12 +1,11 @@
 package Model.BugReport;
 
-import DAL.IListWrapper;
-import DAL.ListWrapper;
+import Model.Wrapper.IListWrapper;
+import Model.Wrapper.ListWrapper;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.User.User;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

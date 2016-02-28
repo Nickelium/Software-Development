@@ -1,4 +1,4 @@
-package DAL;
+package Model.Wrapper;
 
 import java.util.List;
 import java.util.function.Predicate;

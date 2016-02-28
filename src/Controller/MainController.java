@@ -1,4 +1,4 @@
-package Model.Controller;
+package Controller;
 
 /**
  * Created by Karina on 26.02.2016.

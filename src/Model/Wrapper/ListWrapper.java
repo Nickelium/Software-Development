@@ -1,6 +1,4 @@
-package DAL;
-
-import Model.BugReport.BugReport;
+package Model.Wrapper;
 
 import java.util.Collections;
 import java.util.List;

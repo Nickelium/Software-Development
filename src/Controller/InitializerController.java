@@ -1,4 +1,4 @@
-package Model.Controller;
+package Controller;
 
 import Model.BugReport.BugReportService;
 import Model.Project.ProjectService;
