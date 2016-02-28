@@ -116,7 +116,7 @@ public class Project
 		return leadRole;
 	}
 	
-	public List<Role> getDevRole()
+	public List<Role> getDevsRoles()
 	{
 		return devsRoles;
 	}
