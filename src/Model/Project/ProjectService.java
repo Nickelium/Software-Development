@@ -1,8 +1,8 @@
 package Model.Project;
 
 
-import DAL.IListWrapper;
-import DAL.ListWrapper;
+import Model.Wrapper.IListWrapper;
+import Model.Wrapper.ListWrapper;
 import Model.Roles.Lead;
 import Model.User.Developer;
 
@@ -101,7 +101,7 @@ public class ProjectService
 	     *
 	     * @param project the user object that needs to be deleted from the user repository.
 	     */
-	    public void deleteProject(Project project)
+	    void deleteProject(Project project)
 	    {
 	        projectRepository.delete(project);
 	        project.destructor();

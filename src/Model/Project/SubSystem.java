@@ -15,8 +15,6 @@ public class SubSystem
 	
 	private List<SubSystem> subSystems = new ArrayList<SubSystem>();
 	
-	private BugReport bug;
-	
 	/**
 	 * Constructoren
 	 */
@@ -84,11 +82,6 @@ public class SubSystem
 		return new ArrayList<SubSystem>(subSystems);
 	}
 	
-	public BugReport getBugReport()
-	{
-		return bug;
-	}
-	
 	/**
 	 * Setters
 	 */
@@ -124,12 +117,6 @@ public class SubSystem
 	{
 		if(newDescription == null) throw new Exception("The given description cannot be null.");
 		description = newDescription;
-	}
-	
-	public void setBugReport(BugReport newBug) throws Exception
-	{
-		if(newBug == null) throw new Exception("A bugreport cannot be null");
-		bug = newBug;
 	}
 	
 	/**
