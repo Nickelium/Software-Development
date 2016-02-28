@@ -5,7 +5,11 @@ package Model.Tags;
  */
 public abstract class Tag{
 
-     public abstract String toString();
+    public abstract String toString();
+
+    public boolean canChangeToTag(Tag tag){
+        return true;
+    }
 
     public abstract boolean equals(Object obj);
 }

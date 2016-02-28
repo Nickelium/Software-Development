@@ -117,4 +117,9 @@ public class ProjectService
 	    	List<Project> prjList = projectRepository.getAllMatching((x)-> x.getLeadRole() != null && x.getLeadRole().getDeveloper().equals(dev));
 	    	return Collections.unmodifiableList(prjList);
 	    }
+
+		public List<Project> getProjectsWithDeveloper(Developer dev){
+			//TODO
+			return null;
+		}
 	}

@@ -254,12 +254,7 @@ public class Project
 		for(SubSystem s : subSystems)
 			s.destructor();
 		subSystems = null;
-		
-		leadRole.destructor();
-		
-		for(Role devRole : devsRoles)
-			devRole.destructor();
-		
+
 		
 	}
 
