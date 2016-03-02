@@ -13,7 +13,8 @@ public class SubSystem
 	//Same as project, how to handle versionID ?
 	private double versionID;
 	
-	private List<SubSystem> subSystems = new ArrayList<SubSystem>();
+	private List<SubSystem> subSystems = new ArrayList<>();
+	private List<BugReport> bugReports = new ArrayList<>();
 	
 	/**
 	 * Constructoren
@@ -80,6 +81,11 @@ public class SubSystem
 	public List<SubSystem> getSubSystems()
 	{
 		return new ArrayList<SubSystem>(subSystems);
+	}
+	
+	public List<BugReport> getBugReports()
+	{
+		return new ArrayList<BugReport>(bugReports);
 	}
 	
 	/**
@@ -155,6 +161,12 @@ public class SubSystem
 		subSystems.add(newSubSystem);
 	}
 	
+	public void addBugReport(BugReport newBugReport) throws Exception
+	{
+		if(newBugReport == null) throw new NullPointerException("The given bugreport cannot be null.");
+		bugReports.add(newBugReport);
+	}
+	
 	/**
 	 * Returns recursively all subsystems
 	 * @return A list of subsystems
@@ -184,20 +196,18 @@ public class SubSystem
 		
 		return s;
 	}
-	
+	/*
 	public void destructor()
 	{
 		name = null;
 		description = null;
 		versionID = 0.0;
-		
-		for(SubSystem s : subSystems)
-			s.destructor();
+
 		subSystems = null;
-		
-		
+		bugReports = null;
 		
 	}
+	*/
 	
 	
 }
