@@ -8,10 +8,6 @@ import java.util.List;
  */
 public class Issuer extends User {
 
-    private List<Right> rights = Arrays.asList(
-            Right.makeComment
-    );
-
     /**
      * Creates a new Issuer instance using the given strings.
      * @param firstName The first name of the user.
@@ -19,7 +15,7 @@ public class Issuer extends User {
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      */
-    public Issuer(String firstName, String middleName, String lastName, String userName){
+    Issuer(String firstName, String middleName, String lastName, String userName){
         super(firstName,middleName,lastName,userName);
     }
 }

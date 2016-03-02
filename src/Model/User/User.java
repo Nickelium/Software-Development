@@ -7,16 +7,9 @@ import java.util.List;
  */
 public abstract class User {
 
-    public enum Right{
-        createProject,
-        makeComment
-    }
-
     /**
      * Abstract list of rights.
      */
-    private List<Right> rights;
-
     private String firstName;
     private String middleName;
     private String lastName;
@@ -104,12 +97,4 @@ public abstract class User {
         this.userName = userName;
     }
 
-    /**
-     * Returns whether the user has a specific right.
-     * @param right The right to be checked.
-     * @return True when the user has the right.
-     */
-    public boolean hasRight(Right right){
-        return rights.contains(right);
-    }
 }

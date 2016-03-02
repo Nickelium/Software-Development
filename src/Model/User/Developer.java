@@ -12,7 +12,7 @@ public class Developer extends Issuer {
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      */
-    public Developer(String firstName, String middleName, String lastName, String userName){
+    Developer(String firstName, String middleName, String lastName, String userName){
         super(firstName,middleName,lastName,userName);
     }
 
