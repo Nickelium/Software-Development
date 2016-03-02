@@ -42,7 +42,7 @@ public class BugReport {
      *
      * @throws IllegalArgumentException One or more of the specified arguments are invalid.
      */
-    public BugReport(String title, String description, SubSystem subsystem, Issuer creator){
+     BugReport(String title, String description, SubSystem subsystem, Issuer creator){
         if (title == null) throw new IllegalArgumentException("Title is null");
         if (description == null) throw new IllegalArgumentException("Description is null");
         if (subsystem == null) throw new IllegalArgumentException("Subsystem is null");

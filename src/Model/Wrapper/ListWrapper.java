@@ -12,6 +12,12 @@ public class ListWrapper<T> implements IListWrapper<T> {
 
     private List<T> list;
 
+    public ListWrapper(){}
+
+    public ListWrapper(List<T> list){
+        this.list = list;
+    }
+
     @Override
     public T getOne(Predicate<T> criteria) {
         for (T obj : this.list){

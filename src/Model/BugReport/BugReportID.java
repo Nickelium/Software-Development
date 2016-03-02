@@ -23,6 +23,6 @@ public class BugReportID {
 
     @Override
     public boolean equals(Object obj) {
-        return this.Id.toString() == obj.toString();
+        return this.toString().equals(obj.toString());
     }
 }

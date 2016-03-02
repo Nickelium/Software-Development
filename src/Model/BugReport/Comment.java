@@ -30,9 +30,8 @@ public class Comment {
      * @param text The text of the comment.
      * @param issuer The issuer of the comment.
      *
-     * @throws IllegalArgumentException The given arguments are not valid.
      */
-    public Comment(String text, Issuer issuer) throws IllegalArgumentException{
+    public Comment(String text, Issuer issuer){
         if (!isValidText(text)) throw new IllegalArgumentException("Invalid text for comment");
         if (issuer == null) throw new IllegalArgumentException("Invalid issuer for comment");
 
