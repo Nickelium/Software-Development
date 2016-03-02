@@ -238,7 +238,7 @@ public class BugReport {
      *
      * @throws IllegalArgumentException The given developer is null.
      */
-    public void addAssignee(Developer developer)  {
+    void addAssignee(Developer developer)  {
         if (developer == null) throw new IllegalArgumentException();
 
         this.assignees.add(developer);

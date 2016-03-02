@@ -1,6 +1,9 @@
 package Model.Roles;
 
+import Model.Tags.UnderReview;
 import Model.User.Developer;
+
+import java.util.Arrays;
 
 /**
  * Created by Tom on 19/02/16.
@@ -13,7 +16,9 @@ public class Programmer extends Role {
      * @param developer The developer assigned the programmer role.
      */
     public Programmer(Developer developer){
+
         super(developer);
+        this.tagPermissions = Arrays.asList(UnderReview.class);
     }
 
     /**

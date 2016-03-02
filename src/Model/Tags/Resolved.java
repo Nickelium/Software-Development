@@ -1,9 +1,19 @@
 package Model.Tags;
 
+import java.util.Arrays;
+
 /**
  * Created by Tom on 19/02/16.
  */
 public class Resolved extends Tag {
+
+    /**
+     * Default constructor for the Resolved tag.
+     */
+    public Resolved(){
+        this.acceptedTags = Arrays.asList();
+    }
+
     @Override
     public String toString() {
         return "Resolved";

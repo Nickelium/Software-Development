@@ -1,9 +1,18 @@
 package Model.Tags;
 
+import java.util.Arrays;
+
 /**
  * Created by Tom on 19/02/16.
  */
 public class Closed extends Tag {
+
+    /**
+     * Default constructor for the closed tag.
+     */
+    public Closed(){
+        this.acceptedTags = Arrays.asList();
+    }
 
     @Override
     public String toString() {

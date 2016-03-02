@@ -4,7 +4,6 @@ import Model.Tags.*;
 import Model.User.Developer;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Tom on 19/02/16.
@@ -18,8 +17,8 @@ public class Lead extends Role {
      */
     public Lead(Developer developer){
         super(developer);
-        this.tagPermissions.addAll(Arrays.asList(new Closed(), new Duplicate(),
-                new NotABug(), new Resolved(), new Closed()));
+        this.assignmentPermission = Permission.assignDevelopersToBugReport;
+        this.tagPermissions = Arrays.asList(UnderReview.class, Duplicate.class, NotABug.class, Resolved.class, Closed.class);
     }
 
     /**

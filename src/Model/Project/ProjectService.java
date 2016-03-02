@@ -1,6 +1,7 @@
 package Model.Project;
 
 
+import Model.BugReport.BugReport;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 import Model.Roles.Lead;
@@ -128,5 +129,10 @@ public class ProjectService
 					if(dev.equals(role.getDeveloper()) && !pList.contains(project) ) pList.add(project);
 				
 			return pList != null ? pList : null;
+		}
+
+		public Project getProjectContainingBugReport(BugReport bugReport){
+			//TODO Implement
+			return null;
 		}
 	}
