@@ -107,7 +107,6 @@ public class ProjectService
 	    void deleteProject(Project project)
 	    {
 	        projectRepository.delete(project);
-	        project.destructor();
 	    }
 	    
 	    public List<SubSystem> getAllSubSystemFromProject(Project p)
