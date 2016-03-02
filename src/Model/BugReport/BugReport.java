@@ -22,7 +22,6 @@ public class BugReport {
     private String description;
     private TheDate creationDate;
     private Tag tag;
-    private SubSystem subsystem;
     private Issuer creator;
     private List<Developer> assignees;
     private List<Comment> comments;
@@ -42,15 +41,13 @@ public class BugReport {
      *
      * @throws IllegalArgumentException One or more of the specified arguments are invalid.
      */
-     BugReport(String title, String description, SubSystem subsystem, Issuer creator){
+     BugReport(String title, String description, Issuer creator){
         if (title == null) throw new IllegalArgumentException("Title is null");
         if (description == null) throw new IllegalArgumentException("Description is null");
-        if (subsystem == null) throw new IllegalArgumentException("Subsystem is null");
         if (creator == null) throw new IllegalArgumentException("Creator is null");
 
         this.title = title;
         this.description = description;
-        this.subsystem = subsystem;
         this.creator = creator;
 
         this.id = new BugReportID();
@@ -94,16 +91,6 @@ public class BugReport {
     public String getDescription() {
         return this.description;
     }
-
-    /**
-     * Getter to request the subsystem the bugreport is about.
-     *
-     * @return The subsystem the bugreport is about.
-     */
-    public SubSystem getSubsystem() {
-        return this.subsystem;
-    }
-
 
     /**
      * Getter to request the creationDate of the bugreport.
@@ -188,18 +175,6 @@ public class BugReport {
     }
 
     /**
-     * Checker to check if the subsystem of the bugreport is about is valid.
-     *
-     * @param subsystem The subsystem to check.
-     *
-     * @return True if the subsystem is not null. False otherwise.
-     */
-    public boolean isValidSubSystem(SubSystem subsystem){
-        if (subsystem == null) return false;
-        else return true;
-    }
-
-    /**
      * Checker to check if the creator of the bugreport is valid.
      *
      * @param creator The creator to check.
@@ -238,7 +213,8 @@ public class BugReport {
      *
      * @throws IllegalArgumentException The given developer is null.
      */
-    void addAssignee(Developer developer)  {
+
+    public void addAssignee(Developer developer)  {
         if (developer == null) throw new IllegalArgumentException();
 
         this.assignees.add(developer);
