@@ -10,10 +10,6 @@ import java.util.List;
  */
 public class Admin extends User {
 
-    private List<Right> rights = Arrays.asList(
-            Right.createProject
-    );
-
     /**
      * Creates a new Admin instance using the given strings.
      * @param firstName The first name of the user.
@@ -21,7 +17,7 @@ public class Admin extends User {
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      */
-    public Admin(String firstName, String middleName, String lastName, String userName){
+    Admin(String firstName, String middleName, String lastName, String userName){
         super(firstName,middleName,lastName,userName);
     }
 

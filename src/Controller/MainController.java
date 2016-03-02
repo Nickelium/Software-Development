@@ -84,7 +84,7 @@ public class MainController
 	
 	private void startMsg()
 	{
-		String msg = "Welcome\n";
+		String msg = "Welcome! \n";
 		ui.display(msg);
 	}
 	

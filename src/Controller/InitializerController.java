@@ -14,10 +14,10 @@ public class InitializerController {
     private BugReportService bugReportService;
 
     public InitializerController(){
-        initilize();
+        initialise();
     }
 
-    private void initilize(){
+    private void initialise(){
         this.userService = new UserService();
         // refactor ProjectService class first
         //this.projectService = new ProjectService();
