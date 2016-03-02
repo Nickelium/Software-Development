@@ -1,5 +1,7 @@
 package Model.BugReport;
 
+import Model.Project.ProjectService;
+import Model.User.Issuer;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 import Model.Project.Project;
@@ -14,14 +16,30 @@ import java.util.List;
  */
 public class BugReportService {
 
-    private IListWrapper<BugReport> list;
+    private ListWrapper<BugReport> bugReportList;
 
     /**
      * Constructor for the bugReport service.
      *
      */
-    public BugReportService(){
-        this.list = new ListWrapper<BugReport>();
+    public BugReportService(List<BugReport> bugReportList){
+        this.bugReportList = new ListWrapper<BugReport>(bugReportList);
+    }
+
+    /**
+     * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     *
+     * @param title The title of the bugreport
+     * @param description The description of the bugreport
+     * @param creator The creator of the bugreport
+     * @param subsystem The subsystem of the bugreport
+     *
+     * @return The newly created bugreport
+     */
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subsystem){
+        BugReport bugReport = new BugReport(title, description, subsystem, creator);
+        this.bugReportList.insert(bugReport);
+        return bugReport;
     }
 
     /**
@@ -30,7 +48,7 @@ public class BugReportService {
      * @return A list of all the BugReports.
      */
     public List<BugReport> getAllBugReports(){
-        return Collections.unmodifiableList(this.list.getAll());
+        return Collections.unmodifiableList(bugReportList.getAll());
     }
 
     /**
@@ -41,7 +59,7 @@ public class BugReportService {
      * @return The BugReport matching the given id.
      */
     public BugReport getBugReport(BugReportID id){
-        return this.list.getOne(x -> x.getId().equals(id));
+        return this.bugReportList.getOne(x -> x.getId().equals(id));
     }
 
     /**
@@ -50,7 +68,7 @@ public class BugReportService {
      * @param bugReport The BugReport to Add.
      */
     public void addBugReport(BugReport bugReport){
-        this.list.insert(bugReport);
+        this.bugReportList.insert(bugReport);
     }
 
     /**
@@ -59,7 +77,7 @@ public class BugReportService {
      * @param bugReport The bugreport to delete.
      */
     public void deleteBugReport(BugReport bugReport){
-        this.list.delete(bugReport);
+        this.bugReportList.delete(bugReport);
     }
 
     /**
@@ -71,7 +89,7 @@ public class BugReportService {
      */
     public List<BugReport> getBugReportsForProject(Project project){
         List<SubSystem> subsystems = project.getAllSubSystem();
-        List<BugReport> bugReports = this.list.getAllMatching(x -> subsystems.contains(x.getSubsystem()));
+        List<BugReport> bugReports = this.bugReportList.getAllMatching(x -> subsystems.contains(x.getSubsystem()));
         return Collections.unmodifiableList(bugReports);
     }
 
@@ -83,7 +101,7 @@ public class BugReportService {
      * @return A list of all the bugReports assigned to the specified user.
      */
     public List<BugReport> getBugReportsAssignedToUser(User user){
-        List<BugReport> bugReports = this.list.getAllMatching(x -> x.getAssignees().contains(user));
+        List<BugReport> bugReports = this.bugReportList.getAllMatching(x -> x.getAssignees().contains(user));
         return Collections.unmodifiableList(bugReports);
     }
 
@@ -95,7 +113,7 @@ public class BugReportService {
      * @return A list of all the bugReports issued by the specified user.
      */
     public List<BugReport> getBugReportsFiledByUser(User user){
-        List<BugReport> bugReports = this.list.getAllMatching(x -> x.getCreator().equals(user));
+        List<BugReport> bugReports = this.bugReportList.getAllMatching(x -> x.getCreator().equals(user));
         return Collections.unmodifiableList(bugReports);
     }
 
