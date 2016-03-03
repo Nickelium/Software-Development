@@ -31,6 +31,12 @@ public class BugReport {
 
     //region Constructor
 
+    BugReport(String title, String description, Tag tag)
+    {
+       this(title,description,null,null);
+       setTag(tag);
+   }
+    
     /**
      * Constructor for a Bugreport.
      *
@@ -41,17 +47,17 @@ public class BugReport {
      *
      * @throws IllegalArgumentException One or more of the specified arguments are invalid.
      */
-     BugReport(String title, String description, Issuer creator){
+     BugReport(String title, String description, TheDate creationDate, Issuer creator)
+     {
         if (title == null) throw new IllegalArgumentException("Title is null");
         if (description == null) throw new IllegalArgumentException("Description is null");
-        if (creator == null) throw new IllegalArgumentException("Creator is null");
 
         this.title = title;
         this.description = description;
         this.creator = creator;
 
         this.id = new BugReportID();
-        this.creationDate = TheDate.TheDateNow();
+        this.creationDate = creationDate;
         //Tag on creation is New();
         this.tag = new New();
 

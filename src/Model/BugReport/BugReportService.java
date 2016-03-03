@@ -6,6 +6,7 @@ import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 import Model.Project.Project;
 import Model.Project.SubSystem;
+import Model.Tags.Tag;
 import Model.User.User;
 
 import java.util.ArrayList;
@@ -41,7 +42,25 @@ public class BugReportService {
      */
     public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws Exception
     {
-        BugReport bugReport = new BugReport(title, description, creator);
+        BugReport bugReport = new BugReport(title, description, null,creator);
+        subSystem.addBugReport(bugReport);
+        return bugReport;
+    }
+    
+    /**
+     * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     *
+     * @param title The title of the bugreport
+     * @param description The description of the bugreport
+     * @param creator The creator of the bugreport
+     * @param subsystem The subsystem of the bugreport
+     *
+     * @return The newly created bugreport
+     * @throws Exception 
+     */
+    public BugReport createBugReport(String title, String description, SubSystem subSystem, Tag tag) throws Exception
+    {
+        BugReport bugReport = new BugReport(title, description,tag);
         subSystem.addBugReport(bugReport);
         return bugReport;
     }

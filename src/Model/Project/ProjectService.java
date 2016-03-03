@@ -17,11 +17,11 @@ import java.util.List;
 public class ProjectService
 {
 		private IListWrapper<Project> projectRepository;
-		private BugReportService bugReportService;
+		//private BugReportService bugReportService;
 		
-		public ProjectService(BugReportService bugReportService)
+		public ProjectService()
 	 	{
-			this.bugReportService = bugReportService;
+			//this.bugReportService = bugReportService;
 			
 			IListWrapper<Project> pRepository = new ListWrapper<>();
 			setProjectRepository(pRepository);
@@ -62,6 +62,12 @@ public class ProjectService
 	    	return prj;
 	    }
 
+	    public Project addProject(String newName, Lead newLeadRole)
+	    {
+	    	Project prj = new Project(newName, newLeadRole);
+	    	projectRepository.insert(prj); 
+	    	return prj;
+	    }
 	   /*
 	    public void addSubSystemToProject(Project project, SubSystem subsystem)
 	    {
