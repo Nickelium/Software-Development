@@ -23,7 +23,7 @@ public class BugReportService {
      * Constructor for the bugReport service.
      *
      */
-    public BugReportService(List<Project> projectList){
+    public BugReportService(){
         this.projectList = new ListWrapper<>(projectList);
     }
 
@@ -33,7 +33,7 @@ public class BugReportService {
      * @param title The title of the bugreport
      * @param description The description of the bugreport
      * @param creator The creator of the bugreport
-     * @param subsystem The subsystem of the bugreport
+     * @param subSystem The subsystem of the bugreport
      *
      * @return The newly created bugreport
      * @throws Exception 

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import CustomExceptions.ModelException;
 import Model.User.Issuer;
 import Model.Project.TheDate;
 
@@ -31,9 +32,9 @@ public class Comment {
      * @param issuer The issuer of the comment.
      *
      */
-    public Comment(String text, Issuer issuer){
-        if (!isValidText(text)) throw new IllegalArgumentException("Invalid text for comment");
-        if (issuer == null) throw new IllegalArgumentException("Invalid issuer for comment");
+    public Comment(String text, Issuer issuer) throws ModelException {
+        if (!isValidText(text)) throw new ModelException("Invalid text for comment");
+        if (issuer == null) throw new ModelException("Invalid issuer for comment");
 
         this.text = text;
         this.issuer = issuer;
