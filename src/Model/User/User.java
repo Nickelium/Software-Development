@@ -97,4 +97,9 @@ public abstract class User {
         this.userName = userName;
     }
 
+    @Override
+    public String toString(){
+        return getUserName() + " : " + getFirstName() + " " + getMiddleName() + " " + getLastName();
+    }
+
 }

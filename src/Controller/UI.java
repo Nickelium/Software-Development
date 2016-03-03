@@ -6,10 +6,6 @@ import java.util.Scanner;
 public class UI 
 {
 	private Scanner scanner = new Scanner(System.in);
-	public UI()
-	{
-		
-	}
 	
 	public void display(String str)
 	{
@@ -18,9 +14,7 @@ public class UI
 	
 	public String readString()
 	{
-	
 		return scanner.next();
-	
 	}
 	
 	public double readDouble()
@@ -35,6 +29,6 @@ public class UI
 	
 	public void errorDisplay(String str)
 	{
-		System.out.println(str);
+		System.out.println("! Error: " + str);
 	}
 }
