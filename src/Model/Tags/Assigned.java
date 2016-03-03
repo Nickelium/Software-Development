@@ -1,9 +1,19 @@
 package Model.Tags;
 
+import java.util.Arrays;
+
 /**
  * Created by Tom on 19/02/16.
  */
 public class Assigned extends Tag {
+
+    /**
+     * Default constructor for an Assigned tag.
+     */
+    public Assigned(){
+        this.acceptedTags = Arrays.asList(UnderReview.class, NotABug.class);
+    }
+
     /**
      * Returns the name of the class
      *

@@ -1,12 +1,8 @@
 package Model.Roles;
 
 import Model.Tags.Tag;
-import Model.Tags.UnderReview;
 import Model.User.Developer;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,8 +11,8 @@ import java.util.List;
 public abstract class Role {
     private Developer developer;
     private double participation;
-
-    protected List<Tag> tagPermissions;
+    protected Permission assignmentPermission;
+    protected List<Class<? extends Tag>> tagPermissions;
 
     /**
      * Basic constructor for all role-like objects.
@@ -25,7 +21,6 @@ public abstract class Role {
      */
     public Role(Developer developer){
         this.developer = developer;
-        this.tagPermissions = Arrays.asList(new UnderReview());
     }
 
     /**
@@ -57,6 +52,7 @@ public abstract class Role {
         this.participation = participation;
     }
 
+
     /**
      * Method to check if user has permission to use the selected tag.
      *
@@ -65,7 +61,12 @@ public abstract class Role {
      * @return True if the user has permission to use te selected tag.
      */
     public boolean canAssignTag(Tag tag){
-        return this.tagPermissions.contains(tag);
+        return this.tagPermissions.contains(tag.getClass());
     }
 
+
+    public boolean hasValidAssignmentPermission(Permission permission){
+        return (this.assignmentPermission.equals(permission));
+    }
 }
+

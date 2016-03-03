@@ -242,6 +242,7 @@ public class Project
 	}
 
 	
+	/*
 	public void destructor()
 	{
 		name = null;
@@ -251,11 +252,8 @@ public class Project
 		budget = 0.0;
 		versionID = 0.0;
 		
-		for(SubSystem s : subSystems)
-			s.destructor();
 		subSystems = null;
-
-		
 	}
+	*/
 
 }
