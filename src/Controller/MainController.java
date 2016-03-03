@@ -21,7 +21,6 @@ public class MainController
 		ui = new UI();
 		initializer = new Initializer();
 		initializer.init();
-		userService = new UserService(initializer.getListWrapperUser());
 	}
 	
 	public void run()
@@ -96,7 +95,7 @@ public class MainController
 	
 	private void welcomeUser(User user)
 	{
-		String userText = parser.parseUser(user);
+		String userText = user.toString();
 		String str = "Welcome " + userText;
 		ui.display(str);
 	}

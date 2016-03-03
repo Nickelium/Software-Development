@@ -241,19 +241,18 @@ public class Project
 		return p;
 	}
 
-	
+
 	/*
 	public void destructor()
 	{
-		name = null;
-		description = null;
-		creationDate = null;
-		startingDate = null;
-		budget = 0.0;
-		versionID = 0.0;
-		
-		subSystems = null;
+		// bugReports bekijken
 	}
 	*/
+
+	@Override
+	public String toString(){
+		// TODO welke eigenschappen gaat de user krijgen? eventueel meerdere toString functies toevoegen
+		return getName();
+	}
 
 }
