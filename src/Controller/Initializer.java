@@ -1,18 +1,14 @@
 package Controller;
 
 import Model.Project.Project;
-import Model.User.Admin;
-import Model.User.Developer;
-import Model.User.Issuer;
-import Model.User.User;
+import Model.User.*;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 
 public class Initializer implements IInitializer
 {
 
-	private IListWrapper<Project> listWrapperProject;
-	private IListWrapper<User> listWrapperUser;
+	private UserService userService;
 	
 	@Override
 	public void init() 
@@ -22,14 +18,14 @@ public class Initializer implements IInitializer
 		   		repository/listwrapper dan service + elke controller beslist zelf wat hij als service nodig heeft en dus
 		   		zelf aanmaakt -> gewoon repository/listwrapper doorgeven
 		*/
-		listWrapperUser = new ListWrapper<>();
-		listWrapperUser.insert( new Admin("Frederick","Curtis","curt", "Sam"));
-		listWrapperUser.insert( new Issuer("John","","Doctor","doc"));
-		listWrapperUser.insert( new Issuer("Charles","Arnold","Berg","charlie"));
-		listWrapperUser.insert( new Developer("Joseph","","Mays","major"));
-		listWrapperUser.insert( new Developer("Maria","","Carney","maria"));
-		
-		//TODO 
+
+		UserService userService = new UserService();
+
+		userService.addAdmin("Frederick","Curtis","curt", "Sam");
+		userService.addIssuer("John","","Doctor","doc");
+		userService.addIssuer("Charles","Arnold","Berg","charlie");
+		userService.addDeveloper("Joseph","","Mays","major");
+		userService.addDeveloper("Maria","","Carney","maria");
 		
 	}
 
