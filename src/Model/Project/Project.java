@@ -32,6 +32,20 @@ public class Project
 	 * @param newDescription The description of the project
 	 * @param newBudget The budget of the project
 	 */
+	public Project(String newName, Lead newLeadRole)
+	{
+		setName(newName);
+		setLeadRole(newLeadRole);
+		
+		this.creationDate = TheDate.TheDateNow();
+	}
+	
+	/**
+	 * Construct a new instance of Project with the given name and description
+	 * @param newName The name of the project
+	 * @param newDescription The description of the project
+	 * @param newBudget The budget of the project
+	 */
 	public Project(String newName, String newDescription, TheDate newStartingDate, double newBudget, Lead newLeadRole)
 	{
 		setName(newName);
@@ -206,6 +220,12 @@ public class Project
 //		if(subSystems == null )
 //			subSystems = new ArrayList<SubSystem>();
 //		subSystems.add(s);
+	}
+	
+	public void addRole(Role role)
+	{
+		if(role == null) throw new NullPointerException("Given role is null");
+		devsRoles.add(role);
 	}
 	
 	/**

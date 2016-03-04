@@ -1,5 +1,6 @@
 package Model.Wrapper;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
@@ -12,7 +13,15 @@ public class ListWrapper<T> implements IListWrapper<T> {
 
     private List<T> list;
 
-    public ListWrapper(){}
+    public ListWrapper()
+    {
+    	list = new ArrayList<>();
+    }
+    
+    public ListWrapper(List<T> list)
+    {
+          this.list = list;
+    }
     
     @Override
     public T getOne(Predicate<T> criteria) {

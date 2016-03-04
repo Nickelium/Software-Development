@@ -20,6 +20,10 @@ public class SubSystem
 	 * Constructoren
 	 */
 	
+	public SubSystem(String newName)
+	{
+		this(newName, "");
+	}
 	/**
 	 * Construct a new instance subsystem with given name and description
 	 * @param newName The name of the project
@@ -161,7 +165,7 @@ public class SubSystem
 		subSystems.add(newSubSystem);
 	}
 	
-	public void addBugReport(BugReport newBugReport) throws Exception
+	public void addBugReport(BugReport newBugReport)
 	{
 		if(newBugReport == null) throw new NullPointerException("The given bugreport cannot be null.");
 		bugReports.add(newBugReport);

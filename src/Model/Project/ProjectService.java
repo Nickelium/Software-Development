@@ -2,6 +2,7 @@ package Model.Project;
 
 
 import Model.BugReport.BugReport;
+import Model.BugReport.BugReportService;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 import Model.Roles.Lead;
@@ -16,9 +17,12 @@ import java.util.List;
 public class ProjectService
 {
 		private IListWrapper<Project> projectRepository;
+		//private BugReportService bugReportService;
 		
 		public ProjectService()
 	 	{
+			//this.bugReportService = bugReportService;
+			
 			IListWrapper<Project> pRepository = new ListWrapper<>();
 			setProjectRepository(pRepository);
 	    }
@@ -27,7 +31,8 @@ public class ProjectService
 	     * Returns an list with all users.
 	     * @return An list with all users.
 	     */
-	    public List<Project> getProjectList() {
+	    public List<Project> getProjectList() 
+	    {
 	        return Collections.unmodifiableList(projectRepository.getAll());
 	    }
 
@@ -35,7 +40,8 @@ public class ProjectService
 	     * Sets the IRepository object with all users.
 	     * @param projectRepository The new IRepository object with users.
 	     */
-	    private void setProjectRepository(IListWrapper<Project> projectRepository) {
+	    private void setProjectRepository(IListWrapper<Project> projectRepository)
+	    {
 	        this.projectRepository = projectRepository;
 	    }
 
@@ -56,47 +62,25 @@ public class ProjectService
 	    	return prj;
 	    }
 
-	    /**
-	     * Adds a new user to the user repository if there doesn't exist a user object with
-	     * the same username in the User Repository yet.
-	     *
-	     * @throws IllegalArgumentException
-	     * Throws an IllegalArgumentException in case there already exists a User object
-	     * in the User Repository with the same username.
-	     *
-	     * @param project The user object that needs to be added to the user repository.
-	     */
+	    public Project addProject(String newName, Lead newLeadRole)
+	    {
+	    	Project prj = new Project(newName, newLeadRole);
+	    	projectRepository.insert(prj); 
+	    	return prj;
+	    }
+	   /*
 	    public void addSubSystemToProject(Project project, SubSystem subsystem)
 	    {
 	    	if(project != null && subsystem != null) project.addSubSystem(subsystem);
 	    }
+	    */
 	    
-	    /**
-	     * Adds a new user to the user repository if there doesn't exist a user object with
-	     * the same username in the User Repository yet.
-	     *
-	     * @throws IllegalArgumentException
-	     * Throws an IllegalArgumentException in case there already exists a User object
-	     * in the User Repository with the same username.
-	     *
-	     * @param s The user object that needs to be added to the user repository.
-	     * @throws Exception 
-	     */
+	    /*
 	    public void addSubSystemToSubSystem(SubSystem s, SubSystem toAdd) throws Exception
 	    {
 	    	if(s != null && toAdd != null)	s.addSubSystem(toAdd);
 	    }
-
-	    /**
-	     * Updates a user object with given username with the instance of the user object
-	     * in the user repository by calling an update statement of the repository.
-	     *
-	     * @param oldProject the user object that needs to be updated in the user repository.
-	     */
-	    //public void updateProject(Project oldProject, Project newProject)
-	    //{
-	    //    projectRepository.update(((s)-> s.equals(oldProject)), newProject);
-	    //}
+		*/
 
 	    /**
 	     * Deletes a given user object from the user repository by calling a delete
@@ -109,10 +93,12 @@ public class ProjectService
 	        projectRepository.delete(project);
 	    }
 	    
+	    /*
 	    public List<SubSystem> getAllSubSystemFromProject(Project p)
 	    {
-	    	return p != null ? p.getAllSubSystem() : null;
+	    	return p != null ? Collections.unmodifiableList(p.getAllSubSystem()) : null;
 	    }
+	    */
 	    
 	    public List<Project> getProjectsOfLeadRole(Developer dev)
 	    {
@@ -120,18 +106,27 @@ public class ProjectService
 	    	return Collections.unmodifiableList(prjList);
 	    }
 
-		public List<Project> getProjectsWithDeveloper(Developer dev){
-			//TODO
+		public List<Project> getProjectsWithDeveloper(Developer dev)
+		{
 			List<Project> pList = new ArrayList<>();
 			for(Project project : projectRepository.getAll())
 				for(Role role : project.getDevsRoles())
-					if(dev.equals(role.getDeveloper()) && !pList.contains(project) ) pList.add(project);
+					if(dev.equals(role.getDeveloper()) && !pList.contains(project) )
+					{
+						pList.add(project);
+						break;
+					}
 				
-			return pList != null ? pList : null;
+			return pList != null ? Collections.unmodifiableList(pList) : null;
 		}
 
-		public Project getProjectContainingBugReport(BugReport bugReport){
-			//TODO Implement
+		public Project getProjectContainingBugReport(BugReport bugReport)
+		{
+			for(Project project : projectRepository.getAll())
+				for(SubSystem subSystem : project.getAllSubSystem())
+					if (subSystem.getBugReports().contains(bugReport))
+						return project;
+			
 			return null;
 		}
 	}

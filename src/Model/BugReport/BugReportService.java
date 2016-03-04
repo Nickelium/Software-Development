@@ -6,6 +6,7 @@ import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 import Model.Project.Project;
 import Model.Project.SubSystem;
+import Model.Tags.Tag;
 import Model.User.User;
 
 import java.util.ArrayList;
@@ -17,14 +18,15 @@ import java.util.List;
  */
 public class BugReportService {
 
-    private ListWrapper<Project> projectList;
-
+    private ProjectService projectService;
+    
     /**
      * Constructor for the bugReport service.
      *
      */
-    public BugReportService(){
-        this.projectList = new ListWrapper<>(projectList);
+    public BugReportService(ProjectService projectService)
+    {
+        this.projectService = projectService;
     }
 
     /**
@@ -33,13 +35,32 @@ public class BugReportService {
      * @param title The title of the bugreport
      * @param description The description of the bugreport
      * @param creator The creator of the bugreport
-     * @param subSystem The subsystem of the bugreport
+     * @param subsystem The subsystem of the bugreport
      *
      * @return The newly created bugreport
      * @throws Exception 
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws Exception{
-        BugReport bugReport = new BugReport(title, description, creator);
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws Exception
+    {
+        BugReport bugReport = new BugReport(title, description, null,creator);
+        subSystem.addBugReport(bugReport);
+        return bugReport;
+    }
+    
+    /**
+     * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     *
+     * @param title The title of the bugreport
+     * @param description The description of the bugreport
+     * @param creator The creator of the bugreport
+     * @param subsystem The subsystem of the bugreport
+     *
+     * @return The newly created bugreport
+     * @throws Exception 
+     */
+    public BugReport createBugReport(String title, String description, SubSystem subSystem, Tag tag) throws Exception
+    {
+        BugReport bugReport = new BugReport(title, description,tag);
         subSystem.addBugReport(bugReport);
         return bugReport;
     }
@@ -52,22 +73,17 @@ public class BugReportService {
     public List<BugReport> getAllBugReports()
     {
     	List<BugReport> bugReportList = new ArrayList<>();
-    	for(Project project : projectList.getAll())
+    	for(Project project : projectService.getProjectList())
     		for(SubSystem subSystem : project.getAllSubSystem())
-    			for(BugReport bugReport : subSystem.getBugReports())
-    				bugReportList.add(bugReport);
+    				bugReportList.addAll(subSystem.getBugReports());
         return Collections.unmodifiableList(bugReportList);
     }
 
     private IListWrapper<BugReport> getAllBugReportsWrapped()
     {
-    	List<BugReport> bugReportList = new ArrayList<>();
-    	for(Project project : projectList.getAll())
-    		for(SubSystem subSystem : project.getAllSubSystem())
-    			for(BugReport bugReport : subSystem.getBugReports())
-    				bugReportList.add(bugReport);
-    	return new ListWrapper<BugReport>(bugReportList);
+    	return new ListWrapper<BugReport>(getAllBugReports());
     }
+    
     /**
      * Getter to get one specific BugReport.
      *
@@ -75,7 +91,8 @@ public class BugReportService {
      *
      * @return The BugReport matching the given id.
      */
-    public BugReport getBugReport(BugReportID id){
+    public BugReport getBugReport(BugReportID id)
+    {
         return getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
     }
 
@@ -102,7 +119,8 @@ public class BugReportService {
      *
      * @return A list of all the bugReports assigned to the specified user.
      */
-    public List<BugReport> getBugReportsAssignedToUser(User user){
+    public List<BugReport> getBugReportsAssignedToUser(User user)
+    {
     	IListWrapper<BugReport> bugReportList = getAllBugReportsWrapped();
     	
         List<BugReport> bugReports = bugReportList.getAllMatching(x -> x.getAssignees().contains(user));
