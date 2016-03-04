@@ -8,6 +8,7 @@ import Model.Tags.Assigned;
 import Model.Tags.Resolved;
 import Model.Tags.Tag;
 import Model.User.User;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,12 @@ public class TagAssignmentService {
     private ProjectService projectService;
     private List<Class<? extends Tag>> creatorTagPermissons;
 
+
+    /**
+     * Default constructor for tagAssignmentService.
+     *
+     * @param projectService The project service the tagAssignmentService can use.
+     */
     public TagAssignmentService(ProjectService projectService){
         this.projectService = projectService;
         this.creatorTagPermissons = Arrays.asList(Resolved.class, Assigned.class);
@@ -75,6 +82,7 @@ public class TagAssignmentService {
         return this.creatorTagPermissons.contains(tag.getClass());
     }
 
+    @Nullable
     private Role getUserRoleWithinProject(User user, Project project){
         for (Role role: project.getDevsRoles()){
             if (role.getDeveloper().equals(user)){
