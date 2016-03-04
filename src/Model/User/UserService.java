@@ -129,7 +129,7 @@ public class UserService {
      * @return The newly created user.
      */
     public User addDeveloper(String firstName, String middleName, String lastName, String userName){
-        User user = new Developer(firstName,lastName,userName,middleName);
+        User user = new Developer(firstName,middleName,lastName,userName);
         add(user);
         return user;
     }
