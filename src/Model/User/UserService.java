@@ -2,6 +2,7 @@ package Model.User;
 import CustomExceptions.ModelException;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
+import com.sun.tools.internal.xjc.generator.bean.field.IsSetFieldRenderer;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +38,7 @@ public class UserService {
      * @return An unmodifiable list of all administrators.
      */
     public List<User> getAdministrators(){
-        return Collections.unmodifiableList((userList.getAllMatching((s) -> s.getClass().equals(Admin.class))));
+        return Collections.unmodifiableList(userList.getAllMatching((s) -> s instanceof Admin));
     }
 
     /**
@@ -46,7 +47,7 @@ public class UserService {
      * @return An unmodifiable list of all issuers.
      */
     public List<User> getIssuers(){
-        return Collections.unmodifiableList(userList.getAllMatching((s)->s.getClass().equals(Issuer.class)));
+        return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Issuer));
     }
 
     /**
@@ -55,7 +56,7 @@ public class UserService {
      * @return An unmodifiable list of all developers.
      */
     public List<User> getDevelopers(){
-        return Collections.unmodifiableList(userList.getAllMatching((s)->s.getClass().equals(Developer.class)));
+        return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Developer));
     }
 
     //endregion
@@ -66,24 +67,18 @@ public class UserService {
      * Method for adding an admin to the list of users.
      *
      * @param firstName The first name of the user.
-     * @param middleName The middle name of the user. (null if user doesn't have one)
+     * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
      * @param userName The unique username of the user.
      *
      * @return The newly created admin.
      *
-     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
+     * @throws ModelException The username is not unique or empty.
      */
     public User addAdmin(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
-        User user;
-
-        if (middleName == null){
-            user = new Admin(firstName,lastName, userName);
-        } else{
-            user = new Admin(firstName, middleName, lastName, userName);
-        }
+        User user = new Admin(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
 
@@ -100,18 +95,12 @@ public class UserService {
      *
      * @return The newly created issuer.
      *
-     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
+     * @throws ModelException The username is not unique or empty.
      */
     public User addIssuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
-        User user;
-
-        if (middleName == null){
-            user = new Issuer(firstName,lastName, userName);
-        } else{
-            user = new Issuer(firstName, middleName, lastName, userName);
-        }
+        User user = new Issuer(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
 
@@ -128,18 +117,12 @@ public class UserService {
      *
      * @return The newly created developer.
      *
-     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
+     * @throws ModelException The username is not unique or empty.
      */
     public User addDeveloper(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
-        User user;
-
-        if (middleName == null){
-            user = new Developer(firstName,lastName, userName);
-        } else{
-            user = new Developer(firstName, middleName, lastName, userName);
-        }
+        User user = new Developer(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
 

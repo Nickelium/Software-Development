@@ -16,23 +16,11 @@ public class Developer extends Issuer {
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      *
-     * @throws ModelException One of the given arguments is empty.
+     * @throws ModelException Username is empty.
+     * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
     Developer(String firstName, String middleName, String lastName, String userName) throws ModelException{
         super(firstName,middleName,lastName,userName);
-    }
-
-    /**
-     * Default constructor for a developer without middle name.
-     *
-     * @param firstName The first name of the user.
-     * @param lastName The last name of the user.
-     * @param userName The user name of the user.
-     *
-     * @throws ModelException One of the given arguments is empty.
-     */
-    Developer(String firstName, String lastName, String userName) throws ModelException{
-        super(firstName,lastName,userName);
     }
 
 }
