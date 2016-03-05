@@ -80,14 +80,14 @@ public class UserService {
      * in the User Repository with the same username.
      *
      * @param firstName The first name of the user.
+     * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
-     * @param middleName The middle name of the user.
      *
      * @return The newly created user.
      */
     public User addAdmin(String firstName, String middleName, String lastName, String userName){
-        User user = new Admin(firstName,lastName,userName,middleName);
+        User user = new Admin(firstName,middleName,lastName,userName);
         add(user);
         return user;
     }
@@ -101,14 +101,14 @@ public class UserService {
      * in the User Repository with the same username.
      *
      * @param firstName The first name of the user.
+     * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
-     * @param middleName The middle name of the user.
      *
      * @return The newly created user.
      */
     public User addIssuer(String firstName, String middleName, String lastName, String userName){
-        User user = new Issuer(firstName,lastName,userName,middleName);
+        User user = new Issuer(firstName,middleName,lastName,userName);
         add(user);
         return user;
     }
@@ -122,9 +122,9 @@ public class UserService {
      * in the User Repository with the same username.
      *
      * @param firstName The first name of the user.
+     * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
-     * @param middleName The middle name of the user.
      *
      * @return The newly created user.
      */
