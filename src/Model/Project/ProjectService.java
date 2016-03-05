@@ -21,12 +21,10 @@ public class ProjectService
 
     /**
      * Default constructor for a project service.
-     *
-     * @param projectList The list the project service will use.
      */
-    public ProjectService(IListWrapper<Project> projectList)
+    public ProjectService()
     {
-        this.projectList = projectList;
+        this.projectList = new ListWrapper<>();
     }
 
     /**
@@ -86,15 +84,17 @@ public class ProjectService
      *
      * @param bugReport Bugreport to get the project of.
      *
-     * @return The project containing the bugreport or null if the project does not exist.
+     * @return The project containing the bugreport.
+     *
+     * @throws ModelException There is no project containing the given bugreport.
      */
-    public Project getProjectContainingBugReport(BugReport bugReport)
+    public Project getProjectContainingBugReport(BugReport bugReport) throws ModelException
     {
         for(Project project : this.getAllProjects()){
             if (project.getAllBugReports().contains(bugReport)){
                 return project;
             }
         }
-        return null;
+        throw new ModelException("There is no project containing the given bugreport.");
     }
 }

@@ -94,10 +94,15 @@ public class BugReportService {
      * @param id The id of the BugReport to get.
      *
      * @return The BugReport matching the given id.
+     *
+     * @throws ModelException
      */
-    public BugReport getBugReport(BugReportID id)
+    public BugReport getBugReport(BugReportID id) throws ModelException
     {
-        return getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
+        BugReport bugreport = getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
+
+        if (bugreport == null) throw new ModelException("There is no bugreport with the given id.");
+        return bugreport;
     }
 
     /**
