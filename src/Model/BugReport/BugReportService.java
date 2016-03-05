@@ -77,15 +77,15 @@ public class BugReportService {
     /**
      * Getter to request all the BugReports there are.
      *
-     * @return A list of all the BugReports.
+     * @return An unmodifiable list of all the BugReports.
      */
     public List<BugReport> getAllBugReports()
     {
-    	List<BugReport> bugReportList = new ArrayList<>();
-    	for(Project project : projectService.getProjectList())
-    		for(SubSystem subSystem : project.getAllSubSystem())
-    				bugReportList.addAll(subSystem.getBugReports());
-        return Collections.unmodifiableList(bugReportList);
+    	List<BugReport> bugReports = new ArrayList<>();
+        for (Project project: projectService.getAllProjects()){
+            bugReports.addAll(project.getAllBugReports());
+        }
+        return Collections.unmodifiableList(bugReports);
     }
     
     /**
@@ -105,14 +105,10 @@ public class BugReportService {
      *
      * @param project The project for which to find the bugReports.
      *
-     * @return A list of all the bugreports about the given project.
+     * @return An unmodifieable list of all the bugreports about the given project.
      */
     public List<BugReport> getBugReportsForProject(Project project){
-        List<BugReport> bugReportList = new ArrayList<>();
-        for(SubSystem subSystem : project.getAllSubSystem())
-        	bugReportList.addAll(subSystem.getBugReports());
-        
-        return Collections.unmodifiableList(bugReportList);
+        return project.getAllBugReports();
     }
 
     /**

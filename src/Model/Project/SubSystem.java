@@ -1,17 +1,21 @@
 package Model.Project;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
+import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
+import com.sun.tools.internal.ws.processor.model.Model;
+import sun.plugin2.main.client.MacOSXMozillaServiceDelegate;
 
 public class SubSystem 
 {
 
 	private String name;
 	private String description;
-	//Same as project, how to handle versionID ?
-	private double versionID;
+	private double versionID = 1.0;
 	
 	private List<SubSystem> subSystems = new ArrayList<>();
 	private List<BugReport> bugReports = new ArrayList<>();
@@ -19,32 +23,18 @@ public class SubSystem
 	/**
 	 * Constructoren
 	 */
-	
-	public SubSystem(String newName)
-	{
-		this(newName, "");
-	}
+
 	/**
 	 * Construct a new instance subsystem with given name and description
-	 * @param newName The name of the project
-	 * @param newDescription The description of the project
+	 * @param name The name of the project
+	 * @param description The description of the project
+     *
+     * @throws ModelException The name or description is not valid. (see attribute setters for rules)
 	 */
-	public SubSystem(String newName, String newDescription)
+	public SubSystem(String name, String description) throws ModelException
 	{
-		this(newName, newDescription,1.0);
-	}
-	
-	/**
-	 * Construct a new instance subsystem with given name, description and versionID
-	 * @param newName The name of the subsystem
-	 * @param newDescription The description of the subsystem
-	 * @param newVersionID The version ID of the subsystem
-	 */
-	public SubSystem(String newName, String newDescription, double newVersionID)
-	{
-		name = newName;
-		description = newDescription;
-		versionID = newVersionID;
+		this.setName(name);
+		this.setDescription(description);
 	}
 	
 	/**
@@ -52,8 +42,9 @@ public class SubSystem
 	 */
 	
 	/**
-	 * Return the version ID of the subsystem
-	 * @return The version ID of the subsystem
+	 * Getter to request the versionId of the subsystem.
+	 *
+     * @return The version ID of the subsystem
 	 */
 	public double getVersionID()
 	{
@@ -61,7 +52,8 @@ public class SubSystem
 	}
 	
 	/**
-	 * Return the name of the subsystem
+	 * Getter to request the name of the subsystem.
+     *
 	 * @return The name of the subsystem
 	 */
 	public String getName()
@@ -70,7 +62,8 @@ public class SubSystem
 	}
 	
 	/**
-	 * Returns the description of the subsystem
+	 * Getter to request the description of the subsystem.
+     *
 	 * @return The description of the subsystem
 	 */
 	public String getDescription()
@@ -79,101 +72,120 @@ public class SubSystem
 	}
 	
 	/**
-	 * Returns the subsystems of the subsystem
-	 * @return A list of subsystems
-	 */
-	public List<SubSystem> getSubSystems()
-	{
-		return new ArrayList<SubSystem>(subSystems);
-	}
-	
-	public List<BugReport> getBugReports()
-	{
-		return new ArrayList<BugReport>(bugReports);
-	}
-	
-	/**
 	 * Setters
 	 */
 	
 	/**
-	 * Returns the versionID of the subsystem
-	 * @param newVersionID The versionID of the subsystem
-	 * @throws Exception 
+	 * Setter to set the versionId of the subsystem.
+     *
+	 * @param versionID The versionID of the subsystem.
+     *
+	 * @throws ModelException The current versionid is greater than or equal to the new one.
 	 */
-	public void setVersionID(double newVersionID) throws Exception
+	public void setVersionID(double versionID) throws ModelException
 	{
-		if(newVersionID < 0) throw new Exception("The versionID cannot be negative");
-		versionID = newVersionID;
+		if (!isValidVersionID(versionID)) throw new ModelException("The versionId must be higher than the current one.");
+		this.versionID = versionID;
 	}
 	
 	/**
-	 * Returns the name of the subsystem
-	 * @param newName The name of the subsystem
-	 * @throws Exception 
+	 * Setter to set the name of the subsystem.
+     *
+	 * @param name The name of the subsystem
+     *
+	 * @throws ModelException The given name is empty.
 	 */
-	public void setName(String newName) throws Exception
+	public void setName(String name) throws ModelException
 	{
-		if(newName == null) throw new Exception("The given name cannot be null.");
-		name = newName;
+		if (!isValidName(name)) throw new ModelException("The give name is empty.");
+	    this.name = name;
 	}
 	
 	/**
-	 * Returns the description of the subsystem
-	 * @param newDescription The description of the subystem
-	 * @throws Exception 
+	 * Setter to set the description of the subsystem.
+     *
+	 * @param description The description of the subsystem.
+     *
+	 * @throws ModelException The given description is empty.
 	 */
-	public void setDescription(String newDescription) throws Exception
+	public void setDescription(String description) throws ModelException
 	{
-		if(newDescription == null) throw new Exception("The given description cannot be null.");
-		description = newDescription;
+		if (!isValidDescription(description)) throw new ModelException("The given description is empty.");
+		this.description = description;
 	}
-	
+
+    /**
+     * Checker to check if the versionID is valid.
+     *
+     * @param versionID The versionId to check.
+     *
+     * @return True if the versionId is greater than or equal to the current versionId.
+     */
+    public boolean isValidVersionID(double versionID){
+        if (this.versionID >= versionID) return false;
+        else return true;
+    }
+
+    /**
+     * Checker to check if the name is valid.
+     *
+     * @param name the name to check.
+     *
+     * @return True if the name is not empty.
+     */
+    public boolean isValidName(String name){
+        if (name == null) return false;
+        if (name.equals("")) return false;
+        else return true;
+    }
+
+    /**
+     * Checker to check if the description is valid.
+     *
+     * @param description The description is valid.
+     *
+     * @return True if the description is not empty.
+     */
+    public boolean isValidDescription(String description){
+        if (description == null) return false;
+        if (description.equals("")) return false;
+        else return true;
+    }
+
 	/**
 	 * Operations
 	 */
 	
 	/**
-	 * Add a subsystem to this subsystem
-	 * @param newSubSystem The subsystem to add
-	 * @throws Exception
+	 * Method for adding a subsystem to the list of subsystems.
+     *
+     * @param subSystem The subsystem to add.
+     *
+     * @throws IllegalArgumentException The given subsystem is null.
 	 */
-	public void addSubSystem(SubSystem newSubSystem) throws Exception
+    void addSubSystem(SubSystem subSystem)
 	{
-		if(newSubSystem == null) throw new NullPointerException("The given subsystem cannot be null.");
-//		if(subSystems == null)
-//			subSystems = new ArrayList<SubSystem>();
-		
-		/* QUESTIONS
-		 * As stated in the assignement, "subsystems cannot be recursively part of itself", 
-		 * if the versionID is self-generated, then no subsystem can ever be the same if equals is defined as :
-		 * a.name == b.name && a.versionID == b.versionID
-		 * due to the fact we generate the versionID in accounting of previous versionID's
-		 * In this case, upon creation of a new subsystem, the new subsystem can never been created before, therefore a recursive check is redundant
-		 * In the first iteration, projects cannot share subsystems, because the creation of a subsystem is immediately added to a certain project.
-		 * Therefore, another project cannot contain it, unless moving pointer of the subsystem around.
-		 * 
-		 * If equality is defined as :
-		 * a.name == b.name
-		 * then we need a more profound check, where not only children of the subsystems needs to be check but maybe also it parents (if added directly to the subsystem without going through the project parent)
-		 * Shared subsystems check need also to be done, in this case.
-		 * 
-		 * NOTE: The client doesn't seems to indicate the versionID, should we self-generate these versionID's then ?
-		 * 
-		 */
-		if(newSubSystem == this) throw new Exception("The subsystem cannot add himself to his list of subsystems.");
-		subSystems.add(newSubSystem);
+		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+		subSystems.add(subSystem);
 	}
-	
-	public void addBugReport(BugReport newBugReport)
+
+    /**
+     * Method for adding a bugreport to the list of bugreports.
+     *
+     * @param bugReport The bugreport to add.
+     *
+     * @throws IllegalArgumentException The given bugreport is null.
+     */
+	public void addBugReport(BugReport bugReport)
 	{
-		if(newBugReport == null) throw new NullPointerException("The given bugreport cannot be null.");
-		bugReports.add(newBugReport);
+		if(bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+		bugReports.add(bugReport);
 	}
 	
 	/**
-	 * Returns recursively all subsystems
-	 * @return A list of subsystems
+	 * Getter to request all subsystems of this subsystem.
+     *
+	 * @return An unmodifiable list of the subsystems of this subsystem. (recursively)
 	 */
 	public List<SubSystem> getAllSubSystems()
 	{
@@ -184,34 +196,28 @@ public class SubSystem
 			list.addAll(s.getAllSubSystems());
 		}
 		
-		return list;
+		return Collections.unmodifiableList(list);
 	}
-	
-	/**
-	 * Clone the subsystem
-	 * @return The cloned subsystem
-	 */
-	public SubSystem clone()
-	{
-		SubSystem s = new SubSystem(name,description);
-		
-		s.versionID = versionID;
-		if(subSystems != null) s.subSystems =  new ArrayList<SubSystem>(subSystems);
-		
-		return s;
-	}
-	/*
-	public void destructor()
-	{
-		name = null;
-		description = null;
-		versionID = 0.0;
 
-		subSystems = null;
-		bugReports = null;
-		
-	}
-	*/
-	
-	
+    /**
+     * Getter to request all the bugreports of the subsystem.
+     *
+     * @return An unmodifiable list of all the bugreports of the subsystem. (recursively)
+     */
+    public List<BugReport> getAllBugReports(){
+        List<BugReport> bugReports = new ArrayList<>();
+        for (SubSystem subsystem: this.getAllSubSystems()){
+            bugReports.addAll(subsystem.getSubsystemBugReports());
+        }
+        return Collections.unmodifiableList(bugReports);
+    }
+
+    /**
+     * Getter to request hte bugreports of the current subsystem.
+     *
+     * @return A list of the bugreports of the current subsystem.
+     */
+    List<BugReport> getSubsystemBugReports(){
+        return this.bugReports;
+    }
 }

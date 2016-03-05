@@ -1,6 +1,7 @@
 package Model.Project;
 
 
+import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Wrapper.IListWrapper;
@@ -16,117 +17,84 @@ import java.util.List;
 // TODO documentatie
 public class ProjectService
 {
-		private IListWrapper<Project> projectRepository;
-		//private BugReportService bugReportService;
-		
-		public ProjectService()
-	 	{
-			//this.bugReportService = bugReportService;
-			
-			IListWrapper<Project> pRepository = new ListWrapper<>();
-			setProjectRepository(pRepository);
-	    }
+    private IListWrapper<Project> projectList;
 
-	    /**
-	     * Returns an list with all users.
-	     * @return An list with all users.
-	     */
-	    public List<Project> getProjectList() 
-	    {
-	        return Collections.unmodifiableList(projectRepository.getAll());
-	    }
+    /**
+     * Default constructor for a project service.
+     *
+     * @param projectList The list the project service will use.
+     */
+    public ProjectService(IListWrapper<Project> projectList)
+    {
+        this.projectList = projectList;
+    }
 
-	    /**
-	     * Sets the IRepository object with all users.
-	     * @param projectRepository The new IRepository object with users.
-	     */
-	    private void setProjectRepository(IListWrapper<Project> projectRepository)
-	    {
-	        this.projectRepository = projectRepository;
-	    }
+    /**
+     * Getter to request all the projects.
+     *
+     * @return An unmodifiable list of all the projects.
+     */
+    public List<Project> getAllProjects()
+    {
+        return Collections.unmodifiableList(projectList.getAll());
+    }
 
-	    /**
-	     * Adds a new user to the user repository if there doesn't exist a user object with
-	     * the same username in the User Repository yet.
-	     *
-	     * @throws IllegalArgumentException
-	     * Throws an IllegalArgumentException in case there already exists a User object
-	     * in the User Repository with the same username.
-	     *
-	     * @param project The user object that needs to be added to the user repository.
-	     */
-	    public Project addProject(String newName, String newDescription, TheDate newStartingDate, double newBudget, Lead newLeadRole)
-	    {
-	    	Project prj = new Project(newName, newDescription, newStartingDate, newBudget, newLeadRole);
-	    	projectRepository.insert(prj); 
-	    	return prj;
-	    }
+    /**
+     * Method to create a new project and add it to the project list.
+     *
+     * @param name The name of the project.
+     * @param description The description of the project.
+     * @param startingDate The starting date of the project.
+     * @param budget The budget of the project.
+     * @param leadRole The lead of the project.
+     *
+     * @return The newly created project.
+     *
+     * @throws ModelException One of the given arguments is not valid.
+     */
+    public Project createProject(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ModelException {
+        Project project = new Project(name, description, startingDate, budget, leadRole);
+        projectList.insert(project);
+        return project;
+    }
 
-	    public Project addProject(String newName, Lead newLeadRole)
-	    {
-	    	Project prj = new Project(newName, newLeadRole);
-	    	projectRepository.insert(prj); 
-	    	return prj;
-	    }
-	   /*
-	    public void addSubSystemToProject(Project project, SubSystem subsystem)
-	    {
-	    	if(project != null && subsystem != null) project.addSubSystem(subsystem);
-	    }
-	    */
-	    
-	    /*
-	    public void addSubSystemToSubSystem(SubSystem s, SubSystem toAdd) throws Exception
-	    {
-	    	if(s != null && toAdd != null)	s.addSubSystem(toAdd);
-	    }
-		*/
+    /**
+     * Method for removing a project from the list of projects.
+     *
+     * @param project The project to remove.
+     */
+    public void deleteProject(Project project)
+    {
+        projectList.delete(project);
+    }
 
-	    /**
-	     * Deletes a given user object from the user repository by calling a delete
-	     * statement of the repository.
-	     *
-	     * @param project the user object that needs to be deleted from the user repository.
-	     */
-	    void deleteProject(Project project)
-	    {
-	        projectRepository.delete(project);
-	    }
-	    
-	    /*
-	    public List<SubSystem> getAllSubSystemFromProject(Project p)
-	    {
-	    	return p != null ? Collections.unmodifiableList(p.getAllSubSystem()) : null;
-	    }
-	    */
-	    
-	    public List<Project> getProjectsOfLeadRole(Developer dev)
-	    {
-	    	List<Project> prjList = projectRepository.getAllMatching((x)-> x.getLeadRole() != null && x.getLeadRole().getDeveloper().equals(dev));
-	    	return Collections.unmodifiableList(prjList);
-	    }
+    /**
+     * Method for requesting all the projects with the given developer as lead.
+     *
+     * @param developer The developer of which to get de project he/she leads.
+     *
+     * @return An unmodifiable list of all the projects the given developer leads.
+     */
+    public List<Project> getProjectsOfLeadRole(Developer developer)
+    {
+        List<Project> prjList = projectList.getAllMatching(x -> x.getLeadRole().getDeveloper().equals(developer));
+        return Collections.unmodifiableList(prjList);
+    }
 
-		public List<Project> getProjectsWithDeveloper(Developer dev)
-		{
-			List<Project> pList = new ArrayList<>();
-			for(Project project : projectRepository.getAll())
-				for(Role role : project.getDevsRoles())
-					if(dev.equals(role.getDeveloper()) && !pList.contains(project) )
-					{
-						pList.add(project);
-						break;
-					}
-				
-			return pList != null ? Collections.unmodifiableList(pList) : null;
-		}
-
-		public Project getProjectContainingBugReport(BugReport bugReport)
-		{
-			for(Project project : projectRepository.getAll())
-				for(SubSystem subSystem : project.getAllSubSystem())
-					if (subSystem.getBugReports().contains(bugReport))
-						return project;
-			
-			return null;
-		}
-	}
+    /**
+     * Method for requesting the project containing the bugreport.
+     *
+     * @param bugReport Bugreport to get the project of.
+     *
+     * @return The project containing the bugreport or null if the project does not exist.
+     */
+    public Project getProjectContainingBugReport(BugReport bugReport)
+    {
+        for(Project project : this.getAllProjects()){
+            if (project.getAllBugReports().contains(bugReport)){
+                return project;
+            }
+        }
+        return null;
+    }
+}

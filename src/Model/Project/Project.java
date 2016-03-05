@@ -1,9 +1,15 @@
 package Model.Project;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import CustomExceptions.ModelException;
+import Model.BugReport.BugReport;
 import Model.Roles.Lead;
 import Model.Roles.Role;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.sun.tools.internal.ws.processor.model.Model;
+import com.sun.tools.internal.ws.processor.modeler.ModelerException;
 
 public class Project
 {
@@ -14,7 +20,7 @@ public class Project
 	private TheDate startingDate;
 	private double budget;
 	
-	private double versionID; 
+	private double versionID = 1.0;
 	
 	private List<SubSystem> subSystems = new ArrayList<>();
 	private Lead leadRole;
@@ -27,32 +33,17 @@ public class Project
 	*/
 	
 	/**
-	 * Construct a new instance of Project with the given name and description
-	 * @param newName The name of the project
-	 * @param newDescription The description of the project
-	 * @param newBudget The budget of the project
+     * Default constructor for project.
+     *
+     * @throws ModelException One of the arguments given is not valid. (See setters of arguments for rules)
 	 */
-	public Project(String newName, Lead newLeadRole)
+	public Project(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ModelException
 	{
-		setName(newName);
-		setLeadRole(newLeadRole);
-		
-		this.creationDate = TheDate.TheDateNow();
-	}
-	
-	/**
-	 * Construct a new instance of Project with the given name and description
-	 * @param newName The name of the project
-	 * @param newDescription The description of the project
-	 * @param newBudget The budget of the project
-	 */
-	public Project(String newName, String newDescription, TheDate newStartingDate, double newBudget, Lead newLeadRole)
-	{
-		setName(newName);
-		setDescription(newDescription);
-		this.startingDate = newStartingDate;
-		this.budget = newBudget;
-		setLeadRole(newLeadRole);
+		this.setName(name);
+		this.setDescription(description);
+		this.setStartingDate(startingDate);
+		this.setBudget(budget);
+		this.setLeadRole(leadRole);
 		
 		this.creationDate = TheDate.TheDateNow();
 	}
@@ -62,8 +53,9 @@ public class Project
 	 */
 	
 	/**
-	 * Returns the name of the project
-	 * @return The name of the project
+	 * Getter to request the name of the project.
+	 *
+     * @return The name of the project
 	 */
 	public String getName()
 	{
@@ -71,7 +63,8 @@ public class Project
 	}
 	
 	/**
-	 * Returns the description of the project
+	 * Getter to request the description of the project.
+     *
 	 * @return The description of the project
 	 */
 	public String getDescription()
@@ -80,17 +73,18 @@ public class Project
 	}
 	
 	/**
-	 * Returns the creation date of the project
+	 * Getter to request the creation date of the project.
+     *
 	 * @return The creation date of the project
 	 */
 	public TheDate getCreationDate()
 	{
 		return creationDate;
 	}
-	
-	//Intern gebruik maken van TheDate type, afschermen op hoger niveau door strings te gebruiken
+
 	/**
-	 * Returns the starting date of the project
+	 * Getter to request the starting date of the project.
+     *
 	 * @return The starting date of the project
 	 */
 	public TheDate getStartingDate()
@@ -99,7 +93,8 @@ public class Project
 	}
 	
 	/**
-	 * Returns the budget of the project
+	 * Getter to reqeust the budget of the project.
+     *
 	 * @return The budget of the project
 	 */
 	public double getBudget()
@@ -108,7 +103,8 @@ public class Project
 	}
 	
 	/**
-	 * Returns the version ID of the project
+	 * Getter to request the versionId of the project.
+     *
 	 * @return The version ID of the project
 	 */
 	public double getVersionID()
@@ -117,22 +113,33 @@ public class Project
 	}
 	
 	/**
-	 * Returns the subsystems of the project
+	 * Getter to request the subsystems of the project.
+     *
 	 * @return The subsystems of the project
 	 */
 	public List<SubSystem> getSubSystems()
 	{
-		return new ArrayList<SubSystem>(subSystems);
+		return Collections.unmodifiableList(this.subSystems);
 	}
-	
+
+    /**
+     * Getter to request the lead of the project.
+     *
+     * @return The lead of the project.
+     */
 	public Lead getLeadRole()
 	{
 		return leadRole;
 	}
-	
+
+    /**
+     * Getter to request the roles with the developers of project.
+     *
+     * @return The roles with the developers of the project.
+     */
 	public List<Role> getDevsRoles()
 	{
-		return devsRoles;
+		return Collections.unmodifiableList(this.devsRoles);
 	}
 	
 	/**
@@ -140,139 +147,211 @@ public class Project
 	 */
 	
 	/**
-	 * Set the name of the project
-	 * @param newName The name of the project
+	 * Setter to set the name of the project.
+     *
+	 * @param name The name of the project
+     *
+     * @throws ModelException The given name is empty.
 	 */
-	public void setName(String newName)
+	public void setName(String name) throws ModelException
 	{
-		if(newName == null) throw new NullPointerException("The given name cannot be null.");
+		if(!isValidName(name)) throw new ModelException("The given name is empty.");
 		
-		name = newName;
+		this.name = name;
 	}
 	
 	/**
-	 * Set the description of the project
-	 * @param newDescription The description of the project
+	 * Setter to set the description of the project
+	 *
+     * @param description The description of the project
+     *
+     * @throws ModelException The given description is empty.
 	 */
-	public void setDescription(String newDescription)
+	public void setDescription(String description) throws ModelException
 	{
-		if(newDescription == null)  throw new NullPointerException("The given description cannot be null.");
+		if(!isValidDescription(description)) throw new ModelException("The given description is empty.");
 		
-		description = newDescription;
+		this.description = description;
 	}
 	
 	/**
-	 * Set the starting date of the project
-	 * @param day The day of start
-	 * @param month The month of start
-	 * @param year The year of start
-	 * @throws Exception 
+	 * Setter to set the starting date of the project.
+     *
+     * @param date The starting date of the project.
+     *
+     * @throws ModelException The given date is before the creation date.
+     * @throws IllegalArgumentException The given date is null.
 	 */
-	public void setStartingDate(int day, int month, int year) throws Exception
+	public void setStartingDate(TheDate date) throws ModelException
 	{
-		TheDate tmp =  new TheDate(day,month,year);
-		if(creationDate.isAfter(tmp)) throw new Exception("The starting date must be after or on the same date as the creation date");
-		startingDate = new TheDate(day,month,year);
-	}
+        if (date == null) throw new IllegalArgumentException("Date is null");
+		if (!isValidStartingDate(date)) throw new ModelException("The date is before the creation date.");
+        this.startingDate = date;
+    }
 	
 	/**
-	 * Set the budget of the project
-	 * @param newBudget The budget of the project
+	 * Setter to set the budget of the project.
+     *
+     * @param newBudget The budget of the project.
+     *
+     * @throws ModelException The budget is negative.
 	 */
-	public void setBudget(double newBudget) throws Exception
+	public void setBudget(double newBudget) throws ModelException
 	{
-		if(newBudget < 0) throw new Exception("A budget cannot be negative");
-		budget = newBudget;
+		if (!isValidBudget(budget)) throw new ModelException("The budget cannot be negative.");
+
+        budget = newBudget;
 	}
-	
-	/**
-	 * Set the version ID of the project
-	 * @param newVersionID The version ID of the project
-	 * @throws Exception 
-	 */
-	public void setVersionID(double newVersionID) throws Exception
+
+    /**
+     * Setter to set the versionId of the project.
+     *
+     * @param versionID The versionId to set the project to.
+     *
+     * @throws ModelException The given versionId is lower than or equal to the current one.
+     */
+	public void setVersionID(double versionID) throws ModelException
 	{
-		if(newVersionID < 0.0) throw new Exception("A version ID cannot be negative");
-		if(versionID >= newVersionID) throw new Exception("Setting to a previous/smaller versionID cannot be done"); 
-		versionID = newVersionID;
+        if(!isValidVersionID(versionID)) throw new ModelException("The version cannot be lower than or equal to the previous one!");
+		this.versionID = versionID;
 	}
-	
-	public void setLeadRole(Lead newLeadRole)
+
+    /**
+     * Setter to set the lead of the project.
+     *
+     * @param leadRole The lead to assign to the project.
+     *
+     * @throws IllegalArgumentException The given role is null.
+     */
+	public void setLeadRole(Lead leadRole)
 	{
-		if(newLeadRole == null) throw new NullPointerException("The given role cannot be null");
-		leadRole = newLeadRole;
+		if(leadRole == null) throw new IllegalArgumentException("Role is null");
+
+		this.leadRole = leadRole;
 	}
+
+    /**
+     * Checker to check if the given name is valid.
+     *
+     * @param name The name to check.
+     *
+     * @return True if the give name is not null or empty.
+     */
+    public boolean isValidName(String name){
+        if (name == null) return false;
+        if (name.equals("")) return false;
+        else return true;
+    }
+
+    /**
+     * Checker to check if the given description is valid.
+     *
+     * @param description The description to check.
+     *
+     * @return True if the description is null or empty.
+     */
+    public boolean isValidDescription(String description){
+        if (description == null) return false;
+        if (description.equals("")) return false;
+        else return true;
+    }
+
+    /**
+     * Checker to check if the given starting date is valid.
+     *
+     * @param startingDate The starting date to check.
+     *
+     * @return True if the startingdate is later than the creation date.
+     */
+    public boolean isValidStartingDate(TheDate startingDate){
+        if (this.getCreationDate().isAfter(startingDate)) return false;
+        else return true;
+    }
+
+    /**
+     * Checker to check if the budget is valid.
+     *
+     * @param budget The budget to check.
+     *
+     * @return True if the budget is bigger than or equal to 0.
+     */
+    public boolean isValidBudget(double budget){
+        if (budget < 0) return false;
+        else return true;
+    }
+
+    /**
+     * Checker to check if  the version id is valid.
+     *
+     * @param versionID The version id to check.
+     *
+     * @return True if the versionId is higher than the current one.
+     */
+    public boolean isValidVersionID(double versionID){
+        if (versionID <= this.getVersionID()) return false;
+        else return true;
+    }
 	
 	/**
 	 * Operations
 	 */
 	
 	/**
-	 * Add a subsystem to this project
-	 * @param s The subsystem to add
+	 * Method to add a subsystem to the list of subsystems.
+     *
+	 * @param subSystem The subsystem to add.
+     *
+     * @throws IllegalArgumentException The given subsystem is null.
 	 */
-	public void addSubSystem(SubSystem s)
+	public void addSubSystem(SubSystem subSystem)
 	{
 		
-		if(s == null) throw new NullPointerException("The given subsystem cannot be null.");
+		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
 		
-		subSystems.add(s);
-//		if(subSystems == null )
-//			subSystems = new ArrayList<SubSystem>();
-//		subSystems.add(s);
+		subSystems.add(subSystem);
 	}
-	
+
+    /**
+     * Method to add a role to the list of roles.
+     *
+     * @param role The role to add to the list of roles.
+     *
+     * @throws IllegalArgumentException The given role is null.
+     */
 	public void addRole(Role role)
 	{
-		if(role == null) throw new NullPointerException("Given role is null");
+		if(role == null) throw new IllegalArgumentException("Role is null");
 		devsRoles.add(role);
 	}
-	
-	/**
-	 * Get recursively all the subsystems of the project
-	 * @return A list of subsystems
-	 */
-	
-	public List<SubSystem> getAllSubSystem()
+
+
+    /**
+     * Getter to get all the subsystems of the project.
+     *
+     * @return An unmodifiable list of all the subsystems of the project. (recursively)
+     */
+	public List<SubSystem> getAllSubSystems()
 	{
-		List<SubSystem> list = new ArrayList<SubSystem>();
+		List<SubSystem> list = new ArrayList<>();
 		for(SubSystem s : subSystems)
 		{
 			list.add(s);
 			list.addAll(s.getAllSubSystems());
 		}
-		
-		return list;
-	}
-	
-	/**
-	 * Clone a project
-	 * @return A cloned project
-	 */
-	public Project clone()
-	{
-		Project p = new Project(name,description, startingDate, budget, leadRole);
-		
-		p.creationDate = creationDate;
-
-		if(subSystems != null) p.subSystems =  new ArrayList<SubSystem>(subSystems);
-		if(devsRoles != null)  p.devsRoles = new ArrayList<Role>(devsRoles);
-		
-		return p;
+		return Collections.unmodifiableList(list);
 	}
 
-
-	/*
-	public void destructor()
-	{
-		// bugReports bekijken
-	}
-	*/
-
-	@Override
-	public String toString(){
-		// TODO welke eigenschappen gaat de user krijgen? eventueel meerdere toString functies toevoegen
-		return getName();
-	}
+    /**
+     * Getter to request all the bugreports of the project.
+     *
+     * @return An unmodifiable list of all the bugreports of the project. (recursively)
+     */
+    public List<BugReport> getAllBugReports(){
+        List<BugReport> bugReports = new ArrayList<>();
+        for (SubSystem subsystem: this.getAllSubSystems()){
+            bugReports.addAll(subsystem.getSubsystemBugReports());
+        }
+        return Collections.unmodifiableList(bugReports);
+    }
 
 }
