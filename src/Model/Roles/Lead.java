@@ -24,10 +24,10 @@ public class Lead extends Role {
     /**
      * Getter to return the name of the role.
      *
-     * @return The name of the role.
+     * @return The name of the role and developer
      */
     @Override
     public String toString() {
-        return "Lead";
+        return "Lead:" + getDeveloper().toString();
     }
 }

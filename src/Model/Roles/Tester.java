@@ -4,6 +4,7 @@ import Model.Tags.UnderReview;
 import Model.User.Developer;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Tom on 19/02/16.
@@ -18,16 +19,16 @@ public class Tester extends Role {
     public Tester(Developer developer){
         super(developer);
         this.assignmentPermission = Permission.assignProjectDevelopersToBugReport;
-        this.tagPermissions = Arrays.asList(UnderReview.class);
+        this.tagPermissions = Collections.singletonList(UnderReview.class);
     }
 
     /**
      * Getter to request the name of the role.
      *
-     * @return The name of the role.
+     * @return The name of the role and developer.
      */
     @Override
     public String toString() {
-        return "Tester";
+        return "Tester: " + getDeveloper().toString();
     }
 }
