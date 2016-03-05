@@ -1,5 +1,6 @@
 package Model.User;
 
+import CustomExceptions.ModelException;
 import Model.User.User;
 
 import java.util.Arrays;
@@ -11,14 +12,30 @@ import java.util.List;
 public class Admin extends User {
 
     /**
-     * Creates a new Admin instance using the given strings.
+     * Default constructor for an admin.
+     *
      * @param firstName The first name of the user.
      * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
+     *
+     * @throws ModelException One of the arguments is empty.
      */
-    Admin(String firstName, String middleName, String lastName, String userName){
+    Admin(String firstName, String middleName, String lastName, String userName) throws ModelException{
         super(firstName,middleName,lastName,userName);
+    }
+
+    /**
+     * Default constructor for an admin without middle name.
+     *
+     * @param firstName The first name of the user.
+     * @param lastName The last name of the user.
+     * @param userName The user name of the user.
+     *
+     * @throws ModelException One of the arguments is empty.
+     */
+    Admin(String firstName, String lastName, String userName) throws ModelException{
+        super(firstName,lastName,userName);
     }
 
 }

@@ -1,5 +1,9 @@
 package Model.User;
 
+import CustomExceptions.ModelException;
+import com.sun.tools.internal.ws.processor.model.Model;
+import com.sun.tools.internal.xjc.reader.RawTypeSet;
+
 import java.util.List;
 
 /**
@@ -16,23 +20,43 @@ public abstract class User {
     private String userName;
 
     /**
-     * Creates a new User instance using the given strings.
+     * Defalut constructor for a user.
+     *
      * @param firstName The first name of the user.
      * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
+     *
+     * @throws ModelException One of the arguments is empty.
      */
-    User(String firstName, String middleName, String lastName, String userName){
-        setFirstName(firstName);
-        setMiddleName(middleName);
-        setLastName(lastName);
-        setUserName(userName);
+    User(String firstName, String middleName, String lastName, String userName) throws ModelException{
+        if (!isValidFirstName(firstName)) throw new ModelException("First name is empty");
+        if (!isValidLastName(lastName)) throw new ModelException("Last name is empty");
+        if (!isValidUserName(userName)) throw new ModelException("Username is empty");
+
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.userName = userName;
+    }
+
+    /**
+     * Default constructor for user without middle name.
+     * @param firstName The first name of the user.
+     * @param lastName The last name of the user.
+     * @param userName The username of the user.
+     *
+     * @throws ModelException One of the arguments is empty.
+     */
+    User(String firstName, String lastName, String userName) throws ModelException{
+        this(firstName, "", lastName, userName);
     }
 
     // Getters
 
     /**
-     * Returns the first name of the user.
+     * Getter to request the first name of the user.
+     *
      * @return The first name.
      */
     public String getFirstName() {
@@ -40,7 +64,8 @@ public abstract class User {
     }
 
     /**
-     * Returns the middle name of the user.
+     * Getter to request the midle name of the user.
+     *
      * @return The middle name.
      */
     public String getMiddleName(){
@@ -48,7 +73,8 @@ public abstract class User {
     }
 
     /**
-     * Returns the last name of the user.
+     * Getter to request the last name of the user.
+     *
      * @return The last name.
      */
     public String getLastName() {
@@ -56,45 +82,51 @@ public abstract class User {
     }
 
     /**
-     * Returns the (unique) user name of the user.
+     *
+     * Getter to request the unique username of the user.
      * @return The unique user name.
      */
     public String getUserName() {
         return userName;
     }
 
-    // Setters
-
     /**
-     * Sets the first name of the user.
-     * @param firstName A string representing the new first name of the user.
+     * Checker to check if the first name is valid.
+     *
+     * @param firstName The first name to check.
+     *
+     * @return True if the first name is not empty.
      */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public boolean isValidFirstName(String firstName){
+        if (firstName == null) return false;
+        if (firstName.equals("")) return false;
+        else return true;
     }
 
     /**
-     * Sets the middle name of the user.
-     * @param middleName A string representing the new middle name of the user.
+     * Checker to check if the last name is not empty.
+     *
+     * @param lastName The last name to check.
+     *
+     * @return True if the last name is not empty.
      */
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public boolean isValidLastName(String lastName){
+        if (lastName == null) return false;
+        if (lastName.equals("")) return false;
+        else return true;
     }
 
     /**
-     * Sets the last name of the user.
-     * @param lastName A string representing the new last name of the user.
+     * Checker to check the username of the user.
+     *
+     * @param userName The username to check.
+     *
+     * @return True if the username is not empty.
      */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * Sets the user name of the user.
-     * @param userName A string representing the new user name of the user.
-     */
-    private void setUserName(String userName) {
-        this.userName = userName;
+    boolean isValidUserName(String userName){
+        if (userName == null) return false;
+        if (userName.equals("")) return false;
+        else return true;
     }
 
     @Override

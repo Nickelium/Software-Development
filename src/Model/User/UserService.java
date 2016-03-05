@@ -1,4 +1,5 @@
 package Model.User;
+import CustomExceptions.ModelException;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 
@@ -16,55 +17,45 @@ public class UserService {
      * Creates a new UserService with an empty ListWrapper.
      */
     public UserService(){
-        IListWrapper<User> userList = new ListWrapper<User>();
-        setListWrapper(userList);
-    }
-
-    public UserService(IListWrapper<User> listWrapperUser)
-    {
-        setListWrapper(listWrapperUser);
+        this.userList = new ListWrapper<>();
     }
     
     /**
-     * Returns an list with all users.
+     * Getter to request all the users.
+     *
      * @return An list with all users.
      */
     public List<User> getUserList() {
         return Collections.unmodifiableList(userList.getAll());
     }
 
-    /**
-     * Sets the IListWrapper object with all users.
-     * @param userList The new IListWrapper object with users.
-     */
-    private void setListWrapper(IListWrapper<User> userList) {
-        this.userList = userList;
-    }
-
     //region get a specific group of users
 
     /**
-     * Prompts a query to the User List returning all users being an instance of Admin
-     * @return A list object with all administrators saved in the User List.
+     * Getter to request all the administrators.
+     *
+     * @return An unmodifiable list of all administrators.
      */
     public List<User> getAdministrators(){
-        return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Admin));
+        return Collections.unmodifiableList((userList.getAllMatching((s) -> s.getClass().equals(Admin.class))));
     }
 
     /**
-     * Prompts a query to the User List returning all users being an instance of issuer
-     * @return A list object with all issuers saved in the UserRepository
+     * Getter to request all the issuers.
+     *
+     * @return An unmodifiable list of all issuers.
      */
     public List<User> getIssuers(){
-        return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Issuer));
+        return Collections.unmodifiableList(userList.getAllMatching((s)->s.getClass().equals(Issuer.class)));
     }
 
     /**
-     * Prompts a query to the User List returning all users being an instance of Developer
-     * @return A list object with all developers saved in the UserRepository
+     * Getter to request all the developers.
+     *
+     * @return An unmodifiable list of all developers.
      */
     public List<User> getDevelopers(){
-        return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Developer));
+        return Collections.unmodifiableList(userList.getAllMatching((s)->s.getClass().equals(Developer.class)));
     }
 
     //endregion
@@ -72,74 +63,101 @@ public class UserService {
     //region add users
 
     /**
-     * Adds a new admin to the user list if there doesn't exist a user object with
-     * the same username in the user list yet.
-     *
-     * @throws IllegalArgumentException
-     * Throws an IllegalArgumentException in case there already exists a User object
-     * in the User Repository with the same username.
+     * Method for adding an admin to the list of users.
      *
      * @param firstName The first name of the user.
+     * @param middleName The middle name of the user. (null if user doesn't have one)
      * @param lastName The last name of the user.
-     * @param userName The user name of the user.
-     * @param middleName The middle name of the user.
+     * @param userName The unique username of the user.
      *
-     * @return The newly created user.
+     * @return The newly created admin.
+     *
+     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
      */
-    public User addAdmin(String firstName, String middleName, String lastName, String userName){
-        User user = new Admin(firstName,lastName,userName,middleName);
-        add(user);
+    public User addAdmin(String firstName, String middleName, String lastName, String userName) throws ModelException{
+        if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
+
+        User user;
+
+        if (middleName == null){
+            user = new Admin(firstName,lastName, userName);
+        } else{
+            user = new Admin(firstName, middleName, lastName, userName);
+        }
+
+        this.userList.insert(user);
+
         return user;
     }
 
     /**
-     * Adds a new issuer to the user list if there doesn't exist a user object with
-     * the same username in the user list yet.
-     *
-     * @throws IllegalArgumentException
-     * Throws an IllegalArgumentException in case there already exists a User object
-     * in the User Repository with the same username.
+     * Method for adding an issuer to the list of users.
      *
      * @param firstName The first name of the user.
+     * @param middleName The middle name of the user. (null if user doesn't have one)
      * @param lastName The last name of the user.
-     * @param userName The user name of the user.
-     * @param middleName The middle name of the user.
+     * @param userName The unique username of the user.
      *
-     * @return The newly created user.
+     * @return The newly created issuer.
+     *
+     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
      */
-    public User addIssuer(String firstName, String middleName, String lastName, String userName){
-        User user = new Issuer(firstName,lastName,userName,middleName);
-        add(user);
+    public User addIssuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
+        if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
+
+        User user;
+
+        if (middleName == null){
+            user = new Issuer(firstName,lastName, userName);
+        } else{
+            user = new Issuer(firstName, middleName, lastName, userName);
+        }
+
+        this.userList.insert(user);
+
         return user;
     }
 
     /**
-     * Adds a new developer to the user list if there doesn't exist a user object with
-     * the same username in the user list yet.
-     *
-     * @throws IllegalArgumentException
-     * Throws an IllegalArgumentException in case there already exists a User object
-     * in the User Repository with the same username.
+     * Method for adding an developer to the list of users.
      *
      * @param firstName The first name of the user.
+     * @param middleName The middle name of the user. (null if user doesn't have one)
      * @param lastName The last name of the user.
-     * @param userName The user name of the user.
-     * @param middleName The middle name of the user.
+     * @param userName The unique username of the user.
      *
-     * @return The newly created user.
+     * @return The newly created developer.
+     *
+     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
      */
-    public User addDeveloper(String firstName, String middleName, String lastName, String userName){
-        User user = new Developer(firstName,middleName,lastName,userName);
-        add(user);
+    public User addDeveloper(String firstName, String middleName, String lastName, String userName) throws ModelException{
+        if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
+
+        User user;
+
+        if (middleName == null){
+            user = new Developer(firstName,lastName, userName);
+        } else{
+            user = new Developer(firstName, middleName, lastName, userName);
+        }
+
+        this.userList.insert(user);
+
         return user;
     }
 
-
-    private void add(User user){
-        if (!userList.getAllMatching((s)->s.getUserName() == user.getUserName()).isEmpty()){
-            throw new IllegalArgumentException("This user already exists. Choose another user name.");
+    /**
+     * Checker to check if the given username is unique.
+     *
+     * @param username The username to check.
+     *
+     * @return True if the username doesn't exist in the list of users.
+     */
+    public boolean isValidUserName(String username){
+        if (this.userList.getOne(x -> x.getUserName().equals(username)) == null){
+            return true;
         } else {
-            userList.insert(user);
+            return false;
         }
     }
 
@@ -147,22 +165,18 @@ public class UserService {
 
 
     /**
-     * Deletes a given user object from the user userList by calling a delete
-     * statement of the userList.
+     * Getter to request the user with the given username.
      *
-     * @param user the user object that needs to be deleted from the user userList.
+     * @param userName The username of the user to find.
+     *
+     * @return The user with the given username or null if the user does not exist.
+     *
+     * @throws ModelException There is no user with the given username.
      */
-    public void deleteUser(User user){
-        userList.delete(user);
-    }
+    public User getUser(String userName) throws ModelException{
+        User user = this.userList.getOne((s)->s.getUserName()==userName);
 
-    /**
-     * Returns a user object from the user userList defined by the unique user name.
-     *
-     * @param userName the unique username of which we want to retrieve the user object from the user userList
-     * @return the user object from the user userList with given username.
-     */
-    public User getUser(String userName){
-        return userList.getOne((s)->s.getUserName()==userName);
+        if (user == null) throw new ModelException("The user does not exist.");
+        return user;
     }
 }
