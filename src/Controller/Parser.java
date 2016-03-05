@@ -8,11 +8,11 @@ import Model.User.User;
 public class Parser
 {
 
-	public String parseUserList(List<User> listUser)
+	public static String parseUserList(List<User> listUser)
 	{
 		String parsed ="";
-		for(User user : listUser)
-			parsed += user.toString() +"\n";
+		for(int i=0; i< listUser.size(); i++)
+			parsed += i + " " + listUser.get(i).toString() +"\n";
 		return parsed;
 		
 	}

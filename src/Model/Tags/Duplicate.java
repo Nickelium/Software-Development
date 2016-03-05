@@ -1,7 +1,6 @@
 package Model.Tags;
 
 import Model.BugReport.BugReport;
-import com.sun.tools.javac.tree.DCTree;
 
 import java.util.Arrays;
 
