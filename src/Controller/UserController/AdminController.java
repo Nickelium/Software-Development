@@ -64,7 +64,37 @@ public class AdminController extends UserController {
     
     public void updateProject()
     {
+    	List<Project> projectList = projectService.getAllProjects();
+    	String parsedProjectList = Parser.parseProjectList(projectList);
+    	ui.display(parsedProjectList);
     	
+    	int index = ui.readInt();
+    	Project project = projectList.get(index);
+    	
+
+    	ui.display("Project information to update");
+    	ui.display("Name: ");
+    	String name = ui.readString();
+    	ui.display("Description: ");
+    	String description = ui.readString();
+    	ui.display("Starting date: ");
+    	String startingDate = ui.readString();
+    	ui.display("Budget estimate: ");
+    	double budget = ui.readDouble();
+    	
+    	try 
+    	{
+    		project.setName(name);
+        	project.setDescription(description);
+			project.setStartingDate(startingDate);
+			project.setBudget(budget);
+		} 
+    	catch (ModelException e) 
+    	{
+		
+			e.printStackTrace();
+		}
+
     }
 
     
