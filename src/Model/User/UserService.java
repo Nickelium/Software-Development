@@ -38,7 +38,7 @@ public class UserService {
      * @return An unmodifiable list of all administrators.
      */
     public List<User> getAdministrators(){
-        return Collections.unmodifiableList((userList.getAllMatching((s) -> s instanceof Admin));
+        return Collections.unmodifiableList(userList.getAllMatching((s) -> s instanceof Admin));
     }
 
     /**
