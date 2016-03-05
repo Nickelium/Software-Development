@@ -66,24 +66,18 @@ public class UserService {
      * Method for adding an admin to the list of users.
      *
      * @param firstName The first name of the user.
-     * @param middleName The middle name of the user. (null if user doesn't have one)
+     * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
      * @param userName The unique username of the user.
      *
      * @return The newly created admin.
      *
-     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
+     * @throws ModelException The username is not unique or empty.
      */
     public User addAdmin(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
-        User user;
-
-        if (middleName == null){
-            user = new Admin(firstName,lastName, userName);
-        } else{
-            user = new Admin(firstName, middleName, lastName, userName);
-        }
+        User user = new Admin(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
 
@@ -100,18 +94,12 @@ public class UserService {
      *
      * @return The newly created issuer.
      *
-     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
+     * @throws ModelException The username is not unique or empty.
      */
     public User addIssuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
-        User user;
-
-        if (middleName == null){
-            user = new Issuer(firstName,lastName, userName);
-        } else{
-            user = new Issuer(firstName, middleName, lastName, userName);
-        }
+        User user = new Issuer(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
 
@@ -128,18 +116,12 @@ public class UserService {
      *
      * @return The newly created developer.
      *
-     * @throws ModelException The username is not unique or one of the specified arguments is empty. (except for middleName)
+     * @throws ModelException The username is not unique or empty.
      */
     public User addDeveloper(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
-        User user;
-
-        if (middleName == null){
-            user = new Developer(firstName,lastName, userName);
-        } else{
-            user = new Developer(firstName, middleName, lastName, userName);
-        }
+        User user = new Developer(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
 

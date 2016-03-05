@@ -20,36 +20,26 @@ public abstract class User {
     private String userName;
 
     /**
-     * Defalut constructor for a user.
+     * Default constructor for a user.
      *
      * @param firstName The first name of the user.
      * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      *
-     * @throws ModelException One of the arguments is empty.
+     * @throws ModelException Username is empty.
+     * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
     User(String firstName, String middleName, String lastName, String userName) throws ModelException{
-        if (!isValidFirstName(firstName)) throw new ModelException("First name is empty");
-        if (!isValidLastName(lastName)) throw new ModelException("Last name is empty");
         if (!isValidUserName(userName)) throw new ModelException("Username is empty");
+        if (firstName == null) throw new IllegalArgumentException("First name is null, use empty string");
+        if (middleName == null) throw new IllegalArgumentException("Middle name is null, use empty string");
+        if (lastName == null) throw new IllegalArgumentException("Last name is null, use empty string");
 
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.userName = userName;
-    }
-
-    /**
-     * Default constructor for user without middle name.
-     * @param firstName The first name of the user.
-     * @param lastName The last name of the user.
-     * @param userName The username of the user.
-     *
-     * @throws ModelException One of the arguments is empty.
-     */
-    User(String firstName, String lastName, String userName) throws ModelException{
-        this(firstName, "", lastName, userName);
     }
 
     // Getters
@@ -88,32 +78,6 @@ public abstract class User {
      */
     public String getUserName() {
         return userName;
-    }
-
-    /**
-     * Checker to check if the first name is valid.
-     *
-     * @param firstName The first name to check.
-     *
-     * @return True if the first name is not empty.
-     */
-    public boolean isValidFirstName(String firstName){
-        if (firstName == null) return false;
-        if (firstName.equals("")) return false;
-        else return true;
-    }
-
-    /**
-     * Checker to check if the last name is not empty.
-     *
-     * @param lastName The last name to check.
-     *
-     * @return True if the last name is not empty.
-     */
-    public boolean isValidLastName(String lastName){
-        if (lastName == null) return false;
-        if (lastName.equals("")) return false;
-        else return true;
     }
 
     /**
