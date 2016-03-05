@@ -41,11 +41,11 @@ public class Initializer implements IInitializer
 		Tester testerMaria = new Tester(maria);
 		projectA.addRole(testerMaria);
 		
-		SubSystem subSystemA1 = new SubSystem("SubSystemA1");
-		SubSystem subSystemA2 = new SubSystem("SubSystemA2");
-		SubSystem subSystemA3 = new SubSystem("SubSystemA3");
-		SubSystem subSystemA31 = new SubSystem("SubSystemA3.1");
-		SubSystem subSystemA32 = new SubSystem("SubSystemA3.2");
+		SubSystem subSystemA1 = new SubSystem("SubSystemA1","");
+		SubSystem subSystemA2 = new SubSystem("SubSystemA2","");
+		SubSystem subSystemA3 = new SubSystem("SubSystemA3","");
+		SubSystem subSystemA31 = new SubSystem("SubSystemA3.1","");
+		SubSystem subSystemA32 = new SubSystem("SubSystemA3.2","");
 		
 		projectA.addSubSystem(subSystemA1);
 		projectA.addSubSystem(subSystemA2);
@@ -62,9 +62,9 @@ public class Initializer implements IInitializer
 		Programmer programmerMajorB = new Programmer(major);
 		projectB.addRole(programmerMajorB);
 		
-		SubSystem subSystemB1 = new SubSystem("SubSystemB1");
-		SubSystem subSystemB2 = new SubSystem("SubSystemB2");
-		SubSystem subSystemB21 = new SubSystem("SubSystemB2.1");
+		SubSystem subSystemB1 = new SubSystem("SubSystemB1","");
+		SubSystem subSystemB2 = new SubSystem("SubSystemB2","");
+		SubSystem subSystemB21 = new SubSystem("SubSystemB2.1","");
 		
 		projectB.addSubSystem(subSystemB1);
 		projectB.addSubSystem(subSystemB2);

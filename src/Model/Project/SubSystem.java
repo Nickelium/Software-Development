@@ -148,7 +148,6 @@ public class SubSystem
      */
     public boolean isValidDescription(String description){
         if (description == null) return false;
-        if (description.equals("")) return false;
         else return true;
     }
 
@@ -163,7 +162,7 @@ public class SubSystem
      *
      * @throws IllegalArgumentException The given subsystem is null.
 	 */
-    void addSubSystem(SubSystem subSystem)
+    public void addSubSystem(SubSystem subSystem)
 	{
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
 		subSystems.add(subSystem);

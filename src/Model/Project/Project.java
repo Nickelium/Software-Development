@@ -37,15 +37,15 @@ public class Project
      *
      * @throws ModelException One of the arguments given is not valid. (See setters of arguments for rules)
 	 */
-	public Project(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ModelException
+	public Project(String name, String description, String startingDate, double budget, Lead leadRole) throws ModelException
 	{
 		this.setName(name);
 		this.setDescription(description);
+		this.creationDate = TheDate.TheDateNow();
 		this.setStartingDate(startingDate);
 		this.setBudget(budget);
 		this.setLeadRole(leadRole);
 		
-		this.creationDate = TheDate.TheDateNow();
 	}
 	
 	/**
@@ -182,9 +182,10 @@ public class Project
      * @throws ModelException The given date is before the creation date.
      * @throws IllegalArgumentException The given date is null.
 	 */
-	public void setStartingDate(TheDate date) throws ModelException
+	public void setStartingDate(String stringDate) throws ModelException
 	{
-        if (date == null) throw new IllegalArgumentException("Date is null");
+        if (stringDate == null) throw new IllegalArgumentException("Date is null");
+        TheDate date = new TheDate(stringDate);
 		if (!isValidStartingDate(date)) throw new ModelException("The date is before the creation date.");
         this.startingDate = date;
     }
@@ -252,7 +253,6 @@ public class Project
      */
     public boolean isValidDescription(String description){
         if (description == null) return false;
-        if (description.equals("")) return false;
         else return true;
     }
 

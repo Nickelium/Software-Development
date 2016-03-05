@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
  */
 public abstract class UserController {
 
-    private UI ui;
-    private UserService userService;
-    private ProjectService projectService;
-    private BugReportService bugReportService;
+    protected UI ui;
+    protected UserService userService;
+    protected ProjectService projectService;
+    protected BugReportService bugReportService;
 
     protected ArrayList<FunctionWrap> useCases = new ArrayList<FunctionWrap>();
 

@@ -50,7 +50,7 @@ public class ProjectService
      *
      * @throws ModelException One of the given arguments is not valid.
      */
-    public Project createProject(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ModelException {
+    public Project createProject(String name, String description, String startingDate, double budget, Lead leadRole) throws ModelException {
         Project project = new Project(name, description, startingDate, budget, leadRole);
         projectList.insert(project);
         return project;
