@@ -4,32 +4,33 @@ import Model.User.User;
 import Model.User.UserService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Karina on 04.03.2016.
  */
 public class LoginController {
 
-    UserService userService;
-    UI ui;
 
-    public LoginController(UserService userService, UI ui){
+    private UserService userService;
+    private UI ui;
+
+    public LoginController(UserService userService, UI ui) {
         this.userService = userService;
         this.ui = ui;
     }
 
-    public User run(){
+    public User run() {
 
         loginMessage();
-        int mode = ui.readInt();
+        int userType = ui.readInt();
 
         List<User> users = new ArrayList<User>();
 
-        try
-        {
-            switch (mode)
-            {
+        try {
+            switch (userType) {
                 case 1://Admin
                     users = userService.getAdministrators();
                     break;
@@ -42,12 +43,11 @@ public class LoginController {
                 default:
                     throw new Exception("Invalid input");
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             ui.errorDisplay(e.getMessage());
         }
 
+        ui.display("Choose an user to log in as:");
         String parsedTextUsers = Parser.parseUserList(users);
         ui.display(parsedTextUsers);
 
@@ -57,35 +57,20 @@ public class LoginController {
         User user = users.get(selectedUserIndex);
 
         //welcome User
-        welcomeUser(user);
+        welcomeUserMessage(user);
 
-        while(true)
-        {
-            //use cases
-            switch (mode)
-            {
-                case 1://Admin
-                    //propose Project usecases
-                    break;
-                case 2://Issuer
-                    //propose bugreport usecases
-                case 3://Developer
-                    //propose developer usecases
-
-            }
-        }
+        return user;
     }
 
-    private void loginMessage()
-    {
-        String str = "Login as 1) administrator 2) issuer 3) developer\n";
+    private void loginMessage() {
+        String str = "You can log in as: 1 = administrator, 2 = issuer, 3 = developer.";
         ui.display(str);
     }
 
-    private void welcomeUser(User user)
-    {
-        String userText = user.toString();
-        String str = "Welcome " + userText;
+    private void welcomeUserMessage(User user) {
+        String userText = user.getFirstName();
+        String str = "Welcome " + userText + "!";
         ui.display(str);
     }
+
 }
