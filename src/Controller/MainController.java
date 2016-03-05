@@ -30,19 +30,11 @@ public class MainController {
 
     public void run() {
         startMsg();
-        LoginController loginController = new LoginController(initializer.getUserService(), ui);
-        currentUser = loginController.run();
-
+        LoginController loginController = new LoginController(ui, initializer.getUserService(),initializer.getProjectService(),initializer.getBugReportService());
         //create Controller
 
-        UserController userController;
-        if (currentUser instanceof Admin) {
-            userController = new AdminController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService());
-        } else if (currentUser instanceof Developer) {
-            userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService());
-        } else {
-            userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService());
-        }
+        UserController userController = loginController.run();
+        this.currentUser = loginController.getCurrentUser();
 
         while (true) {
             // give all possibilities

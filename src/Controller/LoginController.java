@@ -1,5 +1,13 @@
 package Controller;
 
+import Controller.UserController.AdminController;
+import Controller.UserController.DeveloperController;
+import Controller.UserController.IssuerController;
+import Controller.UserController.UserController;
+import Model.BugReport.BugReportService;
+import Model.Project.ProjectService;
+import Model.User.Admin;
+import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
 
@@ -15,14 +23,20 @@ public class LoginController {
 
 
     private UserService userService;
+    private ProjectService projectService;
+    private BugReportService bugReportService;
     private UI ui;
 
-    public LoginController(UserService userService, UI ui) {
+    private User currentUser;
+
+    public LoginController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService) {
         this.userService = userService;
+        this.projectService = projectService;
+        this.bugReportService = bugReportService;
         this.ui = ui;
     }
 
-    public User run() {
+    public UserController run() {
 
         loginMessage();
         int userType = ui.readInt();
@@ -51,15 +65,24 @@ public class LoginController {
         String parsedTextUsers = Parser.parseUserList(users);
         ui.display(parsedTextUsers);
 
-        //select User
+        //select & set User
         int selectedUserIndex = ui.readInt();
-        //Waar beheren van get index uit lijst ? In controller of service ?
         User user = users.get(selectedUserIndex);
+        setCurrentUser(user);
 
-        //welcome User
         welcomeUserMessage(user);
 
-        return user;
+        // choose controller
+        UserController userController;
+        if (currentUser instanceof Admin) {
+            userController = new AdminController(ui, this.userService, this.projectService, this.bugReportService);
+        } else if (currentUser instanceof Developer) {
+            userController = new DeveloperController(ui, this.userService, this.projectService, this.bugReportService);
+        } else {
+            userController = new IssuerController(ui, this.userService, this.projectService, this.bugReportService);
+        }
+
+        return userController;
     }
 
     private void loginMessage() {
@@ -71,6 +94,14 @@ public class LoginController {
         String userText = user.getFirstName();
         String str = "Welcome " + userText + "!";
         ui.display(str);
+    }
+
+    private void setCurrentUser(User user){
+        this.currentUser = user;
+    }
+
+    public User getCurrentUser(){
+        return currentUser;
     }
 
 }
