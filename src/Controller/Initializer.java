@@ -28,7 +28,7 @@ public class Initializer implements IInitializer
 		this.bugReportService = new BugReportService(projectService);
 
 		// init users
-		Admin sam = (Admin) userService.addAdmin("Frederick","Curtis","curt", "Sam");
+		Admin sam = (Admin) userService.addAdmin("Frederick", "Sam","Curtis","curt");
 		Issuer doc = (Issuer) userService.addIssuer("John","","Doctor","doc");
 		Issuer charlie = (Issuer) userService.addIssuer("Charles","Arnold","Berg","charlie");
 		Developer major = (Developer) userService.addDeveloper("Joseph","","Mays","major");
@@ -50,6 +50,7 @@ public class Initializer implements IInitializer
 		projectA.addSubSystem(subSystemA1);
 		projectA.addSubSystem(subSystemA2);
 		projectA.addSubSystem(subSystemA3);
+
 		try
 		{
 		subSystemA3.addSubSystem(subSystemA31);
