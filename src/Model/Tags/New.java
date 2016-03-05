@@ -8,6 +8,9 @@ import java.util.Arrays;
  */
 public class New extends Tag {
 
+    /**
+     * Default constructor of the New tag.
+     */
     public New(){
         this.acceptedTags = Arrays.asList(Assigned.class, NotABug.class);
     }

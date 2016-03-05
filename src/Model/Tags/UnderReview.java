@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class UnderReview extends Tag {
 
     /**
-     * Default constructor for the underReviewTag();
+     * Default constructor for the underReview tag.
      */
     public UnderReview(){
         this.acceptedTags = Arrays.asList(Resolved.class, Assigned.class);

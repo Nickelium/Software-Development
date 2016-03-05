@@ -21,13 +21,19 @@ public class Duplicate extends Tag {
 
     /**
      * Constructor for the default tag which takes the duplicate
-     * @param duplicateBugReport
+     *
+     * @param duplicateBugReport The other bugreport not containing this tag.
      */
     public Duplicate(BugReport duplicateBugReport){
         this();
         this.duplicateBugReport = duplicateBugReport;
     }
 
+    /**
+     * Getter to request the duplicate bugreport.
+     *
+     * @return The duplicate bugreport.
+     */
     public BugReport getDuplicateBugReport(){
         return this.duplicateBugReport;
     }

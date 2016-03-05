@@ -14,11 +14,6 @@ public class Assigned extends Tag {
         this.acceptedTags = Arrays.asList(UnderReview.class, NotABug.class);
     }
 
-    /**
-     * Returns the name of the class
-     *
-     * @return Assigned as string.
-     */
     @Override
     public String toString() {
         return "Assigned";
