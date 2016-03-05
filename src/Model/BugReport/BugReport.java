@@ -181,7 +181,7 @@ public class BugReport {
      */
     public boolean isValidTitle(String title){
         if (title == null)return false;
-        if (title == "") return false;
+        if (title.equals("")) return false;
         else return true;
     }
 
@@ -194,7 +194,7 @@ public class BugReport {
      */
     public boolean isValidDescription(String description){
         if (description == null) return false;
-        if (description == "") return false;
+        if (description.equals("")) return false;
         else return true;
     }
 

@@ -98,7 +98,7 @@ public class Comment {
      */
     public boolean isValidText(String text){
         if (text == null)return false;
-        if (text == "")return false;
+        if (text.equals(""))return false;
         else return true;
     }
 
