@@ -1,6 +1,8 @@
 package Model.BugReport;
 
+import CustomExceptions.ModelException;
 import Model.Project.ProjectService;
+import Model.Project.TheDate;
 import Model.User.Issuer;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
@@ -11,6 +13,7 @@ import Model.User.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 /**
@@ -23,9 +26,13 @@ public class BugReportService {
     /**
      * Constructor for the bugReport service.
      *
+     * @param projectService The projectservice the BugReportService can use for its BugReports.
+     *
+     * @throws IllegalArgumentException The given projectservice is null.
      */
     public BugReportService(ProjectService projectService)
     {
+        if (projectService == null) throw new IllegalArgumentException("The given projectService is null");
         this.projectService = projectService;
     }
 
@@ -35,15 +42,16 @@ public class BugReportService {
      * @param title The title of the bugreport
      * @param description The description of the bugreport
      * @param creator The creator of the bugreport
-     * @param subsystem The subsystem of the bugreport
+     * @param subSystem The subsystem of the bugreport
      *
      * @return The newly created bugreport
-     * @throws Exception 
+     *
+     * @throws ModelException the title or description is empty.
+     * @throws IllegalArgumentException the creator or subsystem is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws Exception
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws ModelException
     {
-        BugReport bugReport = new BugReport(title, description, null,creator);
-        subSystem.addBugReport(bugReport);
+        BugReport bugReport = new BugReport(title, description, subSystem, creator);
         return bugReport;
     }
     
@@ -53,15 +61,16 @@ public class BugReportService {
      * @param title The title of the bugreport
      * @param description The description of the bugreport
      * @param creator The creator of the bugreport
-     * @param subsystem The subsystem of the bugreport
+     * @param subSystem The subsystem of the bugreport
      *
      * @return The newly created bugreport
-     * @throws Exception 
+     *
+     * @throws ModelException the given title of description is empty.
+     * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, SubSystem subSystem, Tag tag) throws Exception
+    public BugReport createBugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag) throws ModelException
     {
-        BugReport bugReport = new BugReport(title, description,tag);
-        subSystem.addBugReport(bugReport);
+        BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag);
         return bugReport;
     }
 
@@ -77,11 +86,6 @@ public class BugReportService {
     		for(SubSystem subSystem : project.getAllSubSystem())
     				bugReportList.addAll(subSystem.getBugReports());
         return Collections.unmodifiableList(bugReportList);
-    }
-
-    private IListWrapper<BugReport> getAllBugReportsWrapped()
-    {
-    	return new ListWrapper<BugReport>(getAllBugReports());
     }
     
     /**
@@ -104,9 +108,8 @@ public class BugReportService {
      * @return A list of all the bugreports about the given project.
      */
     public List<BugReport> getBugReportsForProject(Project project){
-        List<SubSystem> subSystems = project.getAllSubSystem();
         List<BugReport> bugReportList = new ArrayList<>();
-        for(SubSystem subSystem : subSystems)
+        for(SubSystem subSystem : project.getAllSubSystem())
         	bugReportList.addAll(subSystem.getBugReports());
         
         return Collections.unmodifiableList(bugReportList);
@@ -136,8 +139,14 @@ public class BugReportService {
      */
     public List<BugReport> getBugReportsFiledByUser(User user){
     	IListWrapper<BugReport> bugReportList = getAllBugReportsWrapped();
+
         List<BugReport> bugReports = bugReportList.getAllMatching(x -> x.getCreator().equals(user));
         return Collections.unmodifiableList(bugReports);
+    }
+
+    private IListWrapper<BugReport> getAllBugReportsWrapped()
+    {
+        return new ListWrapper<>(getAllBugReports());
     }
 
 }

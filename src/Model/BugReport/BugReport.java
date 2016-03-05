@@ -1,5 +1,6 @@
 package Model.BugReport;
 
+import CustomExceptions.ModelException;
 import Model.User.Developer;
 import Model.User.Issuer;
 import Model.Project.SubSystem;
@@ -7,6 +8,8 @@ import Model.Project.TheDate;
 import Model.Tags.Assigned;
 import Model.Tags.New;
 import Model.Tags.Tag;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.sun.xml.internal.bind.v2.runtime.IllegalAnnotationException;
 
 import java.util.*;
 
@@ -31,39 +34,54 @@ public class BugReport {
 
     //region Constructor
 
-    BugReport(String title, String description, Tag tag)
+    /**
+     * Default constructor for a BugReport.
+     *
+     * @param title The title of the BugReport.
+     * @param description The description of the BugReport.
+     * @param subSystem The subsystem the bugreport is about.
+     * @param creator The issuer of the bugreport.
+     *
+     * @throws ModelException The title or description is empty.
+     * @throws IllegalArgumentException The subsystem or creator is null.
+     */
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator) throws ModelException
     {
-       this(title,description,null,null);
-       setTag(tag);
+        this(title,description,subSystem, creator, TheDate.TheDateNow(), new New());
    }
     
     /**
      * Constructor for a Bugreport.
      *
-     * @param title       The title of the bugreport.
+     * @param title The title of the bugreport.
      * @param description The description of the bugreport.
-     * @param subsystem   The subsystem the bugreport is about.
-     * @param creator     The creator of the bugreport.
+     * @param subSystem The subsystem the bugreport is about.
+     * @param creator The creator of the bugreport.
      *
-     * @throws IllegalArgumentException One or more of the specified arguments are invalid.
+     * @throws ModelException The title or description is empty.
+     * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-     BugReport(String title, String description, TheDate creationDate, Issuer creator)
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag) throws ModelException
      {
-        if (title == null) throw new IllegalArgumentException("Title is null");
-        if (description == null) throw new IllegalArgumentException("Description is null");
+         if (!isValidTitle(title)) throw new ModelException("The title cannot be empty!");
+         if (!isValidDescription(description)) throw new ModelException("The description cannot be empty!") ;
+         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+         if (creator == null) throw new IllegalArgumentException("The issuer is null");
+         if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
+         if (tag == null) throw new IllegalArgumentException("Tag is null");
 
-        this.title = title;
-        this.description = description;
-        this.creator = creator;
+         this.title = title;
+         this.description = description;
+         this.creator = creator;
+         this.creationDate = creationDate;
+         this.tag = tag;
 
-        this.id = new BugReportID();
-        this.creationDate = creationDate;
-        //Tag on creation is New();
-        this.tag = new New();
+         this.id = new BugReportID();
+         subSystem.addBugReport(this);
 
-        this.assignees = new ArrayList<Developer>();
-        this.comments = new ArrayList<Comment>();
-        this.dependencies = new ArrayList<BugReport>();
+         this.assignees = new ArrayList<>();
+         this.comments = new ArrayList<>();
+         this.dependencies = new ArrayList<>();
 
     }
 
@@ -180,18 +198,6 @@ public class BugReport {
         else return true;
     }
 
-    /**
-     * Checker to check if the creator of the bugreport is valid.
-     *
-     * @param creator The creator to check.
-     *
-     * @return True if the creator is not null. False otherwise.
-     */
-    public boolean isValidCreator(Issuer creator){
-        if (creator == null) return false;
-        else return true;
-    }
-
     //endregion
 
     //region Setters
@@ -203,7 +209,7 @@ public class BugReport {
      *
      * @throws IllegalArgumentException The tag given is null.
      */
-    void setTag(Tag tag) {
+    void setTag(Tag tag){
         if (tag == null) throw new IllegalArgumentException("Tag is null");
         this.tag = tag;
     }
@@ -220,12 +226,12 @@ public class BugReport {
      * @throws IllegalArgumentException The given developer is null.
      */
 
-    public void addAssignee(Developer developer)  {
-        if (developer == null) throw new IllegalArgumentException();
+    void addAssignee(Developer developer)  {
+        if (developer == null) throw new IllegalArgumentException("Developer to assign is null");
 
         this.assignees.add(developer);
 
-        if (this.assignees.size() == 1){
+        if (this.assignees.size() == 1 && this.getTag().getClass().equals(New.class)){
             this.setTag(new Assigned());
         }
     }

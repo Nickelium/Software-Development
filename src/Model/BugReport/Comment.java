@@ -31,10 +31,12 @@ public class Comment {
      * @param text The text of the comment.
      * @param issuer The issuer of the comment.
      *
+     * @throws ModelException The text of the comment is empty.
+     * @throws IllegalArgumentException The given issuer is null.
      */
     public Comment(String text, Issuer issuer) throws ModelException {
-        if (!isValidText(text)) throw new ModelException("Invalid text for comment");
-        if (issuer == null) throw new ModelException("Invalid issuer for comment");
+        if (!isValidText(text)) throw new ModelException("The text of the comment is empty");
+        if (issuer == null) throw new IllegalArgumentException("Invalid issuer for comment");
 
         this.text = text;
         this.issuer = issuer;
@@ -109,7 +111,7 @@ public class Comment {
      *
      * @param comment Comment to add to the list of comments.
      *
-     * @throws IllegalArgumentException The comment is null
+     * @throws IllegalArgumentException The comment is null.
      */
     public void addComment(Comment comment){
         if (comment == null) throw new IllegalArgumentException("Comment is null");

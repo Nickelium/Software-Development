@@ -25,8 +25,13 @@ public class TagAssignmentService {
      * Default constructor for tagAssignmentService.
      *
      * @param projectService The project service the tagAssignmentService can use.
+     *
+     * @throws  IllegalArgumentException the given projectservice is null.
      */
+
     public TagAssignmentService(ProjectService projectService){
+        if (projectService == null) throw new IllegalArgumentException("Projectservice is null");
+
         this.projectService = projectService;
         this.creatorTagPermissons = Arrays.asList(Resolved.class, Assigned.class);
     }
@@ -39,6 +44,7 @@ public class TagAssignmentService {
      * @param tag The tag to which to switch the bugreport.
      *
      * @throws ModelException The user doesn't have the permission to assign the tag to the bugreport.
+     * @throws IllegalArgumentException One of the arguments is null.
      */
     public void assignTag(User user, BugReport bugReport, Tag tag) throws ModelException{
         if (!canAssignTag(user, bugReport, tag)) throw new ModelException("Not allowed to preform tag change!");
@@ -54,8 +60,14 @@ public class TagAssignmentService {
      * @param tag The tag to which to switch the bugreport.
      *
      * @return True if the user has the permission to assign the tag to the burgreport.
+     *
+     * @throws IllegalArgumentException One of the given arguments is null.
      */
     public boolean canAssignTag(User user, BugReport bugReport, Tag tag){
+        if (user == null) throw new IllegalArgumentException("User is null");
+        if (bugReport == null) throw new IllegalArgumentException("BugReport is null");
+        if (tag == null) throw new IllegalArgumentException("Tag is null");
+
         if (!validTagChangePolicy(bugReport, tag)){
             return false;
         }
