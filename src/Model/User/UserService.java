@@ -2,6 +2,7 @@ package Model.User;
 import CustomExceptions.ModelException;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
+import com.sun.tools.internal.xjc.generator.bean.field.IsSetFieldRenderer;
 
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +38,7 @@ public class UserService {
      * @return An unmodifiable list of all administrators.
      */
     public List<User> getAdministrators(){
-        return Collections.unmodifiableList((userList.getAllMatching((s) -> s.getClass().equals(Admin.class))));
+        return Collections.unmodifiableList((userList.getAllMatching((s) -> s instanceof Admin));
     }
 
     /**
@@ -46,7 +47,7 @@ public class UserService {
      * @return An unmodifiable list of all issuers.
      */
     public List<User> getIssuers(){
-        return Collections.unmodifiableList(userList.getAllMatching((s)->s.getClass().equals(Issuer.class)));
+        return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Issuer));
     }
 
     /**
@@ -55,7 +56,7 @@ public class UserService {
      * @return An unmodifiable list of all developers.
      */
     public List<User> getDevelopers(){
-        return Collections.unmodifiableList(userList.getAllMatching((s)->s.getClass().equals(Developer.class)));
+        return Collections.unmodifiableList(userList.getAllMatching((s)->s instanceof Developer));
     }
 
     //endregion
