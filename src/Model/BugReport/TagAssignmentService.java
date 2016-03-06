@@ -73,15 +73,21 @@ public class TagAssignmentService {
         if (bugReport.getCreator().equals(user) && this.validCreatorPermissions(tag)) {
             return true;
         }
-
-        Project project = projectService.getProjectContainingBugReport(bugReport);
-        Role role = getUserRoleWithinProject(user, project);
-
-        if (role == null){
-            return false;
+        try
+        {
+	        Project project = projectService.getProjectContainingBugReport(bugReport);
+	        Role role = getUserRoleWithinProject(user, project);
+	
+	        if (role == null){
+	            return false;
+	        }
+	
+	        return role.canAssignTag(tag);
         }
-
-        return role.canAssignTag(tag);
+        catch(ModelException e)
+        {
+        	return false;
+        }
 
     }
 

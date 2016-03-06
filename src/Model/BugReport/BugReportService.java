@@ -48,7 +48,7 @@ public class BugReportService {
      * @throws ModelException the title or description is empty.
      * @throws IllegalArgumentException the creator or subsystem is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws ModelException
+    public BugReport createBugReport(String title, String description, SubSystem subSystem, Issuer creator ) throws ModelException
     {
         BugReport bugReport = new BugReport(title, description, subSystem, creator);
         return bugReport;
