@@ -3,10 +3,12 @@ package Model.Project;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
-import Model.Roles.Lead;
-import Model.User.Developer;
+import Model.BugReport.BugReportService;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
+import Model.Roles.Lead;
+import Model.Roles.Role;
+import Model.User.Developer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,14 +37,6 @@ public class ProjectService
         return Collections.unmodifiableList(projectList.getAll());
     }
 
-    public List<SubSystem> getAllSubSystems()
-    {
-    	List<SubSystem> subSystemList = new ArrayList<>();
-    	for(Project project : getAllProjects())
-    		subSystemList.addAll(project.getAllSubSystems());
-    	return subSystemList;
-    }
-    
     /**
      * Method to create a new project and add it to the project list.
      *
@@ -61,7 +55,8 @@ public class ProjectService
         projectList.insert(project);
         return project;
     }
-    
+
+
     /**
      * Method for removing a project from the list of projects.
      *
@@ -101,7 +96,19 @@ public class ProjectService
                 return project;
             }
         }
-     
         throw new ModelException("There is no project containing the given bugreport.");
+    }
+
+    /**
+     * Method for requesting all the subsystems of all the projects.
+     *
+     * @return List containing all the subsystems of all the projects.
+     */
+    public List<SubSystem> getAllSubSystems(){
+        List<SubSystem> subSystems = new ArrayList<>();
+        for (Project project: this.getAllProjects()){
+           subSystems.addAll(project.getAllSubSystems());
+        }
+        return subSystems;
     }
 }

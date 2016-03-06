@@ -1,16 +1,15 @@
 package Model.Project;
 
-import CustomExceptions.ModelException;
-import Model.BugReport.BugReport;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
-
+import com.sun.tools.internal.ws.processor.model.Model;
+import com.sun.tools.internal.xjc.reader.RawTypeSet;
+import sun.plugin2.main.client.MacOSXMozillaServiceDelegate;
 
 public class SubSystem 
 {
@@ -150,8 +149,21 @@ public class SubSystem
      */
     public boolean isValidDescription(String description){
         if (description == null) return false;
+        if (description.equals("")) return false;
         else return true;
     }
+
+	/**
+	 * Checker to check if the subsystem is a valid subsystem.
+	 *
+	 * @param subSystem The subsystem to check.
+	 *
+	 * @return True if the subsystem is not already a subsystem of this subsystem.
+     */
+	public boolean isValidSubsystem(SubSystem subSystem){
+		if(this.getAllSubSystems().contains(subSystem)) return false;
+		else return true;
+	}
 
 	/**
 	 * Operations
@@ -163,10 +175,12 @@ public class SubSystem
      * @param subSystem The subsystem to add.
      *
      * @throws IllegalArgumentException The given subsystem is null.
+	 * @throws ModelException The subsystem is not a valid subsystem.
 	 */
-    public void addSubSystem(SubSystem subSystem)
+    public void addSubSystem(SubSystem subSystem) throws ModelException
 	{
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+		if(!isValidSubsystem(subSystem)) throw new ModelException("The subsystem cannot be added!");
 		subSystems.add(subSystem);
 	}
 
@@ -183,12 +197,6 @@ public class SubSystem
 		bugReports.add(bugReport);
 	}
 	
-	public List<SubSystem> getSubSystems()
-	{
-		List<SubSystem> list = new ArrayList<SubSystem>();
-		list = subSystems;
-		return Collections.unmodifiableList(list);
-	}
 	/**
 	 * Getter to request all subsystems of this subsystem.
      *

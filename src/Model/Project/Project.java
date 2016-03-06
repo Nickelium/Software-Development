@@ -182,11 +182,11 @@ public class Project
      * @throws ModelException The given date is before the creation date.
      * @throws IllegalArgumentException The given date is null.
 	 */
-	public void setStartingDate(TheDate newDate) throws ModelException
+	public void setStartingDate(TheDate date) throws ModelException
 	{
-		if(newDate == null) this.startingDate = null;;
-		if (!isValidStartingDate(newDate)) throw new ModelException("The date is before the creation date.");
-        this.startingDate = newDate;
+		if(date == null) throw new IllegalArgumentException("Date is null");
+		if (!isValidStartingDate(date)) throw new ModelException("The date is before the creation date.");
+        this.startingDate = date;
     }
 	
 	/**
