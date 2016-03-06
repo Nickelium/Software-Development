@@ -3,6 +3,7 @@ package Controller;
 import java.util.List;
 
 import Model.Project.Project;
+import Model.Project.SubSystem;
 import Model.User.Admin;
 import Model.User.User;
 
@@ -25,6 +26,14 @@ public class Parser
 			parsed += i + " " + listProject.get(i).toString() +"\n";
 		return parsed;
 		
+	}
+	
+	public static String parseDetailedProject(Project project)
+	{
+		String parsed = project.toString();
+		for(SubSystem subSystem : project.getAllSubSystems())
+			parsed += subSystem.toString() + "\n";
+		return parsed;
 	}
 
 }

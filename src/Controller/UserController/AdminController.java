@@ -97,7 +97,21 @@ public class AdminController extends UserController {
 
     }
 
-    
+    public void deleteProject()
+    {
+    	List<Project> projectList = projectService.getAllProjects();
+    	String parsedProjectList = Parser.parseProjectList(projectList);
+    	ui.display(parsedProjectList);
+    	
+    	int index = ui.readInt();
+    	Project project = projectList.get(index);
+    	
+    	projectService.deleteProject(project);
+    }
 
+    public void createSubSystem()
+    {
+    	
+    }
 
 }
