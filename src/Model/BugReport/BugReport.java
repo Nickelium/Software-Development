@@ -66,7 +66,8 @@ public class BugReport {
          if (!isValidTitle(title)) throw new ModelException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ModelException("The description cannot be empty!") ;
          if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
-         if (creator == null) throw new IllegalArgumentException("The issuer is null");
+         //creator mag null : initilizatie
+         //if (creator == null) throw new IllegalArgumentException("The issuer is null");
          if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
          if (tag == null) throw new IllegalArgumentException("Tag is null");
 
@@ -226,7 +227,7 @@ public class BugReport {
      * @throws IllegalArgumentException The given developer is null.
      */
 
-    void addAssignee(Developer developer)  {
+    public void addAssignee(Developer developer)  {
         if (developer == null) throw new IllegalArgumentException("Developer to assign is null");
 
         this.assignees.add(developer);

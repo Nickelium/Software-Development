@@ -2,6 +2,7 @@ package Controller;
 
 
 import Controller.UserController.UserController;
+import CustomExceptions.ModelException;
 import Model.User.User;
 
 /**
@@ -15,7 +16,12 @@ public class MainController {
     public MainController() {
         ui = new UI();
         initializer = new Initializer();
-        initializer.init();
+        
+        try {
+			initializer.init();
+		} catch (ModelException e) {
+			e.printStackTrace();
+		}
 
     }
 

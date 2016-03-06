@@ -35,7 +35,7 @@ public class TheDate
 	}
 
 	
-	public TheDate(int day, int month, int year) throws DateTimeException
+	public TheDate(int day, int month, int year) throws ModelException
 	{
 		this.date = LocalDate.of(year,month,day);
 	}

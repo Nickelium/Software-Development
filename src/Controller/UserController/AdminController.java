@@ -7,6 +7,7 @@ import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
+import Model.Project.TheDate;
 import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.User.User;
@@ -43,7 +44,19 @@ public class AdminController extends UserController {
     	ui.display("Description: ");
     	String description = ui.readString();
     	ui.display("Starting date: ");
-    	String startingDate = ui.readString();
+    	String stringStartingDate = ui.readString();
+    	TheDate startingDate = null;
+    	
+		try 
+		{
+			startingDate = new TheDate(stringStartingDate);
+		} 
+		catch (ModelException e1) 
+		{
+			//invalid date or dateformat
+			e1.printStackTrace();
+			System.exit(1);
+		}
     	ui.display("Budget estimate: ");
     	double budget = ui.readDouble();
     	
@@ -82,7 +95,20 @@ public class AdminController extends UserController {
     	ui.display("Description: ");
     	String description = ui.readString();
     	ui.display("Starting date: ");
-    	String startingDate = ui.readString();
+    	String stringStartingDate = ui.readString();
+    	TheDate startingDate = null;
+    	
+		try 
+		{
+			startingDate = new TheDate(stringStartingDate);
+		} 
+		catch (ModelException e1) 
+		{
+			//invalid date or dateformat
+			e1.printStackTrace();
+			System.exit(1);
+		}
+    	
     	ui.display("Budget estimate: ");
     	double budget = ui.readDouble();
     	
