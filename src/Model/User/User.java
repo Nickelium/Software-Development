@@ -1,12 +1,11 @@
 package Model.User;
 
 import CustomExceptions.ModelException;
-<<<<<<< HEAD
+
 
 
 import java.util.List;
-=======
->>>>>>> a4b22cb3f05bbda99bc1e83e41d6ec6da20d3267
+
 
 /**
  * Created by Karina on 19.02.2016.
