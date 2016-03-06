@@ -1,10 +1,12 @@
 package Controller;
 
+import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
+import Model.Project.TheDate;
 import Model.Roles.Lead;
 import Model.Roles.Programmer;
 import Model.Roles.Tester;
@@ -22,7 +24,7 @@ public class Initializer implements IInitializer
 	private ProjectService projectService;
 	private BugReportService bugReportService;
 
-	public void init(){
+	public void init() throws ModelException {
 		this.userService = new UserService();
 		// refactor ProjectService class first
 		this.projectService = new ProjectService();
@@ -36,7 +38,7 @@ public class Initializer implements IInitializer
 		Developer maria = (Developer) userService.addDeveloper("Maria","","Carney","maria");
 
 		Lead leadMajor = new Lead(major);
-		Project projectA = projectService.addProject("ProjectA", leadMajor);
+		Project projectA = projectService.createProject("ProjectA", "", TheDate.dateNow(), 0, leadMajor);
 		Programmer programmerMajor = new Programmer(major);
 		projectA.addRole(programmerMajor);
 		Tester testerMaria = new Tester(maria);
@@ -59,7 +61,7 @@ public class Initializer implements IInitializer
 		
 		
 		Lead leadMaria = new Lead(maria);
-		Project projectB = projectService.addProject("ProjectB", leadMaria);
+		Project projectB = projectService.createProject("ProjectB", "", TheDate.dateNow(),0, leadMaria);
 		Programmer programmerMajorB = new Programmer(major);
 		projectB.addRole(programmerMajorB);
 		
