@@ -8,7 +8,6 @@ import Model.Tags.Assigned;
 import Model.Tags.Resolved;
 import Model.Tags.Tag;
 import Model.User.User;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -94,7 +93,6 @@ public class TagAssignmentService {
         return this.creatorTagPermissons.contains(tag.getClass());
     }
 
-    @Nullable
     private Role getUserRoleWithinProject(User user, Project project){
         for (Role role: project.getDevsRoles()){
             if (role.getDeveloper().equals(user)){

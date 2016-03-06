@@ -7,9 +7,6 @@ import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.Roles.Lead;
 import Model.Roles.Role;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.sun.tools.internal.ws.processor.model.Model;
-import com.sun.tools.internal.ws.processor.modeler.ModelerException;
 
 public class Project
 {

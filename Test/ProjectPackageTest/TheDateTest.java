@@ -16,7 +16,7 @@ public class TheDateTest {
 		private String str;
 		
 		@Before
-		public void setup()
+		public void initialization()
 		{
 			day = 24;
 			month = 2;

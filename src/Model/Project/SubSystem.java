@@ -7,8 +7,6 @@ import java.util.List;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
-import com.sun.tools.internal.ws.processor.model.Model;
-import sun.plugin2.main.client.MacOSXMozillaServiceDelegate;
 
 public class SubSystem 
 {

@@ -7,8 +7,6 @@ import Model.Roles.Permission;
 import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.User;
-import com.sun.javafx.sg.prism.NGShape;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by Tom on 2/03/16.
@@ -77,7 +75,6 @@ public class DeveloperAssignmentService {
 
 
 
-    @Nullable
     private Role getUserRoleWithinProject(User user, Project project) {
         for (Role role : project.getDevsRoles()) {
             if (role.getDeveloper().equals(user)) {
