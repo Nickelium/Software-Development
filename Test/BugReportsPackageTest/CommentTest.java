@@ -8,8 +8,8 @@ import Model.User.UserService;
 import com.sun.tools.internal.ws.processor.model.Model;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Tom on 28/02/16.

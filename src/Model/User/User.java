@@ -1,10 +1,11 @@
 package Model.User;
 
 import CustomExceptions.ModelException;
-import com.sun.tools.internal.ws.processor.model.Model;
-import com.sun.tools.internal.xjc.reader.RawTypeSet;
+
+
 
 import java.util.List;
+
 
 /**
  * Created by Karina on 19.02.2016.
@@ -87,7 +88,7 @@ public abstract class User {
      *
      * @return True if the username is not empty.
      */
-    boolean isValidUserName(String userName){
+    public boolean isValidUserName(String userName){
         if (userName == null) return false;
         if (userName.equals("")) return false;
         else return true;

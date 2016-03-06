@@ -1,17 +1,9 @@
 package Controller;
 
 
-import Controller.UserController.AdminController;
-import Controller.UserController.DeveloperController;
-import Controller.UserController.IssuerController;
 import Controller.UserController.UserController;
-import Model.User.Admin;
-import Model.User.Developer;
-import Model.User.Issuer;
+import CustomExceptions.ModelException;
 import Model.User.User;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**
  * Created by Karina on 26.02.2016.
@@ -24,25 +16,22 @@ public class MainController {
     public MainController() {
         ui = new UI();
         initializer = new Initializer();
-        initializer.init();
+        
+        try {
+			initializer.init();
+		} catch (ModelException e) {
+			e.printStackTrace();
+		}
 
     }
 
     public void run() {
         startMsg();
-        LoginController loginController = new LoginController(initializer.getUserService(), ui);
-        currentUser = loginController.run();
-
+        LoginController loginController = new LoginController(ui, initializer.getUserService(),initializer.getProjectService(),initializer.getBugReportService());
         //create Controller
 
-        UserController userController;
-        if (currentUser instanceof Admin) {
-            userController = new AdminController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService());
-        } else if (currentUser instanceof Developer) {
-            userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService());
-        } else {
-            userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService());
-        }
+        UserController userController = loginController.run();
+        this.currentUser = loginController.getCurrentUser();
 
         while (true) {
             // give all possibilities

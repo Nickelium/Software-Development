@@ -1,25 +1,25 @@
 package Controller.UserController;
 
+import Controller.Parser;
 import Controller.UI;
 import Model.BugReport.BugReportService;
+import Model.Project.Project;
 import Model.Project.ProjectService;
-import Model.User.Developer;
 import Model.User.UserService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.List;
 
 /**
  * Created by Karina on 05.03.2016.
  */
 public abstract class UserController {
 
-    private UI ui;
-    private UserService userService;
-    private ProjectService projectService;
-    private BugReportService bugReportService;
+    protected UI ui;
+    protected UserService userService;
+    protected ProjectService projectService;
+    protected BugReportService bugReportService;
 
     protected ArrayList<FunctionWrap> useCases = new ArrayList<FunctionWrap>();
 
@@ -102,8 +102,18 @@ public abstract class UserController {
 
     //region use cases methods
 
-    public void showProject(){
-        getUi().display("show");
+    public void showProject()
+    {
+    	List<Project> projectList = projectService.getAllProjects();
+    	String parsedProjectList = Parser.parseProjectList(projectList);
+    	ui.display(parsedProjectList);
+    	
+    	int index = ui.readInt();
+    	Project project = projectList.get(index);
+    	
+    	String projectDetails = Parser.parseDetailedProject(project);
+    	
+    	ui.display(projectDetails);
     }
 
     public void exitProgram(){

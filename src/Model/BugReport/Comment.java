@@ -1,13 +1,12 @@
 package Model.BugReport;
 
+import CustomExceptions.ModelException;
+import Model.Project.TheDate;
+import Model.User.Issuer;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-
-import CustomExceptions.ModelException;
-import Model.User.Issuer;
-import Model.Project.TheDate;
 
 /**
  * Created by Tom on 19/02/16.

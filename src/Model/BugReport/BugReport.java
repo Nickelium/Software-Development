@@ -1,17 +1,17 @@
 package Model.BugReport;
 
 import CustomExceptions.ModelException;
-import Model.User.Developer;
-import Model.User.Issuer;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.Tags.Assigned;
 import Model.Tags.New;
 import Model.Tags.Tag;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.sun.xml.internal.bind.v2.runtime.IllegalAnnotationException;
+import Model.User.Developer;
+import Model.User.Issuer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Tom on 19/02/16.
@@ -66,7 +66,8 @@ public class BugReport {
          if (!isValidTitle(title)) throw new ModelException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ModelException("The description cannot be empty!") ;
          if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
-         if (creator == null) throw new IllegalArgumentException("The issuer is null");
+         //creator mag null : initilizatie
+         //if (creator == null) throw new IllegalArgumentException("The issuer is null");
          if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
          if (tag == null) throw new IllegalArgumentException("Tag is null");
          if (initialAssignies == null) throw new IllegalArgumentException("List cannot be null");
@@ -227,7 +228,7 @@ public class BugReport {
      * @throws IllegalArgumentException The given developer is null.
      */
 
-    void addAssignee(Developer developer)  {
+    public void addAssignee(Developer developer)  {
         if (developer == null) throw new IllegalArgumentException("Developer to assign is null");
 
         this.assignees.add(developer);

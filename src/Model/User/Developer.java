@@ -1,7 +1,6 @@
 package Model.User;
 
 import CustomExceptions.ModelException;
-import com.sun.tools.internal.ws.processor.model.Model;
 
 /**
  * Created by Karina on 19.02.2016.
@@ -19,7 +18,7 @@ public class Developer extends Issuer {
      * @throws ModelException Username is empty.
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
-    Developer(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public Developer(String firstName, String middleName, String lastName, String userName) throws ModelException{
         super(firstName,middleName,lastName,userName);
     }
 

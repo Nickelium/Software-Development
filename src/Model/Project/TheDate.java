@@ -1,5 +1,7 @@
 package Model.Project;
 
+import CustomExceptions.ModelException;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,10 +18,24 @@ public class TheDate
 	 * @param day The day of the date.
 	 * @param month The month of the date.
 	 * @param year The year of the date.
+	 * @throws ModelException 
      *
      * @throws DateTimeException The given attributes are not valid.
 	 */
-	public TheDate(int day, int month, int year) throws DateTimeException
+	public TheDate(String stringDate) throws ModelException
+	{
+		String[] parts = retrieveParts(stringDate);
+		if(parts.length < 3) throw new ModelException("Incorrect date format");
+		this.date = LocalDate.of(Integer.parseInt(parts[2]),Integer.parseInt(parts[1]),Integer.parseInt(parts[0]));
+	}
+	
+	private String[] retrieveParts(String stringDate)
+	{
+		return stringDate.split("/");
+	}
+
+	
+	public TheDate(int day, int month, int year) throws ModelException
 	{
 		this.date = LocalDate.of(year,month,day);
 	}

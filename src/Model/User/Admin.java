@@ -1,10 +1,6 @@
 package Model.User;
 
 import CustomExceptions.ModelException;
-import Model.User.User;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Karina on 19.02.2016.
@@ -22,7 +18,7 @@ public class Admin extends User {
      * @throws ModelException Username is empty.
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
-    Admin(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public Admin(String firstName, String middleName, String lastName, String userName) throws ModelException{
         super(firstName,middleName,lastName,userName);
     }
 

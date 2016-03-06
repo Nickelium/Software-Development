@@ -2,9 +2,6 @@ package Model.User;
 
 import CustomExceptions.ModelException;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by Karina on 19.02.2016.
  */
@@ -21,7 +18,7 @@ public class Issuer extends User {
      * @throws ModelException Username is empty.
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
-    Issuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public Issuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
         super(firstName,middleName,lastName,userName);
     }
 

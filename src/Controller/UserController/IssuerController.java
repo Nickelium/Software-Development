@@ -17,14 +17,31 @@ public class IssuerController extends UserController{
 
     private void initializeUseCasesIssuer(){
         try {
-            useCases.add(new FunctionWrap("Create Bug Report", AdminController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Select Bug Report", AdminController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Inspect Bug Report", AdminController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Create Comment", AdminController.class.getMethod("showProject")));
+            useCases.add(new FunctionWrap("Create Bug Report", IssuerController.class.getMethod("createBugReport")));
+            useCases.add(new FunctionWrap("Select Bug Report", IssuerController.class.getMethod("selectBugReport")));
+            useCases.add(new FunctionWrap("Inspect Bug Report", IssuerController.class.getMethod("inspectBugReport")));
+            useCases.add(new FunctionWrap("Create Comment", IssuerController.class.getMethod("createComment")));
 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    public void createBugReport(){
+
+    }
+
+    public void selectBugReport(){
+
+    }
+
+    public void inspectBugReport(){
+
+    }
+
+    public void createComment(){
+
     }
 
 }

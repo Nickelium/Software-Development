@@ -8,7 +8,6 @@ import Model.Tags.Assigned;
 import Model.Tags.Resolved;
 import Model.Tags.Tag;
 import Model.User.User;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -75,15 +74,21 @@ public class TagAssignmentService {
         if (bugReport.getCreator().equals(user) && this.validCreatorPermissions(tag)) {
             return true;
         }
-
-        Project project = projectService.getProjectContainingBugReport(bugReport);
-        Role role = getUserRoleWithinProject(user, project);
-
-        if (role == null){
-            return false;
+        try
+        {
+	        Project project = projectService.getProjectContainingBugReport(bugReport);
+	        Role role = getUserRoleWithinProject(user, project);
+	
+	        if (role == null){
+	            return false;
+	        }
+	
+	        return role.canAssignTag(tag);
         }
-
-        return role.canAssignTag(tag);
+        catch(ModelException e)
+        {
+        	return false;
+        }
 
     }
 
@@ -95,7 +100,6 @@ public class TagAssignmentService {
         return this.creatorTagPermissons.contains(tag.getClass());
     }
 
-    @Nullable
     private Role getUserRoleWithinProject(User user, Project project){
         for (Role role: project.getDevsRoles()){
             if (role.getDeveloper().equals(user)){

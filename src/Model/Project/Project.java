@@ -1,15 +1,15 @@
 package Model.Project;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.Roles.Lead;
 import Model.Roles.Role;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.sun.tools.internal.ws.processor.model.Model;
-import com.sun.tools.internal.ws.processor.modeler.ModelerException;
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 public class Project
 {
@@ -41,11 +41,11 @@ public class Project
 	{
 		this.setName(name);
 		this.setDescription(description);
+		this.creationDate = TheDate.TheDateNow();
 		this.setStartingDate(startingDate);
 		this.setBudget(budget);
 		this.setLeadRole(leadRole);
 		
-		this.creationDate = TheDate.TheDateNow();
 	}
 	
 	/**
@@ -182,11 +182,11 @@ public class Project
      * @throws ModelException The given date is before the creation date.
      * @throws IllegalArgumentException The given date is null.
 	 */
-	public void setStartingDate(TheDate date) throws ModelException
+	public void setStartingDate(TheDate newDate) throws ModelException
 	{
-        if (date == null) throw new IllegalArgumentException("Date is null");
-		if (!isValidStartingDate(date)) throw new ModelException("The date is before the creation date.");
-        this.startingDate = date;
+		if(newDate == null) this.startingDate = null;;
+		if (!isValidStartingDate(newDate)) throw new ModelException("The date is before the creation date.");
+        this.startingDate = newDate;
     }
 	
 	/**
@@ -252,7 +252,6 @@ public class Project
      */
     public boolean isValidDescription(String description){
         if (description == null) return false;
-        if (description.equals("")) return false;
         else return true;
     }
 
