@@ -49,18 +49,11 @@ public class Initializer implements IInitializer
 		Tester testerMaria = new Tester(maria);
 		projectA.addRole(testerMaria);
 		
-		SubSystem subSystemA1 = new SubSystem("SubSystemA1", "SubsystemA1 description");
-		SubSystem subSystemA2 = new SubSystem("SubSystemA2","SubsystemA2 description");
-		SubSystem subSystemA3 = new SubSystem("SubSystemA3","SubsystemA3 description");
-		SubSystem subSystemA31 = new SubSystem("SubSystemA3.1","SubsystemA3.1 description");
-		SubSystem subSystemA32 = new SubSystem("SubSystemA3.2","SubsystemA3.2 description");
-		
-		projectA.addSubSystem(subSystemA1);
-		projectA.addSubSystem(subSystemA2);
-		projectA.addSubSystem(subSystemA3);
-
-		subSystemA3.addSubSystem(subSystemA31);
-		subSystemA3.addSubSystem(subSystemA32);
+		SubSystem subSystemA1 = projectService.createSubsystem("SubSystemA1", "SubsystemA1 description", projectA);
+		SubSystem subSystemA2 = projectService.createSubsystem("SubSystemA2","SubsystemA2 description", projectA);
+		SubSystem subSystemA3 = projectService.createSubsystem("SubSystemA3","SubsystemA3 description", projectA);
+		SubSystem subSystemA31 = projectService.createSubsystem("SubSystemA3.1","SubsystemA3.1 description", subSystemA3);
+		SubSystem subSystemA32 = projectService.createSubsystem("SubSystemA3.2","SubsystemA3.2 description", subSystemA3);
 		
 		
 		Lead leadMaria = new Lead(maria);
@@ -68,14 +61,9 @@ public class Initializer implements IInitializer
 		Programmer programmerMajorB = new Programmer(major);
 		projectB.addRole(programmerMajorB);
 		
-		SubSystem subSystemB1 = new SubSystem("SubSystemB1", "SubsystemB1 description");
-		SubSystem subSystemB2 = new SubSystem("SubSystemB2", "SubsystemB2 description");
-		SubSystem subSystemB21 = new SubSystem("SubSystemB2.1", "SubsystemB2.1 description.");
-		
-		projectB.addSubSystem(subSystemB1);
-		projectB.addSubSystem(subSystemB2);
-		
-		subSystemB2.addSubSystem(subSystemB21);
+		SubSystem subSystemB1 = projectService.createSubsystem("SubSystemB1", "SubsystemB1 description", projectB);
+		SubSystem subSystemB2 = projectService.createSubsystem("SubSystemB2", "SubsystemB2 description", projectB);
+		SubSystem subSystemB21 = projectService.createSubsystem("SubSystemB2.1", "SubsystemB2.1 description.", subSystemB2);
 		
 		
 		bugReportService.createBugReport("The function parse_ewd returns unexpected results",

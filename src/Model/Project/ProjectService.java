@@ -7,6 +7,7 @@ import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
+import com.sun.jmx.snmp.SnmpUnknownSubSystemException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +53,44 @@ public class ProjectService
         Project project = new Project(name, description, startingDate, budget, leadRole);
         projectList.insert(project);
         return project;
+    }
+
+    /**
+     * Method to create a subsystem and insert it into an existing subsystem.
+     *
+     * @param name The name of the new subsystem.
+     * @param description The description of the new subsystem.
+     * @param subSystem The subsystem to insert the new one in.
+     *
+     * @return The newly created subsystem.
+     *
+     * @throws ModelException One of the string arguments are wrong.
+     */
+    public SubSystem createSubsystem(String name, String description, SubSystem subSystem) throws ModelException{
+        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+        SubSystem newSubsystem = new SubSystem(name, description);
+        subSystem.addSubSystem(newSubsystem);
+
+        return newSubsystem;
+    }
+
+    /**
+     * Method to create a subsystem and insert it into an existing project.
+     *
+     * @param name The name of the new subsystem.
+     * @param description The description of the new subsystem.
+     * @param project The project to insert the new subsystem in.
+     *
+     * @return The newly created subsystem.
+     *
+     * @throws ModelException One of the string arguments are wrong.
+     */
+    public SubSystem createSubsystem(String name, String description, Project project) throws ModelException{
+        if (project == null) throw new IllegalArgumentException("Project is null");
+        SubSystem newSubsystem = new SubSystem(name, description);
+        project.addSubSystem(newSubsystem);
+
+        return newSubsystem;
     }
 
 
