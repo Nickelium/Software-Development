@@ -13,7 +13,7 @@ public class Parser
 	{
 		String parsed ="";
 		for(int i=0; i< listUser.size(); i++)
-			parsed += i + " " + listUser.get(i).toString() +"\n";
+			parsed += i + ":\n" + listUser.get(i).toString() +"\n";
 		return parsed;
 		
 	}
@@ -22,7 +22,7 @@ public class Parser
 	{
 		String parsed ="";
 		for(int i=0; i< listProject.size(); i++)
-			parsed += i + " " + listProject.get(i).toString() +"\n";
+			parsed += i + ":\n" + listProject.get(i).toString() +"\n";
 		return parsed;
 		
 	}
@@ -31,7 +31,7 @@ public class Parser
 	{
 		String parsed ="";
 		for(int i=0; i< listSubSystem.size(); i++)
-			parsed += i + " " + listSubSystem.get(i).toString() +"\n";
+			parsed += i + ":\n" + listSubSystem.get(i).toString() +"\n";
 		return parsed;
 		
 	}
@@ -40,7 +40,7 @@ public class Parser
 	{
 		String parsed = project.toString();
 		for(SubSystem subSystem : project.getSubSystems())
-			parsed += "\n\t" +Parser.parseDetailedSubSystem(subSystem);
+			parsed += "\n\t" + Parser.addTabulation(Parser.parseDetailedSubSystem(subSystem));
 		return parsed;
 	}
 	
@@ -48,9 +48,14 @@ public class Parser
 	{
 		if(subSystem == null) return "";
 		String parsed = subSystem.toString();
-		for(SubSystem sub : subSystem.getAllSubSystems())
-			parsed += "\n\t " + Parser.parseDetailedSubSystem(sub); 
+		for(SubSystem sub : subSystem.getSubSystems())
+			parsed += "\n\t" + Parser.addTabulation(Parser.parseDetailedSubSystem(sub));
 		return parsed;
+	}
+	
+	public static String addTabulation(String str)
+	{
+		return str.replace("\n", "\n\t");
 	}
 
 }
