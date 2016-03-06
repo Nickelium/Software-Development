@@ -47,7 +47,7 @@ public class BugReport {
      */
     BugReport(String title, String description, SubSystem subSystem, Issuer creator) throws ModelException
     {
-        this(title,description,subSystem, creator, TheDate.TheDateNow(), new New());
+        this(title,description,subSystem, creator, TheDate.TheDateNow(), new New(), new ArrayList<>());
    }
     
     /**
@@ -61,7 +61,7 @@ public class BugReport {
      * @throws ModelException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag) throws ModelException
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ModelException
      {
          if (!isValidTitle(title)) throw new ModelException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ModelException("The description cannot be empty!") ;
@@ -70,6 +70,7 @@ public class BugReport {
          //if (creator == null) throw new IllegalArgumentException("The issuer is null");
          if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
          if (tag == null) throw new IllegalArgumentException("Tag is null");
+         if (initialAssignies == null) throw new IllegalArgumentException("List cannot be null");
 
          this.title = title;
          this.description = description;
@@ -80,9 +81,9 @@ public class BugReport {
          this.id = new BugReportID();
          subSystem.addBugReport(this);
 
-         this.assignees = new ArrayList<>();
          this.comments = new ArrayList<>();
          this.dependencies = new ArrayList<>();
+         this.assignees = initialAssignies;
 
     }
 

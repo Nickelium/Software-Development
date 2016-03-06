@@ -1,18 +1,20 @@
 package Model.BugReport;
 
 import CustomExceptions.ModelException;
-import Model.Project.Project;
 import Model.Project.ProjectService;
-import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Tags.Tag;
+import Model.User.Developer;
 import Model.User.Issuer;
-import Model.User.User;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
+import Model.Project.Project;
+import Model.Project.SubSystem;
+import Model.Tags.Tag;
+import Model.User.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 /**
@@ -48,7 +50,7 @@ public class BugReportService {
      * @throws ModelException the title or description is empty.
      * @throws IllegalArgumentException the creator or subsystem is null.
      */
-    public BugReport createBugReport(String title, String description, SubSystem subSystem, Issuer creator ) throws ModelException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws ModelException
     {
         BugReport bugReport = new BugReport(title, description, subSystem, creator);
         return bugReport;
@@ -67,9 +69,9 @@ public class BugReportService {
      * @throws ModelException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag) throws ModelException
+    public BugReport createBugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ModelException
     {
-        BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag);
+        BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag, initialAssignees);
         return bugReport;
     }
 

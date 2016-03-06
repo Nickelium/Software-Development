@@ -74,7 +74,7 @@ public class UserService {
      *
      * @throws ModelException The username is not unique or empty.
      */
-    public User addAdmin(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public User createAdmin(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
         User user = new Admin(firstName, middleName, lastName, userName);
@@ -96,7 +96,7 @@ public class UserService {
      *
      * @throws ModelException The username is not unique or empty.
      */
-    public User addIssuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public User createIssuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
         User user = new Issuer(firstName, middleName, lastName, userName);
@@ -118,7 +118,7 @@ public class UserService {
      *
      * @throws ModelException The username is not unique or empty.
      */
-    public User addDeveloper(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public User createDeveloper(String firstName, String middleName, String lastName, String userName) throws ModelException{
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
         User user = new Developer(firstName, middleName, lastName, userName);

@@ -26,7 +26,7 @@ public class TheDateTest {
 		
 
 		@Test
-		public void constructor3Param_SUCCES()
+		public void constructor3Param_SUCCES() thr
 		{
 			TheDate d = new TheDate(day,month,year);
 			
