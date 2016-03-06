@@ -7,7 +7,6 @@ import Model.Roles.Permission;
 import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.User;
-import com.sun.javafx.sg.prism.NGShape;
 import org.jetbrains.annotations.Nullable;
 
 /**

@@ -1,15 +1,13 @@
 package Model.Project;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.Roles.Lead;
 import Model.Roles.Role;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.sun.tools.internal.ws.processor.model.Model;
-import com.sun.tools.internal.ws.processor.modeler.ModelerException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Project
 {

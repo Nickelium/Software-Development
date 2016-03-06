@@ -5,14 +5,11 @@ import Controller.UI;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
-import Model.User.Developer;
 import Model.User.UserService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Created by Karina on 05.03.2016.

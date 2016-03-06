@@ -1,7 +1,6 @@
 package Model.User;
 
 import CustomExceptions.ModelException;
-import com.sun.tools.internal.ws.processor.model.Model;
 
 /**
  * Created by Karina on 19.02.2016.

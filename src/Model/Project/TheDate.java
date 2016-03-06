@@ -1,10 +1,10 @@
 package Model.Project;
 
+import CustomExceptions.ModelException;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import CustomExceptions.ModelException;
 
 //Class for uniform dateformats
 public class TheDate

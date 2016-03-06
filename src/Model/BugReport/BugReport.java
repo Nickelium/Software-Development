@@ -1,17 +1,17 @@
 package Model.BugReport;
 
 import CustomExceptions.ModelException;
-import Model.User.Developer;
-import Model.User.Issuer;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.Tags.Assigned;
 import Model.Tags.New;
 import Model.Tags.Tag;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.sun.xml.internal.bind.v2.runtime.IllegalAnnotationException;
+import Model.User.Developer;
+import Model.User.Issuer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Tom on 19/02/16.

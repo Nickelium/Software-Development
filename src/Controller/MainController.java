@@ -1,17 +1,8 @@
 package Controller;
 
 
-import Controller.UserController.AdminController;
-import Controller.UserController.DeveloperController;
-import Controller.UserController.IssuerController;
 import Controller.UserController.UserController;
-import Model.User.Admin;
-import Model.User.Developer;
-import Model.User.Issuer;
 import Model.User.User;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 /**
  * Created by Karina on 26.02.2016.

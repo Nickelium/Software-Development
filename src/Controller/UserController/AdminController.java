@@ -1,7 +1,5 @@
 package Controller.UserController;
 
-import java.util.List;
-
 import Controller.Parser;
 import Controller.UI;
 import CustomExceptions.ModelException;
@@ -13,6 +11,8 @@ import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
+
+import java.util.List;
 
 /**
  * Created by Karina on 05.03.2016.

@@ -1,14 +1,11 @@
 package Model.Project;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
-import com.sun.tools.internal.ws.processor.model.Model;
-import sun.plugin2.main.client.MacOSXMozillaServiceDelegate;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SubSystem 
 {

@@ -1,14 +1,13 @@
-import static org.junit.Assert.*;
+import Model.Project.Project;
+import Model.Project.SubSystem;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import Model.Project.Project;
-import Model.Project.SubSystem;
-import Model.Project.TheDate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ProjectTest {
 

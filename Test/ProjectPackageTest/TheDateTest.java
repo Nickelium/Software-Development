@@ -1,12 +1,12 @@
-import static org.junit.Assert.*;
+import Model.Project.TheDate;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import Model.Project.TheDate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class TheDateTest {
 

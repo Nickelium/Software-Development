@@ -1,10 +1,6 @@
 package Model.User;
 
 import CustomExceptions.ModelException;
-import com.sun.tools.internal.ws.processor.model.Model;
-import com.sun.tools.internal.xjc.reader.RawTypeSet;
-
-import java.util.List;
 
 /**
  * Created by Karina on 19.02.2016.
