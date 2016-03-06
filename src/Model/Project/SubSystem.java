@@ -8,6 +8,7 @@ import java.util.List;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import com.sun.tools.internal.ws.processor.model.Model;
+import com.sun.tools.internal.xjc.reader.RawTypeSet;
 import sun.plugin2.main.client.MacOSXMozillaServiceDelegate;
 
 public class SubSystem 
@@ -153,6 +154,18 @@ public class SubSystem
     }
 
 	/**
+	 * Checker to check if the subsystem is a valid subsystem.
+	 *
+	 * @param subSystem The subsystem to check.
+	 *
+	 * @return True if the subsystem is not already a subsystem of this subsystem.
+     */
+	public boolean isValidSubsystem(SubSystem subSystem){
+		if(this.getAllSubSystems().contains(subSystem)) return false;
+		else return true;
+	}
+
+	/**
 	 * Operations
 	 */
 	
@@ -162,10 +175,12 @@ public class SubSystem
      * @param subSystem The subsystem to add.
      *
      * @throws IllegalArgumentException The given subsystem is null.
+	 * @throws ModelException The subsystem is not a valid subsystem.
 	 */
-    void addSubSystem(SubSystem subSystem)
+    public void addSubSystem(SubSystem subSystem) throws ModelException
 	{
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+		if(!isValidSubsystem(subSystem)) throw new ModelException("The subsystem cannot be added!");
 		subSystems.add(subSystem);
 	}
 

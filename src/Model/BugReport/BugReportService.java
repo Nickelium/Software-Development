@@ -3,6 +3,7 @@ package Model.BugReport;
 import CustomExceptions.ModelException;
 import Model.Project.ProjectService;
 import Model.Project.TheDate;
+import Model.User.Developer;
 import Model.User.Issuer;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
@@ -68,9 +69,9 @@ public class BugReportService {
      * @throws ModelException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag) throws ModelException
+    public BugReport createBugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ModelException
     {
-        BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag);
+        BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag, initialAssignees);
         return bugReport;
     }
 

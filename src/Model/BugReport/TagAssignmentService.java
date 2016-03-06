@@ -62,8 +62,9 @@ public class TagAssignmentService {
      * @return True if the user has the permission to assign the tag to the burgreport.
      *
      * @throws IllegalArgumentException One of the given arguments is null.
+     * @throws ModelException One of the arguments doesn't match.
      */
-    public boolean canAssignTag(User user, BugReport bugReport, Tag tag){
+    public boolean canAssignTag(User user, BugReport bugReport, Tag tag) throws ModelException{
         if (user == null) throw new IllegalArgumentException("User is null");
         if (bugReport == null) throw new IllegalArgumentException("BugReport is null");
         if (tag == null) throw new IllegalArgumentException("Tag is null");

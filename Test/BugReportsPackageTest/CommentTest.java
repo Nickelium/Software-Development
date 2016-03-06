@@ -1,8 +1,11 @@
 package BugReportsPackageTest;
 
+import CustomExceptions.ModelException;
 import Model.BugReport.Comment;
 import Model.Project.TheDate;
 import Model.User.Issuer;
+import Model.User.UserService;
+import com.sun.tools.internal.ws.processor.model.Model;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,43 +17,45 @@ import static org.junit.Assert.*;
 public class CommentTest {
     private Issuer issuer;
     private Comment comment1;
+    private UserService userService;
 
     @Before
-    public void initialization(){
-        this.issuer = new Issuer("Test", "T", "Testing", "user1");
+    public void initialization() throws ModelException{
+        userService = new UserService();
+        this.issuer = (Issuer) userService.createIssuer("Test", "T", "Testing", "user1");
         this.comment1 = new Comment("Test Comment", this.issuer);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_IllegalText(){
+    @Test(expected = ModelException.class)
+    public void constructor_IllegalText() throws ModelException{
         new Comment(null, this.issuer);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void constructor_IllegalIssuer(){
+    public void constructor_IllegalIssuer() throws ModelException{
         new Comment("test", null);
     }
 
     @Test()
-    public void getIssuerTest(){
+    public void getIssuerTest() throws ModelException{
         Comment comment = new Comment("test", issuer);
         assertEquals(this.issuer, comment.getIssuer());
     }
 
     @Test()
-    public void getDateTest(){
+    public void getDateTest() throws ModelException{
         Comment comment = new Comment("test", issuer);
         assertEquals(TheDate.TheDateNow(), comment.getCreationDate());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void addCommentTest_InvalidArgument(){
+    public void addCommentTest_InvalidArgument() throws ModelException{
         Comment comment = new Comment("test", issuer);
         comment.addComment(null);
     }
 
     @Test()
-    public void addCommentTest(){
+    public void addCommentTest() throws ModelException{
         Comment comment = new Comment("test", issuer);
         assertEquals(0, comment.getComments().size());
 
@@ -60,14 +65,14 @@ public class CommentTest {
     }
 
     @Test()
-    public void getCommentTest(){
+    public void getCommentTest() throws ModelException{
         Comment comment = new Comment("test", issuer);
         comment.addComment(this.comment1);
         assert comment.getComments().contains(this.comment1);
     }
 
     @Test()
-    public void getText() {
+    public void getText() throws ModelException{
         Comment comment = new Comment("test", issuer);
         assert comment.getText().equals("test");
     }

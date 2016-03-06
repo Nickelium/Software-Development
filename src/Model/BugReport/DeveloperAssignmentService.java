@@ -54,8 +54,9 @@ public class DeveloperAssignmentService {
      * @return True if the user has the valid permissions to assign the developer to the bugreport.
      *
      * @throws IllegalArgumentException One of the given arguments is null.
+     * @throws ModelException One of the arguments doesn't match.
      */
-    public boolean canUserAssignDeveloperToBugReport(User user, Developer developer, BugReport bugReport){
+    public boolean canUserAssignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ModelException{
         if (user == null) throw new IllegalArgumentException("User is null");
         if (developer == null) throw new IllegalArgumentException("Developer is null");
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
