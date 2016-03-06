@@ -26,10 +26,10 @@ public class AdminController extends UserController {
 
     private void initializeUseCasesAdmin(){
         try {
-            useCases.add(new FunctionWrap("Create Project", AdminController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Update Project", AdminController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Delete Project", AdminController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Create Subsystem", AdminController.class.getMethod("showProject")));
+            useCases.add(new FunctionWrap("Create Project", AdminController.class.getMethod("createProject")));
+            useCases.add(new FunctionWrap("Update Project", AdminController.class.getMethod("updateProject")));
+            useCases.add(new FunctionWrap("Delete Project", AdminController.class.getMethod("deleteProject")));
+            useCases.add(new FunctionWrap("Create Subsystem", AdminController.class.getMethod("createSubSystem")));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class AdminController extends UserController {
     }
     public void createProject()
     {
-    	ui.display("Project information");
+    	ui.display("Please enter the project information:");
     	ui.display("Name: ");
     	String name = ui.readString();
     	ui.display("Description: ");
@@ -49,6 +49,7 @@ public class AdminController extends UserController {
     	
     	List<User> possibleLeadDevelopers = userService.getDevelopers();
        	String parsedPossibleLeadDevelopers = Parser.parseUserList(possibleLeadDevelopers);
+		ui.display("Please choose a lead developer for this project: ");
        	ui.display(parsedPossibleLeadDevelopers);
        	int index = ui.readInt();
        	Developer leadDev = (Developer) possibleLeadDevelopers.get(index);
@@ -58,13 +59,15 @@ public class AdminController extends UserController {
 			Project project = projectService.createProject(name, description, startingDate, budget, leadRole);
 			ui.display(project.toString());
 		} catch (ModelException e) {
-			
-			e.printStackTrace();
+			ui.errorDisplay(e.getMessage());
+			ui.display("Enter 1 if you want to retry.");
+			if (ui.readInt() == 1) createProject();
 		}
     }
     
     public void updateProject()
     {
+		ui.display("Choose a project you want to uodate: ");
     	List<Project> projectList = projectService.getAllProjects();
     	String parsedProjectList = Parser.parseProjectList(projectList);
     	ui.display(parsedProjectList);
@@ -92,14 +95,16 @@ public class AdminController extends UserController {
 		} 
     	catch (ModelException e) 
     	{
-		
-			e.printStackTrace();
+			ui.display(e.getMessage());
+			ui.display("Enter 1 if you want to retry.");
+			if (ui.readInt() == 1) updateProject();
 		}
 
     }
 
     public void deleteProject()
     {
+		ui.display("Choose a project you want to delete: ");
     	List<Project> projectList = projectService.getAllProjects();
     	String parsedProjectList = Parser.parseProjectList(projectList);
     	ui.display(parsedProjectList);
@@ -112,6 +117,7 @@ public class AdminController extends UserController {
 
     public void createSubSystem()
     {
+		ui.display("Choose a project: ");
     	List<Project> projectList = projectService.getAllProjects();
     	String parsedProjectList = Parser.parseProjectList(projectList);
     	ui.display(parsedProjectList);
