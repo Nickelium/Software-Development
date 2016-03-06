@@ -1,10 +1,11 @@
 package BugReportsPackageTest;
 
-import Model.BugReport.BugReport;
 import Model.BugReport.BugReportID;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by Tom on 28/02/16.

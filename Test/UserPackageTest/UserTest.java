@@ -3,13 +3,12 @@ package UserPackageTest;
 import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.Issuer;
-import Model.User.User;
 import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by Laurens on 6/03/2016.

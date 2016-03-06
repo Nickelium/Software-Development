@@ -12,7 +12,10 @@ import Model.Roles.Tester;
 import Model.Tags.Assigned;
 import Model.Tags.Closed;
 import Model.Tags.New;
-import Model.User.*;
+import Model.User.Admin;
+import Model.User.Developer;
+import Model.User.Issuer;
+import Model.User.UserService;
 
 import java.util.ArrayList;
 import java.util.Arrays;

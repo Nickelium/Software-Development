@@ -4,8 +4,6 @@ import Model.User.Issuer;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import static junit.framework.TestCase.assertEquals;
 
 /**
