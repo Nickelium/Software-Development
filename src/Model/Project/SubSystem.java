@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+import CustomExceptions.ModelException;
+import Model.BugReport.BugReport;
+
+
 public class SubSystem 
 {
 

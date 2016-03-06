@@ -22,7 +22,7 @@ public class ProjectTest {
 	private int year;
 	
 	@Before
-	public void setup(){
+	public void initialization(){
 		this.name = "FirstName LastName";
 		this.description = "This is an unknown person.";
 		this.budget = 10;

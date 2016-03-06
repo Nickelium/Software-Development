@@ -2,6 +2,11 @@ package Model.User;
 
 import CustomExceptions.ModelException;
 
+
+
+import java.util.List;
+
+
 /**
  * Created by Karina on 19.02.2016.
  */
