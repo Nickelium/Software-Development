@@ -5,8 +5,8 @@ import Model.Project.TheDate;
 import Model.User.Issuer;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Tom on 28/02/16.

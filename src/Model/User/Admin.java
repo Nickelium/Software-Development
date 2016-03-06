@@ -1,10 +1,6 @@
 package Model.User;
 
 import CustomExceptions.ModelException;
-import Model.User.User;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Karina on 19.02.2016.

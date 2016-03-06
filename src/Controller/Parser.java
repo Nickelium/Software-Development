@@ -1,11 +1,10 @@
 package Controller;
 
-import java.util.List;
-
 import Model.Project.Project;
 import Model.Project.SubSystem;
-import Model.User.Admin;
 import Model.User.User;
+
+import java.util.List;
 
 public class Parser
 {

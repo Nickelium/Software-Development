@@ -12,9 +12,7 @@ import Model.User.User;
 import Model.User.UserService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Karina on 04.03.2016.

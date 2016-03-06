@@ -3,12 +3,10 @@ package Model.Project;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
-import Model.BugReport.BugReportService;
+import Model.Roles.Lead;
+import Model.User.Developer;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
-import Model.Roles.Lead;
-import Model.Roles.Role;
-import Model.User.Developer;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -6,7 +6,6 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.Tags.New;
 import Model.User.Issuer;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

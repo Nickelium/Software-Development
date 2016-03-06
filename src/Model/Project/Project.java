@@ -1,12 +1,16 @@
 package Model.Project;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.Roles.Lead;
 import Model.Roles.Role;
+<<<<<<< HEAD
+=======
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+>>>>>>> a4b22cb3f05bbda99bc1e83e41d6ec6da20d3267
 
 public class Project
 {

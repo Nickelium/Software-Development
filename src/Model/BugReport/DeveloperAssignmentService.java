@@ -7,6 +7,10 @@ import Model.Roles.Permission;
 import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.User;
+<<<<<<< HEAD
+=======
+import org.jetbrains.annotations.Nullable;
+>>>>>>> a4b22cb3f05bbda99bc1e83e41d6ec6da20d3267
 
 /**
  * Created by Tom on 2/03/16.
