@@ -28,6 +28,7 @@ public abstract class UserController {
         setUserService(userService);
         setProjectService(projectService);
         setBugReportService(bugReportService);
+        initializeUseCasesUser();
     }
 
     //region UseCases

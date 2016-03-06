@@ -96,7 +96,11 @@ public abstract class User {
 
     @Override
     public String toString(){
-        return getUserName() + " : " + getFirstName() + " " + getMiddleName() + " " + getLastName();
+        if (getMiddleName().equals("")){
+            return getUserName() + " (" + getFirstName() + " " + getLastName() + ")";
+        }else{
+            return getUserName() + " (" + getFirstName() + " " + getMiddleName() + " " + getLastName() + ")";
+        }
     }
 
 }

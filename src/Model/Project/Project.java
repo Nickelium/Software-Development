@@ -177,7 +177,7 @@ public class Project
 	/**
 	 * Setter to set the starting date of the project.
      *
-     * @param date The starting date of the project.
+     * @param newDate The starting date of the project.
      *
      * @throws ModelException The given date is before the creation date.
      * @throws IllegalArgumentException The given date is null.
@@ -304,7 +304,7 @@ public class Project
 	 */
 	public void addSubSystem(SubSystem subSystem)
 	{
-		
+
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
 		
 		subSystems.add(subSystem);
@@ -352,5 +352,10 @@ public class Project
         }
         return Collections.unmodifiableList(bugReports);
     }
+
+	@Override
+	public String toString(){
+		return "Project name: " + getName() + "; Creation Date: " + getCreationDate() + "; Starting Date: " + getStartingDate() + "; Lead developer: " + getLeadRole().getDeveloper().toString();
+	}
 
 }

@@ -43,19 +43,19 @@ public class AdminController extends UserController {
     	String name = ui.readString();
     	ui.display("Description: ");
     	String description = ui.readString();
-    	ui.display("Starting date: ");
-    	String stringStartingDate = ui.readString();
-    	TheDate startingDate = null;
-    	
-		try 
-		{
-			startingDate = new TheDate(stringStartingDate);
-		} 
-		catch (ModelException e1) 
-		{
-			//invalid date or dateformat
-			e1.printStackTrace();
-			System.exit(1);
+
+		TheDate startingDate = null;
+    	while(true) {
+			try {
+				ui.display("Starting date (dd/MM/yyyy): ");
+				String stringStartingDate = ui.readString();
+				startingDate = new TheDate(stringStartingDate);
+				break;
+			} catch (ModelException e1) {
+				//invalid date or dateformat
+				ui.errorDisplay(e1.getMessage());
+				ui.display("Please use the given format (dd/MM/yyyy)");
+			}
 		}
     	ui.display("Budget estimate: ");
     	double budget = ui.readDouble();
@@ -70,6 +70,7 @@ public class AdminController extends UserController {
     	
     	try {
 			Project project = projectService.createProject(name, description, startingDate, budget, leadRole);
+			ui.display("Your project has been created successfully!");
 			ui.display(project.toString());
 		} catch (ModelException e) {
 			ui.errorDisplay(e.getMessage());
@@ -80,21 +81,20 @@ public class AdminController extends UserController {
     
     public void updateProject()
     {
-		ui.display("Choose a project you want to uodate: ");
+		ui.display("Choose a project you want to update: ");
     	List<Project> projectList = projectService.getAllProjects();
     	String parsedProjectList = Parser.parseProjectList(projectList);
     	ui.display(parsedProjectList);
     	
     	int index = ui.readInt();
     	Project project = projectList.get(index);
-    	
 
-    	ui.display("Project information to update");
-    	ui.display("Name: ");
+    	ui.display("Enter new values:");
+    	ui.display("Name (current value: "+ project.getName() + "): ");
     	String name = ui.readString();
-    	ui.display("Description: ");
+    	ui.display("Description (current value: "+ project.getDescription() +"): ");
     	String description = ui.readString();
-    	ui.display("Starting date: ");
+    	ui.display("Starting date (current value: "+ project.getStartingDate() + "): ");
     	String stringStartingDate = ui.readString();
     	TheDate startingDate = null;
     	
@@ -109,7 +109,7 @@ public class AdminController extends UserController {
 			System.exit(1);
 		}
     	
-    	ui.display("Budget estimate: ");
+    	ui.display("Budget estimate (current value: "+ project.getBudget() + "): ");
     	double budget = ui.readDouble();
     	
     	try 
@@ -118,6 +118,9 @@ public class AdminController extends UserController {
         	project.setDescription(description);
 			project.setStartingDate(startingDate);
 			project.setBudget(budget);
+
+			ui.display("The project has been successfully updated.");
+			ui.display(project.toString());
 		} 
     	catch (ModelException e) 
     	{
@@ -139,11 +142,11 @@ public class AdminController extends UserController {
     	Project project = projectList.get(index);
     	
     	projectService.deleteProject(project);
+		ui.display("The project has been successfully deleted.");
     }
 
     public void createSubSystem()
     {
-		ui.display("Choose a project: ");
     	List<Project> projectList = projectService.getAllProjects();
     	String parsedProjectList = Parser.parseProjectList(projectList);
     	ui.display(parsedProjectList);
@@ -151,44 +154,41 @@ public class AdminController extends UserController {
     	List<SubSystem> subSystemList = projectService.getAllSubSystems();
     	String parsedSubSystemList = Parser.parseSubSystemList(subSystemList);
     	ui.display(parsedSubSystemList);
-    	
-    	ui.display("Project or Subsystem (P/S) : ");
-    	String input = ui.readString();
-    	
-    	try
-    	{
-	    	int index;
-	    	if(input.equalsIgnoreCase("p"))
-	    	{
-	    		index = ui.readInt();
-	    		Project project = projectList.get(index);
-	    		//creator voor subsytem of niet ?
-	    		String name = ui.readString();
-	    		String description = ui.readString();
-	    		SubSystem newSubSystem = new SubSystem(name,description);
-	    		project.addSubSystem(newSubSystem);
-	    	}
-	    	else if (input.equalsIgnoreCase("s"))
-	    	{
-	    		index = ui.readInt();
-	    		SubSystem subSystem = subSystemList.get(index);
-	    		//creator voor subsytem of niet ?
-	    		String name = ui.readString();
-	    		String description = ui.readString();
-	    		SubSystem newSubSystem = new SubSystem(name,description);
-	    		subSystem.addSubSystem(newSubSystem);
-	    		
-	    	}
-	    	else
-	    	{
-	    		//invalid input
-	    	}
-    	}
-    	catch(ModelException e)
-    	{
-    		
-    	}
-    	
+
+		while(true) {
+			ui.display("Project or subsystem (P/S) : ");
+			String input = ui.readString();
+
+			try {
+				int index;
+				if (input.equalsIgnoreCase("p")) {
+					ui.display("Choose a project: ");
+					index = ui.readInt();
+					Project project = projectList.get(index);
+					//creator voor subsytem of niet ?
+					String name = ui.readString();
+					String description = ui.readString();
+					SubSystem newSubSystem = new SubSystem(name, description);
+					project.addSubSystem(newSubSystem);
+					break;
+				} else if (input.equalsIgnoreCase("s")) {
+					ui.display("Choose a subsystem: ");
+					index = ui.readInt();
+					SubSystem subSystem = subSystemList.get(index);
+					//creator voor subsytem of niet ?
+					String name = ui.readString();
+					String description = ui.readString();
+					SubSystem newSubSystem = new SubSystem(name, description);
+					subSystem.addSubSystem(newSubSystem);
+					break;
+
+				}
+			} catch (ModelException e) {
+				ui.display(e.getMessage());
+				ui.display("Press 1 to retry.");
+				if(ui.readInt() != 1) break;
+			}
+		}
     }
 
 }
