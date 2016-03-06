@@ -26,6 +26,8 @@ public class UserServiceTest {
 
     @Before
     public void initialization() throws Exception {
+
+        // Create ListWrapper for reference
         this.service = new UserService();
         this.admin = new Admin("adminFirstName", "adminMiddleName", "adminLastName", "adminUserName");
         this.developer = new Developer("developerFirstName", "developerMiddleName", "developerLastName", "developerUserName");
@@ -33,12 +35,16 @@ public class UserServiceTest {
         userList.insert(admin);
         userList.insert(developer);
         userList.insert(issuer);
+
+        // Add users into UserService
+        service.createAdmin("adminFirstName", "adminMiddleName", "adminLastName", "adminUserName");
+        service.createDeveloper("developerFirstName", "developerMiddleName", "developerLastName", "developerUserName");
+        service.createIssuer("issuerFirstName", "issuerMiddleName", "issuerLastName", "issuerUserName");
     }
 
     @Test
     public void testGetUserList() throws Exception {
-        ListWrapper<User> newList = (ListWrapper<User>) service.getUserList();
-        List<User> allUsers = newList.getAll();
+        List<User> allUsers = service.getUserList();
         for(User u : allUsers){
             if(u.getUserName() == admin.getUserName())
                 assertEquals(u.getUserName(),admin.getUserName());
@@ -51,8 +57,7 @@ public class UserServiceTest {
 
     @Test
     public void testGetAdministrators() throws Exception {
-        ListWrapper<User> newList = (ListWrapper<User>) service.getAdministrators();
-        List<User> allAdmins = newList.getAll();
+        List<User> allAdmins = service.getAdministrators();
         for(User a : allAdmins){
             assertEquals(a.getUserName(), admin.getUserName());
         }
@@ -60,17 +65,18 @@ public class UserServiceTest {
 
     @Test
     public void testGetIssuers() throws Exception {
-        ListWrapper<User> newList = (ListWrapper<User>) service.getIssuers();
-        List<User> allIssuers = newList.getAll();
+        List<User> allIssuers = service.getIssuers();
         for(User i : allIssuers){
-            assertEquals(i.getUserName(), issuer.getUserName());
+            if(i.getUserName() == issuer.getUserName())
+                assertEquals(i.getUserName(), issuer.getUserName());
+            else
+                assertEquals(i.getUserName(), developer.getUserName());
         }
     }
 
     @Test
     public void testGetDevelopers() throws Exception {
-        ListWrapper<User> newList = (ListWrapper<User>) service.getDevelopers();
-        List<User> allDevelopers = newList.getAll();
+        List<User> allDevelopers = service.getDevelopers();
         for(User d : allDevelopers){
             assertEquals(d.getUserName(), developer.getUserName());
         }
@@ -79,8 +85,7 @@ public class UserServiceTest {
     @Test
     public void testCreateAdmin() throws Exception {
         service.createAdmin("testFirst", "testMiddle", "testLast", "testAdminName");
-        ListWrapper<User> newList = (ListWrapper<User>) service.getAdministrators();
-        List<User> containsNewAdmin = newList.getAll();
+        List<User> containsNewAdmin = service.getAdministrators();
         for(User a : containsNewAdmin){
             if(a.getUserName() == "testAdminName")
                 assertEquals(a.getUserName(), "testAdminName");
@@ -90,8 +95,7 @@ public class UserServiceTest {
     @Test
     public void testCreateIssuer() throws Exception {
         service.createIssuer("testFirst", "testMiddle", "testLast", "testIssuerName");
-        ListWrapper<User> newList = (ListWrapper<User>) service.getIssuers();
-        List<User> containsNewIssuer = newList.getAll();
+        List<User> containsNewIssuer = service.getIssuers();
         for(User i : containsNewIssuer){
             if(i.getUserName() == "testIssuerName")
                 assertEquals(i.getUserName(), "testIssuerName");
@@ -101,8 +105,7 @@ public class UserServiceTest {
     @Test
     public void testCreateDeveloper() throws Exception {
         service.createDeveloper("testFirst", "testMiddle", "testLast", "testDeveloperName");
-        ListWrapper<User> newList = (ListWrapper<User>) service.getDevelopers();
-        List<User> containsNewDeveloper = newList.getAll();
+        List<User> containsNewDeveloper = service.getDevelopers();
         for(User d : containsNewDeveloper){
             if(d.getUserName() == "testDeveloperName")
                 assertEquals(d.getUserName(), "testDeveloperName");

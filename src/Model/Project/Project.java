@@ -301,7 +301,7 @@ public class Project
      *
      * @throws IllegalArgumentException The given subsystem is null.
 	 */
-	void addSubSystem(SubSystem subSystem)
+	public void addSubSystem(SubSystem subSystem)
 	{
 
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
