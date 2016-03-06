@@ -1,3 +1,6 @@
+package ProjectPackageTest;
+
+import CustomExceptions.ModelException;
 import Model.Project.TheDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,8 +29,7 @@ public class TheDateTest {
 		
 
 		@Test
-		public void constructor3Param_SUCCES() thr
-		{
+		public void constructor3Param_SUCCES() throws ModelException {
 			TheDate d = new TheDate(day,month,year);
 			
 			assertEquals(d.getDay(),day);
@@ -36,35 +38,30 @@ public class TheDateTest {
 		}
 		
 		@Test (expected = DateTimeException.class)
-		public void constructor3Param_FAIL()
-		{
+		public void constructor3Param_FAIL() throws ModelException {
 			TheDate d = new TheDate(50,0,10);
 		}
 		
 		@Test
-		public void toString_SUCCES()
-		{
+		public void toString_SUCCES() throws ModelException {
 			TheDate d = new TheDate(day,month,year);
 			assertEquals(d.toString(),str);
 		}
 		
 		@Test
-		public void TheDateNow_SUCCES()
-		{
+		public void TheDateNow_SUCCES() throws ModelException {
 			TheDate d = new TheDate(LocalDate.now().getDayOfMonth(),LocalDate.now().getMonthValue(),LocalDate.now().getYear());
 			assertEquals(TheDate.TheDateNow(),d);
 		}
 		
 		@Test
-		public void dateNow_SUCCES()
-		{
+		public void dateNow_SUCCES() throws ModelException {
 			TheDate d = new TheDate(LocalDate.now().getDayOfMonth(),LocalDate.now().getMonthValue(),LocalDate.now().getYear());
 			assertEquals(TheDate.dateNow(),d.toString());
 		}
 		
 		@Test
-		public void equals_SUCCES()
-		{
+		public void equals_SUCCES() throws ModelException {
 			TheDate d = new TheDate(day,month,year);
 			TheDate a = new TheDate(24,2,2016);
 			
@@ -72,8 +69,7 @@ public class TheDateTest {
 		}
 		
 		@Test
-		public void equals_FAILVALUE()
-		{
+		public void equals_FAILVALUE() throws ModelException {
 			TheDate d = new TheDate(day,month,year);
 			TheDate a = new TheDate(24,2,2015);
 			
@@ -81,8 +77,7 @@ public class TheDateTest {
 		}
 		
 		@Test
-		public void equals_FAILNULL()
-		{
+		public void equals_FAILNULL() throws ModelException {
 			TheDate d = new TheDate(day,month,year);
 			TheDate a = null;
 			
@@ -90,8 +85,7 @@ public class TheDateTest {
 		}
 		
 		@Test
-		public void equals_FAILINSTANCE()
-		{
+		public void equals_FAILINSTANCE() throws ModelException {
 			TheDate d = new TheDate(day,month,year);
 			String a = new String("");
 			

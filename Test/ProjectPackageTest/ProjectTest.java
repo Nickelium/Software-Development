@@ -10,7 +10,6 @@ import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.Issuer;
 import Model.User.UserService;
-import com.sun.tools.internal.ws.processor.model.Model;
 import org.junit.Before;
 import org.junit.Test;
 

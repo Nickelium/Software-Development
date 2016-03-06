@@ -48,7 +48,7 @@ public class Parser
 	{
 		if(subSystem == null) return "";
 		String parsed = subSystem.toString();
-		for(SubSystem sub : subSystem.getSubSystems())
+		for(SubSystem sub : subSystem.getAllSubSystems())
 			parsed += "\n\t " + Parser.parseDetailedSubSystem(sub); 
 		return parsed;
 	}
