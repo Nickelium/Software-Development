@@ -1,21 +1,19 @@
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import CustomExceptions.ModelException;
+import Model.Project.Project;
 import Model.Project.ProjectService;
+import Model.Project.SubSystem;
+import Model.Project.TheDate;
 import Model.Roles.Lead;
-import Model.Roles.Role;
 import Model.User.Developer;
-import Model.User.Issuer;
 import Model.User.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
-import Model.Project.Project;
-import Model.Project.SubSystem;
-import Model.Project.TheDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ProjectTest {
 

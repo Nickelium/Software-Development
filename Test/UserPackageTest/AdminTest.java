@@ -1,7 +1,8 @@
 package UserPackageTest;
 
 import Model.User.Admin;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 

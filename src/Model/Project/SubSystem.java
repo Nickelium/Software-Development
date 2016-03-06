@@ -1,13 +1,18 @@
 package Model.Project;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+<<<<<<< HEAD
+import CustomExceptions.ModelException;
+import Model.BugReport.BugReport;
+
+=======
+>>>>>>> eb0549be7477cff5d182c97d170ac83dd7cd5ddc
 public class SubSystem 
 {
 
