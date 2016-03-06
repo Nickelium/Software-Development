@@ -18,7 +18,7 @@ public class Issuer extends User {
      * @throws ModelException Username is empty.
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
-    Issuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public Issuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
         super(firstName,middleName,lastName,userName);
     }
 
