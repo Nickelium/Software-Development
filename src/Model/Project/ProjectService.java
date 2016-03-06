@@ -98,4 +98,17 @@ public class ProjectService
         }
         throw new ModelException("There is no project containing the given bugreport.");
     }
+
+    /**
+     * Method for requesting all the subsystems of all the projects.
+     *
+     * @return List containing all the subsystems of all the projects.
+     */
+    public List<SubSystem> getAllSubSystems(){
+        List<SubSystem> subSystems = new ArrayList<>();
+        for (Project project: this.getAllProjects()){
+           subSystems.addAll(project.getAllSubSystems());
+        }
+        return subSystems;
+    }
 }
