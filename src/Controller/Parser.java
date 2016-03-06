@@ -28,11 +28,29 @@ public class Parser
 		
 	}
 	
+	public static String parseSubSystemList(List<SubSystem> listSubSystem)
+	{
+		String parsed ="";
+		for(int i=0; i< listSubSystem.size(); i++)
+			parsed += i + " " + listSubSystem.get(i).toString() +"\n";
+		return parsed;
+		
+	}
+	
 	public static String parseDetailedProject(Project project)
 	{
 		String parsed = project.toString();
-		for(SubSystem subSystem : project.getAllSubSystems())
-			parsed += subSystem.toString() + "\n";
+		for(SubSystem subSystem : project.getSubSystems())
+			parsed += "\n\t" +Parser.parseDetailedSubSystem(subSystem);
+		return parsed;
+	}
+	
+	public static String parseDetailedSubSystem(SubSystem subSystem)
+	{
+		if(subSystem == null) return "";
+		String parsed = subSystem.toString();
+		for(SubSystem sub : subSystem.getSubSystems())
+			parsed += "\n\t " + Parser.parseDetailedSubSystem(sub); 
 		return parsed;
 	}
 

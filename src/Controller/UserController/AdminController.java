@@ -8,6 +8,7 @@ import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
+import Model.Project.SubSystem;
 import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.User.User;
@@ -111,6 +112,50 @@ public class AdminController extends UserController {
 
     public void createSubSystem()
     {
+    	List<Project> projectList = projectService.getAllProjects();
+    	String parsedProjectList = Parser.parseProjectList(projectList);
+    	ui.display(parsedProjectList);
+    	
+    	List<SubSystem> subSystemList = projectService.getAllSubSystems();
+    	String parsedSubSystemList = Parser.parseSubSystemList(subSystemList);
+    	ui.display(parsedSubSystemList);
+    	
+    	ui.display("Project or Subsystem (P/S) : ");
+    	String input = ui.readString();
+    	
+    	try
+    	{
+	    	int index;
+	    	if(input.equalsIgnoreCase("p"))
+	    	{
+	    		index = ui.readInt();
+	    		Project project = projectList.get(index);
+	    		//creator voor subsytem of niet ?
+	    		String name = ui.readString();
+	    		String description = ui.readString();
+	    		SubSystem newSubSystem = new SubSystem(name,description);
+	    		project.addSubSystem(newSubSystem);
+	    	}
+	    	else if (input.equalsIgnoreCase("s"))
+	    	{
+	    		index = ui.readInt();
+	    		SubSystem subSystem = subSystemList.get(index);
+	    		//creator voor subsytem of niet ?
+	    		String name = ui.readString();
+	    		String description = ui.readString();
+	    		SubSystem newSubSystem = new SubSystem(name,description);
+	    		subSystem.addSubSystem(newSubSystem);
+	    		
+	    	}
+	    	else
+	    	{
+	    		//invalid input
+	    	}
+    	}
+    	catch(ModelException e)
+    	{
+    		
+    	}
     	
     }
 

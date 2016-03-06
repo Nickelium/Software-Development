@@ -181,6 +181,12 @@ public class SubSystem
 		bugReports.add(bugReport);
 	}
 	
+	public List<SubSystem> getSubSystems()
+	{
+		List<SubSystem> list = new ArrayList<SubSystem>();
+		list = subSystems;
+		return Collections.unmodifiableList(list);
+	}
 	/**
 	 * Getter to request all subsystems of this subsystem.
      *

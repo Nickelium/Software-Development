@@ -37,6 +37,14 @@ public class ProjectService
         return Collections.unmodifiableList(projectList.getAll());
     }
 
+    public List<SubSystem> getAllSubSystems()
+    {
+    	List<SubSystem> subSystemList = new ArrayList<>();
+    	for(Project project : getAllProjects())
+    		subSystemList.addAll(project.getAllSubSystems());
+    	return subSystemList;
+    }
+    
     /**
      * Method to create a new project and add it to the project list.
      *
@@ -55,7 +63,7 @@ public class ProjectService
         projectList.insert(project);
         return project;
     }
-
+    
     /**
      * Method for removing a project from the list of projects.
      *
