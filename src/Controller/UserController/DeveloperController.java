@@ -17,12 +17,24 @@ public class DeveloperController extends IssuerController {
 
     private void initializeUseCasesDeveloper(){
         try {
-            useCases.add(new FunctionWrap("Assign To Project", AdminController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Assign To Bug Report", AdminController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Update Bug Report", AdminController.class.getMethod("showProject")));
+            useCases.add(new FunctionWrap("Assign To Project", DeveloperController.class.getMethod("assignToProject")));
+            useCases.add(new FunctionWrap("Assign To Bug Report", DeveloperController.class.getMethod("assignToBugReport")));
+            useCases.add(new FunctionWrap("Update Bug Report", DeveloperController.class.getMethod("updateBugReport")));
 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void assignToProject(){
+
+    }
+
+    public void assignToBugReport(){
+
+    }
+
+    public void updateBugReport(){
+
     }
 }
