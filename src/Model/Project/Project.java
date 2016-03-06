@@ -176,7 +176,7 @@ public class Project
 	/**
 	 * Setter to set the starting date of the project.
      *
-     * @param newDate The starting date of the project.
+     * @param date The starting date of the project.
      *
      * @throws ModelException The given date is before the creation date.
      * @throws IllegalArgumentException The given date is null.

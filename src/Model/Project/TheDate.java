@@ -11,22 +11,22 @@ public class TheDate
 {
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private LocalDate date;
-	
+
+
 	/**
-	 * Constuctor to create a date instance with given arguments.
-     *
-	 * @param day The day of the date.
-	 * @param month The month of the date.
-	 * @param year The year of the date.
-	 * @throws ModelException 
-     *
-     * @throws DateTimeException The given attributes are not valid.
-	 */
-	public TheDate(String stringDate) throws ModelException
-	{
-		String[] parts = retrieveParts(stringDate);
-		if(parts.length < 3) throw new ModelException("Incorrect date format");
-		this.date = LocalDate.of(Integer.parseInt(parts[2]),Integer.parseInt(parts[1]),Integer.parseInt(parts[0]));
+	 * Constructor for the date that accepts a string representation of the date. (dd/MM/yyyy)
+	 *
+	 * @param stringDate String representation of the date. (dd/MM/yyyy)
+	 *
+	 * @throws ModelException The given string date cannot be parsed to a date.
+     */
+	public TheDate(String stringDate) throws ModelException {
+		try {
+			String[] parts = retrieveParts(stringDate);
+			this.date = LocalDate.of(Integer.parseInt(parts[2]), Integer.parseInt(parts[1]), Integer.parseInt(parts[0]));
+		} catch (Exception e){
+			throw new ModelException("Incorrect date format!");
+		}
 	}
 	
 	private String[] retrieveParts(String stringDate)
@@ -34,7 +34,16 @@ public class TheDate
 		return stringDate.split("/");
 	}
 
-	
+	/**
+	 * Constuctor to create a date instance with given arguments.
+	 *
+	 * @param day The day of the date.
+	 * @param month The month of the date.
+	 * @param year The year of the date.
+	 * @throws ModelException
+	 *
+	 * @throws DateTimeException The given attributes are not valid.
+	 */
 	public TheDate(int day, int month, int year) throws ModelException
 	{
 		this.date = LocalDate.of(year,month,day);
