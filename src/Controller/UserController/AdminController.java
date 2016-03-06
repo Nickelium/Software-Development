@@ -38,7 +38,7 @@ public class AdminController extends UserController {
     }
     public void createProject()
     {
-    	ui.display("Please enter the project information:");
+    	ui.display("Please enter the project information.");
     	ui.display("Name: ");
     	String name = ui.readString();
     	ui.display("Description: ");
@@ -62,7 +62,7 @@ public class AdminController extends UserController {
     	
     	List<User> possibleLeadDevelopers = userService.getDevelopers();
        	String parsedPossibleLeadDevelopers = Parser.parseUserList(possibleLeadDevelopers);
-		ui.display("Please choose a lead developer for this project: ");
+		ui.display("Choose a lead developer for this project: ");
        	ui.display(parsedPossibleLeadDevelopers);
        	int index = ui.readInt();
        	Developer leadDev = (Developer) possibleLeadDevelopers.get(index);
@@ -70,7 +70,7 @@ public class AdminController extends UserController {
     	
     	try {
 			Project project = projectService.createProject(name, description, startingDate, budget, leadRole);
-			ui.display("Your project has been created successfully!");
+			ui.display("Your project has been successfully created!");
 			ui.display(project.toString());
 		} catch (ModelException e) {
 			ui.errorDisplay(e.getMessage());
@@ -81,7 +81,7 @@ public class AdminController extends UserController {
     
     public void updateProject()
     {
-		ui.display("Choose a project you want to update: ");
+		ui.display("Select a project you want to update: ");
     	List<Project> projectList = projectService.getAllProjects();
     	String parsedProjectList = Parser.parseProjectList(projectList);
     	ui.display(parsedProjectList);
@@ -89,7 +89,7 @@ public class AdminController extends UserController {
     	int index = ui.readInt();
     	Project project = projectList.get(index);
 
-    	ui.display("Enter new values:");
+    	ui.display("Enter new values.");
     	ui.display("Name (current value: "+ project.getName() + "): ");
     	String name = ui.readString();
     	ui.display("Description (current value: "+ project.getDescription() +"): ");
@@ -133,7 +133,7 @@ public class AdminController extends UserController {
 
     public void deleteProject()
     {
-		ui.display("Choose a project you want to delete: ");
+		ui.display("Select a project you want to delete: ");
     	List<Project> projectList = projectService.getAllProjects();
     	String parsedProjectList = Parser.parseProjectList(projectList);
     	ui.display(parsedProjectList);
@@ -147,10 +147,12 @@ public class AdminController extends UserController {
 
     public void createSubSystem()
     {
+		ui.display("List of all projects:");
     	List<Project> projectList = projectService.getAllProjects();
     	String parsedProjectList = Parser.parseProjectList(projectList);
     	ui.display(parsedProjectList);
-    	
+
+		ui.display("List of all subsystems:");
     	List<SubSystem> subSystemList = projectService.getAllSubSystems();
     	String parsedSubSystemList = Parser.parseSubSystemList(subSystemList);
     	ui.display(parsedSubSystemList);
