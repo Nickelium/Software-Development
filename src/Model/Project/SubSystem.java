@@ -28,7 +28,7 @@ public class SubSystem
      *
      * @throws ModelException The name or description is not valid. (see attribute setters for rules)
 	 */
-	 SubSystem(String name, String description) throws ModelException
+	 public SubSystem(String name, String description) throws ModelException
 	{
 		this.setName(name);
 		this.setDescription(description);
@@ -67,7 +67,15 @@ public class SubSystem
 	{
 		return description;
 	}
-	
+	/**
+	 * Getter to request the subsystems list of this subsystem
+	 * 
+	 * @return The subsystems of this subsystem
+	 */
+	public List<SubSystem> getSubSystems()
+	{
+		return Collections.unmodifiableList(subSystems);
+	}
 	/**
 	 * Setters
 	 */
@@ -229,5 +237,12 @@ public class SubSystem
      */
     List<BugReport> getSubsystemBugReports(){
         return this.bugReports;
+    }
+    
+    @Override
+    public String toString()
+    {
+    	return "Subsystem name: " + name + "\nDescription: " + description 
+    			+ "\nVersionID: " + versionID; 
     }
 }

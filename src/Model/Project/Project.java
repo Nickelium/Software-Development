@@ -354,7 +354,12 @@ public class Project
 
 	@Override
 	public String toString(){
-		return "Project name: " + getName() + "; Creation Date: " + getCreationDate() + "; Starting Date: " + getStartingDate() + "; Lead developer: " + getLeadRole().getDeveloper().toString();
+		return "Project name: " + getName() + "\nDescription: " + getDescription() 
+				+"\nCreation Date: " + getCreationDate() 
+				+ "\nStarting Date: " + getStartingDate() + "\nBudget: " + getBudget()
+				+ "\nVersionID: " + versionID + "\nLead developer: " 
+				+ getLeadRole().getDeveloper().toString();
+				//add tostring devsroles
 	}
 
 }
