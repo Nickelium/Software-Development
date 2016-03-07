@@ -4,6 +4,7 @@ import Controller.UserController.AdminController;
 import Controller.UserController.DeveloperController;
 import Controller.UserController.IssuerController;
 import Controller.UserController.UserController;
+import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.Project.ProjectService;
 import Model.User.Admin;
@@ -34,53 +35,64 @@ public class LoginController {
         this.ui = ui;
     }
 
-    public UserController run() {
-
-        loginMessage();
-        int userType = ui.readInt();
-
-        List<User> users = new ArrayList<User>();
-
-        try {
-            switch (userType) {
-                case 1://Admin
-                    users = userService.getAdministrators();
-                    break;
-                case 2://Issuer
-                    users = userService.getIssuers();
-                    break;
-                case 3://Developer
-                    users = userService.getDevelopers();
-                    break;
-                default:
-                    throw new Exception("Invalid input");
-            }
-        } catch (Exception e) {
-            ui.errorDisplay(e.getMessage());
+    public UserController run() 
+    {
+    	try
+    	{
+	        loginMessage();
+	        int userType = ui.readInt();
+	
+	        List<User> users = new ArrayList<User>();
+	
+	        switch (userType)
+	        {
+	        	case 1://Admin
+	        		users = userService.getAdministrators();
+	                break;
+	            case 2://Issuer
+	                users = userService.getIssuers();
+	                break;
+	            case 3://Developer
+	                users = userService.getDevelopers();
+	                break;
+	            default:
+	               throw new ModelException("This in an invalid input");
+	        }      
+	
+	        ui.display("Choose an user to log in as:");
+	        String parsedTextUsers = Parser.parseUserList(users);
+	        ui.display(parsedTextUsers);
+	
+	        //select & set User
+	        int selectedUserIndex = ui.readInt();
+	        User user = users.get(selectedUserIndex);
+	        setCurrentUser(user);
+	
+	        welcomeUserMessage(user);
+	
+	        // choose controller
+	        UserController userController;
+	        if (currentUser instanceof Admin) 
+	        {
+	            userController = new AdminController(ui, this.userService, this.projectService, this.bugReportService);
+	        } 
+	        else if (currentUser instanceof Developer) 
+	        {
+	            userController = new DeveloperController(ui, this.userService, this.projectService, this.bugReportService);
+	        }
+	        else 
+	        {
+	            userController = new IssuerController(ui, this.userService, this.projectService, this.bugReportService);
+	        }
+	
+	        return userController;
+        
+    	} 
+    	catch (ModelException e) 
+    	{
+    		ui.errorDisplay(e.getMessage());
+            return run();
         }
-
-        ui.display("Choose an user to log in as:");
-        String parsedTextUsers = Parser.parseUserList(users);
-        ui.display(parsedTextUsers);
-
-        //select & set User
-        int selectedUserIndex = ui.readInt();
-        User user = users.get(selectedUserIndex);
-        setCurrentUser(user);
-
-        welcomeUserMessage(user);
-
-        // choose controller
-        UserController userController;
-        if (currentUser instanceof Admin) {
-            userController = new AdminController(ui, this.userService, this.projectService, this.bugReportService);
-        } else if (currentUser instanceof Developer) {
-            userController = new DeveloperController(ui, this.userService, this.projectService, this.bugReportService);
-        } else {
-            userController = new IssuerController(ui, this.userService, this.projectService, this.bugReportService);
-        }
-
-        return userController;
     }
 
     private void loginMessage() {
