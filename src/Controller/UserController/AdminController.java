@@ -176,10 +176,8 @@ public class AdminController extends UserController {
              }
             else
             {
-               ui.display("This is an invalid input");
-               ui.display("Press 1 to retry.");
-               if (ui.readInt() == 1) createSubSystem();
-             }
+               throw new ModelException("This is an invalid input");
+            }
         } 
     	catch (ModelException e) 
     	{
