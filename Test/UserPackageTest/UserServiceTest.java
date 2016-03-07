@@ -46,11 +46,11 @@ public class UserServiceTest {
     public void testGetUserList() throws Exception {
         List<User> allUsers = service.getUserList();
         for(User u : allUsers){
-            if(u.getUserName() == admin.getUserName())
+            if(u instanceof Admin)
                 assertEquals(u.getUserName(),admin.getUserName());
-            if(u.getUserName() == developer.getUserName())
+            else if(u instanceof Developer)
                 assertEquals(u.getUserName(), developer.getUserName());
-            if(u.getUserName() == issuer.getUserName())
+            else if(u instanceof Issuer)
                 assertEquals(u.getUserName(), issuer.getUserName());
         }
     }
@@ -67,10 +67,10 @@ public class UserServiceTest {
     public void testGetIssuers() throws Exception {
         List<User> allIssuers = service.getIssuers();
         for(User i : allIssuers){
-            if(i.getUserName() == issuer.getUserName())
-                assertEquals(i.getUserName(), issuer.getUserName());
-            else
+            if(i instanceof Developer)
                 assertEquals(i.getUserName(), developer.getUserName());
+            else if(i instanceof Issuer)
+                assertEquals(i.getUserName(), issuer.getUserName());
         }
     }
 
@@ -87,7 +87,7 @@ public class UserServiceTest {
         service.createAdmin("testFirst", "testMiddle", "testLast", "testAdminName");
         List<User> containsNewAdmin = service.getAdministrators();
         for(User a : containsNewAdmin){
-            if(a.getUserName() == "testAdminName")
+            if(a instanceof Admin && a.getUserName() == "testAdminName")
                 assertEquals(a.getUserName(), "testAdminName");
         }
     }
@@ -97,7 +97,7 @@ public class UserServiceTest {
         service.createIssuer("testFirst", "testMiddle", "testLast", "testIssuerName");
         List<User> containsNewIssuer = service.getIssuers();
         for(User i : containsNewIssuer){
-            if(i.getUserName() == "testIssuerName")
+            if(i instanceof Issuer && !(i instanceof Developer)&& i.getUserName() == "testIssuerName")
                 assertEquals(i.getUserName(), "testIssuerName");
         }
     }
@@ -107,7 +107,7 @@ public class UserServiceTest {
         service.createDeveloper("testFirst", "testMiddle", "testLast", "testDeveloperName");
         List<User> containsNewDeveloper = service.getDevelopers();
         for(User d : containsNewDeveloper){
-            if(d.getUserName() == "testDeveloperName")
+            if(d instanceof Developer && !(d instanceof Issuer))
                 assertEquals(d.getUserName(), "testDeveloperName");
         }
     }
