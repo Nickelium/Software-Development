@@ -28,7 +28,7 @@ public class SubSystem
      *
      * @throws ModelException The name or description is not valid. (see attribute setters for rules)
 	 */
-	 public SubSystem(String name, String description) throws ModelException
+	SubSystem(String name, String description) throws ModelException
 	{
 		this.setName(name);
 		this.setDescription(description);
@@ -87,7 +87,7 @@ public class SubSystem
      *
 	 * @throws ModelException The current versionid is greater than or equal to the new one.
 	 */
-	public void setVersionID(double versionID) throws ModelException
+	private void setVersionID(double versionID) throws ModelException
 	{
 		if (!isValidVersionID(versionID)) throw new ModelException("The versionId must be higher than the current one.");
 		this.versionID = versionID;
@@ -126,7 +126,7 @@ public class SubSystem
      *
      * @return True if the versionId is greater than or equal to the current versionId.
      */
-    public boolean isValidVersionID(double versionID){
+    private boolean isValidVersionID(double versionID){
         if (this.versionID >= versionID) return false;
         else return true;
     }
@@ -138,7 +138,7 @@ public class SubSystem
      *
      * @return True if the name is not empty.
      */
-    public boolean isValidName(String name){
+    private boolean isValidName(String name){
         if (name == null) return false;
         if (name.equals("")) return false;
         else return true;
@@ -151,7 +151,7 @@ public class SubSystem
      *
      * @return True if the description is not empty.
      */
-    public boolean isValidDescription(String description){
+    private boolean isValidDescription(String description){
         if (description == null) return false;
         if (description.equals("")) return false;
         else return true;
@@ -164,7 +164,7 @@ public class SubSystem
 	 *
 	 * @return True if the subsystem is not already a subsystem of this subsystem.
      */
-	public boolean isValidSubsystem(SubSystem subSystem){
+    private boolean isValidSubsystem(SubSystem subSystem){
 		if(this.getAllSubSystems().contains(subSystem)) return false;
 		else return true;
 	}
@@ -181,7 +181,7 @@ public class SubSystem
      * @throws IllegalArgumentException The given subsystem is null.
 	 * @throws ModelException The subsystem is not a valid subsystem.
 	 */
-	public void addSubSystem(SubSystem subSystem) throws ModelException
+	void addSubSystem(SubSystem subSystem) throws ModelException
 	{
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
 		if(!isValidSubsystem(subSystem)) throw new ModelException("The subsystem cannot be added!");
@@ -225,7 +225,7 @@ public class SubSystem
     public List<BugReport> getAllBugReports(){
         List<BugReport> bugReports = new ArrayList<>();
         for (SubSystem subsystem: this.getAllSubSystems()){
-            bugReports.addAll(subsystem.getSubsystemBugReports());
+            bugReports.addAll(subsystem.getBugReports());
         }
         return Collections.unmodifiableList(bugReports);
     }
@@ -235,14 +235,14 @@ public class SubSystem
      *
      * @return A list of the bugreports of the current subsystem.
      */
-    List<BugReport> getSubsystemBugReports(){
+    List<BugReport> getBugReports(){
         return this.bugReports;
     }
     
     @Override
     public String toString()
     {
-    	return "Subsystem name: " + name + "\nDescription: " + description 
-    			+ "\nVersionID: " + versionID; 
+    	return "Subsystem name: " + getName() + "\nDescription: " + getDescription() 
+    			+ "\nVersionID: " + getVersionID(); 
     }
 }

@@ -36,7 +36,7 @@ public class Project
      *
      * @throws ModelException One of the arguments given is not valid. (See setters of arguments for rules)
 	 */
-	public Project(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ModelException
+	Project(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ModelException
 	{
 		this.setName(name);
 		this.setDescription(description);
@@ -236,7 +236,7 @@ public class Project
      *
      * @return True if the give name is not null or empty.
      */
-    public boolean isValidName(String name){
+    private boolean isValidName(String name){
         if (name == null) return false;
         if (name.equals("")) return false;
         else return true;
@@ -249,8 +249,9 @@ public class Project
      *
      * @return True if the description is null or empty.
      */
-    public boolean isValidDescription(String description){
+    private boolean isValidDescription(String description){
         if (description == null) return false;
+        if (description.equals("")) return false;
         else return true;
     }
 
@@ -261,7 +262,7 @@ public class Project
      *
      * @return True if the startingdate is later than the creation date.
      */
-    public boolean isValidStartingDate(TheDate startingDate){
+    private boolean isValidStartingDate(TheDate startingDate){
         if (this.getCreationDate().isAfter(startingDate)) return false;
         else return true;
     }
@@ -273,7 +274,7 @@ public class Project
      *
      * @return True if the budget is bigger than or equal to 0.
      */
-    public boolean isValidBudget(double budget){
+    private boolean isValidBudget(double budget){
         if (budget < 0) return false;
         else return true;
     }
@@ -285,7 +286,7 @@ public class Project
      *
      * @return True if the versionId is higher than the current one.
      */
-    public boolean isValidVersionID(double versionID){
+    private boolean isValidVersionID(double versionID){
         if (versionID <= this.getVersionID()) return false;
         else return true;
     }
@@ -301,7 +302,7 @@ public class Project
      *
      * @throws IllegalArgumentException The given subsystem is null.
 	 */
-	public void addSubSystem(SubSystem subSystem)
+	void addSubSystem(SubSystem subSystem)
 	{
 
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
@@ -347,7 +348,7 @@ public class Project
     public List<BugReport> getAllBugReports(){
         List<BugReport> bugReports = new ArrayList<>();
         for (SubSystem subsystem: this.getAllSubSystems()){
-            bugReports.addAll(subsystem.getSubsystemBugReports());
+            bugReports.addAll(subsystem.getBugReports());
         }
         return Collections.unmodifiableList(bugReports);
     }
@@ -358,7 +359,7 @@ public class Project
 				+"\nCreation Date: " + getCreationDate() 
 				+ "\nStarting Date: " + getStartingDate() + "\nBudget: " + getBudget()
 				+ "\nVersionID: " + versionID + "\nLead developer: " 
-				+ getLeadRole().getDeveloper().toString();
+				+ getLeadRole().getDeveloper();
 				//add tostring devsroles
 	}
 

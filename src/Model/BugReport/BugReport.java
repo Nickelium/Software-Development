@@ -48,7 +48,7 @@ public class BugReport {
     BugReport(String title, String description, SubSystem subSystem, Issuer creator) throws ModelException
     {
         this(title,description,subSystem, creator, TheDate.TheDateNow(), new New(), new ArrayList<>());
-   }
+    }
     
     /**
      * Constructor for a Bugreport.
@@ -62,7 +62,7 @@ public class BugReport {
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
     BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ModelException
-     {
+    {
          if (!isValidTitle(title)) throw new ModelException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ModelException("The description cannot be empty!") ;
          if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
@@ -180,7 +180,7 @@ public class BugReport {
      *
      * @return True if the title is not null or not empty. False otherwise.
      */
-    public boolean isValidTitle(String title){
+    private boolean isValidTitle(String title){
         if (title == null)return false;
         if (title.equals("")) return false;
         else return true;
@@ -193,7 +193,7 @@ public class BugReport {
      *
      * @return True if the description is not null or not empty. False otherwise.
      */
-    public boolean isValidDescription(String description){
+    private boolean isValidDescription(String description){
         if (description == null) return false;
         if (description.equals("")) return false;
         else return true;
@@ -244,7 +244,7 @@ public class BugReport {
      *
      * @throws IllegalArgumentException The given comment is null.
      */
-    public void addComment(Comment comment){
+    void addComment(Comment comment){
         if (comment == null) throw new IllegalArgumentException("Comment is null");
 
         this.comments.add(comment);
@@ -264,6 +264,15 @@ public class BugReport {
         else{
             return false;
         }
+    }
+    
+    @Override
+    public String toString()
+    {
+    	return "Bugreport ID: " + getId() + "\nTitle: " + getTitle() 
+    			+ "\nDescription: " + getDescription()+ "\nCreation date: "
+    			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
+    			+ getCreator(); 
     }
 
     //endregion
