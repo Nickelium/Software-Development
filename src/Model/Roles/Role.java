@@ -68,5 +68,12 @@ public abstract class Role {
     public boolean hasValidAssignmentPermission(Permission permission){
         return (this.assignmentPermission.equals(permission));
     }
+    
+    /**
+     * Method to copy this role object.
+     * 
+     * @return The copied role.
+     */
+    public abstract Role copy();
 }
 

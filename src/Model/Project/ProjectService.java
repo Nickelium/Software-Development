@@ -54,6 +54,22 @@ public class ProjectService
         projectList.insert(project);
         return project;
     }
+    
+    /**
+     * Method to fork a project and add it to the project list.
+     * 
+     * @param project The project that will be forked
+     * 
+     * @return The forked project
+     * 
+     * @throws ModelException One of attributes of the project could not be forked.
+     */
+    public Project forkProject(Project project) throws ModelException
+    {
+    	Project forkedProject = project.fork();
+    	projectList.insert(forkedProject);
+		return forkedProject;	
+    }
 
     /**
      * Method to create a subsystem and insert it into an existing subsystem.

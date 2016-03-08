@@ -211,6 +211,7 @@ public class SubSystem
 		List<SubSystem> list = new ArrayList<SubSystem>();
 		for(SubSystem s : subSystems)
 		{
+			list.add(s);
 			list.addAll(s.getAllSubSystems());
 		}
 		
@@ -239,6 +240,32 @@ public class SubSystem
         return this.bugReports;
     }
     
+    /**
+	 * Method to fork a subsystem.
+	 * 
+	 * @return The forked subsystem.
+	 * 
+	 * @throws ModelException One of the attributes of the subsystem could not be forked.
+	 */
+    //fork != clone
+    public SubSystem fork() throws ModelException
+    {
+    	SubSystem forkedSubSystem = new SubSystem(name,description);
+    	forkedSubSystem.versionID = versionID;
+    	
+    	for(SubSystem subsystem : subSystems )
+    		forkedSubSystem.subSystems.add(subsystem.fork());
+    	
+    	//no bugreports
+    	
+    	return forkedSubSystem;
+    }
+    
+    /**
+	 * Method to represent a subsystem as a string.
+	 * 
+	 * @return The subsystem as a string.
+	 */
     @Override
     public String toString()
     {

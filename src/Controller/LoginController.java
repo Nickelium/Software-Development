@@ -88,7 +88,7 @@ public class LoginController {
 	        return userController;
         
     	} 
-    	catch (ModelException e) 
+    	catch (ModelException | IndexOutOfBoundsException e) 
     	{
     		ui.errorDisplay(e.getMessage());
             return run();

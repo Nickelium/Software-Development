@@ -30,4 +30,14 @@ public class Lead extends Role {
     public String toString() {
         return "Lead:" + getDeveloper().toString();
     }
+
+    /**
+     * Method to copy this role object.
+     * 
+     * @return The copied role.
+     */
+	@Override
+	public Role copy() {
+		return new Lead(getDeveloper());
+	}
 }

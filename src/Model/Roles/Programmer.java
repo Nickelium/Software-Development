@@ -30,4 +30,16 @@ public class Programmer extends Role {
     public String toString() {
         return "Programmer: " + getDeveloper().toString();
     }
+    
+    /**
+     * Method to copy this programmer object.
+     * 
+     * @return The copied role.
+     */
+	@Override
+	public Role copy() {
+		return new Programmer(getDeveloper());
+	}
+	
+	
 }

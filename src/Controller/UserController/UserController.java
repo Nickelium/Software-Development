@@ -116,16 +116,25 @@ public abstract class UserController {
 
     public void showProject()
     {
-    	List<Project> projectList = projectService.getAllProjects();
-    	String parsedProjectList = Parser.parseProjectList(projectList);
-    	ui.display(parsedProjectList);
-    	
-    	int index = ui.readInt();
-    	Project project = projectList.get(index);
-    	
-    	String projectDetails = Parser.parseDetailedProject(project);
-    	
-    	ui.display(projectDetails);
+    	try
+    	{
+	    	List<Project> projectList = projectService.getAllProjects();
+	    	String parsedProjectList = Parser.parseProjectList(projectList);
+	    	ui.display(parsedProjectList);
+	    	
+	    	int index = ui.readInt();
+	    	Project project = projectList.get(index);
+	    	
+	    	String projectDetails = Parser.parseDetailedProject(project);
+	    	
+	    	ui.display(projectDetails);
+    	}
+    	catch(IndexOutOfBoundsException e)
+    	{
+    		 getUi().display(e.getMessage());
+             getUi().display("Press 1 to retry.");
+             if (getUi().readInt() == 1) showProject();
+    	}
     }
 
     public void exitProgram(){

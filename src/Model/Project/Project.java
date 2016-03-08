@@ -352,7 +352,38 @@ public class Project
         }
         return Collections.unmodifiableList(bugReports);
     }
+    
 
+	/**
+	 * Method to fork a project.
+	 * 
+	 * @return The forked project.
+	 * 
+	 * @throws ModelException One of attributes of the project could not be forked.
+	 */
+    //fork != clone
+	public Project fork () throws ModelException
+	{
+		Project forkedProject = new Project(name,description,startingDate.copy(),budget, (Lead)leadRole.copy());
+		
+		forkedProject.creationDate = creationDate.copy();
+		forkedProject.versionID = versionID;
+		
+	
+		for(SubSystem subsystem : subSystems)
+			forkedProject.subSystems.add(subsystem.fork());
+			
+		for(Role role : devsRoles)
+			forkedProject.devsRoles.add(role.copy());
+		
+		return forkedProject;
+	}
+    
+	/**
+	 * Method to represent a project as a string.
+	 * 
+	 * @return The project as a string.
+	 */
 	@Override
 	public String toString(){
 		return "Project name: " + getName() + "\nDescription: " + getDescription() 

@@ -86,7 +86,7 @@ public class TheDate
 	/**
 	 * Overrided string method.
      *
-	 * @Returns String format of this object
+	 * @return String format of this object
 	 */
 	@Override
 	public String toString()
@@ -152,5 +152,17 @@ public class TheDate
 	public static TheDate TheDateNow()
 	{
 		return new TheDate();
+	}
+	
+	/**
+	 * Method to copy a thedate object
+	 * 
+	 * @return The copied date
+	 * 
+	 * @throws ModelException The attributes of thedate object are not valid.
+	 */
+	public TheDate copy() throws ModelException
+	{
+		return new TheDate(getDay(),getMonth(),getYear());
 	}
 }
