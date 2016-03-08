@@ -5,6 +5,7 @@ import Controller.UI;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
+import Model.User.User;
 import Model.User.UserService;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,18 +17,20 @@ import java.util.List;
  */
 public abstract class UserController {
 
-    protected UI ui;
-    protected UserService userService;
-    protected ProjectService projectService;
-    protected BugReportService bugReportService;
+    private UI ui;
+    private UserService userService;
+    private ProjectService projectService;
+    private BugReportService bugReportService;
+    private User currentUser;
 
     protected ArrayList<FunctionWrap> useCases = new ArrayList<FunctionWrap>();
 
-    public UserController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService){
+    public UserController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
         setUi(ui);
         setUserService(userService);
         setProjectService(projectService);
         setBugReportService(bugReportService);
+        setCurrentUser(currentUser);
         initializeUseCasesUser();
     }
 
@@ -67,24 +70,28 @@ public abstract class UserController {
 
     //region Getters & setters
 
-    public UI getUi() {
-        return ui;
-    }
-
-    public void setUi(UI ui) {
+    private void setUi(UI ui) {
         this.ui = ui;
     }
 
-    public void setUserService(UserService userService) {
+    private void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    public void setProjectService(ProjectService projectService) {
+    private void setProjectService(ProjectService projectService) {
         this.projectService = projectService;
     }
 
-    public void setBugReportService(BugReportService bugReportService) {
+    private void setBugReportService(BugReportService bugReportService) {
         this.bugReportService = bugReportService;
+    }
+
+    private void setCurrentUser(User currentUser){
+        this.currentUser = currentUser;
+    }
+
+    public UI getUi() {
+        return ui;
     }
 
     public UserService getUserService() {
@@ -97,6 +104,10 @@ public abstract class UserController {
 
     public BugReportService getBugReportService() {
         return bugReportService;
+    }
+
+    public User getCurrentUser(){
+        return currentUser;
     }
 
     //endregion

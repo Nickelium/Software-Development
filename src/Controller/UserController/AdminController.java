@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class AdminController extends UserController {
 
-    public AdminController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService) {
-        super(ui, userService, projectService, bugReportService);
+    public AdminController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
+        super(ui, userService, projectService, bugReportService, currentUser);
         initializeUseCasesAdmin();
     }
 
@@ -40,139 +40,139 @@ public class AdminController extends UserController {
     public void createProject() {
     	try
     	{
-	        ui.display("Please enter the project information.");
-	        ui.display("Name: ");
-	        String name = ui.readString();
-	        ui.display("Description: ");
-	        String description = ui.readString();
+	        getUi().display("Please enter the project information.");
+            getUi().display("Name: ");
+	        String name = getUi().readString();
+            getUi().display("Description: ");
+	        String description = getUi().readString();
 	
 	        TheDate startingDate = null;
-	       
-	        ui.display("Starting date (dd/MM/yyyy): ");
-	        String stringStartingDate = ui.readString();
+
+            getUi().display("Starting date (dd/MM/yyyy): ");
+	        String stringStartingDate = getUi().readString();
 	        startingDate = new TheDate(stringStartingDate);
+
+            getUi().display("Budget estimate: ");
+	        double budget = getUi().readDouble();
 	
-	        ui.display("Budget estimate: ");
-	        double budget = ui.readDouble();
-	
-	        List<User> possibleLeadDevelopers = userService.getDevelopers();
+	        List<User> possibleLeadDevelopers = getUserService().getDevelopers();
 	        String parsedPossibleLeadDevelopers = Parser.parseUserList(possibleLeadDevelopers);
-	        ui.display("Choose a lead developer for this project: ");
-	        ui.display(parsedPossibleLeadDevelopers);
-	        int index = ui.readInt();
+            getUi().display("Choose a lead developer for this project: ");
+            getUi().display(parsedPossibleLeadDevelopers);
+	        int index = getUi().readInt();
 	        Developer leadDev = (Developer) possibleLeadDevelopers.get(index);
 	        Lead leadRole = new Lead(leadDev);
 	        
-	        Project project = projectService.createProject(name, description, startingDate, budget, leadRole);
-	        ui.display("Your project has been successfully created!");
-	        ui.display(project.toString());
+	        Project project = getProjectService().createProject(name, description, startingDate, budget, leadRole);
+            getUi().display("Your project has been successfully created!");
+            getUi().display(project.toString());
         } 
     	catch (ModelException e) 
     	{
-            ui.errorDisplay(e.getMessage());
-            ui.display("Enter 1 if you want to retry.");
-            if (ui.readInt() == 1) createProject();
+            getUi().errorDisplay(e.getMessage());
+            getUi().display("Enter 1 if you want to retry.");
+            if (getUi().readInt() == 1) createProject();
         }
     }
 
     public void updateProject() {
     	try
     	{
-	        ui.display("Select a project you want to update: ");
-	        List<Project> projectList = projectService.getAllProjects();
+            getUi().display("Select a project you want to update: ");
+	        List<Project> projectList = getProjectService().getAllProjects();
 	        String parsedProjectList = Parser.parseProjectList(projectList);
-	        ui.display(parsedProjectList);
+            getUi().display(parsedProjectList);
 	
-	        int index = ui.readInt();
+	        int index = getUi().readInt();
 	        Project project = projectList.get(index);
-	
-	        ui.display("Please enter new values.");
-	        ui.display("Name (current value: " + project.getName() + "): ");
-	        String name = ui.readString();
-	        ui.display("Description (current value: " + project.getDescription() + "): ");
-	        String description = ui.readString();
+
+            getUi().display("Please enter new values.");
+            getUi().display("Name (current value: " + project.getName() + "): ");
+	        String name = getUi().readString();
+            getUi().display("Description (current value: " + project.getDescription() + "): ");
+	        String description = getUi().readString();
 	        TheDate startingDate = null;
-	        
-	        ui.display("Starting date (current value: " + project.getStartingDate() + "): ");
-	        String stringStartingDate = ui.readString();
+
+            getUi().display("Starting date (current value: " + project.getStartingDate() + "): ");
+	        String stringStartingDate = getUi().readString();
 	        startingDate = new TheDate(stringStartingDate);
-	  
-	        ui.display("Budget estimate (current value: " + project.getBudget() + "): ");
-	        double budget = ui.readDouble();
+
+            getUi().display("Budget estimate (current value: " + project.getBudget() + "): ");
+	        double budget = getUi().readDouble();
 	
 	        project.setName(name);
 	        project.setDescription(description);
 	        project.setStartingDate(startingDate);
 	        project.setBudget(budget);
-	
-	        ui.display("The project has been successfully updated.");
-	        ui.display(project.toString());
+
+            getUi().display("The project has been successfully updated.");
+            getUi().display(project.toString());
         
         } 
     	catch (ModelException e) 
     	{
-            ui.display(e.getMessage());
-            ui.display("Enter 1 if you want to retry.");
-            if (ui.readInt() == 1) updateProject();
+            getUi().display(e.getMessage());
+            getUi().display("Enter 1 if you want to retry.");
+            if (getUi().readInt() == 1) updateProject();
         }
     }
 
     public void deleteProject() 
     {
-        ui.display("Select a project you want to delete: ");
-        List<Project> projectList = projectService.getAllProjects();
+        getUi().display("Select a project you want to delete: ");
+        List<Project> projectList = getProjectService().getAllProjects();
         String parsedProjectList = Parser.parseProjectList(projectList);
-        ui.display(parsedProjectList);
+        getUi().display(parsedProjectList);
 
-        int index = ui.readInt();
+        int index = getUi().readInt();
         Project project = projectList.get(index);
 
-        projectService.deleteProject(project);
-        ui.display("The project has been successfully deleted.");
+        getProjectService().deleteProject(project);
+        getUi().display("The project has been successfully deleted.");
     }
 
     public void createSubSystem() 
     {
     	try
     	{
-	    	ui.display("List of all projects:");
-	        List<Project> projectList = projectService.getAllProjects();
+            getUi().display("List of all projects:");
+	        List<Project> projectList = getProjectService().getAllProjects();
 	        String parsedProjectList = Parser.parseProjectList(projectList);
-	        ui.display(parsedProjectList);
-	
-	        ui.display("List of all subsystems:");
-	        List<SubSystem> subSystemList = projectService.getAllSubSystems();
+            getUi().display(parsedProjectList);
+
+            getUi().display("List of all subsystems:");
+	        List<SubSystem> subSystemList = getProjectService().getAllSubSystems();
 	        String parsedSubSystemList = Parser.parseSubSystemList(subSystemList);
-	        ui.display(parsedSubSystemList);
-	
-	        ui.display("Project or subsystem (P/S) : ");
-	        String input = ui.readString();
+            getUi().display(parsedSubSystemList);
+
+            getUi().display("Project or subsystem (P/S) : ");
+	        String input = getUi().readString();
           
             int index;
             if (input.equalsIgnoreCase("p")) 
             {
-                ui.display("Choose a project: ");
-                index = ui.readInt();
+                getUi().display("Choose a project: ");
+                index = getUi().readInt();
                 Project project = projectList.get(index);
-                ui.display("Please enter the subsystem information.");
-                ui.display("Name:");
-                String name = ui.readString();
-                ui.display("Description:");
-                String description = ui.readString();
-                projectService.createSubsystem(name, description, project);
+                getUi().display("Please enter the subsystem information.");
+                getUi().display("Name:");
+                String name = getUi().readString();
+                getUi().display("Description:");
+                String description = getUi().readString();
+                getProjectService().createSubsystem(name, description, project);
 
             } 
             else if (input.equalsIgnoreCase("s")) 
             {
-               ui.display("Choose a subsystem: ");
-               index = ui.readInt();
-               SubSystem subSystem = subSystemList.get(index);
-               ui.display("Please enter the subsystem information.");
-               ui.display("Name:");
-               String name = ui.readString();
-               ui.display("Description:");
-               String description = ui.readString();
-               projectService.createSubsystem(name, description, subSystem);
+                getUi().display("Choose a subsystem: ");
+                index = getUi().readInt();
+                SubSystem subSystem = subSystemList.get(index);
+                getUi().display("Please enter the subsystem information.");
+                getUi().display("Name:");
+                String name = getUi().readString();
+                getUi().display("Description:");
+                String description = getUi().readString();
+                getProjectService().createSubsystem(name, description, subSystem);
              }
             else
             {
@@ -181,9 +181,9 @@ public class AdminController extends UserController {
         } 
     	catch (ModelException e) 
     	{
-                ui.display(e.getMessage());
-                ui.display("Press 1 to retry.");
-                if (ui.readInt() == 1) createSubSystem();
+            getUi().display(e.getMessage());
+            getUi().display("Press 1 to retry.");
+            if (getUi().readInt() == 1) createSubSystem();
         }
     }
 

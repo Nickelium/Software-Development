@@ -74,15 +74,15 @@ public class LoginController {
 	        UserController userController;
 	        if (currentUser instanceof Admin) 
 	        {
-	            userController = new AdminController(ui, this.userService, this.projectService, this.bugReportService);
+	            userController = new AdminController(ui, this.userService, this.projectService, this.bugReportService, user);
 	        } 
 	        else if (currentUser instanceof Developer) 
 	        {
-	            userController = new DeveloperController(ui, this.userService, this.projectService, this.bugReportService);
+	            userController = new DeveloperController(ui, this.userService, this.projectService, this.bugReportService, user);
 	        }
 	        else 
 	        {
-	            userController = new IssuerController(ui, this.userService, this.projectService, this.bugReportService);
+	            userController = new IssuerController(ui, this.userService, this.projectService, this.bugReportService, user);
 	        }
 	
 	        return userController;

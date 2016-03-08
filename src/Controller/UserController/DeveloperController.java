@@ -3,6 +3,7 @@ package Controller.UserController;
 import Controller.UI;
 import Model.BugReport.BugReportService;
 import Model.Project.ProjectService;
+import Model.User.User;
 import Model.User.UserService;
 
 /**
@@ -10,8 +11,8 @@ import Model.User.UserService;
  */
 public class DeveloperController extends IssuerController {
 
-    public DeveloperController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService){
-        super(ui, userService, projectService, bugReportService);
+    public DeveloperController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
+        super(ui, userService, projectService, bugReportService, currentUser);
         initializeUseCasesDeveloper();
     }
 
