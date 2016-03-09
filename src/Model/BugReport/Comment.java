@@ -33,7 +33,7 @@ public class Comment {
      * @throws ModelException The text of the comment is empty.
      * @throws IllegalArgumentException The given issuer is null.
      */
-    public Comment(String text, Issuer issuer) throws ModelException {
+    Comment(String text, Issuer issuer) throws ModelException {
         if (!isValidText(text)) throw new ModelException("The text of the comment is empty");
         if (issuer == null) throw new IllegalArgumentException("Invalid issuer for comment");
 
@@ -108,14 +108,17 @@ public class Comment {
     /**
      * Function for adding a comment to the list of comments.
      *
-     * @param comment Comment to add to the list of comments.
+     * @param text Text of the new comment.
+     * @param issuer The issuer writing the comment.
      *
-     * @throws IllegalArgumentException The comment is null.
+     * @throws ModelException Something went wront during the creation of the comment. See comment constructor.
+     *
+     * @return Returns the newly created comment.
      */
-    public void addComment(Comment comment){
-        if (comment == null) throw new IllegalArgumentException("Comment is null");
-
+    public Comment createComment(String text, Issuer issuer) throws ModelException {
+        Comment comment = new Comment(text, issuer);
         this.comments.add(comment);
+        return comment;
     }
     
     /**

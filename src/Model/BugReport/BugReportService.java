@@ -11,7 +11,6 @@ import Model.User.Issuer;
 import Model.User.User;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
-import com.sun.tools.internal.ws.processor.model.Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,6 +72,13 @@ public class BugReportService {
     {
         BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag, initialAssignees);
         return bugReport;
+    }
+
+    //TODO Documentation
+    public Comment createComment(String text, Issuer issuer, BugReport bugReport) throws ModelException {
+        Comment comment = new Comment(text, issuer);
+        bugReport.addComment(comment);
+        return comment;
     }
 
     /**

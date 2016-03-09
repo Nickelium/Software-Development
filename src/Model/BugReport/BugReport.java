@@ -48,7 +48,7 @@ public class BugReport {
     BugReport(String title, String description, SubSystem subSystem, Issuer creator) throws ModelException
     {
         this(title,description,subSystem, creator, TheDate.TheDateNow(), new New(), new ArrayList<>());
-    }
+   }
     
     /**
      * Constructor for a Bugreport.
@@ -62,7 +62,7 @@ public class BugReport {
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
     BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ModelException
-    {
+     {
          if (!isValidTitle(title)) throw new ModelException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ModelException("The description cannot be empty!") ;
          if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
@@ -184,7 +184,7 @@ public class BugReport {
      *
      * @return True if the title is not null or not empty. False otherwise.
      */
-    private boolean isValidTitle(String title){
+    public boolean isValidTitle(String title){
         if (title == null)return false;
         if (title.equals("")) return false;
         else return true;
@@ -197,7 +197,7 @@ public class BugReport {
      *
      * @return True if the description is not null or not empty. False otherwise.
      */
-    private boolean isValidDescription(String description){
+    public boolean isValidDescription(String description){
         if (description == null) return false;
         if (description.equals("")) return false;
         else return true;
@@ -254,6 +254,14 @@ public class BugReport {
         this.comments.add(comment);
     }
 
+    //TODO Documentation
+    public void addDependency(BugReport dependency) {
+        if (dependency == null) throw new IllegalArgumentException("Dependency is null");
+
+        this.dependencies.add(dependency);
+
+    }
+
     /**
      * Overrided the equals method to only look at the id to check for equality.
      *
@@ -270,24 +278,19 @@ public class BugReport {
         }
     }
 
-    //TODO documentatie
-    public void addDependency(BugReport bugReport){
-        if (!dependencies.contains(bugReport)) dependencies.add(bugReport);
-    }
 
-    
     /**
 	 * Method to represent a bugreport as a string.
-	 * 
+	 *
 	 * @return The bugreport as a string.
 	 */
     @Override
     public String toString()
     {
-    	return "Bugreport ID: " + getId() + "\nTitle: " + getTitle() 
+    	return "Bugreport ID: " + getId() + "\nTitle: " + getTitle()
     			+ "\nDescription: " + getDescription()+ "\nCreation date: "
     			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
-    			+ getCreator(); 
+    			+ getCreator();
     }
 
     //endregion
