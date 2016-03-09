@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.BugReport.BugReport;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.User.User;
@@ -34,6 +35,15 @@ public class Parser
 			parsed += i + ":\n" + listSubSystem.get(i).toString() +"\n";
 		return parsed;
 		
+	}
+
+	public static String parseBugReportList(List<BugReport> listBugReport)
+	{
+		String parsed ="";
+		for(int i=0; i< listBugReport.size(); i++)
+			parsed += i + ":\n" + listBugReport.get(i).toString() +"\n";
+		return parsed;
+
 	}
 	
 	public static String parseDetailedProject(Project project)
