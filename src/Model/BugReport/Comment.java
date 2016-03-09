@@ -1,6 +1,7 @@
 package Model.BugReport;
 
 import CustomExceptions.ModelException;
+import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Issuer;
 
@@ -83,6 +84,23 @@ public class Comment {
     public List<Comment> getComments(){
         return Collections.unmodifiableList(this.comments);
     }
+
+	/**
+	 * Getter to request all comments of this comment.
+     *
+	 * @return An unmodifiable list of the comments of this comment. (recursively)
+	 */
+	public List<Comment> getAllComments()
+	{
+		List<Comment> list = new ArrayList<>();
+		for(Comment comm : comments)
+		{
+			list.add(comm);
+			list.addAll(comm.getAllComments());
+		}
+		
+		return Collections.unmodifiableList(list);
+	}
 
     //endregion
 

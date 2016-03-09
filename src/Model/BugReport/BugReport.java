@@ -253,6 +253,22 @@ public class BugReport {
 
         this.comments.add(comment);
     }
+    
+    /**
+     * Getter to get all the comments of the bugreport.
+     *
+     * @return An unmodifiable list of all the comments of the bugreport. (recursively)
+     */
+	public List<Comment> getAllComments()
+	{
+		List<Comment> list = new ArrayList<>();
+		for(Comment comm : comments)
+		{
+			list.add(comm);
+			list.addAll(comm.getAllComments());
+		}
+		return Collections.unmodifiableList(list);
+	}
 
     /**
      * Overrided the equals method to only look at the id to check for equality.

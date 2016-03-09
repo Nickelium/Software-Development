@@ -83,6 +83,14 @@ public class Parser
 
 	}
 	
+	public static String parseCommentList(List<Comment> listComment)
+	{
+		String parsed ="";
+		for(int i=0; i< listComment.size(); i++)
+			parsed += i + ":\n" + listComment.get(i).toString() +"\n";
+		return parsed;
+	}
+	
 	public static String parseDetailedProject(Project project)
 	{
 		String parsed = project.toString();
