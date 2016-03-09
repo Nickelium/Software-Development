@@ -95,89 +95,110 @@ public class IssuerController extends UserController {
     }
 
     protected BugReport selectBugReport() {
-        try {
+        try 
+        {
             int chosenNumber;
             List<BugReport> bugReportList = null;
-            boolean ValidSelectionDisplayed = false;
+           
             // return for usage in DeveloperController
-            while (!ValidSelectionDisplayed) {
-                getUi().display("Select the preferred search method: ");
-                getUi().display(Parser.parseSearchMethods());
+           
+            getUi().display("Select the preferred search method: ");
+                
+          	String searchMethods = "";
+          	searchMethods += "0 :Search for bug reports with a specific string in the title or description\n";
+        	searchMethods += "1 :Search for bug reports filed by some specific user\n";
+        	searchMethods += "2 :Search for bug reports assigned to specific user";
+        	  		
+            getUi().display(searchMethods);
 
-                int methodIndex = getUi().readInt();
+            int methodIndex = getUi().readInt();
 
-                if (methodIndex == 0) {
-                    // Search for bug reports with a specific string in the title or description
-                    getUi().display("Please enter a search string matching the title or description of the desired bug report.");
-                    String query = getUi().readString();
+            if (methodIndex == 0) 
+            {
+            	// Search for bug reports with a specific string in the title or description
+            	getUi().display("Please enter a search string matching the title or description of the desired bug report.");
+                String query = getUi().readString();
 
-                    // Make List with possible bug reports
-                    List<BugReport> list1 = getBugReportService().getBugReportsWithDescriptionContaining(query);
-                    List<BugReport> list2 = getBugReportService().getBugReportsWithTitleContaining(query);
+                // Make List with possible bug reports
+                List<BugReport> list1 = getBugReportService().getBugReportsWithDescriptionContaining(query);
+                List<BugReport> list2 = getBugReportService().getBugReportsWithTitleContaining(query);
 
-                    // Combine both lists
-                    bugReportList = new ArrayList<BugReport>(list1);
-                    for (BugReport b : list2) {
-                        bugReportList.add(b);
-                    }
-
-                    if (bugReportList.size() > 0) {
-                        // Show Results
-                        getUi().display("The search result for your query is: ");
-                        getUi().display(Parser.parseBugReportList(bugReportList));
-                        ValidSelectionDisplayed = true;
-                    } else {
-                        getUi().display("No bug reports found.");
-                    }
-
-
-                } else if (methodIndex == 1) {
-
-                    // Search for bug reports filed by some specific user
-                    getUi().display("Please enter the username of the user that filed the desired bug report: ");
-                    String userName = getUi().readString();
-
-                    User user = getUserService().getUser(userName);
-                    bugReportList = getBugReportService().getBugReportsFiledByUser(user);
-                    if (bugReportList.size() > 0) {
-                        // Show Results
-                        getUi().display("The search result for your query is: ");
-                        getUi().display(Parser.parseBugReportList(bugReportList));
-                        ValidSelectionDisplayed = true;
-                    } else {
-                        getUi().display("No bug reports found.");
-
-                    }
-                } else if (methodIndex == 2){
-                    // Search for bug reports assigned to specific user
-                    getUi().display("Please enter the username of the user that the bug reports are assigned to: ");
-                    String userName = getUi().readString();
-
-                    User user = getUserService().getUser(userName);
-                    bugReportList = getBugReportService().getBugReportsAssignedToUser(user);
-
-                    if (bugReportList.size() > 0) {
-                        // Show Results
-                        getUi().display("The search result for your query is: ");
-                        getUi().display(Parser.parseBugReportList(bugReportList));
-                        ValidSelectionDisplayed = true;
-                    } else {
-                        getUi().display("No bug reports found.");
-                    }
+                // Combine both lists
+                bugReportList = new ArrayList<BugReport>(list1);
+                for (BugReport b : list2) {
+                	bugReportList.add(b);
                 }
 
-                else{
-                    getUi().display("Please enter a valid number.");
+                if (bugReportList.size() > 0) 
+                {
+                	// Show Results
+                    getUi().display("The search result for your query is: ");
+                    getUi().display(Parser.parseBugReportList(bugReportList));
+                       
+                } 
+                else
+                {
+                	getUi().display("No bug reports found.");
+                }
+
+
+            }
+            else if (methodIndex == 1) 
+            {
+
+            	// Search for bug reports filed by some specific user
+                getUi().display("Please enter the username of the user that filed the desired bug report: ");
+                String userName = getUi().readString();
+
+                User user = getUserService().getUser(userName);
+                bugReportList = getBugReportService().getBugReportsFiledByUser(user);
+                if (bugReportList.size() > 0) 
+                {
+                	// Show Results
+                    getUi().display("The search result for your query is: ");
+                    getUi().display(Parser.parseBugReportList(bugReportList));
+                }
+                else
+                {
+                	getUi().display("No bug reports found.");
+
                 }
             }
+            else if (methodIndex == 2)
+            {
+                // Search for bug reports assigned to specific user
+                getUi().display("Please enter the username of the user that the bug reports are assigned to: ");
+                String userName = getUi().readString();
+
+                User user = getUserService().getUser(userName);
+                bugReportList = getBugReportService().getBugReportsAssignedToUser(user);
+
+                if (bugReportList.size() > 0)
+                {
+                	// Show Results
+                	getUi().display("The search result for your query is: ");
+                    getUi().display(Parser.parseBugReportList(bugReportList));
+                      
+                }
+                else
+                {
+                	getUi().display("No bug reports found.");
+                }
+            }
+            else
+            {
+            	throw new ModelException("Enter a valid number.");
+            }
+            
             // Make choice
             getUi().display("Please enter the number of the bug report that you would like to select: ");
             chosenNumber = getUi().readInt();
             return bugReportList.get(chosenNumber);
-        } catch (ModelException | IndexOutOfBoundsException e) {
+            
+        } 
+        catch (ModelException | IndexOutOfBoundsException e) 
+        {
             getUi().errorDisplay(e.getMessage());
-            //TODO wat gaan we hier doen als het niet werkt??
-            e.printStackTrace();
             return selectBugReport();
         }
 
@@ -209,19 +230,12 @@ public class IssuerController extends UserController {
             String input = getUi().readString();
 
             if (input.equalsIgnoreCase("b")) {
-                getUi().display("Comment (Sluit af met . op nieuwe lijn):");
-                String text = "";
-                String newText = "";
-                while (!newText.equals(".")) {
-                    if (!text.equals("") || !newText.equals("")) {
-                        text += newText + '\n';
-                    }
-                    newText = getUi().readLine();
-                }
+                getUi().display("Comment (Terminate with a . on a new line):");
+                String text = getUi().readMultiline();
                 Comment newComment = getBugReportService().createComment(text, (Issuer) getCurrentUser(), bugReport);
                 getUi().display("The comment was:\n"
                         + "-------------------------\n"
-                        + newComment.getText()
+                        + newComment
                         + "-------------------------\n"
                         + "It has successfully been created.\n");
 
@@ -231,16 +245,10 @@ public class IssuerController extends UserController {
                 index = getUi().readInt();
                 Comment comm = listComment.get(index);
                 getUi().display("Comment (Sluit af met . op nieuwe lijn):");
-                String text = "";
-                String newText = "";
-                while (!newText.equals(".")) {
-                    if (!text.equals("") || !newText.equals("")) {
-                        text.concat(newText + '\n');
-                    }
-                    newText = getUi().readLine();
-                }
+                String text = getUi().readMultiline();
+              
                 Comment newComment = getBugReportService().createComment(text, (Issuer) getCurrentUser(), comm);
-                getUi().display("The comment was:\n" + newComment.getText() + "\nIt has successfully been created.\n");
+                getUi().display("The comment was:\n" + newComment + "\nIt has successfully been created.\n");
             } else {
                 throw new ModelException("This is an invalid input");
             }
