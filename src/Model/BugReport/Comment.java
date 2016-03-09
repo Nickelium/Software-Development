@@ -95,7 +95,7 @@ public class Comment {
      *
      * @return True if the text is not empty or not null. False otherwise.
      */
-    public boolean isValidText(String text){
+    private boolean isValidText(String text){
         if (text == null)return false;
         if (text.equals(""))return false;
         else return true;
@@ -116,6 +116,18 @@ public class Comment {
         if (comment == null) throw new IllegalArgumentException("Comment is null");
 
         this.comments.add(comment);
+    }
+    
+    /**
+	 * Method to represent a comment as a string.
+	 * 
+	 * @return The comment as a string.
+	 */
+    public String toString()
+    {
+    	return "Comment text: " + getText() + "\nIssuer: " + getIssuer() 
+    			+ "\nCreation date: " + getCreationDate()+ "\nCreation date: "
+    			+ getCreationDate();
     }
 
     //endregion

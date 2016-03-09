@@ -93,12 +93,12 @@ public class IssuerController extends UserController{
 
     }
 
-    public void selectBugReport(){
+    public void selectBugReport() {
         try {
 
 
             // show all dependencies of this bug report
-        }catch(/*ModelException | */IndexOutOfBoundsException e){
+        } catch (/*ModelException | */IndexOutOfBoundsException e) {
             getUi().errorDisplay(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
             if (getUi().readInt() == 1) createBugReport();

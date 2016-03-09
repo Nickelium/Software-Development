@@ -272,6 +272,11 @@ public class BugReport {
     }
 
     
+    /**
+	 * Method to represent a bugreport as a string.
+	 * 
+	 * @return The bugreport as a string.
+	 */
     @Override
     public String toString()
     {
