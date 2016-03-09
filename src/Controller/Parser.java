@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.BugReport.BugReport;
+import Model.BugReport.Comment;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.User.User;
@@ -63,7 +64,25 @@ public class Parser
 		return parsed;
 	}
 	
-	public static String addTabulation(String str)
+	public static String parseDetailBugReport(BugReport bugReport)
+	{
+		if(bugReport == null) return "";
+		String parsed = bugReport.toString();
+		for(Comment comm : bugReport.getComments())
+			parsed += "\n\t" + Parser.addTabulation(Parser.parseDetailComment(comm));
+		return parsed;
+	}
+	
+	private static String parseDetailComment(Comment comment)
+	{
+		if(comment == null) return "";
+		String parsed = comment.toString();
+		for(Comment comm : comment.getComments())
+			parsed += "\n\t" + Parser.addTabulation(Parser.parseDetailComment(comm));
+		return parsed;
+	}
+	
+	private static String addTabulation(String str)
 	{
 		return str.replace("\n", "\n\t");
 	}
