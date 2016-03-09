@@ -93,18 +93,81 @@ public class IssuerController extends UserController{
 
     }
 
-    public BugReport selectBugReport() {
+    public BugReport selectBugReport() throws ModelException{
+
         try {
 
-            // show all dependencies of this bug report
+            int chosenNumber;
+            List<BugReport> bugReportList;
+
             // return for usage in DeveloperController
-            return null;
+
+            getUi().display("Select the preferred search method: ");
+            getUi().display(Parser.parseSearchMethods());
+
+            int methodIndex = getUi().readInt();
+
+            if(methodIndex == 0){
+                // Search for bug reports with a specific string in the title or description
+                getUi().display("Please enter a search string matching the title or description of the desired bug report.");
+                String query = getUi().readString();
+
+                // Make List with possible bug reports
+                List<BugReport> list1 = getBugReportService().getBugReportsWithDescriptionContaining(query);
+                List<BugReport> list2 = getBugReportService().getBugReportsWithTitleContaining(query);
+
+                // Combine both lists
+                bugReportList = list1;
+                for(BugReport b : list2){
+                    bugReportList.add(b);
+                }
+
+                // Show Results
+                getUi().display("The search result for your query is: ");
+                getUi().display(Parser.parseBugReportList(bugReportList));
+
+            }
+
+            else if (methodIndex == 1){
+                // Search for bug reports filed by some specific user
+                getUi().display("Please enter the username of the user that filed the desired bug report: ");
+                String userName = getUi().readString();
+
+                User user = getUserService().getUser(userName);
+                bugReportList = getBugReportService().getBugReportsFiledByUser(user);
+
+                // Show Results
+                getUi().display("The search result for your query is: ");
+                getUi().display(Parser.parseBugReportList(bugReportList));
+            }
+
+            else {
+                // Search for bug reports assigned to specific user
+                getUi().display("Please enter the username of the user that the bug reports are assigned to: ");
+                String userName = getUi().readString();
+
+                User user = getUserService().getUser(userName);
+                bugReportList = getBugReportService().getBugReportsAssignedToUser(user);
+
+                // Show Results
+                getUi().display("The search result for your query is: ");
+                getUi().display(Parser.parseBugReportList(bugReportList));
+            }
+
+            // Make choice
+            getUi().display("Please enter the number of the bug report that you would like to select: ");
+            chosenNumber = getUi().readInt();
+
+            return bugReportList.get(chosenNumber);
+
 
         } catch (/*ModelException | */IndexOutOfBoundsException e) {
             getUi().errorDisplay(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
             if (getUi().readInt() == 1) createBugReport();
         }
+
+        return null;
 
     }
 

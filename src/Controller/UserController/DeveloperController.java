@@ -79,7 +79,7 @@ public class DeveloperController extends IssuerController {
 
             }
 
-        } catch (ModelException | IndexOutOfBoundsException e) {
+        } catch (/*ModelException | */IndexOutOfBoundsException e) {
             getUi().display(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
             if (getUi().readInt() == 1) assignToProject();
