@@ -93,21 +93,19 @@ public class IssuerController extends UserController{
 
     }
 
-    public void selectBugReport() {
+    public BugReport selectBugReport() {
         try {
 
-
-<<<<<<< HEAD
-        // TODO: Deze use case wordt gebruikt door Developer use cases en moet dus het gekozen bugreport teruggeven!
-        return null;
-=======
             // show all dependencies of this bug report
+            // return for usage in DeveloperController
+            return null;
+
         } catch (/*ModelException | */IndexOutOfBoundsException e) {
             getUi().errorDisplay(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
             if (getUi().readInt() == 1) createBugReport();
         }
->>>>>>> 247365487ba6c084c5569d7663213da9bbb72352
+
     }
 
     public void inspectBugReport(){
