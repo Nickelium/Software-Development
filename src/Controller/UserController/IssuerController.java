@@ -1,6 +1,5 @@
 package Controller.UserController;
 
-import Controller.MainController;
 import Controller.Parser;
 import Controller.UI;
 import CustomExceptions.ModelException;
@@ -95,113 +94,6 @@ public class IssuerController extends UserController {
 
     }
 
-<<<<<<< HEAD
-    protected BugReport selectBugReport()
-    {
-    	try 
-    	{
-               int chosenNumber;
-               List<BugReport> bugReportList;
-
-               // return for usage in DeveloperController
-
-               getUi().display("Select the preferred search method: ");
-               getUi().display(Parser.parseSearchMethods());
-
-               int methodIndex = getUi().readInt();
-
-               if(methodIndex == 0){
-                   // Search for bug reports with a specific string in the title or description
-                   getUi().display("Please enter a search string matching the title or description of the desired bug report.");
-                   String query = getUi().readString();
-
-                   // Make List with possible bug reports
-                   List<BugReport> list1 = getBugReportService().getBugReportsWithDescriptionContaining(query);
-                   List<BugReport> list2 = getBugReportService().getBugReportsWithTitleContaining(query);
-
-                   // Combine both lists
-                   bugReportList = new ArrayList<BugReport>(list1);
-                   for(BugReport b : list2){
-                       bugReportList.add(b);
-                   }
-
-                   if(bugReportList.size()>0) {
-                       // Show Results
-                       getUi().display("The search result for your query is: ");
-                       getUi().display(Parser.parseBugReportList(bugReportList));
-
-                       getUi().display("Please specify which bug report you'd like to edit.");
-                       int bugReportIndex = getUi().readInt();
-                       return bugReportList.get(bugReportIndex);
-
-                   }else{
-                       getUi().display("No bug reports found.");
-                   }
-
-               }
-
-               else if (methodIndex == 1){
-                   // Search for bug reports filed by some specific user
-                   getUi().display("Please enter the username of the user that filed the desired bug report: ");
-                   String userName = getUi().readString();
-
-                   User user = getUserService().getUser(userName);
-                   bugReportList = getBugReportService().getBugReportsFiledByUser(user);
-                   if(bugReportList.size() > 0) {
-                       // Show Results
-                       getUi().display("The search result for your query is: ");
-                       getUi().display(Parser.parseBugReportList(bugReportList));
-
-                       getUi().display("Please specify which bug report you'd like to edit.");
-                       int bugReportIndex = getUi().readInt();
-                       return bugReportList.get(bugReportIndex);
-
-                   }else{
-                       getUi().display("No bug reports found.");
-                   }
-               }
-
-               else if (methodIndex == 2){
-                   // Search for bug reports assigned to specific user
-                   getUi().display("Please enter the username of the user that the bug reports are assigned to: ");
-                   String userName = getUi().readString();
-
-                   User user = getUserService().getUser(userName);
-                   bugReportList = getBugReportService().getBugReportsAssignedToUser(user);
-
-                   // Show Results
-                   getUi().display("The search result for your query is: ");
-                   getUi().display(Parser.parseBugReportList(bugReportList));
-
-                   getUi().display("Please specify which bug report you'd like to edit.");
-                   int bugReportIndex = getUi().readInt();
-                   return bugReportList.get(bugReportIndex);
-               }
-
-               else {
-
-                   throw new ModelException("Please use a valid number.");
-
-               }
-
-               // Make choice
-               getUi().display("Please enter the number of the bug report that you would like to select: ");
-               chosenNumber = getUi().readInt();
-
-               return bugReportList.get(chosenNumber);
-    	  }
-        catch (ModelException | IndexOutOfBoundsException e) 
-    	{
-        	getUi().errorDisplay(e.getMessage());
-
-            selectBugReport();
-
-
-        }
-
-        return null;
-
-=======
     protected BugReport selectBugReport() {
         try {
             int chosenNumber;
@@ -285,7 +177,6 @@ public class IssuerController extends UserController {
             e.printStackTrace();
         }
         return null;
->>>>>>> 9f779d805e748b071169f6062a67071a8d550827
     }
 
     public void inspectBugReport() {
