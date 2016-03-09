@@ -27,7 +27,7 @@ public class MainController {
 
     public void run() {
         startMsg();
-        LoginController loginController = new LoginController(ui, initializer.getUserService(),initializer.getProjectService(),initializer.getBugReportService());
+        LoginController loginController = new LoginController(ui, initializer.getUserService(),initializer.getProjectService(),initializer.getBugReportService(), initializer.getDeveloperAssignmentService());
         //create Controller
 
         UserController userController = loginController.run();

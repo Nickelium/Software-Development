@@ -13,6 +13,7 @@ import Model.User.Issuer;
 import Model.User.User;
 import Model.User.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -118,14 +119,18 @@ public class IssuerController extends UserController{
                    List<BugReport> list2 = getBugReportService().getBugReportsWithTitleContaining(query);
 
                    // Combine both lists
-                   bugReportList = list1;
+                   bugReportList = new ArrayList<BugReport>(list1);
                    for(BugReport b : list2){
                        bugReportList.add(b);
                    }
 
-                   // Show Results
-                   getUi().display("The search result for your query is: ");
-                   getUi().display(Parser.parseBugReportList(bugReportList));
+                   if(bugReportList.size()>0) {
+                       // Show Results
+                       getUi().display("The search result for your query is: ");
+                       getUi().display(Parser.parseBugReportList(bugReportList));
+                   }else{
+                       getUi().display("No bug reports found.");
+                   }
 
                }
 
@@ -136,10 +141,13 @@ public class IssuerController extends UserController{
 
                    User user = getUserService().getUser(userName);
                    bugReportList = getBugReportService().getBugReportsFiledByUser(user);
-
-                   // Show Results
-                   getUi().display("The search result for your query is: ");
-                   getUi().display(Parser.parseBugReportList(bugReportList));
+                   if(bugReportList.size() > 0) {
+                       // Show Results
+                       getUi().display("The search result for your query is: ");
+                       getUi().display(Parser.parseBugReportList(bugReportList));
+                   }else{
+                       getUi().display("No bug reports found.");
+                   }
                }
 
                else {

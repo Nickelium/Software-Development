@@ -8,6 +8,7 @@ import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Parser
@@ -32,7 +33,7 @@ public class Parser
 	}
 
 	public static String parseSearchMethods(){
-		List<String> listMethods = null;
+		List<String> listMethods = new ArrayList<String>();
 		listMethods.add(0,"Search for bug reports with a specific string in the title or description");
 		listMethods.add(1,"Search for bug reports filed by some specific user");
 		listMethods.add(2,"Search for bug reports assigned to specific user");

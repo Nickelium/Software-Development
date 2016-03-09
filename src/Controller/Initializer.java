@@ -2,6 +2,7 @@ package Controller;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
+import Model.BugReport.DeveloperAssignmentService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -26,6 +27,7 @@ public class Initializer implements IInitializer
 	private UserService userService;
 	private ProjectService projectService;
 	private BugReportService bugReportService;
+	private DeveloperAssignmentService developerAssignmentService;
 
 	public void init(){
         try{
@@ -34,6 +36,8 @@ public class Initializer implements IInitializer
 		// refactor ProjectService class first
 		this.projectService = new ProjectService();
 		this.bugReportService = new BugReportService(projectService);
+
+		this.developerAssignmentService = new DeveloperAssignmentService(projectService);
 
 		// init users
 		Admin sam = (Admin) userService.createAdmin("Frederick", "Sam","Curtis","curt");
@@ -113,6 +117,10 @@ public class Initializer implements IInitializer
 	public BugReportService getBugReportService() 
 	{
 		return bugReportService;
+	}
+
+	public DeveloperAssignmentService getDeveloperAssignmentService(){
+		return developerAssignmentService;
 	}
 
 
