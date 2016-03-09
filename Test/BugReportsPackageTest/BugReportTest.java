@@ -7,14 +7,8 @@ import Model.Tags.Assigned;
 import Model.Tags.Closed;
 import Model.Tags.New;
 import org.junit.Test;
-
-<<<<<<< HEAD
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
-
-=======
 import static org.junit.Assert.*;
->>>>>>> 9f779d805e748b071169f6062a67071a8d550827
+
 
 /**
  * Created by Tom on 28/02/16.
