@@ -106,7 +106,6 @@ public class IssuerController extends UserController {
 
                 int methodIndex = getUi().readInt();
 
-
                 if (methodIndex == 0) {
                     // Search for bug reports with a specific string in the title or description
                     getUi().display("Please enter a search string matching the title or description of the desired bug report.");
@@ -149,7 +148,7 @@ public class IssuerController extends UserController {
                         getUi().display("No bug reports found.");
 
                     }
-                } else {
+                } else if (methodIndex == 2){
                     // Search for bug reports assigned to specific user
                     getUi().display("Please enter the username of the user that the bug reports are assigned to: ");
                     String userName = getUi().readString();
@@ -166,6 +165,10 @@ public class IssuerController extends UserController {
                         getUi().display("No bug reports found.");
                     }
                 }
+
+                else{
+                    getUi().display("Please enter a valid number.");
+                }
             }
             // Make choice
             getUi().display("Please enter the number of the bug report that you would like to select: ");
@@ -175,8 +178,9 @@ public class IssuerController extends UserController {
             getUi().errorDisplay(e.getMessage());
             //TODO wat gaan we hier doen als het niet werkt??
             e.printStackTrace();
+            return selectBugReport();
         }
-        return null;
+
     }
 
     public void inspectBugReport() {
