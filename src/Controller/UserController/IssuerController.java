@@ -172,9 +172,10 @@ public class IssuerController extends UserController{
         catch (ModelException | IndexOutOfBoundsException e) 
     	{
         	getUi().errorDisplay(e.getMessage());
-            getUi().display("Enter 1 if you want to retry.");
-            return selectBugReport();
+            //TODO wat gaan we hier doen als het niet werkt??
+            e.printStackTrace();
         }
+        return null;
     }
 
     public void inspectBugReport()
@@ -203,26 +204,26 @@ public class IssuerController extends UserController{
     		List<Comment> listComment = bugReport.getAllComments();
     		String parsedListComment = Parser.parseCommentList(listComment);
     		getUi().display(parsedListComment);
-    		
+
+            //whaaat
     		getUi().display("Create a comment of the bugreport or on one of the comments (B/C) : ");
 	        String input = getUi().readString();
-          
-            int index;
+
             if (input.equalsIgnoreCase("b")) 
             {
-                getUi().display("Please enter the comment information.");
-                getUi().display("Text:");
+                getUi().display("Comment:");
                 String text = getUi().readString();
                 Comment newComment = getBugReportService().createComment(text, (Issuer)getCurrentUser(), bugReport);
+
 
             } 
             else if (input.equalsIgnoreCase("c")) 
             {
+                int index;
                 getUi().display("Choose a comment from one of above: ");
                 index = getUi().readInt();
                 Comment comm = listComment.get(index);
-                getUi().display("Please enter the comment information.");
-                getUi().display("Text:");
+                getUi().display("Comment:");
                 String text = getUi().readString();
                 Comment newComment = getBugReportService().createComment(text, (Issuer)getCurrentUser(), comm);
              }
@@ -236,7 +237,7 @@ public class IssuerController extends UserController{
     	{
     		 getUi().errorDisplay(e.getMessage());
              getUi().display("Enter 1 if you want to retry.");
-             if (getUi().readInt() == 1) inspectBugReport();
+             if (getUi().readInt() == 1) createComment();
     	}
     }
 
