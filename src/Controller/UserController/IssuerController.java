@@ -205,23 +205,41 @@ public class IssuerController extends UserController {
             String input = getUi().readString();
 
             if (input.equalsIgnoreCase("b")) {
-                getUi().display("Comment:");
-                String text = getUi().readString();
+                getUi().display("Comment (Sluit af met . op nieuwe lijn):");
+                String text = "";
+                String newText = "";
+                while (!newText.equals(".")) {
+                    if (!text.equals("") || !newText.equals("")) {
+                        text += newText + '\n';
+                    }
+                    newText = getUi().readLine();
+                }
                 Comment newComment = getBugReportService().createComment(text, (Issuer) getCurrentUser(), bugReport);
-
+                getUi().display("The comment was:\n"
+                        + "-------------------------\n"
+                        + newComment.getText()
+                        + "-------------------------\n"
+                        + "It has successfully been created.\n");
 
             } else if (input.equalsIgnoreCase("c")) {
                 int index;
                 getUi().display("Choose a comment from one of above: ");
                 index = getUi().readInt();
                 Comment comm = listComment.get(index);
-                getUi().display("Comment:");
-                String text = getUi().readString();
+                getUi().display("Comment (Sluit af met . op nieuwe lijn):");
+                String text = "";
+                String newText = "";
+                while (!newText.equals(".")) {
+                    if (!text.equals("") || !newText.equals("")) {
+                        text.concat(newText + '\n');
+                    }
+                    newText = getUi().readLine();
+                }
                 Comment newComment = getBugReportService().createComment(text, (Issuer) getCurrentUser(), comm);
+                getUi().display("The comment was:\n" + newComment.getText() + "\nIt has successfully been created.\n");
             } else {
                 throw new ModelException("This is an invalid input");
             }
-            getUi().display("The comment has been successfully created.\n");
         } catch (ModelException | IndexOutOfBoundsException e) {
             getUi().errorDisplay(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");

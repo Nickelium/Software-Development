@@ -15,6 +15,10 @@ public class UI
 	{
 		return scanner.next();
 	}
+
+	public String readLine() {
+		return scanner.nextLine();
+	}
 	
 	public double readDouble()
 	{
