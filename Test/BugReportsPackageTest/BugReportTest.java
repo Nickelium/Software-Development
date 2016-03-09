@@ -1,136 +1,109 @@
 package BugReportsPackageTest;
 
 import CustomExceptions.ModelException;
-import Model.BugReport.BugReport;
 import Model.BugReport.BugReportID;
-import Model.BugReport.BugReportService;
-import Model.Project.ProjectService;
-import Model.Project.SubSystem;
 import Model.Project.TheDate;
+import Model.Tags.Assigned;
+import Model.Tags.Closed;
 import Model.Tags.New;
-import Model.User.Issuer;
-import Model.User.UserService;
-import org.junit.Before;
 import org.junit.Test;
 
+<<<<<<< HEAD
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
+=======
+import static org.junit.Assert.*;
+>>>>>>> 9f779d805e748b071169f6062a67071a8d550827
 
 /**
  * Created by Tom on 28/02/16.
  */
-public class BugReportTest {
-    private SubSystem subsys;
-    private Issuer issuer;
-    private BugReportService bugReportService;
-    private ProjectService projectService;
-    private UserService userService;
+public class BugReportTest extends BugReportInitializaton {
 
-    @Before
-    public void initialization() throws ModelException{
-        projectService = new ProjectService();
-        userService = new UserService();
-        bugReportService = new BugReportService(projectService);
-        this.subsys = new SubSystem("Test", "Test subsystem");
-        this.issuer = (Issuer) userService.createIssuer("Test", "T", "Testing", "user1");
-    }
-
-    @Test(expected = ModelException.class)
-    public void constructor_IllegalTitle() throws ModelException {
-        bugReportService.createBugReport(null, "description", this.issuer, this.subsys);
-    }
-
-    @Test(expected = ModelException.class)
-    public void constructor_IllegalDescription() throws ModelException {
-        bugReportService.createBugReport("Test", null, this.issuer, this.subsys);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_IllegalSubsystem() throws ModelException {
-        bugReportService.createBugReport("Test", "description", null, this.subsys);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_IllegalIsser() throws ModelException {
-        bugReportService.createBugReport("Test", "description", this.issuer, null);
-    }
-
-    @Test()
-    public void getId() throws ModelException {
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getId().getClass(), BugReportID.class);
-    }
-
-    @Test()
-    public void getTitle() throws ModelException {
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getTitle(), "title");
-    }
-
-    @Test()
-    public void getDescription() throws ModelException {
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getDescription(), "description");
-    }
-
-    @Test()
-    public void getCreationDate() throws ModelException {
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getCreationDate(), TheDate.TheDateNow());
-    }
-
-    @Test()
-    public void getCreator() throws ModelException {
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getCreator(), this.issuer);
-    }
-
-    @Test()
-    public void getTag_AfterCreation() throws ModelException{
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getTag().getClass(), New.class);
-    }
-
-    @Test()
-    public void getAssignees_NotNull() throws ModelException {
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertNotNull(bugReport.getAssignees());
-    }
-
-    @Test()
-    public void getAssignees_Empty() throws ModelException{
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getAssignees().size(), 0);
-    }
-
-    @Test()
-    public void getComments_NotNull() throws ModelException{
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertNotNull(bugReport.getComments());
+    @Test
+    public void getIdTest() {
+        assertFalse(bugReport1.getId() == null);
+        assertFalse(bugReport1.getId().equals(""));
+        assertEquals(bugReport1.getId(), bugReport1.getId());
+        assertFalse(bugReport1.getId().equals(new BugReportID()));
     }
 
     @Test
-    public void getComments_Empty() throws ModelException{
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getComments().size(), 0);
+    public void getTitleTest() {
+        assertEquals("Bug1", bugReport1.getTitle());
+        assertFalse(bugReport1.getTitle().equals("Bug2"));
     }
 
-    @Test()
-    public void getDependencies_NotNull() throws ModelException{
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertNotNull(bugReport.getDependencies());
+    @Test
+    public void getDescriptionTest() {
+        assertEquals("Des Bug1", bugReport1.getDescription());
+        assertFalse(bugReport1.getDescription().equals("Bug2"));
     }
 
-    @Test()
-    public void getDependencies_Empty() throws ModelException{
-        BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
-        assertEquals(bugReport.getDependencies().size(), 0);
+    @Test
+    public void getCreationDateTest() throws ModelException {
+        assertEquals(TheDate.TheDateNow(), bugReport2.getCreationDate());
     }
 
+    @Test
+    public void getCreatorTest() throws ModelException {
+        assertEquals(issuer1, bugReport1.getCreator());
+        assertFalse(bugReport1.getCreator().equals(issuer2));
+    }
 
+    @Test
+    public void getTagTest() throws ModelException {
+        assertEquals(New.class, bugReport1.getTag().getClass());
+        assertEquals(Closed.class, bugReport2.getTag().getClass());
+        assertEquals(Assigned.class, bugReport3.getTag().getClass());
+    }
 
+    @Test
+    public void getAssigneesTest() throws ModelException {
+        assertEquals(0, bugReport1.getAssignees().size());
+        assertEquals(1, bugReport2.getAssignees().size());
+        assertEquals(2, bugReport3.getAssignees().size());
+    }
 
+    @Test
+    public void getCommentsTest() throws ModelException {
+        assertEquals(1, bugReport1.getComments().size());
+        bugReportService.createComment("TestComment", issuer1, bugReport1);
+        assertEquals(2, bugReport1.getComments().size());
+    }
 
+    @Test
+    public void getDependencies() throws ModelException {
+        assertEquals(0, bugReport1.getDependencies().size());
+        bugReport1.addDependency(bugReport2);
+        assertEquals(1, bugReport1.getDependencies().size());
+    }
+
+    @Test
+    public void isValidTitleTest() {
+        assertFalse(bugReport1.isValidTitle(null));
+        assertFalse(bugReport1.isValidTitle(""));
+        assertTrue(bugReport1.isValidTitle("Test"));
+    }
+
+    @Test
+    public void isValidDescriptionTest() {
+        assertFalse(bugReport1.isValidTitle(null));
+        assertFalse(bugReport1.isValidTitle(""));
+        assertTrue(bugReport1.isValidTitle("Test"));
+    }
+
+    @Test
+    public void addDependencyTest() {
+        bugReport3.addDependency(bugReport2);
+        assertTrue(bugReport3.getDependencies().contains(bugReport2));
+    }
+
+    @Test
+    public void equalsTest() {
+        assertTrue(bugReport2.equals(bugReport2));
+        assertFalse(bugReport1.equals(bugReport2));
+    }
 }
 

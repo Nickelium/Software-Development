@@ -1,9 +1,7 @@
 package UserPackageTest;
 
 import Model.User.*;
-import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
