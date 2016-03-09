@@ -1,7 +1,6 @@
 package Model.BugReport;
 
 import CustomExceptions.ModelException;
-import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Issuer;
 
@@ -102,6 +101,17 @@ public class Comment {
 		return Collections.unmodifiableList(list);
 	}
 
+    /**
+     * Method for adding a comment to the list of comments.
+     *
+     * @param comment Comments to add to the list of comments.
+     */
+    void addComment(Comment comment) {
+        if (comment == null) throw new IllegalArgumentException("Comment is null");
+
+        this.comments.add(comment);
+    }
+
     //endregion
 
     //region Checkers
@@ -122,22 +132,6 @@ public class Comment {
     //endregion
 
     //region Functions
-
-    /**
-     * Function for adding a comment to the list of comments.
-     *
-     * @param text Text of the new comment.
-     * @param issuer The issuer writing the comment.
-     *
-     * @throws ModelException Something went wront during the creation of the comment. See comment constructor.
-     *
-     * @return Returns the newly created comment.
-     */
-    public Comment createComment(String text, Issuer issuer) throws ModelException {
-        Comment comment = new Comment(text, issuer);
-        this.comments.add(comment);
-        return comment;
-    }
     
     /**
 	 * Method to represent a comment as a string.
