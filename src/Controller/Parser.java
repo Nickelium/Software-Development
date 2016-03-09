@@ -5,6 +5,7 @@ import Model.BugReport.Comment;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Roles.Role;
+import Model.User.Developer;
 import Model.User.User;
 
 import java.util.List;
@@ -19,6 +20,15 @@ public class Parser
 			parsed += i + ":\n" + listUser.get(i).toString() +"\n";
 		return parsed;
 		
+	}
+
+	public static String parseDeveloperList(List<Developer> listDeveloper)
+	{
+		String parsed ="";
+		for(int i=0; i< listDeveloper.size(); i++)
+			parsed += i + ":\n" + listDeveloper.get(i).toString() +"\n";
+		return parsed;
+
 	}
 	
 	public static String parseProjectList(List<Project> listProject)

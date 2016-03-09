@@ -5,10 +5,9 @@ import Controller.UI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
+import Model.BugReport.DeveloperAssignmentService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
-import Model.Project.TheDate;
-import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
@@ -20,9 +19,12 @@ import java.util.List;
  */
 public class DeveloperController extends IssuerController {
 
-    public DeveloperController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
+    private DeveloperAssignmentService developerAssignmentService;
+
+    public DeveloperController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser, DeveloperAssignmentService developerAssignmentService) {
         super(ui, userService, projectService, bugReportService, currentUser);
         initializeUseCasesDeveloper();
+        this.developerAssignmentService = developerAssignmentService;
     }
 
     private void initializeUseCasesDeveloper() {
@@ -36,7 +38,7 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void assignToProject(){
+    public void assignToProject() throws ModelException{
         try {
             // Get projects with currentUser as Lead Developer.
             List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
@@ -87,8 +89,34 @@ public class DeveloperController extends IssuerController {
     public void assignToBugReport() {
         try {
             // Use Case Select Bug Report
+            getUi().display("Please select the bug report that you want to assign a new developer to: ");
             BugReport bugReport = selectBugReport();
 
+            // Check if current user doesn't have the Lead or Tester role
+            //TODO: implement extension 4.12 3a
+
+            // Show developers that are involved in the project.
+            getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
+            List<Developer> developerList = bugReport.getAssignees();
+            String parsedList = Parser.parseDeveloperList(developerList);
+            getUi().display(parsedList);
+
+            boolean cont = true;
+            while(cont){
+                if(getUi().readInt() == -1) {
+                    getUi().display("Assignment stopped by user. Continuing...");
+                    cont = false;
+                }
+                else if(developerList.size()==0){
+                    getUi().display("No more users are available to be assigned. Continuing...");
+                    cont = false;
+                }
+                else {
+                    int developerIndex = getUi().readInt();
+                    developerAssignmentService.assignDeveloperToBugReport(getCurrentUser(), developerList.get(developerIndex), bugReport);
+                    developerList.remove(developerIndex);
+                }
+            }
 
         }
 
@@ -99,7 +127,24 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void updateBugReport() {
+    public void updateBugReport() throws ModelException{
+        try{
+            // Use Case Select Bug Report
+            getUi().display("Please select the bug report that you want to update: ");
+            BugReport bugReport = selectBugReport();
+
+            getUi().display("Please specify the new tag for the bug report: ");
+            // TODO: 4.13.3 : Hoe kunnen we een lijst geven van tags?
+            // TODO: extension 4.13.4a
+
+
+        }
+
+        catch (ModelException | IndexOutOfBoundsException e) {
+            getUi().display(e.getMessage());
+            getUi().display("Enter 1 if you want to retry.");
+            if (getUi().readInt() == 1) assignToBugReport();
+        }
 
     }
 }

@@ -78,8 +78,8 @@ public class IssuerController extends UserController{
 
     public BugReport selectBugReport(){
 
-        // Deze use case wordt gebruikt door Developer use cases
-        // en moet dus het gekozen bugreport teruggeven!
+        // TODO: Deze use case wordt gebruikt door Developer use cases en moet dus het gekozen bugreport teruggeven!
+        return null;
     }
 
     public void inspectBugReport(){
