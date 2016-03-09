@@ -107,7 +107,7 @@ public class TheDate
 	{
 		if(obj == null) return false;
 		if( !(obj instanceof TheDate)  ) return false;
-		return date.equals(((TheDate)obj).date);
+		return this.date.equals(((TheDate) obj).date);
 	}
 
     /**

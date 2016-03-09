@@ -248,7 +248,7 @@ public class BugReport {
      *
      * @throws IllegalArgumentException The given comment is null.
      */
-    public void addComment(Comment comment){
+    void addComment(Comment comment) {
         if (comment == null) throw new IllegalArgumentException("Comment is null");
 
         this.comments.add(comment);
