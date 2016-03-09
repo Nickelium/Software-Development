@@ -114,6 +114,13 @@ public class BugReportService {
         return comm;
     }
 
+    //TODO Documentation
+    public Comment createComment(String text, Issuer issuer, BugReport bugReport) throws ModelException {
+        Comment comment = new Comment(text, issuer);
+        bugReport.addComment(comment);
+        return comment;
+    }
+
     /**
      * Getter to request all the BugReports there are.
      *
