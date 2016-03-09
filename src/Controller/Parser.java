@@ -39,7 +39,7 @@ public class Parser
 		listMethods.add(2,"Search for bug reports assigned to specific user");
 		String parsed ="";
 		for(int i=0; i< listMethods.size(); i++)
-			parsed += i + ":\n" + listMethods.get(i).toString() +"\n";
+			parsed += i + ": " + listMethods.get(i).toString() +"\n";
 		return parsed;
 	}
 	

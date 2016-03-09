@@ -13,8 +13,9 @@ import Model.User.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
+
 
 /**
  * Created by Tom on 28/02/16.

@@ -14,17 +14,14 @@ import Model.Tags.Closed;
 import Model.User.Developer;
 import Model.User.Issuer;
 import Model.User.UserService;
-import com.sun.tools.internal.ws.processor.model.Model;
-import com.sun.tools.internal.ws.processor.modeler.ModelerException;
-import com.sun.tools.javac.comp.Flow;
-import junit.framework.Assert;
+
 import org.junit.Before;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+
 
 /**
  * Created by Tom on 9/03/16.

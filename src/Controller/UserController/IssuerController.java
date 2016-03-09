@@ -1,5 +1,6 @@
 package Controller.UserController;
 
+import Controller.MainController;
 import Controller.Parser;
 import Controller.UI;
 import CustomExceptions.ModelException;
@@ -128,6 +129,11 @@ public class IssuerController extends UserController{
                        // Show Results
                        getUi().display("The search result for your query is: ");
                        getUi().display(Parser.parseBugReportList(bugReportList));
+
+                       getUi().display("Please specify which bug report you'd like to edit.");
+                       int bugReportIndex = getUi().readInt();
+                       return bugReportList.get(bugReportIndex);
+
                    }else{
                        getUi().display("No bug reports found.");
                    }
@@ -145,12 +151,17 @@ public class IssuerController extends UserController{
                        // Show Results
                        getUi().display("The search result for your query is: ");
                        getUi().display(Parser.parseBugReportList(bugReportList));
+
+                       getUi().display("Please specify which bug report you'd like to edit.");
+                       int bugReportIndex = getUi().readInt();
+                       return bugReportList.get(bugReportIndex);
+
                    }else{
                        getUi().display("No bug reports found.");
                    }
                }
 
-               else {
+               else if (methodIndex == 2){
                    // Search for bug reports assigned to specific user
                    getUi().display("Please enter the username of the user that the bug reports are assigned to: ");
                    String userName = getUi().readString();
@@ -161,6 +172,16 @@ public class IssuerController extends UserController{
                    // Show Results
                    getUi().display("The search result for your query is: ");
                    getUi().display(Parser.parseBugReportList(bugReportList));
+
+                   getUi().display("Please specify which bug report you'd like to edit.");
+                   int bugReportIndex = getUi().readInt();
+                   return bugReportList.get(bugReportIndex);
+               }
+
+               else {
+
+                   throw new ModelException("Please use a valid number.");
+
                }
 
                // Make choice
@@ -172,9 +193,14 @@ public class IssuerController extends UserController{
         catch (ModelException | IndexOutOfBoundsException e) 
     	{
         	getUi().errorDisplay(e.getMessage());
-            getUi().display("Enter 1 if you want to retry.");
-            return selectBugReport();
+
+            selectBugReport();
+
+
         }
+
+        return null;
+
     }
 
     public void inspectBugReport()

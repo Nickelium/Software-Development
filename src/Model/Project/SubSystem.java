@@ -28,7 +28,7 @@ public class SubSystem
      *
      * @throws ModelException The name or description is not valid. (see attribute setters for rules)
 	 */
-	SubSystem(String name, String description) throws ModelException
+	public SubSystem(String name, String description) throws ModelException
 	{
 		this.setName(name);
 		this.setDescription(description);
@@ -181,7 +181,7 @@ public class SubSystem
      * @throws IllegalArgumentException The given subsystem is null.
 	 * @throws ModelException The subsystem is not a valid subsystem.
 	 */
-	void addSubSystem(SubSystem subSystem) throws ModelException
+	public void addSubSystem(SubSystem subSystem) throws ModelException
 	{
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
 		if(!isValidSubsystem(subSystem)) throw new ModelException("The subsystem cannot be added!");
