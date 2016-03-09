@@ -79,7 +79,7 @@ public class DeveloperController extends IssuerController {
 
             }
 
-        } catch (ModelException | IndexOutOfBoundsException e) {
+        } catch (/*ModelException | */IndexOutOfBoundsException e) {
             getUi().display(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
             if (getUi().readInt() == 1) assignToProject();
@@ -101,15 +101,14 @@ public class DeveloperController extends IssuerController {
             String parsedList = Parser.parseDeveloperList(developerList);
             getUi().display(parsedList);
 
-            boolean cont = true;
-            while(cont){
+            while(true){
                 if(getUi().readInt() == -1) {
                     getUi().display("Assignment stopped by user. Continuing...");
-                    cont = false;
+                    break;
                 }
                 else if(developerList.size()==0){
                     getUi().display("No more users are available to be assigned. Continuing...");
-                    cont = false;
+                    break;
                 }
                 else {
                     int developerIndex = getUi().readInt();
@@ -119,7 +118,6 @@ public class DeveloperController extends IssuerController {
             }
 
         }
-
         catch (ModelException | IndexOutOfBoundsException e) {
             getUi().display(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
@@ -140,7 +138,7 @@ public class DeveloperController extends IssuerController {
 
         }
 
-        catch (ModelException | IndexOutOfBoundsException e) {
+        catch (/*ModelException |*/ IndexOutOfBoundsException e) {
             getUi().display(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
             if (getUi().readInt() == 1) assignToBugReport();

@@ -6,6 +6,7 @@ import Controller.UserController.IssuerController;
 import Controller.UserController.UserController;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
+import Model.BugReport.DeveloperAssignmentService;
 import Model.Project.ProjectService;
 import Model.User.Admin;
 import Model.User.Developer;
@@ -24,14 +25,16 @@ public class LoginController {
     private UserService userService;
     private ProjectService projectService;
     private BugReportService bugReportService;
+	private DeveloperAssignmentService developerAssignmentService;
     private UI ui;
 
     private User currentUser;
 
-    public LoginController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService) {
+    public LoginController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, DeveloperAssignmentService developerAssignmentService) {
         this.userService = userService;
         this.projectService = projectService;
         this.bugReportService = bugReportService;
+		this.developerAssignmentService = developerAssignmentService;
         this.ui = ui;
     }
 
@@ -72,13 +75,14 @@ public class LoginController {
 	
 	        // choose controller
 	        UserController userController;
+
 	        if (currentUser instanceof Admin) 
 	        {
 	            userController = new AdminController(ui, this.userService, this.projectService, this.bugReportService, user);
 	        } 
 	        else if (currentUser instanceof Developer) 
 	        {
-	            userController = new DeveloperController(ui, this.userService, this.projectService, this.bugReportService, user);
+	            userController = new DeveloperController(ui, this.userService, this.projectService, this.bugReportService, user, this.developerAssignmentService);
 	        }
 	        else 
 	        {

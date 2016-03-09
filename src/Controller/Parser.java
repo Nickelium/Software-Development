@@ -8,6 +8,7 @@ import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Parser
@@ -30,6 +31,17 @@ public class Parser
 		return parsed;
 
 	}
+
+	public static String parseSearchMethods(){
+		List<String> listMethods = new ArrayList<String>();
+		listMethods.add(0,"Search for bug reports with a specific string in the title or description");
+		listMethods.add(1,"Search for bug reports filed by some specific user");
+		listMethods.add(2,"Search for bug reports assigned to specific user");
+		String parsed ="";
+		for(int i=0; i< listMethods.size(); i++)
+			parsed += i + ":\n" + listMethods.get(i).toString() +"\n";
+		return parsed;
+	}
 	
 	public static String parseProjectList(List<Project> listProject)
 	{
@@ -49,15 +61,19 @@ public class Parser
 		
 	}
 
+
+	// TODO: List van roles opvragen implementeren
+	/*
 	public static String parseRoleList()
 	{
 
 		String parsed ="";
 		for(int i=0; i< listRole.size(); i++)
-			parsed += i + ":\n" + listBugReport.get(i).toString() +"\n";
+			parsed += i + ":\n" + listRole.get(i).toString() +"\n";
 		return parsed;
 
 	}
+	*/
 
 	public static String parseBugReportList(List<BugReport> listBugReport)
 	{
@@ -66,6 +82,14 @@ public class Parser
 			parsed += i + ":\n" + listBugReport.get(i).toString() +"\n";
 		return parsed;
 
+	}
+	
+	public static String parseCommentList(List<Comment> listComment)
+	{
+		String parsed ="";
+		for(int i=0; i< listComment.size(); i++)
+			parsed += i + ":\n" + listComment.get(i).toString() +"\n";
+		return parsed;
 	}
 	
 	public static String parseDetailedProject(Project project)

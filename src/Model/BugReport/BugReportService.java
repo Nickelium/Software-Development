@@ -73,6 +73,46 @@ public class BugReportService {
         BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag, initialAssignees);
         return bugReport;
     }
+    
+    /**
+     * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     *
+     * @param title The title of the bugreport
+     * @param description The description of the bugreport
+     * @param creator The creator of the bugreport
+     * @param subSystem The subsystem of the bugreport
+     *
+     * @return The newly created bugreport
+     *
+     * @throws ModelException the given title of description is empty.
+     * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
+     */
+    public Comment createComment(String text, Issuer issuer, BugReport bugReport) throws ModelException
+    {
+        Comment comm = new Comment(text, issuer);
+        bugReport.addComment(comm);
+        return comm;
+    }
+    
+    /**
+     * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     *
+     * @param title The title of the bugreport
+     * @param description The description of the bugreport
+     * @param creator The creator of the bugreport
+     * @param subSystem The subsystem of the bugreport
+     *
+     * @return The newly created bugreport
+     *
+     * @throws ModelException the given title of description is empty.
+     * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
+     */
+    public Comment createComment(String text, Issuer issuer, Comment comment) throws ModelException
+    {
+        Comment comm = new Comment(text, issuer);
+        comment.addComment(comm);
+        return comm;
+    }
 
     //TODO Documentation
     public Comment createComment(String text, Issuer issuer, BugReport bugReport) throws ModelException {
@@ -94,6 +134,7 @@ public class BugReportService {
         }
         return Collections.unmodifiableList(bugReports);
     }
+    
     
     /**
      * Getter to get one specific BugReport.
@@ -183,7 +224,7 @@ public class BugReportService {
         if (description.equals(" ")) return false;
         return true;
     }
-
+    
     //TODO Documentation
     private IListWrapper<BugReport> getAllBugReportsWrapped()
     {

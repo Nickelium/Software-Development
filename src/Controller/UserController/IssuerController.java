@@ -5,6 +5,7 @@ import Controller.UI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
+import Model.BugReport.Comment;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -12,6 +13,7 @@ import Model.User.Issuer;
 import Model.User.User;
 import Model.User.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +29,6 @@ public class IssuerController extends UserController{
     private void initializeUseCasesIssuer(){
         try {
             useCases.add(new FunctionWrap("Create Bug Report", IssuerController.class.getMethod("createBugReport")));
-            useCases.add(new FunctionWrap("Select Bug Report", IssuerController.class.getMethod("selectBugReport")));
             useCases.add(new FunctionWrap("Inspect Bug Report", IssuerController.class.getMethod("inspectBugReport")));
             useCases.add(new FunctionWrap("Create Comment", IssuerController.class.getMethod("createComment")));
 
@@ -37,7 +38,8 @@ public class IssuerController extends UserController{
     }
 
 
-    public void createBugReport(){
+    public void createBugReport()
+    {
         try {
             // select a project
             getUi().display("Select a project:");
@@ -93,27 +95,149 @@ public class IssuerController extends UserController{
 
     }
 
-    public BugReport selectBugReport() {
-        try {
+    protected BugReport selectBugReport()
+    {
+    	try 
+    	{
+               int chosenNumber;
+               List<BugReport> bugReportList;
 
-            // show all dependencies of this bug report
-            // return for usage in DeveloperController
-            return null;
+               // return for usage in DeveloperController
 
-        } catch (/*ModelException | */IndexOutOfBoundsException e) {
-            getUi().errorDisplay(e.getMessage());
+               getUi().display("Select the preferred search method: ");
+               getUi().display(Parser.parseSearchMethods());
+
+               int methodIndex = getUi().readInt();
+
+               if(methodIndex == 0){
+                   // Search for bug reports with a specific string in the title or description
+                   getUi().display("Please enter a search string matching the title or description of the desired bug report.");
+                   String query = getUi().readString();
+
+                   // Make List with possible bug reports
+                   List<BugReport> list1 = getBugReportService().getBugReportsWithDescriptionContaining(query);
+                   List<BugReport> list2 = getBugReportService().getBugReportsWithTitleContaining(query);
+
+                   // Combine both lists
+                   bugReportList = new ArrayList<BugReport>(list1);
+                   for(BugReport b : list2){
+                       bugReportList.add(b);
+                   }
+
+                   if(bugReportList.size()>0) {
+                       // Show Results
+                       getUi().display("The search result for your query is: ");
+                       getUi().display(Parser.parseBugReportList(bugReportList));
+                   }else{
+                       getUi().display("No bug reports found.");
+                   }
+
+               }
+
+               else if (methodIndex == 1){
+                   // Search for bug reports filed by some specific user
+                   getUi().display("Please enter the username of the user that filed the desired bug report: ");
+                   String userName = getUi().readString();
+
+                   User user = getUserService().getUser(userName);
+                   bugReportList = getBugReportService().getBugReportsFiledByUser(user);
+                   if(bugReportList.size() > 0) {
+                       // Show Results
+                       getUi().display("The search result for your query is: ");
+                       getUi().display(Parser.parseBugReportList(bugReportList));
+                   }else{
+                       getUi().display("No bug reports found.");
+                   }
+               }
+
+               else {
+                   // Search for bug reports assigned to specific user
+                   getUi().display("Please enter the username of the user that the bug reports are assigned to: ");
+                   String userName = getUi().readString();
+
+                   User user = getUserService().getUser(userName);
+                   bugReportList = getBugReportService().getBugReportsAssignedToUser(user);
+
+                   // Show Results
+                   getUi().display("The search result for your query is: ");
+                   getUi().display(Parser.parseBugReportList(bugReportList));
+               }
+
+               // Make choice
+               getUi().display("Please enter the number of the bug report that you would like to select: ");
+               chosenNumber = getUi().readInt();
+
+               return bugReportList.get(chosenNumber);
+    	  }
+        catch (ModelException | IndexOutOfBoundsException e) 
+    	{
+        	getUi().errorDisplay(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
-            if (getUi().readInt() == 1) createBugReport();
+            return selectBugReport();
         }
+    }
+
+    public void inspectBugReport()
+    {
+    	try
+    	{
+    		BugReport bugReport = selectBugReport();	    	
+	    	String bugReportDetails = Parser.parseDetailBugReport(bugReport);
+	    	getUi().display(bugReportDetails);
+    	}
+    	catch(IndexOutOfBoundsException e)
+    	{
+    		 getUi().errorDisplay(e.getMessage());
+             getUi().display("Enter 1 if you want to retry.");
+             if (getUi().readInt() == 1) inspectBugReport();
+    	}
 
     }
 
-    public void inspectBugReport(){
+    public void createComment()
+    {
+    	try
+    	{
+    		BugReport bugReport = selectBugReport();
+    		getUi().display("List of all comments of this bugreport:");
+    		List<Comment> listComment = bugReport.getAllComments();
+    		String parsedListComment = Parser.parseCommentList(listComment);
+    		getUi().display(parsedListComment);
+    		
+    		getUi().display("Create a comment of the bugreport or on one of the comments (B/C) : ");
+	        String input = getUi().readString();
+          
+            int index;
+            if (input.equalsIgnoreCase("b")) 
+            {
+                getUi().display("Please enter the comment information.");
+                getUi().display("Text:");
+                String text = getUi().readString();
+                Comment newComment = getBugReportService().createComment(text, (Issuer)getCurrentUser(), bugReport);
 
-    }
-
-    public void createComment(){
-
+            } 
+            else if (input.equalsIgnoreCase("c")) 
+            {
+                getUi().display("Choose a comment from one of above: ");
+                index = getUi().readInt();
+                Comment comm = listComment.get(index);
+                getUi().display("Please enter the comment information.");
+                getUi().display("Text:");
+                String text = getUi().readString();
+                Comment newComment = getBugReportService().createComment(text, (Issuer)getCurrentUser(), comm);
+             }
+            else
+            {
+               throw new ModelException("This is an invalid input");
+            }
+            getUi().display("The comment has been successfully created.\n");
+    	}
+    	catch(ModelException | IndexOutOfBoundsException e)
+    	{
+    		 getUi().errorDisplay(e.getMessage());
+             getUi().display("Enter 1 if you want to retry.");
+             if (getUi().readInt() == 1) inspectBugReport();
+    	}
     }
 
 }

@@ -120,14 +120,14 @@ public abstract class UserController {
     	{
 	    	List<Project> projectList = projectService.getAllProjects();
 	    	String parsedProjectList = Parser.parseProjectList(projectList);
-	    	ui.display(parsedProjectList);
+	    	getUi().display(parsedProjectList);
 	    	
 	    	int index = ui.readInt();
 	    	Project project = projectList.get(index);
 	    	
 	    	String projectDetails = Parser.parseDetailedProject(project);
 	    	
-	    	ui.display(projectDetails);
+	    	getUi().display(projectDetails);
     	}
     	catch(IndexOutOfBoundsException e)
     	{
@@ -138,7 +138,7 @@ public abstract class UserController {
     }
 
     public void exitProgram(){
-        ui.display("Bye!");
+        getUi().display("Bye!");
         System.exit(1);
     }
 

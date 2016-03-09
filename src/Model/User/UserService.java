@@ -156,7 +156,7 @@ public class UserService {
      * @throws ModelException There is no user with the given username.
      */
     public User getUser(String userName) throws ModelException{
-        User user = this.userList.getOne((s)->s.getUserName()==userName);
+        User user = this.userList.getOne((s)->s.getUserName().equals(userName));
 
         if (user == null) throw new ModelException("The user does not exist.");
         return user;
