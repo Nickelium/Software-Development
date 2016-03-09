@@ -126,5 +126,10 @@ public class BugReportTest {
         BugReport bugReport = bugReportService.createBugReport("title", "description", this.issuer, this.subsys);
         assertEquals(bugReport.getDependencies().size(), 0);
     }
+
+
+
+
+
 }
 

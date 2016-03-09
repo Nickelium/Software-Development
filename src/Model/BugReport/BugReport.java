@@ -77,6 +77,10 @@ public class BugReport {
          this.creationDate = creationDate;
          this.tag = tag;
 
+         //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
+         // the tag is changed to an assigned tag.
+         if (tag.getClass().equals(New.class) && !initialAssignies.isEmpty()) this.tag = new Assigned();
+
          this.id = new BugReportID();
          subSystem.addBugReport(this);
 

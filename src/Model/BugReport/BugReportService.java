@@ -11,6 +11,7 @@ import Model.User.Issuer;
 import Model.User.User;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
+import com.sun.tools.internal.ws.processor.model.Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +69,7 @@ public class BugReportService {
      * @throws ModelException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ModelException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ModelException
     {
         BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag, initialAssignees);
         return bugReport;
@@ -145,9 +146,46 @@ public class BugReportService {
         return Collections.unmodifiableList(bugReports);
     }
 
+    //TODO Documentation
+    public List<BugReport> getBugReportsWithTitleContaining(String title) throws ModelException{
+        if (!isValidTitleString(title)) throw new ModelException("The string cannot be empty!");
+
+        List<BugReport> bugreports = getAllBugReportsWrapped().getAllMatching(x -> x.getTitle().contains(title));
+        return Collections.unmodifiableList(bugreports);
+
+    }
+
+    public List<BugReport> getBugReportsWithDescriptionContaining(String description) throws ModelException{
+        if (!isValidDescription(description)) throw new ModelException("The string cannot be empty!");
+
+        List<BugReport> bugReports = getAllBugReportsWrapped().getAllMatching(x -> x.getDescription().contains(description));
+        return Collections.unmodifiableList(bugReports);
+    }
+
+    //TODO Documentation / eventueel string methodes gebruiken
+    public boolean isValidTitleString(String title) {
+        if (title == null) return false;
+        if (title.equals("")) return false;
+        if (title.equals(" ")) return false;
+        return true;
+    }
+
+    //TODO Documentation / eventueel string methodes gebruiken
+    public boolean isValidDescription(String description){
+        if (description == null) return false;
+        if (description.equals("")) return false;
+        if (description.equals(" ")) return false;
+        return true;
+    }
+
+    //TODO Documentation
     private IListWrapper<BugReport> getAllBugReportsWrapped()
     {
-        return new ListWrapper<>(getAllBugReports());
+        List<BugReport> bugReports = new ArrayList<>();
+        for (Project project: projectService.getAllProjects()){
+            bugReports.addAll(project.getAllBugReports());
+        }
+        return new ListWrapper<>(bugReports);
     }
 
 }
