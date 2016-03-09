@@ -211,6 +211,7 @@ public class SubSystem
 		List<SubSystem> list = new ArrayList<SubSystem>();
 		for(SubSystem s : subSystems)
 		{
+			list.add(s);
 			list.addAll(s.getAllSubSystems());
 		}
 		

@@ -68,24 +68,24 @@ public class Initializer implements IInitializer
 		
 		bugReportService.createBugReport("The function parse_ewd returns unexpected results",
 				"If the function parse_ewd is invoked while ...",
+				doc,
 				subSystemB1,
-                doc,
                 new TheDate(3,1,2016),
                 new Closed(),
                 Collections.singletonList(maria));
 		
 		bugReportService.createBugReport("Crash while processing user input",
-				"If incorrect user input is entered into the system ...", 
+				"If incorrect user input is entered into the system ...",
+				doc,
 				subSystemA31,
-                doc,
                 new TheDate(15,1,2016),
 				new Assigned(),
                 Arrays.asList(major, maria));
 		
 		bugReportService.createBugReport("SubsystemA2 feezes",
 				"If the function process_dfe is invoked with ...",
+				charlie,
 				subSystemA2,
-                charlie,
                 new TheDate(4,2,2016),
 				new New(),
                 new ArrayList<>());
