@@ -3,6 +3,7 @@ package Controller;
 import Model.BugReport.BugReport;
 import Model.Project.Project;
 import Model.Project.SubSystem;
+import Model.Roles.Role;
 import Model.User.User;
 
 import java.util.List;
@@ -35,6 +36,16 @@ public class Parser
 			parsed += i + ":\n" + listSubSystem.get(i).toString() +"\n";
 		return parsed;
 		
+	}
+
+	public static String parseRoleList()
+	{
+
+		String parsed ="";
+		for(int i=0; i< listRole.size(); i++)
+			parsed += i + ":\n" + listBugReport.get(i).toString() +"\n";
+		return parsed;
+
 	}
 
 	public static String parseBugReportList(List<BugReport> listBugReport)

@@ -3,6 +3,7 @@ package Controller.UserController;
 import Controller.Parser;
 import Controller.UI;
 import CustomExceptions.ModelException;
+import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
@@ -75,8 +76,10 @@ public class IssuerController extends UserController{
 
     }
 
-    public void selectBugReport(){
+    public BugReport selectBugReport(){
 
+        // Deze use case wordt gebruikt door Developer use cases
+        // en moet dus het gekozen bugreport teruggeven!
     }
 
     public void inspectBugReport(){
