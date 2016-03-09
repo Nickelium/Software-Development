@@ -1,6 +1,5 @@
 package Controller.UserController;
 
-import Controller.MainController;
 import Controller.Parser;
 import Controller.UI;
 import CustomExceptions.ModelException;
@@ -181,7 +180,11 @@ public class IssuerController extends UserController {
             e.printStackTrace();
             return selectBugReport();
         }
+<<<<<<< HEAD
 
+=======
+        return null;
+>>>>>>> cd112a6ebb6f80dcb7cd0c4d322200895cdbb18f
     }
 
     public void inspectBugReport() {

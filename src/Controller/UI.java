@@ -8,7 +8,7 @@ public class UI
 	
 	public void display(String str)
 	{
-		System.out.println(str);
+		System.out.print(str + "\n");
 	}
 	
 	public String readString()
