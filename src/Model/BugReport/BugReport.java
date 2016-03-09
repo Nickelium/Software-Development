@@ -265,6 +265,12 @@ public class BugReport {
             return false;
         }
     }
+
+    //TODO documentatie
+    public void addDependency(BugReport bugReport){
+        if (!dependencies.contains(bugReport)) dependencies.add(bugReport);
+    }
+
     
     @Override
     public String toString()
