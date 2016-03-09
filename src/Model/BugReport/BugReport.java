@@ -254,6 +254,14 @@ public class BugReport {
         this.comments.add(comment);
     }
 
+    //TODO Documentation
+    public void addDependency(BugReport dependency) {
+        if (dependency == null) throw new IllegalArgumentException("Dependency is null");
+
+        this.dependencies.add(dependency);
+
+    }
+
     /**
      * Overrided the equals method to only look at the id to check for equality.
      *
