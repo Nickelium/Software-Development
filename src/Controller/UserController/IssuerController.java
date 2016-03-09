@@ -56,6 +56,7 @@ public class IssuerController extends UserController{
             SubSystem subSystem = subSystemList.get(indexS);
 
             // ask information for the bugreport
+            getUi().display("\n");
             getUi().display("Please enter the bug report information.");
             getUi().display("Title:");
             String title = getUi().readString();
@@ -65,10 +66,26 @@ public class IssuerController extends UserController{
             Issuer issuer = (Issuer) getCurrentUser();
 
             // create bugreport
-            getBugReportService().createBugReport(title, description, issuer, subSystem);
+            BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem);
+
+            // show all dependencies
+            List<BugReport> possibleDependencies = getBugReportService().getBugReportsForProject(project);
+            String possibleDependenciesStr = Parser.parseBugReportList(possibleDependencies);
+            while(true){
+                getUi().display("\n");
+                getUi().display("Select a possible dependency (enter -1 to exit): ");
+                getUi().display(possibleDependenciesStr);
+                int indexDep = getUi().readInt();
+                if (indexDep ==-1) break;
+                // add dependency
+                BugReport newDependency = possibleDependencies.get(indexDep);
+                bugReport.addDependency(newDependency);
+                getUi().display("Dependency is successfully added!");
+                getUi().display(newDependency.toString());
+            }
 
             // show all dependencies of this bug report
-        }catch(ModelException e){
+        }catch(ModelException | IndexOutOfBoundsException e){
             getUi().errorDisplay(e.getMessage());
             getUi().display("Enter 1 if you want to retry.");
             if (getUi().readInt() == 1) createBugReport();
@@ -76,10 +93,21 @@ public class IssuerController extends UserController{
 
     }
 
-    public BugReport selectBugReport(){
+    public void selectBugReport() {
+        try {
 
+
+<<<<<<< HEAD
         // TODO: Deze use case wordt gebruikt door Developer use cases en moet dus het gekozen bugreport teruggeven!
         return null;
+=======
+            // show all dependencies of this bug report
+        } catch (/*ModelException | */IndexOutOfBoundsException e) {
+            getUi().errorDisplay(e.getMessage());
+            getUi().display("Enter 1 if you want to retry.");
+            if (getUi().readInt() == 1) createBugReport();
+        }
+>>>>>>> 247365487ba6c084c5569d7663213da9bbb72352
     }
 
     public void inspectBugReport(){
