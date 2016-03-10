@@ -1,7 +1,7 @@
 package Controller.UserController;
 
+import Controller.IUI;
 import Controller.Parser;
-import Controller.UI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class AdminController extends UserController {
 
-    public AdminController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
+    public AdminController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
         initializeUseCasesAdmin();
     }

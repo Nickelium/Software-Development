@@ -10,23 +10,24 @@ import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.User;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.EventListener;
+import java.util.logging.Handler;
+
 /**
  * Created by Karina on 26.02.2016.
  */
 public class MainController {
-    private UI ui;
+    private IUI ui;
     private IInitializer initializer;
     private User currentUser;
 
     public MainController() {
         ui = new UI();
         initializer = new Initializer();
-        
-        try {
-			initializer.init();
-		} catch (ModelException e) {
-			e.printStackTrace();
-		}
 
     }
 
@@ -34,8 +35,6 @@ public class MainController {
         startMsg();
         LoginController loginController = new LoginController(ui, initializer.getUserService());
         this.currentUser = loginController.run();
-        //create Controller
-
 
         // choose controller
         UserController userController;
@@ -52,31 +51,35 @@ public class MainController {
             userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser);
         }
 
-        while (true) {
-            // give all possibilities
-            ui.display("Choose one of the actions below:");
-            userController.showAllUseCases();
-
-            int chosenUseCase;
-            // ask to choose
-            chosenUseCase = ui.readInt();
-
-            // call function
-            try {
-                userController.callUseCase(chosenUseCase);
-            } catch (IndexOutOfBoundsException e) {
-                ui.errorDisplay("This is an invalid choice.");
-                continue;
-            }
-
-            //repeat
-        }
+        chooseUseCase(userController);
 
     }
 
     private void startMsg() {
         String msg = "Welcome to the bug tracking system!";
         ui.display(msg);
+    }
+
+    public void chooseUseCase(UserController userController){
+        while (true) {
+
+        // give all possibilities
+        ui.display("Choose one of the actions below:");
+        userController.showAllUseCases();
+
+        int chosenUseCase;
+        // ask to choose
+        chosenUseCase = ui.readInt();
+
+        // call function
+        try {
+            userController.callUseCase(chosenUseCase);
+        } catch (IndexOutOfBoundsException e) {
+            ui.errorDisplay("This is an invalid choice.");
+            continue;
+        }
+
+        }
     }
 
 
