@@ -63,7 +63,7 @@ public class CreateProject extends AdminControllerInit {
                 ".",
                 "11/12/2016",
                 "-200.0",
-                "0"
+                "1"
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
@@ -81,7 +81,7 @@ public class CreateProject extends AdminControllerInit {
                 "Project Test Discription",
                 ".",
                 "11/12/2016",
-                "-200.0",
+                "200.0",
                 "5"
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));

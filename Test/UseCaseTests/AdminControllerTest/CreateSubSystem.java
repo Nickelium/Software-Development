@@ -12,93 +12,63 @@ import java.util.Arrays;
 /**
  * Created by Karina on 10.03.2016.
  */
-public class ForkProject  extends AdminControllerInit {
+public class CreateSubSystem extends AdminControllerInit {
 
 
     @Test
-    public void successfulForkedProject() throws Exception{
+    public void successfullyCreatedSubSystem_forProject() throws Exception{
         String[] simulatedUserInput = {
+                "P",
                 "0",
-                "1.1",
-                "11/11/2016",
-                "200.0",
-                "1"
+                "Sub System Name Test",
+                "Sub System Description Test",
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(3);
-    }
-
-
-    @Test(expected = ModelException.class)
-    public void unsuccessfullyForkProject_invalidVersionID() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "0.3",
-                "11/11/2016",
-                "200.0",
-                "1"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-
-        UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(3);
-
-    }
-
-    @Test(expected = ModelException.class)
-    public void unsuccessfullyForkProject_invalidStartingDate() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "1.1",
-                "11/11/2014",
-                "200.0",
-                "1"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-
-        UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(3);
-
-    }
-
-
-    @Test(expected = ModelException.class)
-    public void unsuccessfullyForkProject_invalidBudget() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "1.1",
-                "11/11/2016",
-                "-200.0",
-                "1"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-
-        UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(3);
-
+        adminController.callUseCase(6);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void unsuccessfullyForkProject_invalidLead() throws Exception{
+    public void unsuccessfulCreateSubSystem_forProject_wrongSelection() throws Exception{
         String[] simulatedUserInput = {
-                "0",
-                "1.1",
-                "11/11/2016",
-                "200.0",
-                "5"
+                "P",
+                "10"
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(3);
+        adminController.callUseCase(6);
+    }
 
+    @Test
+    public void successfullyCreatedSubSystem_forSubSystem() throws Exception{
+        String[] simulatedUserInput = {
+                "S",
+                "0",
+                "Sub System Name Test",
+                "Sub System Description Test",
+        };
+        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+        TestUI ui = new TestUI(input);
+
+        UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
+        adminController.callUseCase(6);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void unsuccessfulCreateSubSystem_forSubSystem_wrongSelection() throws Exception{
+        String[] simulatedUserInput = {
+                "S",
+                "10"
+        };
+        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+        TestUI ui = new TestUI(input);
+
+        UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
+        adminController.callUseCase(6);
     }
 
 }
