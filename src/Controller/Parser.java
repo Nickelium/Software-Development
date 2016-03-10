@@ -61,20 +61,6 @@ public class Parser
 		
 	}
 
-
-	// TODO: List van roles opvragen implementeren
-	/*
-	public static String parseRoleList()
-	{
-
-		String parsed ="";
-		for(int i=0; i< listRole.size(); i++)
-			parsed += i + ":\n" + listRole.get(i).toString() +"\n";
-		return parsed;
-
-	}
-	*/
-
 	public static String parseBugReportList(List<BugReport> listBugReport)
 	{
 		String parsed ="";
