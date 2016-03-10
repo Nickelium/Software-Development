@@ -2,7 +2,6 @@ package Controller.UserController;
 
 import Controller.IUI;
 import Controller.Parser;
-import Controller.UI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
@@ -13,7 +12,6 @@ import Model.Project.ProjectService;
 import Model.Roles.Programmer;
 import Model.Roles.Role;
 import Model.Roles.Tester;
-import Model.Tags.Tag;
 import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
@@ -47,7 +45,7 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void assignToProject() throws ModelException, IndexOutOfBoundsException {
+    public void assignToProject() throws Exception {
         // Get projects with currentUser as Lead Developer.
         List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
 
@@ -125,15 +123,16 @@ public class DeveloperController extends IssuerController {
         getUi().display("Please select the bug report that you want to update: ");
         BugReport bugReport = selectBugReport();
 
-            getUi().display("Please specify the new tag for the bug report: ");
-            String input = getUi().readString();
-            Class<?> tag;
-            try {
-                tag = Class.forName("Model.Tags.TagTypes." + input);
-                if (input == "-1") return;
-            } catch (ClassNotFoundException e) {
-                throw new ModelException("The given tag does not exist!");
-            }
+        getUi().display("Please specify the new tag for the bug report: ");
+        String input = getUi().readString();
+        Class<?> tag;
+        try {
+            tag = Class.forName("Model.Tags.TagTypes." + input);
+            if (input == "-1") return;
+        } catch (ClassNotFoundException e) {
+            throw new ModelException("The given tag does not exist!");
+        }
+    }
 
     //region Getters & Setters
 
