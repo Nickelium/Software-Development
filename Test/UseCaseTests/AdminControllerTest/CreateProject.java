@@ -25,6 +25,7 @@ public class CreateProject extends AdminControllerInit {
         String[] simulatedUserInput = {
                 "Project Test",
                 "Project Test Discription",
+                ".",
                 "11/12/2016",
                 "200.0",
                 "0"
@@ -41,6 +42,7 @@ public class CreateProject extends AdminControllerInit {
         String[] simulatedUserInput = {
                 "Project Test",
                 "Project Test Discription",
+                ".",
                 "11/12/2014",
                 "200.0",
                 "0"
@@ -58,6 +60,7 @@ public class CreateProject extends AdminControllerInit {
         String[] simulatedUserInput = {
                 "Project Test",
                 "Project Test Discription",
+                ".",
                 "11/12/2016",
                 "-200.0",
                 "0"

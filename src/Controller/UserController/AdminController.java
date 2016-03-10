@@ -42,8 +42,8 @@ public class AdminController extends UserController {
         getUi().display("Please enter the project information.");
         getUi().display("Name: ");
         String name = getUi().readString();
-        getUi().display("Description: ");
-        String description = getUi().readString();
+        getUi().display("Description (close with .): ");
+        String description = getUi().readMultiline();
 
         TheDate startingDate = null;
 
