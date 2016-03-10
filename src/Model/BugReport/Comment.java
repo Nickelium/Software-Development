@@ -140,9 +140,8 @@ public class Comment {
 	 */
     public String toString()
     {
-    	return "Comment text: " + getText() + "\nIssuer: " + getIssuer() 
-    			+ "\nCreation date: " + getCreationDate()+ "\nCreation date: "
-    			+ getCreationDate();
+        return "Comment text: \n" + getText() + "\nIssuer: " + getIssuer()
+                + "\nCreation date: " + getCreationDate();
     }
 
     //endregion

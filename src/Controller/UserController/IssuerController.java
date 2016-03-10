@@ -236,7 +236,7 @@ public class IssuerController extends UserController {
                 getUi().display("The comment was:\n"
                         + "-------------------------\n"
                         + newComment
-                        + "-------------------------\n"
+                        + "\n-------------------------\n"
                         + "It has successfully been created.\n");
 
             } else if (input.equalsIgnoreCase("c")) {
