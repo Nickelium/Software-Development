@@ -44,9 +44,16 @@ public class TheDate
 	 *
 	 * @throws DateTimeException The given attributes are not valid.
 	 */
-	public TheDate(int day, int month, int year) throws ModelException
+	public TheDate(int day, int month, int year) throws ModelException 
 	{
-		this.date = LocalDate.of(year,month,day);
+		try
+		{
+			this.date = LocalDate.of(year,month,day);
+		}
+		catch(Exception e)
+		{
+			throw new ModelException("Incorrect date format!");
+		}
 	}
 
     private TheDate(){
@@ -119,6 +126,7 @@ public class TheDate
      */
 	public boolean isAfter(TheDate date)
 	{
+		if(date == null) return false;
 		return this.date.isAfter(date.date);
 	}
 
@@ -131,6 +139,7 @@ public class TheDate
      */
 	public boolean isBefore(TheDate date)
 	{
+		if(date == null) return false;
 		return this.date.isBefore(date.date);
 	}
 
