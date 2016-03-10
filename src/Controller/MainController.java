@@ -71,23 +71,28 @@ public class MainController {
 
     public void chooseUseCase(UserController userController){
         while (true) {
-
-        // give all possibilities
-        ui.display("Choose one of the actions below:");
-        userController.showAllUseCases();
-
-        int chosenUseCase;
-        // ask to choose
-        chosenUseCase = ui.readInt();
-
-        // call function
-        try {
-            userController.callUseCase(chosenUseCase);
-        } catch (IndexOutOfBoundsException e) {
-            ui.errorDisplay("This is an invalid choice.");
-            continue;
-        }
-
+                int chosenUseCase;
+                // ask to choose
+                ui.display("Choose one of the actions below:");
+                userController.showAllUseCases();
+            while(true){
+                chosenUseCase = ui.readInt();
+                if(chosenUseCase < userController.getUseCases().size()) break;
+                else{
+                    ui.display("This is not a valid input! Please retry:");
+                }
+            }
+                while (true) {
+                    try {
+                        // call function
+                        userController.callUseCase(chosenUseCase);
+                        break;
+                    } catch (ModelException | IndexOutOfBoundsException e) {
+                        ui.errorDisplay(e.getMessage());
+                        ui.display("Enter 1 if you want to retry.");
+                        if (ui.readInt() != 1) break;
+                    }
+                }
         }
     }
 
