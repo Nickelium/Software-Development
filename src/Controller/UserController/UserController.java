@@ -119,7 +119,7 @@ public abstract class UserController {
 
     //region use cases methods
 
-    public void showProject() throws ModelException
+    void showProject() throws ModelException
     {
     	try
     	{
@@ -142,7 +142,7 @@ public abstract class UserController {
     	}
     }
 
-    public void exitProgram(){
+    void exitProgram(){
         getUi().display("Bye!");
         System.exit(1);
     }

@@ -46,7 +46,7 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void assignToProject() throws Exception {
+    void assignToProject() throws Exception {
         // Get projects with currentUser as Lead Developer.
         List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
 
@@ -89,7 +89,7 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void assignToBugReport() throws ModelException, IndexOutOfBoundsException {
+    void assignToBugReport() throws ModelException, IndexOutOfBoundsException {
         // Use Case Select Bug Report
         getUi().display("Please select the bug report that you want to assign a new developer to: ");
         BugReport bugReport = selectBugReport();
@@ -119,7 +119,7 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void updateBugReport() throws Exception {
+    void updateBugReport() throws Exception {
         // Use Case Select Bug Report
         getUi().display("Please select the bug report that you want to update: ");
         BugReport bugReport = selectBugReport();
@@ -146,7 +146,7 @@ public class DeveloperController extends IssuerController {
         return developerAssignmentService;
     }
 
-    public void setDeveloperAssignmentService(DeveloperAssignmentService developerAssignmentService) {
+    private void setDeveloperAssignmentService(DeveloperAssignmentService developerAssignmentService) {
         this.developerAssignmentService = developerAssignmentService;
     }
 
@@ -154,7 +154,7 @@ public class DeveloperController extends IssuerController {
         return tagAssignmentService;
     }
 
-    public void setTagAssignmentService(TagAssignmentService tagAssignmentService) {
+    private void setTagAssignmentService(TagAssignmentService tagAssignmentService) {
         this.tagAssignmentService = tagAssignmentService;
     }
 

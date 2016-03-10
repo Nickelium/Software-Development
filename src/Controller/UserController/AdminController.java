@@ -38,7 +38,7 @@ public class AdminController extends UserController {
         }
     }
 
-    public void createProject() throws ModelException, IndexOutOfBoundsException {
+    void createProject() throws ModelException, IndexOutOfBoundsException {
         getUi().display("Please enter the project information.");
         getUi().display("Name: ");
         String name = getUi().readString();
@@ -67,7 +67,7 @@ public class AdminController extends UserController {
         getUi().display(project.toString());
     }
 
-    public void forkProject() throws ModelException, IndexOutOfBoundsException {
+    void forkProject() throws ModelException, IndexOutOfBoundsException {
         getUi().display("Select a project you want to fork: ");
         List<Project> projectList = getProjectService().getAllProjects();
         String parsedProjectList = Parser.parseProjectList(projectList);
@@ -105,7 +105,7 @@ public class AdminController extends UserController {
         getUi().display(forkProject.toString());
     }
 
-    public void updateProject() throws ModelException, IndexOutOfBoundsException {
+    void updateProject() throws ModelException, IndexOutOfBoundsException {
         getUi().display("Select a project you want to update: ");
         List<Project> projectList = getProjectService().getAllProjects();
         String parsedProjectList = Parser.parseProjectList(projectList);
@@ -137,7 +137,7 @@ public class AdminController extends UserController {
         getUi().display(project.toString());
     }
 
-    public void deleteProject() throws ModelException, IndexOutOfBoundsException {
+    void deleteProject() throws ModelException, IndexOutOfBoundsException {
         getUi().display("Select a project you want to delete: ");
         List<Project> projectList = getProjectService().getAllProjects();
         String parsedProjectList = Parser.parseProjectList(projectList);
@@ -150,7 +150,7 @@ public class AdminController extends UserController {
         getUi().display("The project has been successfully deleted.\n");
     }
 
-    public void createSubSystem() throws ModelException, IndexOutOfBoundsException {
+    void createSubSystem() throws ModelException, IndexOutOfBoundsException {
         getUi().display("List of all projects:");
         List<Project> projectList = getProjectService().getAllProjects();
         String parsedProjectList = Parser.parseProjectList(projectList);
