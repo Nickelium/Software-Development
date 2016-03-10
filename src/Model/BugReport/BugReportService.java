@@ -84,7 +84,7 @@ public class BugReportService {
     //TODO Documentation
     public Comment createComment(String text, Issuer issuer, Comment comment) throws ModelException {
         Comment newComment = new Comment(text, issuer);
-        comment.addComment(comment);
+        comment.addComment(newComment);
         return newComment;
 
     }

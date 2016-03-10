@@ -123,7 +123,7 @@ public class Comment {
      *
      * @return True if the text is not empty or not null. False otherwise.
      */
-    private boolean isValidText(String text){
+    public boolean isValidText(String text) {
         if (text == null)return false;
         if (text.equals(""))return false;
         else return true;

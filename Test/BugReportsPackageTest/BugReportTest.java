@@ -8,7 +8,10 @@ import Model.Tags.Closed;
 import Model.Tags.New;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * Created by Tom on 28/02/16.
  */
