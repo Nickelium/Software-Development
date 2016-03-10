@@ -1,6 +1,6 @@
 package Model.Roles;
 
-import Model.Tags.UnderReview;
+import Model.Tags.TagTypes.UnderReview;
 import Model.User.Developer;
 
 import java.util.Collections;
@@ -30,10 +30,10 @@ public class Tester extends Role {
     public String toString() {
         return "Tester: " + getDeveloper().toString();
     }
-    
+
     /**
      * Method to copy this tester object.
-     * 
+     *
      * @return The copied tester.
      */
 	@Override

@@ -386,12 +386,18 @@ public class Project
 	 */
 	@Override
 	public String toString(){
-		return "Project name: " + getName() + "\nDescription: " + getDescription() 
+		String string = "Project name: " + getName() + "\nDescription: " + getDescription()
 				+"\nCreation Date: " + getCreationDate() 
 				+ "\nStarting Date: " + getStartingDate() + "\nBudget: " + getBudget()
-				+ "\nVersionID: " + versionID + "\nLead developer: " 
-				+ getLeadRole().getDeveloper();
-				//add tostring devsroles
+				+ "\nVersionID: " + versionID + "\nLead developer: "
+				+ getLeadRole().getDeveloper() + "\n";
+
+		for (Role role : devsRoles) {
+			string += role.toString() + "\n";
+		}
+
+		return string;
+
 	}
 
 }

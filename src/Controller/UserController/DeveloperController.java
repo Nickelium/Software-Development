@@ -2,7 +2,6 @@ package Controller.UserController;
 
 import Controller.IUI;
 import Controller.Parser;
-import Controller.UI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
@@ -10,10 +9,15 @@ import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
+import Model.Roles.Programmer;
+import Model.Roles.Role;
+import Model.Roles.Tester;
+import Model.Tags.Tag;
 import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,7 +46,7 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void assignToProject() throws ModelException, IndexOutOfBoundsException {
+    public void assignToProject() throws Exception {
         // Get projects with currentUser as Lead Developer.
         List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
 
@@ -68,11 +72,19 @@ public class DeveloperController extends IssuerController {
             int developerIndex = getUi().readInt();
             User developer = developerList.get(developerIndex);
 
-            getUi().display("Please select the role that you want to assign to the developer of the project: ");
-            //TODO stap 6+7+8
+                getUi().display("Please select the role that you want to assign to the developer of the project: ");
 
+                List<Class<? extends Role>> roles = Arrays.asList(Programmer.class, Tester.class);
+                getUi().display(Parser.parseProjectRoles(roles));
 
-            getUi().display("The new developer has been successfully assigned to a new role in the project.\n");
+                int selectedIndex = getUi().readInt();
+                Class<? extends Role> selectedClass = roles.get(selectedIndex);
+
+                Role role = selectedClass.getDeclaredConstructor(Developer.class).newInstance(developer);
+
+                project.addRole(role);
+
+                getUi().display("The new developer has been successfully assigned to a new role in the project.\n");
 
         }
     }
@@ -82,8 +94,9 @@ public class DeveloperController extends IssuerController {
         getUi().display("Please select the bug report that you want to assign a new developer to: ");
         BugReport bugReport = selectBugReport();
 
-        // Check if current user doesn't have the Lead or Tester role
-        //TODO: implement extension 4.12 3a
+            do {
+                bugReport = selectBugReport();
+            } while (!getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport));
 
         // Show developers that are involved in the project.
         getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
@@ -106,16 +119,25 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void updateBugReport() throws ModelException, IndexOutOfBoundsException {
+    public void updateBugReport() throws Exception {
         // Use Case Select Bug Report
         getUi().display("Please select the bug report that you want to update: ");
         BugReport bugReport = selectBugReport();
 
         getUi().display("Please specify the new tag for the bug report: ");
-        // TODO: 4.13.3 : Hoe kunnen we een lijst geven van tags?
-        // TODO: extension 4.13.4a
+        String input = getUi().readString();
+        Class<?> tag;
+        try {
+            tag = Class.forName("Model.Tags.TagTypes." + input);
+            if (input == "-1") return;
+        } catch (ClassNotFoundException e) {
+            throw new ModelException("The given tag does not exist!");
+        }
 
+        Tag newTag = (Tag) tag.newInstance();
+        getTagAssignmentService().assignTag(getCurrentUser(), bugReport, newTag);
 
+        getUi().display("The tag has successfully been changed.");
     }
 
     //region Getters & Setters

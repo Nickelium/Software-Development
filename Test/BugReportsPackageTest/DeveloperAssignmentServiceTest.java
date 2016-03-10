@@ -5,7 +5,7 @@ import Model.BugReport.BugReport;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Tags.Assigned;
+import Model.Tags.TagTypes.Assigned;
 import org.junit.Test;
 
 import java.util.Arrays;

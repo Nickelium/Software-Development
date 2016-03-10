@@ -1,6 +1,6 @@
 package Model.Roles;
 
-import Model.Tags.*;
+import Model.Tags.TagTypes.*;
 import Model.User.Developer;
 
 import java.util.Arrays;
@@ -33,7 +33,7 @@ public class Lead extends Role {
 
     /**
      * Method to copy this role object.
-     * 
+     *
      * @return The copied role.
      */
 	@Override

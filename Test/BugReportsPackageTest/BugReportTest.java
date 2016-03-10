@@ -4,14 +4,12 @@ import CustomExceptions.ModelException;
 import Model.BugReport.BugReportID;
 import Model.BugReport.Comment;
 import Model.Project.TheDate;
-import Model.Tags.Assigned;
-import Model.Tags.Closed;
-import Model.Tags.New;
+import Model.Tags.TagTypes.Assigned;
+import Model.Tags.TagTypes.Closed;
+import Model.Tags.TagTypes.New;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Tom on 28/02/16.
