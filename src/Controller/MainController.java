@@ -60,7 +60,7 @@ public class MainController {
         ui.display(msg);
     }
 
-    public void chooseUseCase(UserController userController) throws Exception {
+    private void chooseUseCase(UserController userController) throws Exception {
         while (true) {
             int chosenUseCase;
             // ask to choose

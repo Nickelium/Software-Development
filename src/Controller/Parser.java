@@ -31,17 +31,6 @@ public class Parser
         return parsed;
 
 	}
-
-	public static String parseSearchMethods(){
-		List<String> listMethods = new ArrayList<String>();
-		listMethods.add(0,"Search for bug reports with a specific string in the title or description");
-		listMethods.add(1,"Search for bug reports filed by some specific user");
-		listMethods.add(2,"Search for bug reports assigned to specific user");
-		String parsed ="";
-		for(int i=0; i< listMethods.size(); i++)
-			parsed += i + ": " + listMethods.get(i).toString() +"\n";
-		return parsed;
-	}
 	
 	public static String parseProjectList(List<Project> listProject)
 	{
