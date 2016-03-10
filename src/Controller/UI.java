@@ -58,6 +58,7 @@ public class UI
 		{
 			scanner.next();
 		}
+
 		return scanner.nextInt();
 
 	}
