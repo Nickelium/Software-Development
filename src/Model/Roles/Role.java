@@ -69,10 +69,10 @@ public abstract class Role {
         if (assignmentPermission == null) return false;
         else return (this.assignmentPermission.equals(permission));
     }
-    
+
     /**
      * Method to copy this role object.
-     * 
+     *
      * @return The copied role.
      */
     public abstract Role copy();

@@ -3,9 +3,9 @@ package Model.BugReport;
 import CustomExceptions.ModelException;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Tags.Assigned;
-import Model.Tags.New;
 import Model.Tags.Tag;
+import Model.Tags.TagTypes.Assigned;
+import Model.Tags.TagTypes.New;
 import Model.User.Developer;
 import Model.User.Issuer;
 

@@ -62,13 +62,12 @@ public class DeveloperAssignmentService {
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
 
         Project project;
-		try 
-		{
+        try {
 			project = this.projectService.getProjectContainingBugReport(bugReport);
-		
+
 	        Role role = this.getUserRoleWithinProject(user, project);
-	
-	        if (role == null)
+
+            if (role == null)
 	            return false;
             else if (role.hasValidAssignmentPermission(Permission.assignDevelopersToBugReport)
                     && projectContainDeveloper(developer, project)) {
@@ -80,6 +79,27 @@ public class DeveloperAssignmentService {
 	     {
 	    	 return false;
 	     }
+    }
+
+    //TODO Documentation && Tests
+    public boolean canUserAssignDevelopers(User user, BugReport bugReport) {
+        if (user == null) throw new IllegalArgumentException("User is null");
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+
+        Project project;
+        try {
+            project = this.projectService.getProjectContainingBugReport(bugReport);
+
+            Role role = this.getUserRoleWithinProject(user, project);
+
+            if (role == null)
+                return false;
+            else if (role.hasValidAssignmentPermission(Permission.assignDevelopersToBugReport)) {
+                return true;
+            } else return false;
+        } catch (ModelException e) {
+            return false;
+        }
     }
 
 

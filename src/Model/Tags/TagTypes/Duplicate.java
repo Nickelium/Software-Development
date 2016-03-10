@@ -1,6 +1,7 @@
-package Model.Tags;
+package Model.Tags.TagTypes;
 
 import Model.BugReport.BugReport;
+import Model.Tags.Tag;
 
 import java.util.Arrays;
 
