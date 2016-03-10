@@ -80,10 +80,10 @@ public class TagAssignmentService {
 	        Role role = getUserRoleWithinProject(user, project);
 	
 	        if (role == null){
-	            return false;
-	        }
-	
-	        return role.canAssignTag(tag);
+                return false;
+            }
+
+            return role.canAssignTag(tag);
         }
         catch(ModelException e)
         {
@@ -101,6 +101,9 @@ public class TagAssignmentService {
     }
 
     private Role getUserRoleWithinProject(User user, Project project){
+        if (project.getLeadRole().getDeveloper().equals(user)) {
+            return project.getLeadRole();
+        }
         for (Role role: project.getDevsRoles()){
             if (role.getDeveloper().equals(user)){
                 return role;

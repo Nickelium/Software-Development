@@ -37,6 +37,14 @@ public class CommentTest extends BugReportInitializaton {
         assert comment1.getComments().contains(comment);
     }
 
+    @Test
+    public void getAllCommentTest() throws ModelException {
+        Comment comment = bugReportService.createComment("Test 3 comment", issuer1, comment1);
+        Comment subComment = bugReportService.createComment("Test 4 comment", issuer2, comment);
+        assert comment1.getAllComments().contains(subComment);
+        assert comment1.getAllComments().contains(comment);
+    }
+
     @Test()
     public void getText() throws ModelException{
         assert comment1.getText().equals("Test Comment");

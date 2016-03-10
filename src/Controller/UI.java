@@ -63,6 +63,7 @@ public class UI implements IUI {
 		{
 			scanner.next();
 		}
+
 		return scanner.nextInt();
 
 	}

@@ -48,10 +48,10 @@ public class BugReportInitializaton {
         userService = new UserService();
 
 
-        dev1 = (Developer) userService.createDeveloper("Dev1", "", "", "dev1");
-        dev2 = (Developer) userService.createDeveloper("Dev2", "", "", "dev2");
-        issuer1 = (Issuer) userService.createIssuer("Iss1", "", "", "iss1");
-        issuer2 = (Issuer) userService.createIssuer("Iss2", "", "", "iss2");
+        dev1 = userService.createDeveloper("Dev1", "", "", "dev1");
+        dev2 = userService.createDeveloper("Dev2", "", "", "dev2");
+        issuer1 = userService.createIssuer("Iss1", "", "", "iss1");
+        issuer2 = userService.createIssuer("Iss2", "", "", "iss2");
         project1 = projectService.createProject("Test1", "Des Test1", TheDate.TheDateNow(), 0.0, new Lead(dev1));
         project2 = projectService.createProject("Test2", "Des Test2", TheDate.TheDateNow(), 0.0, new Lead(dev2));
         subSystem1A = projectService.createSubsystem("Sub1A", "Des Sub1A", project1);

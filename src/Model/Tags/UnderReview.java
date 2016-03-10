@@ -11,7 +11,7 @@ public class UnderReview extends Tag {
      * Default constructor for the underReview tag.
      */
     public UnderReview(){
-        this.acceptedTags = Arrays.asList(Resolved.class, Assigned.class);
+        this.acceptedTags = Arrays.asList(Resolved.class, Assigned.class, Closed.class);
     }
 
     @Override
