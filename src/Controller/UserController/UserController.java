@@ -50,15 +50,17 @@ public abstract class UserController {
         }
     }
 
-    public void callUseCase(int number) throws ModelException,IndexOutOfBoundsException {
+    public void callUseCase(int number) throws Exception {
         try {
             getUseCases().get(number).getFunction().invoke(this);
         }catch (IllegalAccessException e){
             e.printStackTrace();
         }catch (InvocationTargetException e){
             if (e.getTargetException() instanceof ModelException) throw new ModelException(e.getTargetException().getMessage());
-            if (e.getTargetException() instanceof IndexOutOfBoundsException) throw new IndexOutOfBoundsException(e.getTargetException().getMessage());
-            e.printStackTrace();
+            else if (e.getTargetException() instanceof IndexOutOfBoundsException) throw new IndexOutOfBoundsException(e.getTargetException().getMessage());
+            else{
+                throw e;
+            }
         }
     }
 

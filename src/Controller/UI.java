@@ -1,6 +1,5 @@
 package Controller;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UI implements IUI {
@@ -15,12 +14,6 @@ public class UI implements IUI {
 	@Override
 	public String readString()
 	{
-		if(scanner.hasNext()) return scanner.next();
-		return readString();
-	}
-
-	@Override
-	public String readLine() {
 		return scanner.nextLine();
 	}
 	
@@ -35,8 +28,8 @@ public class UI implements IUI {
             {
                 text += newText + '\n';
             }
-            newText = readLine();
-        }
+			newText = readString();
+		}
         return text;
 	}
 	
