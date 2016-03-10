@@ -20,7 +20,7 @@ public class FunctionWrap{
         return name;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -28,7 +28,7 @@ public class FunctionWrap{
         return function;
     }
 
-    private void setFunction(Method function) {
+    public void setFunction(Method function) {
         this.function = function;
     }
 }

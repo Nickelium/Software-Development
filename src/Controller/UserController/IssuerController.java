@@ -38,7 +38,7 @@ public class IssuerController extends UserController {
     }
 
 
-    void createBugReport() throws ModelException, IndexOutOfBoundsException {
+    public void createBugReport() throws ModelException, IndexOutOfBoundsException {
         // select a project
         getUi().display("Select a project:");
         List<Project> projectList = getProjectService().getAllProjects();
@@ -171,14 +171,14 @@ public class IssuerController extends UserController {
 
     }
 
-    void inspectBugReport() throws ModelException, IndexOutOfBoundsException {
+    public void inspectBugReport() throws ModelException, IndexOutOfBoundsException {
         BugReport bugReport = selectBugReport();
         String bugReportDetails = Parser.parseDetailBugReport(bugReport);
         getUi().display(bugReportDetails);
 
     }
 
-    void createComment() throws ModelException, IndexOutOfBoundsException {
+    public void createComment() throws ModelException, IndexOutOfBoundsException {
         BugReport bugReport = selectBugReport();
         List<Comment> listComment = bugReport.getAllComments();
         if (listComment.size() > 0) {
