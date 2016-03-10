@@ -2,14 +2,12 @@ package Controller.UserController;
 
 import Controller.IUI;
 import Controller.Parser;
-import Controller.UI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
-import com.sun.javafx.sg.prism.NGShape;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -121,7 +119,7 @@ public abstract class UserController {
 
     //region use cases methods
 
-    public void showProject()
+    public void showProject() throws ModelException
     {
     	try
     	{
