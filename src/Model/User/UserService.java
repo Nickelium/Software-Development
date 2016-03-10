@@ -80,7 +80,6 @@ public class UserService {
         User user = new Admin(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
-        //TODO added cast
         return (Admin) user;
     }
 
@@ -102,7 +101,6 @@ public class UserService {
         User user = new Issuer(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
-        //TODO added cast;
         return (Issuer) user;
     }
 
@@ -124,7 +122,6 @@ public class UserService {
         User user = new Developer(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
-        //TODO added a cast
         return (Developer) user;
     }
 

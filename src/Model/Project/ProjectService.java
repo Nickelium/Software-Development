@@ -7,13 +7,11 @@ import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
-import com.sun.jmx.snmp.SnmpUnknownSubSystemException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// TODO documentatie
 public class ProjectService
 {
     private IListWrapper<Project> projectList;
