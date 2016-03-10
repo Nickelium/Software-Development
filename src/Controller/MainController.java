@@ -34,7 +34,16 @@ public class MainController {
     public void run() {
         startMsg();
         LoginController loginController = new LoginController(ui, initializer.getUserService());
-        this.currentUser = loginController.run();
+        while(true) {
+            try {
+                this.currentUser = loginController.run();
+                break;
+            } catch (ModelException e) {
+                ui.display(e.getMessage());
+                ui.display("Enter 1 if you want to retry. Any other key if not.");
+                if (ui.readInt() != 1) break;
+            }
+        }
 
         // choose controller
         UserController userController;
