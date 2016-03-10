@@ -39,23 +39,28 @@ public class IssuerController extends UserController {
 
 
     public void createBugReport() throws ModelException, IndexOutOfBoundsException {
-        // select a project
+
+        // Step 2
         getUi().display("Select a project:");
         List<Project> projectList = getProjectService().getAllProjects();
         String parsedProjectList = Parser.parseProjectList(projectList);
         getUi().display(parsedProjectList);
+
+        // Step 3
         int indexP = getUi().readInt();
         Project project = projectList.get(indexP);
 
-        // select a subsystem
+        // Step 4
         getUi().display("Select a subsystem:");
         List<SubSystem> subSystemList = project.getAllSubSystems();
         String subSystemsOfProject = Parser.parseSubSystemList(subSystemList);
         getUi().display(subSystemsOfProject);
+
+        // Step 5
         int indexS = getUi().readInt();
         SubSystem subSystem = subSystemList.get(indexS);
 
-        // ask information for the bugreport
+        // Step 6 + 7
         getUi().display("\n");
         getUi().display("Please enter the bug report information.");
         getUi().display("Title:");
@@ -65,19 +70,21 @@ public class IssuerController extends UserController {
 
         Issuer issuer = (Issuer) getCurrentUser();
 
-        // create bugreport
+        // Step 10
         BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem);
 
-        // show all dependencies
+        // Step 8
         List<BugReport> possibleDependencies = getBugReportService().getBugReportsForProject(project);
         String possibleDependenciesStr = Parser.parseBugReportList(possibleDependencies);
         while (true) {
+
+            // Step 9
             getUi().display("\n");
             getUi().display("Select a possible dependency (enter -1 to exit): ");
             getUi().display(possibleDependenciesStr);
             int indexDep = getUi().readInt();
             if (indexDep == -1) break;
-            // add dependency
+
             BugReport newDependency = possibleDependencies.get(indexDep);
             bugReport.addDependency(newDependency);
             getUi().display("Dependency is successfully added!");
@@ -90,8 +97,7 @@ public class IssuerController extends UserController {
         int chosenNumber;
         List<BugReport> bugReportList = null;
 
-        // return for usage in DeveloperController
-
+        // Step 1
         getUi().display("Select the preferred search method: ");
 
         String searchMethods = "";
@@ -101,6 +107,7 @@ public class IssuerController extends UserController {
 
         getUi().display(searchMethods);
 
+        // Step 2
         int methodIndex = getUi().readInt();
 
         if (methodIndex == 0) {
@@ -119,7 +126,7 @@ public class IssuerController extends UserController {
             }
 
             if (bugReportList.size() > 0) {
-                // Show Results
+                // Step 3
                 getUi().display("The search result for your query is: ");
                 getUi().display(Parser.parseBugReportList(bugReportList));
 
@@ -137,7 +144,7 @@ public class IssuerController extends UserController {
             User user = getUserService().getUser(userName);
             bugReportList = getBugReportService().getBugReportsFiledByUser(user);
             if (bugReportList.size() > 0) {
-                // Show Results
+                // Step 3
                 getUi().display("The search result for your query is: ");
                 getUi().display(Parser.parseBugReportList(bugReportList));
             } else {
@@ -153,7 +160,7 @@ public class IssuerController extends UserController {
             bugReportList = getBugReportService().getBugReportsAssignedToUser(user);
 
             if (bugReportList.size() > 0) {
-                // Show Results
+                // Step 3
                 getUi().display("The search result for your query is: ");
                 getUi().display(Parser.parseBugReportList(bugReportList));
 
@@ -164,7 +171,7 @@ public class IssuerController extends UserController {
             throw new ModelException("Enter a valid number.");
         }
 
-        // Make choice
+        // Step 4
         getUi().display("Please enter the number of the bug report that you would like to select: ");
         chosenNumber = getUi().readInt();
         return bugReportList.get(chosenNumber);
@@ -172,14 +179,22 @@ public class IssuerController extends UserController {
     }
 
     public void inspectBugReport() throws ModelException, IndexOutOfBoundsException {
+
+        // Step 2
         BugReport bugReport = selectBugReport();
+
+        // Step 3
         String bugReportDetails = Parser.parseDetailBugReport(bugReport);
         getUi().display(bugReportDetails);
 
     }
 
     public void createComment() throws ModelException, IndexOutOfBoundsException {
+
+        // Step 2
         BugReport bugReport = selectBugReport();
+
+        // Step 3
         List<Comment> listComment = bugReport.getAllComments();
         if (listComment.size() > 0) {
             getUi().display("List of all comments of this bugreport:");
@@ -187,13 +202,19 @@ public class IssuerController extends UserController {
             getUi().display(parsedListComment);
         }
 
-        //whaaat
+        // Step 4
         getUi().display("Create a comment of the bugreport or on one of the comments (B/C) : ");
         String input = getUi().readString();
 
         if (input.equalsIgnoreCase("b")) {
+
+            // Step 5
             getUi().display("Comment (Terminate with a . on a new line):");
+
+            // Step 6
             String text = getUi().readMultiline();
+
+            // Step 7
             Comment newComment = getBugReportService().createComment(text, (Issuer) getCurrentUser(), bugReport);
             getUi().display("The comment was:\n"
                     + "-------------------------\n"
@@ -206,9 +227,14 @@ public class IssuerController extends UserController {
             getUi().display("Choose a comment from one of above: ");
             index = getUi().readInt();
             Comment comm = listComment.get(index);
+
+            // Step 5
             getUi().display("Comment (Sluit af met . op nieuwe lijn):");
+
+            // Step 6
             String text = getUi().readMultiline();
 
+            // Step 7
             Comment newComment = getBugReportService().createComment(text, (Issuer) getCurrentUser(), comm);
             getUi().display("The comment was:\n" + newComment + "\nIt has successfully been created.\n");
         } else {

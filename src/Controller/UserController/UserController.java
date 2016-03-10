@@ -123,15 +123,17 @@ public abstract class UserController {
     {
     	try
     	{
+            // Step 2
 	    	List<Project> projectList = projectService.getAllProjects();
 	    	String parsedProjectList = Parser.parseProjectList(projectList);
 	    	getUi().display(parsedProjectList);
-	    	
+
+            // Step 3
 	    	int index = ui.readInt();
 	    	Project project = projectList.get(index);
-	    	
+
+            // Step 4
 	    	String projectDetails = Parser.parseDetailedProject(project);
-	    	
 	    	getUi().display(projectDetails);
     	}
     	catch(IndexOutOfBoundsException e)

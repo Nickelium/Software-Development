@@ -63,7 +63,7 @@ public class MainController {
     private void chooseUseCase(UserController userController) throws Exception {
         while (true) {
             int chosenUseCase;
-            // ask to choose
+            // Step 1 in most Use Cases
 
             while (true) {
                 try {

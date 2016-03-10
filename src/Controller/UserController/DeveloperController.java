@@ -47,41 +47,48 @@ public class DeveloperController extends IssuerController {
     }
 
     public void assignToProject() throws Exception {
+
         // Get projects with currentUser as Lead Developer.
         List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
 
         // Check if there are any projects with currentUser as Lead Developer.
         if (developerProjectList.size() == 0) {
-            // Use case ends here
-            getUi().display("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
-        } else {
-            // Developer has projects with Lead Role.
-            getUi().display("Select the project that you want to assign a new developer to: ");
 
+            // Step 2a
+            getUi().display("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
+
+        } else {
+
+            // Step 2
+            getUi().display("Select the project that you want to assign a new developer to: ");
             String parsedDeveloperProjectList = Parser.parseProjectList(developerProjectList);
             getUi().display(parsedDeveloperProjectList);
 
+            // Step 3
             int projectIndex = getUi().readInt();
             Project project = developerProjectList.get(projectIndex);
 
+            // Step 4
             getUi().display("Please select the a developer that you want to assign to the selected project: ");
             List<User> developerList = getUserService().getDevelopers();
             String parsedDevelopersList = Parser.parseUserList(developerList);
             getUi().display(parsedDevelopersList);
 
+            // Step 5
             int developerIndex = getUi().readInt();
             User developer = developerList.get(developerIndex);
 
+            // Step 6
             getUi().display("Please select the role that you want to assign to the developer of the project: ");
-
             List<Class<? extends Role>> roles = Arrays.asList(Programmer.class, Tester.class);
             getUi().display(Parser.parseProjectRoles(roles));
 
+            // Step 7
             int selectedIndex = getUi().readInt();
             Class<? extends Role> selectedClass = roles.get(selectedIndex);
 
+            // Step 8
             Role role = selectedClass.getDeclaredConstructor(Developer.class).newInstance(developer);
-
             project.addRole(role);
 
             getUi().display("The new developer has been successfully assigned to a new role in the project.\n");
@@ -90,7 +97,8 @@ public class DeveloperController extends IssuerController {
     }
 
     public void assignToBugReport() throws ModelException, IndexOutOfBoundsException {
-        // Use Case Select Bug Report
+
+        // Step 2
         getUi().display("Please select the bug report that you want to assign a new developer to: ");
         BugReport bugReport = selectBugReport();
         while (true) {
@@ -100,12 +108,14 @@ public class DeveloperController extends IssuerController {
             }
             getUi().errorDisplay("You don't have the permission to assing developers to this BugReport.");
         }
-        // Show developers that are involved in the project.
+
+        // Step 3
         getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
         List<Developer> developerList = bugReport.getAssignees();
         String parsedList = Parser.parseDeveloperList(developerList);
         getUi().display(parsedList);
 
+        // Step 4
         while (true) {
             if (getUi().readInt() == -1) {
                 getUi().display("Assignment stopped by user. Continuing...");
@@ -114,6 +124,8 @@ public class DeveloperController extends IssuerController {
                 getUi().display("No more users are available to be assigned. Continuing...");
                 break;
             } else {
+
+                // Step 5
                 int developerIndex = getUi().readInt();
                 getDeveloperAssignmentService().assignDeveloperToBugReport(getCurrentUser(), developerList.get(developerIndex), bugReport);
                 developerList.remove(developerIndex);
@@ -122,10 +134,12 @@ public class DeveloperController extends IssuerController {
     }
 
     public void updateBugReport() throws Exception {
-        // Use Case Select Bug Report
+
+        // Step 2
         getUi().display("Please select the bug report that you want to update: ");
         BugReport bugReport = selectBugReport();
 
+        // Step 3
         getUi().display("Please specify the new tag for the bug report: ");
         String input = getUi().readString();
         Class<?> tag;
@@ -136,6 +150,7 @@ public class DeveloperController extends IssuerController {
             throw new ModelException("The given tag does not exist!");
         }
 
+        // Step 4
         Tag newTag = (Tag) tag.newInstance();
         getTagAssignmentService().assignTag(getCurrentUser(), bugReport, newTag);
 

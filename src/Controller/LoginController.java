@@ -35,10 +35,12 @@ public class LoginController {
     public User run() throws ModelException
     {
 	        loginMessage();
+			// Step 1
 	        int userType = ui.readInt();
 	
 	        List<User> users = new ArrayList<User>();
-	
+
+			// Step 2
 	        switch (userType)
 	        {
 	        	case 1://Admin
@@ -58,11 +60,13 @@ public class LoginController {
 	        String parsedTextUsers = Parser.parseUserList(users);
 	        ui.display(parsedTextUsers);
 	
-	        //select & set User
+	        // Step 3
 	        int selectedUserIndex = ui.readInt();
 			if(selectedUserIndex >= users.size()) throw new ModelException("This user does not exist!");
 	        User user = users.get(selectedUserIndex);
 	        setCurrentUser(user);
+
+			// Step 4
 	        welcomeUserMessage(user);
 
 			return user;
