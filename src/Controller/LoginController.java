@@ -23,22 +23,16 @@ public class LoginController {
 
 
     private UserService userService;
-    private ProjectService projectService;
-    private BugReportService bugReportService;
-	private DeveloperAssignmentService developerAssignmentService;
     private UI ui;
 
     private User currentUser;
 
-    public LoginController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, DeveloperAssignmentService developerAssignmentService) {
+    public LoginController(UI ui, UserService userService) {
         this.userService = userService;
-        this.projectService = projectService;
-        this.bugReportService = bugReportService;
-		this.developerAssignmentService = developerAssignmentService;
         this.ui = ui;
     }
 
-    public UserController run() 
+    public User run()
     {
     	try
     	{
@@ -72,24 +66,8 @@ public class LoginController {
 	        setCurrentUser(user);
 	
 	        welcomeUserMessage(user);
-	
-	        // choose controller
-	        UserController userController;
 
-	        if (currentUser instanceof Admin) 
-	        {
-	            userController = new AdminController(ui, this.userService, this.projectService, this.bugReportService, user);
-	        } 
-	        else if (currentUser instanceof Developer) 
-	        {
-	            userController = new DeveloperController(ui, this.userService, this.projectService, this.bugReportService, user, this.developerAssignmentService);
-	        }
-	        else 
-	        {
-	            userController = new IssuerController(ui, this.userService, this.projectService, this.bugReportService, user);
-	        }
-	
-	        return userController;
+			return user;
         
     	} 
     	catch (ModelException | IndexOutOfBoundsException e) 

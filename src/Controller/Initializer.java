@@ -3,6 +3,7 @@ package Controller;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
+import Model.BugReport.TagAssignmentService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -13,6 +14,7 @@ import Model.Roles.Tester;
 import Model.Tags.Assigned;
 import Model.Tags.Closed;
 import Model.Tags.New;
+import Model.Tags.Tag;
 import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.Issuer;
@@ -28,6 +30,7 @@ public class Initializer implements IInitializer
 	private ProjectService projectService;
 	private BugReportService bugReportService;
 	private DeveloperAssignmentService developerAssignmentService;
+	private TagAssignmentService tagAssignmentService;
 
 	public void init(){
         try{
@@ -36,8 +39,8 @@ public class Initializer implements IInitializer
 		// refactor ProjectService class first
 		this.projectService = new ProjectService();
 		this.bugReportService = new BugReportService(projectService);
-
 		this.developerAssignmentService = new DeveloperAssignmentService(projectService);
+		this.tagAssignmentService = new TagAssignmentService(projectService);
 
 		// init users
 		Admin sam = (Admin) userService.createAdmin("Frederick", "Sam","Curtis","curt");
@@ -106,21 +109,25 @@ public class Initializer implements IInitializer
 
 	public UserService getUserService() 
 	{
-		return userService;
+		return this.userService;
 	}
 
 	public ProjectService getProjectService() 
 	{
-		return projectService;
+		return this.projectService;
 	}
 
 	public BugReportService getBugReportService() 
 	{
-		return bugReportService;
+		return this.bugReportService;
 	}
 
 	public DeveloperAssignmentService getDeveloperAssignmentService(){
-		return developerAssignmentService;
+		return this.developerAssignmentService;
+	}
+
+	public TagAssignmentService getTagAssignmentService(){
+		return this.tagAssignmentService;
 	}
 
 
