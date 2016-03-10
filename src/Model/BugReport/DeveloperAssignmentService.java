@@ -54,7 +54,7 @@ public class DeveloperAssignmentService {
      * @return True if the user has the valid permissions to assign the developer to the bugreport.
      *
      * @throws IllegalArgumentException One of the given arguments is null.
-     * @throws ModelException One of the arguments doesn't match.
+     * @throws ModelException The specified bugreport doesn't have a project it is assigned to. (Normally never thrown because system prevents this)
      */
     public boolean canUserAssignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ModelException{
         if (user == null) throw new IllegalArgumentException("User is null");
@@ -62,24 +62,45 @@ public class DeveloperAssignmentService {
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
 
         Project project;
-		try 
-		{
-			project = this.projectService.getProjectContainingBugReport(bugReport);
-		
-	        Role role = this.getUserRoleWithinProject(user, project);
-	
-	        if (role == null)
-	            return false;
-            else if (role.hasValidAssignmentPermission(Permission.assignDevelopersToBugReport)
+        try {
+            project = this.projectService.getProjectContainingBugReport(bugReport);
+
+            if (canUserAssignDevelopers(user, bugReport)
                     && projectContainDeveloper(developer, project)) {
                 return true;
-            }
-	        else return false;
-		}
-	     catch(ModelException e)
-	     {
-	    	 return false;
-	     }
+            } else return false;
+        } catch (ModelException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checker to check if the user has te permission to assign developers to the bugreport
+     *
+     * @param user      The user requesting the assignment
+     * @param bugReport The bugreport to which the user wishes to assign developers.
+     * @return True if the user has the valid permissions to assign developers to the bugreport.
+     * @throws IllegalArgumentException One of the given arguments is null.
+     * @throws ModelException           The specified bugreport doesn't have a project it is assigned to. (Normally never thrown because system prevents this)
+     */
+    public boolean canUserAssignDevelopers(User user, BugReport bugReport) {
+        if (user == null) throw new IllegalArgumentException("User is null");
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+
+        Project project;
+        try {
+            project = this.projectService.getProjectContainingBugReport(bugReport);
+
+            Role role = this.getUserRoleWithinProject(user, project);
+
+            if (role == null)
+                return false;
+            else if (role.hasValidAssignmentPermission(Permission.assignDevelopersToBugReport)) {
+                return true;
+            } else return false;
+        } catch (ModelException e) {
+            return false;
+        }
     }
 
 

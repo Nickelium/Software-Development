@@ -1,4 +1,6 @@
-package Model.Tags;
+package Model.Tags.TagTypes;
+
+import Model.Tags.Tag;
 
 import java.util.Collections;
 

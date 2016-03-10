@@ -1,6 +1,6 @@
 package Model.Roles;
 
-import Model.Tags.UnderReview;
+import Model.Tags.TagTypes.UnderReview;
 import Model.User.Developer;
 
 import java.util.Collections;
@@ -30,16 +30,16 @@ public class Programmer extends Role {
     public String toString() {
         return "Programmer: " + getDeveloper().toString();
     }
-    
+
     /**
      * Method to copy this programmer object.
-     * 
+     *
      * @return The copied role.
      */
 	@Override
 	public Role copy() {
 		return new Programmer(getDeveloper());
 	}
-	
-	
+
+
 }

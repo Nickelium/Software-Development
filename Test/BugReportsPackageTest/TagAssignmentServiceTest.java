@@ -5,10 +5,10 @@ import Model.BugReport.BugReport;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Tags.Assigned;
-import Model.Tags.Closed;
-import Model.Tags.Resolved;
-import Model.Tags.UnderReview;
+import Model.Tags.TagTypes.Assigned;
+import Model.Tags.TagTypes.Closed;
+import Model.Tags.TagTypes.Resolved;
+import Model.Tags.TagTypes.UnderReview;
 import org.junit.Test;
 
 import java.util.Arrays;

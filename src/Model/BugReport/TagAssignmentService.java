@@ -4,9 +4,9 @@ import CustomExceptions.ModelException;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Roles.Role;
-import Model.Tags.Assigned;
-import Model.Tags.Resolved;
 import Model.Tags.Tag;
+import Model.Tags.TagTypes.Assigned;
+import Model.Tags.TagTypes.Resolved;
 import Model.User.User;
 
 import java.util.Arrays;

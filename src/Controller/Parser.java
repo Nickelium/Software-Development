@@ -18,8 +18,8 @@ public class Parser
 	{
 		String parsed ="";
 		for(int i=0; i< listUser.size(); i++)
-			parsed += i + ":\n" + listUser.get(i).toString() +"\n";
-		return parsed;
+            parsed += i + ": " + listUser.get(i).toString() + "\n";
+        return parsed;
 		
 	}
 
@@ -27,8 +27,8 @@ public class Parser
 	{
 		String parsed ="";
 		for(int i=0; i< listDeveloper.size(); i++)
-			parsed += i + ":\n" + listDeveloper.get(i).toString() +"\n";
-		return parsed;
+            parsed += i + ": " + listDeveloper.get(i).toString() + "\n";
+        return parsed;
 
 	}
 
@@ -47,8 +47,8 @@ public class Parser
 	{
 		String parsed ="";
 		for(int i=0; i< listProject.size(); i++)
-			parsed += i + ":\n" + listProject.get(i).toString() +"\n";
-		return parsed;
+            parsed += i + ": " + listProject.get(i).toString() + "\n";
+        return parsed;
 		
 	}
 	
@@ -56,31 +56,17 @@ public class Parser
 	{
 		String parsed ="";
 		for(int i=0; i< listSubSystem.size(); i++)
-			parsed += i + ":\n" + listSubSystem.get(i).toString() +"\n";
-		return parsed;
+            parsed += i + ": " + listSubSystem.get(i).toString() + "\n";
+        return parsed;
 		
 	}
-
-
-	// TODO: List van roles opvragen implementeren
-	/*
-	public static String parseRoleList()
-	{
-
-		String parsed ="";
-		for(int i=0; i< listRole.size(); i++)
-			parsed += i + ":\n" + listRole.get(i).toString() +"\n";
-		return parsed;
-
-	}
-	*/
 
 	public static String parseBugReportList(List<BugReport> listBugReport)
 	{
 		String parsed ="";
 		for(int i=0; i< listBugReport.size(); i++)
-			parsed += i + ":\n" + listBugReport.get(i).toString() +"\n";
-		return parsed;
+            parsed += i + ": " + listBugReport.get(i).toString() + "\n";
+        return parsed;
 
 	}
 	
@@ -88,8 +74,8 @@ public class Parser
 	{
 		String parsed ="";
 		for(int i=0; i< listComment.size(); i++)
-			parsed += i + ":\n" + listComment.get(i).toString() +"\n";
-		return parsed;
+            parsed += i + ": " + listComment.get(i).toString() + "\n";
+        return parsed;
 	}
 	
 	public static String parseDetailedProject(Project project)
@@ -115,7 +101,15 @@ public class Parser
 		String parsed = bugReport.toString();
 		for(Comment comm : bugReport.getComments())
 			parsed += "\n\t" + Parser.addTabulation(Parser.parseDetailComment(comm));
-		return parsed;
+        return parsed;
+    }
+
+    public static String parseProjectRoles(List<Class<? extends Role>> list) {
+        String parsed = "";
+        for (int i = 0; i < list.size(); i++) {
+            parsed += i + ": " + list.get(i).getSimpleName() + "\n";
+        }
+        return parsed;
 	}
 	
 	private static String parseDetailComment(Comment comment)
