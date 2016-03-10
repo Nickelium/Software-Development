@@ -12,6 +12,7 @@ import Model.Project.ProjectService;
 import Model.Roles.Programmer;
 import Model.Roles.Role;
 import Model.Roles.Tester;
+import Model.Tags.Tag;
 import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
@@ -118,7 +119,7 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void updateBugReport() throws ModelException, IndexOutOfBoundsException {
+    public void updateBugReport() throws Exception {
         // Use Case Select Bug Report
         getUi().display("Please select the bug report that you want to update: ");
         BugReport bugReport = selectBugReport();
@@ -132,6 +133,11 @@ public class DeveloperController extends IssuerController {
         } catch (ClassNotFoundException e) {
             throw new ModelException("The given tag does not exist!");
         }
+
+        Tag newTag = (Tag) tag.newInstance();
+        getTagAssignmentService().assignTag(getCurrentUser(), bugReport, newTag);
+
+        getUi().display("The tag has successfully been changed.");
     }
 
     //region Getters & Setters
