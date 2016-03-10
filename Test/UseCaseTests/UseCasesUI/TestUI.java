@@ -28,13 +28,6 @@ public class TestUI implements IUI {
     }
 
     @Override
-    public String readLine() {
-        String str = input.remove(0);
-        System.out.println("-- User: " + str);
-        return str;
-    }
-
-    @Override
     public String readMultiline() {
         String text = "";
         String newText = "";
@@ -44,7 +37,7 @@ public class TestUI implements IUI {
             {
                 text += newText + '\n';
             }
-            newText = readLine();
+            newText = readString();
         }
         return text;
     }

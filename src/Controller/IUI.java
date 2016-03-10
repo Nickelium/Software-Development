@@ -8,8 +8,6 @@ public interface IUI {
 
     String readString();
 
-    String readLine();
-
     String readMultiline();
 
     double readDouble();
