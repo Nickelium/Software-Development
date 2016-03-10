@@ -197,7 +197,7 @@ public class Project
 	 */
 	public void setBudget(double newBudget) throws ModelException
 	{
-		if (!isValidBudget(budget)) throw new ModelException("The budget cannot be negative.");
+		if (!isValidBudget(newBudget)) throw new ModelException("The budget cannot be negative.");
 
         budget = newBudget;
 	}
