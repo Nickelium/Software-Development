@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Karina on 10.03.2016.
@@ -25,8 +25,8 @@ public class LoginTest extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         LoginController loginController = new LoginController(ui, userService);
-        User currentUser = loginController.run();
-
+        loginController.run();
+        User currentUser = loginController.getCurrentUser();
         assertTrue(currentUser instanceof Model.User.Admin);
     }
 
@@ -40,8 +40,8 @@ public class LoginTest extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         LoginController loginController = new LoginController(ui, userService);
-        User currentUser = loginController.run();
-
+        loginController.run();
+        User currentUser = loginController.getCurrentUser();
         assertTrue(currentUser instanceof Model.User.Issuer);
     }
 
@@ -54,8 +54,8 @@ public class LoginTest extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         LoginController loginController = new LoginController(ui, userService);
-        User currentUser = loginController.run();
-
+        loginController.run();
+        User currentUser = loginController.getCurrentUser();
         assertTrue(currentUser instanceof Model.User.Developer);
     }
 

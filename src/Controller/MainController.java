@@ -31,7 +31,7 @@ public class MainController {
 
     }
 
-    public void run() {
+    public void run() throws Exception{
         startMsg();
         LoginController loginController = new LoginController(ui, initializer.getUserService());
         while(true) {
@@ -41,7 +41,10 @@ public class MainController {
             } catch (ModelException e) {
                 ui.display(e.getMessage());
                 ui.display("Enter 1 if you want to retry. Any other key if not.");
-                if (ui.readInt() != 1) break;
+                if (ui.readInt() != 1){
+                    ui.display("Bye!");
+                    System.exit(0);
+                }
             }
         }
 
@@ -69,7 +72,7 @@ public class MainController {
         ui.display(msg);
     }
 
-    public void chooseUseCase(UserController userController){
+    public void chooseUseCase(UserController userController) throws Exception{
         while (true) {
                 int chosenUseCase;
                 // ask to choose
