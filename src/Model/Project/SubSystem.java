@@ -80,18 +80,18 @@ public class SubSystem
 	 * Setters
 	 */
 	
-	/**
-	 * Setter to set the versionId of the subsystem.
-     *
-	 * @param versionID The versionID of the subsystem.
-     *
-	 * @throws ModelException The current versionid is greater than or equal to the new one.
-	 */
-	private void setVersionID(double versionID) throws ModelException
-	{
-		if (!isValidVersionID(versionID)) throw new ModelException("The versionId must be higher than the current one.");
-		this.versionID = versionID;
-	}
+//	/**
+//	 * Setter to set the versionId of the subsystem.
+//     *
+//	 * @param versionID The versionID of the subsystem.
+//     *
+//	 * @throws ModelException The current versionid is greater than or equal to the new one.
+//	 */
+//	private void setVersionID(double versionID) throws ModelException
+//	{
+//		if (!isValidVersionID(versionID)) throw new ModelException("The versionId must be higher than the current one.");
+//		this.versionID = versionID;
+//	}
 	
 	/**
 	 * Setter to set the name of the subsystem.
@@ -119,17 +119,17 @@ public class SubSystem
 		this.description = description;
 	}
 
-    /**
-     * Checker to check if the versionID is valid.
-     *
-     * @param versionID The versionId to check.
-     *
-     * @return True if the versionId is greater than or equal to the current versionId.
-     */
-    private boolean isValidVersionID(double versionID){
-        if (this.versionID >= versionID) return false;
-        else return true;
-    }
+//    /**
+//     * Checker to check if the versionID is valid.
+//     *
+//     * @param versionID The versionId to check.
+//     *
+//     * @return True if the versionId is greater than or equal to the current versionId.
+//     */
+//    private boolean isValidVersionID(double versionID){
+//        if (this.versionID >= versionID) return false;
+//        else return true;
+//    }
 
     /**
      * Checker to check if the name is valid.
@@ -165,6 +165,7 @@ public class SubSystem
 	 * @return True if the subsystem is not already a subsystem of this subsystem.
      */
     private boolean isValidSubsystem(SubSystem subSystem){
+    	if(this == subSystem) return false;
 		if(this.getAllSubSystems().contains(subSystem)) return false;
 		else return true;
 	}
@@ -225,8 +226,9 @@ public class SubSystem
      */
     public List<BugReport> getAllBugReports(){
         List<BugReport> bugReports = new ArrayList<>();
+        bugReports.addAll(this.bugReports);
         for (SubSystem subsystem: this.getAllSubSystems()){
-            bugReports.addAll(subsystem.getBugReports());
+            bugReports.addAll(subsystem.getAllBugReports());
         }
         return Collections.unmodifiableList(bugReports);
     }
