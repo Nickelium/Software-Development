@@ -1,5 +1,7 @@
 package Controller;
 
+import CustomExceptions.ModelException;
+
 import java.util.Scanner;
 
 public class UI implements IUI {
@@ -34,25 +36,27 @@ public class UI implements IUI {
 	}
 	
 	@Override
-	public double readDouble()
+	public double readDouble() throws ModelException
 	{
-		while(!scanner.hasNextDouble())
-		{
-			scanner.next();
+		String text = scanner.nextLine();
+		try {
+			return Double.parseDouble(text);
+		} catch (NumberFormatException e) {
+			throw new ModelException("The value should be of type double!");
 		}
-		return scanner.nextDouble();
 
 	}
 	
 	@Override
-	public int readInt()
+	public int readInt() throws ModelException
 	{
-		while(!scanner.hasNextInt())
-		{
-			scanner.next();
-		}
+		String text = scanner.nextLine();
+		try {
+			return Integer.parseInt(text);
 
-		return scanner.nextInt();
+		} catch (NumberFormatException e) {
+			throw new ModelException("The value should be of type integer!");
+		}
 
 	}
 	

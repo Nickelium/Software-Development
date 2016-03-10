@@ -53,7 +53,7 @@ public class Initializer implements IInitializer
 		Developer maria = (Developer) userService.createDeveloper("Maria","","Carney","maria");
 
 		Lead leadMajor = new Lead(major);
-		Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12,5,2016), 0.0, leadMajor);
+			Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2016), -200.0, leadMajor);
 		Programmer programmerMajor = new Programmer(major);
 		projectA.addRole(programmerMajor);
 		Tester testerMaria = new Tester(maria);

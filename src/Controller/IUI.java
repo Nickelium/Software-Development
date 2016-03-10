@@ -1,5 +1,7 @@
 package Controller;
 
+import CustomExceptions.ModelException;
+
 /**
  * Created by Karina on 10.03.2016.
  */
@@ -10,9 +12,9 @@ public interface IUI {
 
     String readMultiline();
 
-    double readDouble();
+    double readDouble() throws ModelException;
 
-    int readInt();
+    int readInt() throws ModelException;
 
     void errorDisplay(String str);
 }
