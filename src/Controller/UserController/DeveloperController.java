@@ -6,6 +6,7 @@ import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
+import Model.BugReport.TagAssignmentService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.User.Developer;
@@ -20,11 +21,13 @@ import java.util.List;
 public class DeveloperController extends IssuerController {
 
     private DeveloperAssignmentService developerAssignmentService;
+    private TagAssignmentService tagAssignmentService;
 
-    public DeveloperController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser, DeveloperAssignmentService developerAssignmentService) {
+    public DeveloperController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser, DeveloperAssignmentService developerAssignmentService, TagAssignmentService tagAssignmentService) {
         super(ui, userService, projectService, bugReportService, currentUser);
         initializeUseCasesDeveloper();
-        this.developerAssignmentService = developerAssignmentService;
+        setDeveloperAssignmentService(developerAssignmentService);
+        setTagAssignmentService(tagAssignmentService);
     }
 
     private void initializeUseCasesDeveloper() {
@@ -112,7 +115,7 @@ public class DeveloperController extends IssuerController {
                 }
                 else {
                     int developerIndex = getUi().readInt();
-                    developerAssignmentService.assignDeveloperToBugReport(getCurrentUser(), developerList.get(developerIndex), bugReport);
+                    getDeveloperAssignmentService().assignDeveloperToBugReport(getCurrentUser(), developerList.get(developerIndex), bugReport);
                     developerList.remove(developerIndex);
                 }
             }
@@ -145,4 +148,24 @@ public class DeveloperController extends IssuerController {
         }
 
     }
+
+    //region Getters & Setters
+
+    public DeveloperAssignmentService getDeveloperAssignmentService() {
+        return developerAssignmentService;
+    }
+
+    public void setDeveloperAssignmentService(DeveloperAssignmentService developerAssignmentService) {
+        this.developerAssignmentService = developerAssignmentService;
+    }
+
+    public TagAssignmentService getTagAssignmentService() {
+        return tagAssignmentService;
+    }
+
+    public void setTagAssignmentService(TagAssignmentService tagAssignmentService) {
+        this.tagAssignmentService = tagAssignmentService;
+    }
+
+    //endregion
 }

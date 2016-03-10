@@ -1,8 +1,13 @@
 package Controller;
 
 
+import Controller.UserController.AdminController;
+import Controller.UserController.DeveloperController;
+import Controller.UserController.IssuerController;
 import Controller.UserController.UserController;
 import CustomExceptions.ModelException;
+import Model.User.Admin;
+import Model.User.Developer;
 import Model.User.User;
 
 /**
@@ -27,11 +32,25 @@ public class MainController {
 
     public void run() {
         startMsg();
-        LoginController loginController = new LoginController(ui, initializer.getUserService(),initializer.getProjectService(),initializer.getBugReportService(), initializer.getDeveloperAssignmentService());
+        LoginController loginController = new LoginController(ui, initializer.getUserService());
+        this.currentUser = loginController.run();
         //create Controller
 
-        UserController userController = loginController.run();
-        this.currentUser = loginController.getCurrentUser();
+
+        // choose controller
+        UserController userController;
+        if (currentUser instanceof Admin)
+        {
+            userController = new AdminController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser);
+        }
+        else if (currentUser instanceof Developer)
+        {
+            userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser, initializer.getDeveloperAssignmentService(), initializer.getTagAssignmentService());
+        }
+        else
+        {
+            userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser);
+        }
 
         while (true) {
             // give all possibilities
