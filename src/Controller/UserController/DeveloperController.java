@@ -72,19 +72,19 @@ public class DeveloperController extends IssuerController {
             int developerIndex = getUi().readInt();
             User developer = developerList.get(developerIndex);
 
-                getUi().display("Please select the role that you want to assign to the developer of the project: ");
+            getUi().display("Please select the role that you want to assign to the developer of the project: ");
 
-                List<Class<? extends Role>> roles = Arrays.asList(Programmer.class, Tester.class);
-                getUi().display(Parser.parseProjectRoles(roles));
+            List<Class<? extends Role>> roles = Arrays.asList(Programmer.class, Tester.class);
+            getUi().display(Parser.parseProjectRoles(roles));
 
-                int selectedIndex = getUi().readInt();
-                Class<? extends Role> selectedClass = roles.get(selectedIndex);
+            int selectedIndex = getUi().readInt();
+            Class<? extends Role> selectedClass = roles.get(selectedIndex);
 
-                Role role = selectedClass.getDeclaredConstructor(Developer.class).newInstance(developer);
+            Role role = selectedClass.getDeclaredConstructor(Developer.class).newInstance(developer);
 
-                project.addRole(role);
+            project.addRole(role);
 
-                getUi().display("The new developer has been successfully assigned to a new role in the project.\n");
+            getUi().display("The new developer has been successfully assigned to a new role in the project.\n");
 
         }
     }
@@ -93,11 +93,13 @@ public class DeveloperController extends IssuerController {
         // Use Case Select Bug Report
         getUi().display("Please select the bug report that you want to assign a new developer to: ");
         BugReport bugReport = selectBugReport();
-
-            do {
-                bugReport = selectBugReport();
-            } while (!getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport));
-
+        while (true) {
+            bugReport = selectBugReport();
+            if (getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport)) {
+                break;
+            }
+            getUi().errorDisplay("You don't have the permission to assing developers to this BugReport.");
+        }
         // Show developers that are involved in the project.
         getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
         List<Developer> developerList = bugReport.getAssignees();
