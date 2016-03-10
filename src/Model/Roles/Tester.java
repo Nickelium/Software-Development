@@ -17,7 +17,7 @@ public class Tester extends Role {
      */
     public Tester(Developer developer){
         super(developer);
-        this.assignmentPermission = Permission.assignProjectDevelopersToBugReport;
+        this.assignmentPermission = Permission.assignDevelopersToBugReport;
         this.tagPermissions = Collections.singletonList(UnderReview.class);
     }
 

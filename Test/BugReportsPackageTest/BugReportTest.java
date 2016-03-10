@@ -2,6 +2,7 @@ package BugReportsPackageTest;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportID;
+import Model.BugReport.Comment;
 import Model.Project.TheDate;
 import Model.Tags.Assigned;
 import Model.Tags.Closed;
@@ -70,6 +71,14 @@ public class BugReportTest extends BugReportInitializaton {
     }
 
     @Test
+    public void getAllCommentsTest() throws ModelException {
+        Comment comment = bugReportService.createComment("Test 3 comment", issuer1, bugReport1);
+        Comment subComment = bugReportService.createComment("Test 4 comment", issuer2, comment);
+        assert bugReport1.getAllComments().contains(subComment);
+        assert bugReport1.getAllComments().contains(comment);
+    }
+
+    @Test
     public void getDependencies() throws ModelException {
         assertEquals(0, bugReport1.getDependencies().size());
         bugReport1.addDependency(bugReport2);
@@ -100,6 +109,7 @@ public class BugReportTest extends BugReportInitializaton {
     public void equalsTest() {
         assertTrue(bugReport2.equals(bugReport2));
         assertFalse(bugReport1.equals(bugReport2));
+        assertFalse(bugReport1.equals(comment1));
     }
 }
 

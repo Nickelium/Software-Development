@@ -74,14 +74,14 @@ public class UserService {
      *
      * @throws ModelException The username is not unique or empty.
      */
-    public User createAdmin(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public Admin createAdmin(String firstName, String middleName, String lastName, String userName) throws ModelException {
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
         User user = new Admin(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
-
-        return user;
+        //TODO added cast
+        return (Admin) user;
     }
 
     /**
@@ -96,14 +96,14 @@ public class UserService {
      *
      * @throws ModelException The username is not unique or empty.
      */
-    public User createIssuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public Issuer createIssuer(String firstName, String middleName, String lastName, String userName) throws ModelException {
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
         User user = new Issuer(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
-
-        return user;
+        //TODO added cast;
+        return (Issuer) user;
     }
 
     /**
@@ -118,14 +118,14 @@ public class UserService {
      *
      * @throws ModelException The username is not unique or empty.
      */
-    public User createDeveloper(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public Developer createDeveloper(String firstName, String middleName, String lastName, String userName) throws ModelException {
         if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
 
         User user = new Developer(firstName, middleName, lastName, userName);
 
         this.userList.insert(user);
-
-        return user;
+        //TODO added a cast
+        return (Developer) user;
     }
 
     /**

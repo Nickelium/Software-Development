@@ -66,7 +66,8 @@ public abstract class Role {
 
 
     public boolean hasValidAssignmentPermission(Permission permission){
-        return (this.assignmentPermission.equals(permission));
+        if (assignmentPermission == null) return false;
+        else return (this.assignmentPermission.equals(permission));
     }
     
     /**

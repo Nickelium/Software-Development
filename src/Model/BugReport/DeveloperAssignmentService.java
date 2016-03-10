@@ -39,8 +39,9 @@ public class DeveloperAssignmentService {
      */
     public void assignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ModelException{
         if (!canUserAssignDeveloperToBugReport(user, developer, bugReport)) throw new ModelException("Cannot assign developer to bugreport!");
-
-        bugReport.addAssignee(developer);
+        if (!bugReport.getAssignees().contains(developer)) {
+            bugReport.addAssignee(developer);
+        }
     }
 
     /**
@@ -69,13 +70,10 @@ public class DeveloperAssignmentService {
 	
 	        if (role == null)
 	            return false;
-	        else if (role.hasValidAssignmentPermission(Permission.assignDevelopersToBugReport)){
-	            return true;
-	        }
-	        else if (role.hasValidAssignmentPermission(Permission.assignProjectDevelopersToBugReport)
-	                && projectContainDeveloper(developer, project)){
-	            return true;
-	        }
+            else if (role.hasValidAssignmentPermission(Permission.assignDevelopersToBugReport)
+                    && projectContainDeveloper(developer, project)) {
+                return true;
+            }
 	        else return false;
 		}
 	     catch(ModelException e)
@@ -85,8 +83,10 @@ public class DeveloperAssignmentService {
     }
 
 
-
     private Role getUserRoleWithinProject(User user, Project project) {
+        if (project.getLeadRole().getDeveloper().equals(user)) {
+            return project.getLeadRole();
+        }
         for (Role role : project.getDevsRoles()) {
             if (role.getDeveloper().equals(user)) {
                 return role;

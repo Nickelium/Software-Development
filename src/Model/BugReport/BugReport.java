@@ -86,7 +86,7 @@ public class BugReport {
 
          this.comments = new ArrayList<>();
          this.dependencies = new ArrayList<>();
-         this.assignees = initialAssignies;
+         this.assignees = new ArrayList<>(initialAssignies);
 
     }
 

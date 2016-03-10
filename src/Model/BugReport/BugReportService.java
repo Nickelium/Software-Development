@@ -57,11 +57,16 @@ public class BugReportService {
     
     /**
      * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     * Van de gebruiker van deze functie wordt verwacht dat de initialAssignies ook developers van het project zijn.
+     * Anders zullen tag assignment rechten voor deze gebruiker geweigerd worden.
      *
      * @param title The title of the bugreport
      * @param description The description of the bugreport
      * @param creator The creator of the bugreport
      * @param subSystem The subsystem of the bugreport
+     * @param creationDate The creation date of the bugreport
+     * @param tag The initial tag of the bugreport
+     * @param initialAssignees The list of initialAssignies van de bugreport
      *
      * @return The newly created bugreport
      *
