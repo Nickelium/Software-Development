@@ -2,6 +2,7 @@ package Controller.UserController;
 
 import Controller.IUI;
 import Controller.Parser;
+import Controller.UI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
@@ -46,34 +47,31 @@ public class DeveloperController extends IssuerController {
         }
     }
 
-    public void assignToProject() throws Exception {
-        try {
-            // Get projects with currentUser as Lead Developer.
-            List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
+    public void assignToProject() throws ModelException, IndexOutOfBoundsException {
+        // Get projects with currentUser as Lead Developer.
+        List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
 
-            // Check if there are any projects with currentUser as Lead Developer.
-            if(developerProjectList.size() == 0){
-                // Use case ends here
-                getUi().display("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
-            }
+        // Check if there are any projects with currentUser as Lead Developer.
+        if (developerProjectList.size() == 0) {
+            // Use case ends here
+            getUi().display("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
+        } else {
+            // Developer has projects with Lead Role.
+            getUi().display("Select the project that you want to assign a new developer to: ");
 
-            else {
-                // Developer has projects with Lead Role.
-                getUi().display("Select the project that you want to assign a new developer to: ");
+            String parsedDeveloperProjectList = Parser.parseProjectList(developerProjectList);
+            getUi().display(parsedDeveloperProjectList);
 
-                String parsedDeveloperProjectList = Parser.parseProjectList(developerProjectList);
-                getUi().display(parsedDeveloperProjectList);
+            int projectIndex = getUi().readInt();
+            Project project = developerProjectList.get(projectIndex);
 
-                int projectIndex = getUi().readInt();
-                Project project = developerProjectList.get(projectIndex);
+            getUi().display("Please select the a developer that you want to assign to the selected project: ");
+            List<User> developerList = getUserService().getDevelopers();
+            String parsedDevelopersList = Parser.parseUserList(developerList);
+            getUi().display(parsedDevelopersList);
 
-                getUi().display("Please select the a developer that you want to assign to the selected project: ");
-                List<User> developerList = getUserService().getDevelopers();
-                String parsedDevelopersList = Parser.parseUserList(developerList);
-                getUi().display(parsedDevelopersList);
-
-                int developerIndex = getUi().readInt();
-                User developer = developerList.get(developerIndex);
+            int developerIndex = getUi().readInt();
+            User developer = developerList.get(developerIndex);
 
                 getUi().display("Please select the role that you want to assign to the developer of the project: ");
 
@@ -89,60 +87,43 @@ public class DeveloperController extends IssuerController {
 
                 getUi().display("The new developer has been successfully assigned to a new role in the project.\n");
 
-            }
-
-        } catch (/*ModelException | */ IndexOutOfBoundsException e) {
-            getUi().display(e.getMessage());
-            getUi().display("Enter 1 if you want to retry.");
-            if (getUi().readInt() == 1) assignToProject();
         }
     }
 
-    public void assignToBugReport() {
-        try {
-            // Use Case Select Bug Report
-            getUi().display("Please select the bug report that you want to assign a new developer to: ");
-            BugReport bugReport;
+    public void assignToBugReport() throws ModelException, IndexOutOfBoundsException {
+        // Use Case Select Bug Report
+        getUi().display("Please select the bug report that you want to assign a new developer to: ");
+        BugReport bugReport = selectBugReport();
 
             do {
                 bugReport = selectBugReport();
             } while (!getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport));
 
-            // Show developers that are involved in the project.
-            getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
-            List<Developer> developerList = bugReport.getAssignees();
-            String parsedList = Parser.parseDeveloperList(developerList);
-            getUi().display(parsedList);
+        // Show developers that are involved in the project.
+        getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
+        List<Developer> developerList = bugReport.getAssignees();
+        String parsedList = Parser.parseDeveloperList(developerList);
+        getUi().display(parsedList);
 
-            while(true){
-                if(getUi().readInt() == -1) {
-                    getUi().display("Assignment stopped by user. Continuing...");
-                    break;
-                }
-                else if(developerList.size()==0){
-                    getUi().display("No more users are available to be assigned. Continuing...");
-                    break;
-                }
-                else {
-                    int developerIndex = getUi().readInt();
-                    getDeveloperAssignmentService().assignDeveloperToBugReport(getCurrentUser(), developerList.get(developerIndex), bugReport);
-                    developerList.remove(developerIndex);
-                }
+        while (true) {
+            if (getUi().readInt() == -1) {
+                getUi().display("Assignment stopped by user. Continuing...");
+                break;
+            } else if (developerList.size() == 0) {
+                getUi().display("No more users are available to be assigned. Continuing...");
+                break;
+            } else {
+                int developerIndex = getUi().readInt();
+                getDeveloperAssignmentService().assignDeveloperToBugReport(getCurrentUser(), developerList.get(developerIndex), bugReport);
+                developerList.remove(developerIndex);
             }
-
-        }
-        catch (ModelException | IndexOutOfBoundsException e) {
-            getUi().display(e.getMessage());
-            getUi().display("Enter 1 if you want to retry.");
-            if (getUi().readInt() == 1) assignToBugReport();
         }
     }
 
-    public void updateBugReport() throws Exception {
-        try{
-            // Use Case Select Bug Report
-            getUi().display("Please select the bug report that you want to update: ");
-            BugReport bugReport = selectBugReport();
+    public void updateBugReport() throws ModelException, IndexOutOfBoundsException {
+        // Use Case Select Bug Report
+        getUi().display("Please select the bug report that you want to update: ");
+        BugReport bugReport = selectBugReport();
 
             getUi().display("Please specify the new tag for the bug report: ");
             String input = getUi().readString();
@@ -153,16 +134,6 @@ public class DeveloperController extends IssuerController {
             } catch (ClassNotFoundException e) {
                 throw new ModelException("The given tag does not exist!");
             }
-
-            Tag newTag = (Tag) tag.newInstance();
-            getTagAssignmentService().assignTag(getCurrentUser(), bugReport, newTag);
-        } catch (/*ModelException |*/IndexOutOfBoundsException e) {
-            getUi().display(e.getMessage());
-            getUi().display("Enter 1 if you want to retry.");
-            if (getUi().readInt() == 1) assignToBugReport();
-        }
-
-    }
 
     //region Getters & Setters
 

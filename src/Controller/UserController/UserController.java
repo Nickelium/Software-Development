@@ -3,11 +3,13 @@ package Controller.UserController;
 import Controller.IUI;
 import Controller.Parser;
 import Controller.UI;
+import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
+import com.sun.javafx.sg.prism.NGShape;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -48,12 +50,14 @@ public abstract class UserController {
         }
     }
 
-    public void callUseCase(int number){
+    public void callUseCase(int number) throws ModelException,IndexOutOfBoundsException {
         try {
             getUseCases().get(number).getFunction().invoke(this);
         }catch (IllegalAccessException e){
             e.printStackTrace();
         }catch (InvocationTargetException e){
+            if (e.getTargetException() instanceof ModelException) throw new ModelException(e.getTargetException().getMessage());
+            if (e.getTargetException() instanceof IndexOutOfBoundsException) throw new IndexOutOfBoundsException(e.getTargetException().getMessage());
             e.printStackTrace();
         }
     }

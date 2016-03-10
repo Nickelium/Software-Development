@@ -21,12 +21,7 @@ public class UI implements IUI {
 
 	@Override
 	public String readLine() {
-		while(!scanner.hasNextLine())
-		{
-			scanner.next();
-		}
 		return scanner.nextLine();
-
 	}
 	
 	@Override

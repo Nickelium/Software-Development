@@ -32,10 +32,8 @@ public class LoginController {
         this.ui = ui;
     }
 
-    public User run()
+    public User run() throws ModelException
     {
-    	try
-    	{
 	        loginMessage();
 	        int userType = ui.readInt();
 	
@@ -62,19 +60,12 @@ public class LoginController {
 	
 	        //select & set User
 	        int selectedUserIndex = ui.readInt();
+			if(selectedUserIndex >= users.size()) throw new ModelException("This user does not exist!");
 	        User user = users.get(selectedUserIndex);
 	        setCurrentUser(user);
-	
 	        welcomeUserMessage(user);
 
 			return user;
-        
-    	} 
-    	catch (ModelException | IndexOutOfBoundsException e) 
-    	{
-    		ui.errorDisplay(e.getMessage());
-            return run();
-        }
     }
 
     private void loginMessage() {
