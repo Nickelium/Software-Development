@@ -32,7 +32,11 @@ public class Initializer implements IInitializer
 	private DeveloperAssignmentService developerAssignmentService;
 	private TagAssignmentService tagAssignmentService;
 
-	public void init(){
+	public Initializer() {
+		init();
+	}
+
+	private void init(){
         try{
 
 		this.userService = new UserService();

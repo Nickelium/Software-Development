@@ -1,5 +1,6 @@
 package Controller.UserController;
 
+import Controller.IUI;
 import Controller.Parser;
 import Controller.UI;
 import CustomExceptions.ModelException;
@@ -23,7 +24,7 @@ public class DeveloperController extends IssuerController {
     private DeveloperAssignmentService developerAssignmentService;
     private TagAssignmentService tagAssignmentService;
 
-    public DeveloperController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser, DeveloperAssignmentService developerAssignmentService, TagAssignmentService tagAssignmentService) {
+    public DeveloperController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser, DeveloperAssignmentService developerAssignmentService, TagAssignmentService tagAssignmentService) {
         super(ui, userService, projectService, bugReportService, currentUser);
         initializeUseCasesDeveloper();
         setDeveloperAssignmentService(developerAssignmentService);

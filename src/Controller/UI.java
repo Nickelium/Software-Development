@@ -3,21 +3,23 @@ package Controller;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class UI 
-{
+public class UI implements IUI {
 	private Scanner scanner = new Scanner(System.in);
 	
+	@Override
 	public void display(String str)
 	{
 		System.out.print(str + "\n");
 	}
 	
+	@Override
 	public String readString()
 	{
 		if(scanner.hasNext()) return scanner.next();
 		return readString();
 	}
 
+	@Override
 	public String readLine() {
 		while(!scanner.hasNextLine())
 		{
@@ -27,6 +29,7 @@ public class UI
 
 	}
 	
+	@Override
 	public String readMultiline()
 	{
 		String text = "";
@@ -42,6 +45,7 @@ public class UI
         return text;
 	}
 	
+	@Override
 	public double readDouble()
 	{
 		while(!scanner.hasNextDouble())
@@ -52,6 +56,7 @@ public class UI
 
 	}
 	
+	@Override
 	public int readInt()
 	{
 		while(!scanner.hasNextInt())
@@ -63,6 +68,7 @@ public class UI
 
 	}
 	
+	@Override
 	public void errorDisplay(String str)
 	{
 		System.out.println("! Error: " + str);

@@ -57,11 +57,16 @@ public class BugReportService {
     
     /**
      * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     * Van de gebruiker van deze functie wordt verwacht dat de initialAssignies ook developers van het project zijn.
+     * Anders zullen tag assignment rechten voor deze gebruiker geweigerd worden.
      *
      * @param title The title of the bugreport
      * @param description The description of the bugreport
      * @param creator The creator of the bugreport
      * @param subSystem The subsystem of the bugreport
+     * @param creationDate The creation date of the bugreport
+     * @param tag The initial tag of the bugreport
+     * @param initialAssignees The list of initialAssignies van de bugreport
      *
      * @return The newly created bugreport
      *
@@ -74,14 +79,32 @@ public class BugReportService {
         return bugReport;
     }
 
-    //TODO Documentation
+    /**
+     * Method for creating a comment and adding it to the list of comments of the bugreport.
+     *
+     * @param text      The text of the comment.
+     * @param issuer    The issuer writing the comment.
+     * @param bugReport The bugreport on which the issuer commented.
+     * @return The newly created comment.
+     * @throws ModelException One of the given arguments are illegal. See constructor of comment for rules.
+     */
     public Comment createComment(String text, Issuer issuer, BugReport bugReport) throws ModelException {
         Comment comment = new Comment(text, issuer);
         bugReport.addComment(comment);
         return comment;
     }
 
-    //TODO Documentation
+    /**
+     * Method for creating a comment and adding it to the list of comments of the given comment.
+     *
+     * @param text The text of the comment.
+     * @param issuer The issuer writing the comment.
+     * @param comment The comment on which the issuer commented.
+     *
+     * @return The newly created comment.
+     *
+     * @throws ModelException One of the given arguments are illegal. See constructor of comment for rules.
+     */
     public Comment createComment(String text, Issuer issuer, Comment comment) throws ModelException {
         Comment newComment = new Comment(text, issuer);
         comment.addComment(newComment);
@@ -161,7 +184,15 @@ public class BugReportService {
         return Collections.unmodifiableList(bugReports);
     }
 
-    //TODO Documentation
+    /**
+     * Method for requesting the bugreports where the title contains de given string.
+     *
+     * @param title The string the title should contain.
+     *
+     * @return An unmodifiable list of bugreports where the title contains the given string.
+     *
+     * @throws ModelException The given string is not a valid string. It is empty or whitespace.
+     */
     public List<BugReport> getBugReportsWithTitleContaining(String title) throws ModelException{
         if (!isValidTitleString(title)) throw new ModelException("The string cannot be empty!");
 
@@ -170,6 +201,15 @@ public class BugReportService {
 
     }
 
+    /**
+     * Method for requesting the bugreports where the description contains de given string.
+     *
+     * @param description The string the description should contain.
+     *
+     * @return An unmodifiable list of bugreports where the description contains the given string.
+     *
+     * @throws ModelException The given string is not a valid string. It is empty or whitespace.
+     */
     public List<BugReport> getBugReportsWithDescriptionContaining(String description) throws ModelException{
         if (!isValidDescription(description)) throw new ModelException("The string cannot be empty!");
 
@@ -177,7 +217,13 @@ public class BugReportService {
         return Collections.unmodifiableList(bugReports);
     }
 
-    //TODO Documentation / eventueel string methodes gebruiken
+    /**
+     * Checker to check if the string for filtering is a valid string.
+     *
+     * @param title The string part to check.
+     *
+     * @return True if the title is not null, empty or whitespace.
+     */
     public boolean isValidTitleString(String title) {
         if (title == null) return false;
         if (title.equals("")) return false;
@@ -185,15 +231,20 @@ public class BugReportService {
         return true;
     }
 
-    //TODO Documentation / eventueel string methodes gebruiken
+    /**
+     * Checker to check if the string for filtering is a valid string.
+     *
+     * @param description The string part to check.
+     *
+     * @return True if the description is not null, empty or whitespace.
+     */
     public boolean isValidDescription(String description){
         if (description == null) return false;
         if (description.equals("")) return false;
         if (description.equals(" ")) return false;
         return true;
     }
-    
-    //TODO Documentation
+
     private IListWrapper<BugReport> getAllBugReportsWrapped()
     {
         List<BugReport> bugReports = new ArrayList<>();

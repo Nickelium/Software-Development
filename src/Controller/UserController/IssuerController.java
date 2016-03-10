@@ -1,7 +1,7 @@
 package Controller.UserController;
 
+import Controller.IUI;
 import Controller.Parser;
-import Controller.UI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class IssuerController extends UserController {
 
-    public IssuerController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
+    public IssuerController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
         initializeUseCasesIssuer();
     }
@@ -220,10 +220,12 @@ public class IssuerController extends UserController {
     public void createComment() {
         try {
             BugReport bugReport = selectBugReport();
-            getUi().display("List of all comments of this bugreport:");
             List<Comment> listComment = bugReport.getAllComments();
-            String parsedListComment = Parser.parseCommentList(listComment);
-            getUi().display(parsedListComment);
+            if(listComment.size() >0) {
+                getUi().display("List of all comments of this bugreport:");
+                String parsedListComment = Parser.parseCommentList(listComment);
+                getUi().display(parsedListComment);
+            }
 
             //whaaat
             getUi().display("Create a comment of the bugreport or on one of the comments (B/C) : ");

@@ -86,7 +86,7 @@ public class BugReport {
 
          this.comments = new ArrayList<>();
          this.dependencies = new ArrayList<>();
-         this.assignees = initialAssignies;
+         this.assignees = new ArrayList<>(initialAssignies);
 
     }
 
@@ -270,7 +270,12 @@ public class BugReport {
 		return Collections.unmodifiableList(list);
 	}
 
-    //TODO Documentation
+    /**
+     * Method for adding a dependency to the list of dependencies.
+     *
+     * @param dependency The dependency to add.
+     * @throws IllegalArgumentException The given dependency is null.
+     */
     public void addDependency(BugReport dependency) {
         if (dependency == null) throw new IllegalArgumentException("Dependency is null");
 

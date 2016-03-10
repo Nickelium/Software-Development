@@ -1,5 +1,6 @@
 package Controller.UserController;
 
+import Controller.IUI;
 import Controller.Parser;
 import Controller.UI;
 import Model.BugReport.BugReportService;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public abstract class UserController {
 
-    private UI ui;
+    private IUI ui;
     private UserService userService;
     private ProjectService projectService;
     private BugReportService bugReportService;
@@ -25,7 +26,7 @@ public abstract class UserController {
 
     protected ArrayList<FunctionWrap> useCases = new ArrayList<FunctionWrap>();
 
-    public UserController(UI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
+    public UserController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
         setUi(ui);
         setUserService(userService);
         setProjectService(projectService);
@@ -70,7 +71,7 @@ public abstract class UserController {
 
     //region Getters & setters
 
-    private void setUi(UI ui) {
+    private void setUi(IUI ui) {
         this.ui = ui;
     }
 
@@ -90,7 +91,7 @@ public abstract class UserController {
         this.currentUser = currentUser;
     }
 
-    public UI getUi() {
+    public IUI getUi() {
         return ui;
     }
 

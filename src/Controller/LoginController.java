@@ -23,11 +23,11 @@ public class LoginController {
 
 
     private UserService userService;
-    private UI ui;
+    private IUI ui;
 
     private User currentUser;
 
-    public LoginController(UI ui, UserService userService) {
+    public LoginController(IUI ui, UserService userService) {
         this.userService = userService;
         this.ui = ui;
     }

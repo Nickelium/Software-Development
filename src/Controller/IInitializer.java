@@ -9,7 +9,6 @@ import Model.User.UserService;
 
 public interface IInitializer 
 {
-	public void init() throws ModelException;
 
 	public UserService getUserService();
 
