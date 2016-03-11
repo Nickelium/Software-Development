@@ -119,27 +119,20 @@ public abstract class UserController {
 
     //region use cases methods
 
-    public void showProject() throws ModelException
+    public void showProject() throws ModelException, IndexOutOfBoundsException
     {
-    	try
-    	{
+            // Step 2
 	    	List<Project> projectList = projectService.getAllProjects();
 	    	String parsedProjectList = Parser.parseProjectList(projectList);
 	    	getUi().display(parsedProjectList);
-	    	
+
+            // Step 3
 	    	int index = ui.readInt();
 	    	Project project = projectList.get(index);
-	    	
+
+            // Step 4
 	    	String projectDetails = Parser.parseDetailedProject(project);
-	    	
 	    	getUi().display(projectDetails);
-    	}
-    	catch(IndexOutOfBoundsException e)
-    	{
-    		 getUi().display(e.getMessage());
-             getUi().display("Press 1 to retry.");
-             if (getUi().readInt() == 1) showProject();
-    	}
     }
 
     public void exitProgram(){

@@ -32,13 +32,29 @@ public class LoginController {
         this.ui = ui;
     }
 
+	/**
+	 *
+	 * Method to log a user in into BugTrap.
+	 *
+	 * 1. The user indicates if he wants to log in as an administrator, issuer or
+	 * developer.
+	 * 2. The system shows an overview of the users of the selected category.
+	 * 3. The user selects one of the shown users4.
+	 * 4. The system greets the user.
+	 *
+	 * @return 	user
+	 * 			the user that will be logged in
+	 * @throws ModelException in case the method encounters invalid input.
+     */
     public User run() throws ModelException
     {
 	        loginMessage();
+			// Step 1
 	        int userType = ui.readInt();
 	
 	        List<User> users = new ArrayList<User>();
-	
+
+			// Step 2
 	        switch (userType)
 	        {
 	        	case 1://Admin
@@ -58,11 +74,13 @@ public class LoginController {
 	        String parsedTextUsers = Parser.parseUserList(users);
 	        ui.display(parsedTextUsers);
 	
-	        //select & set User
+	        // Step 3
 	        int selectedUserIndex = ui.readInt();
 			if(selectedUserIndex >= users.size()) throw new ModelException("This user does not exist!");
 	        User user = users.get(selectedUserIndex);
 	        setCurrentUser(user);
+
+			// Step 4
 	        welcomeUserMessage(user);
 
 			return user;
