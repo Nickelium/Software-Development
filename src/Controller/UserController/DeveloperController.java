@@ -46,6 +46,26 @@ public class DeveloperController extends IssuerController {
         }
     }
 
+    /**
+     *
+     * Lets a Developer assign another developer to a project of which the current
+     * Developer is lead developer.
+     *
+     * 2. The system shows a list of the projects in which the logged in user is
+     *    assigned as lead developer.
+     * 3. The lead developer selects one of his projects.
+     * 4. The system shows a list of other developers to assign.
+     * 5. The lead developer selects one of these other developers.
+     * 6. The system shows a list of possible (i.e. not yet assigned) roles for the
+     *    selected developer.
+     * 7. The lead developer selects a role.
+     * 8. The systems assigns the selected role to the selected developer.
+     *
+     * @throws Exception
+     *          if something goes wrong during execution, give user the
+     *          chance of retrying.
+     *
+     */
     public void assignToProject() throws Exception {
 
         // Get projects with currentUser as Lead Developer.
@@ -98,6 +118,21 @@ public class DeveloperController extends IssuerController {
         }
     }
 
+    /**
+     *
+     * Lets a Developer assign one or more developers to a bug report.
+     *
+     * 2. Include use case Select Bug Report.
+     * 3. The system shows a list of developers that are involved in the project.
+     * 4. The logged in developer selects one or more of the developers to assign
+     *    to the selected bug report on top of those already assigned.
+     * 5. The systems assigns the selected developers to the selected bug report.
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     *
+     */
     public void assignToBugReport() throws ModelException, IndexOutOfBoundsException {
 
         // Step 2
@@ -125,6 +160,19 @@ public class DeveloperController extends IssuerController {
         }
     }
 
+    /**
+     *
+     * Lets a Developer update the tag of a bug report.
+     *
+     * 2. Include use case Select Bug Report.
+     * 3. The developer suggests a new tag for the bug report.
+     * 4. The system gives the selected bug report the new tag.
+     *
+     * @throws Exception
+     *          if something goes wrong during execution, give user the
+     *          chance of retrying.
+     *
+     */
     public void updateBugReport() throws Exception {
 
         // Step 2
