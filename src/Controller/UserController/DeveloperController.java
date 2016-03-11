@@ -75,12 +75,12 @@ public class DeveloperController extends IssuerController {
         if (developerProjectList.size() == 0) {
 
             // Step 2a
-            getUi().display("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
-
+            throw new ModelException("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
         } else {
 
             // Step 2
             getUi().display("Select the project that you want to assign a new developer to: ");
+
             String parsedDeveloperProjectList = Parser.parseProjectList(developerProjectList);
             getUi().display(parsedDeveloperProjectList);
 
@@ -100,6 +100,7 @@ public class DeveloperController extends IssuerController {
 
             // Step 6
             getUi().display("Please select the role that you want to assign to the developer of the project: ");
+
             List<Class<? extends Role>> roles = Arrays.asList(Programmer.class, Tester.class);
             getUi().display(Parser.parseProjectRoles(roles));
 
@@ -109,6 +110,7 @@ public class DeveloperController extends IssuerController {
 
             // Step 8
             Role role = selectedClass.getDeclaredConstructor(Developer.class).newInstance(developer);
+
             project.addRole(role);
 
             getUi().display("The new developer has been successfully assigned to a new role in the project.\n");
@@ -129,6 +131,7 @@ public class DeveloperController extends IssuerController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      *
      */
     public void assignToBugReport() throws ModelException, IndexOutOfBoundsException {
@@ -136,12 +139,8 @@ public class DeveloperController extends IssuerController {
         // Step 2
         getUi().display("Please select the bug report that you want to assign a new developer to: ");
         BugReport bugReport = selectBugReport();
-        while (true) {
-            bugReport = selectBugReport();
-            if (getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport)) {
-                break;
-            }
-            getUi().errorDisplay("You don't have the permission to assing developers to this BugReport.");
+        if (!getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport)) {
+            throw new ModelException("You are not allowed to assign developers to this bugreport.");
         }
 
         // Step 3
@@ -149,22 +148,16 @@ public class DeveloperController extends IssuerController {
         List<Developer> developerList = bugReport.getAssignees();
         String parsedList = Parser.parseDeveloperList(developerList);
         getUi().display(parsedList);
-
         // Step 4
-        while (true) {
-            if (getUi().readInt() == -1) {
-                getUi().display("Assignment stopped by user. Continuing...");
-                break;
-            } else if (developerList.size() == 0) {
-                getUi().display("No more users are available to be assigned. Continuing...");
-                break;
-            } else {
+        int selectedValue = getUi().readInt();
 
-                // Step 5
-                int developerIndex = getUi().readInt();
-                getDeveloperAssignmentService().assignDeveloperToBugReport(getCurrentUser(), developerList.get(developerIndex), bugReport);
-                developerList.remove(developerIndex);
-            }
+        if (selectedValue == -1) {
+            getUi().display("Assignment of developer canceled.");
+        } else {
+            //Step 5
+            Developer developer = developerList.get(selectedValue);
+            developerAssignmentService.assignDeveloperToBugReport(getCurrentUser(), developer, bugReport);
+            getUi().display("The developer has successfully been assigned to the bugreport.");
         }
     }
 

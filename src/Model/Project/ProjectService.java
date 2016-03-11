@@ -140,7 +140,7 @@ public class ProjectService
      *
      * @throws ModelException There is no project containing the given bugreport.
      */
-    public Project getProjectContainingBugReport(BugReport bugReport) throws ModelException
+    public Project getProjectsContainingBugReport(BugReport bugReport) throws ModelException
     {
         for(Project project : this.getAllProjects()){
             if (project.getAllBugReports().contains(bugReport)){

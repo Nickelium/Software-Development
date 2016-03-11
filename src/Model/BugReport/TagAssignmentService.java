@@ -76,8 +76,8 @@ public class TagAssignmentService {
         }
         try
         {
-	        Project project = projectService.getProjectContainingBugReport(bugReport);
-	        Role role = getUserRoleWithinProject(user, project);
+            Project project = projectService.getProjectsContainingBugReport(bugReport);
+            Role role = getUserRoleWithinProject(user, project);
 	
 	        if (role == null){
                 return false;

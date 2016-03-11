@@ -8,7 +8,6 @@ import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Parser
@@ -83,8 +82,8 @@ public class Parser
 			parsed += "\n\t" + Parser.addTabulation(Parser.parseDetailedSubSystem(sub));
 		return parsed;
 	}
-	
-	public static String parseDetailBugReport(BugReport bugReport)
+
+	public static String parseDetailedBugReport(BugReport bugReport)
 	{
 		if(bugReport == null) return "";
 		String parsed = bugReport.toString();

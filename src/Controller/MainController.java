@@ -87,7 +87,7 @@ public class MainController {
                 } catch (ModelException | IndexOutOfBoundsException e) {
                     ui.errorDisplay(e.getMessage());
                     ui.display("Enter 1 if you want to retry.");
-                    if (ui.readInt() != 1) break;
+                    if (!ui.readString().equals("1")) break;
                 }
             }
         }

@@ -8,7 +8,7 @@ import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
 import Model.Project.ProjectService;
 import Model.User.UserService;
-import org.junit.*;
+import org.junit.Before;
 
 /**
  * Created by Karina on 10.03.2016.

@@ -40,9 +40,8 @@ public class TheDate
 	 * @param day The day of the date.
 	 * @param month The month of the date.
 	 * @param year The year of the date.
-	 * @throws ModelException
 	 *
-	 * @throws DateTimeException The given attributes are not valid.
+	 * @throws ModelException The given attributes are not valid to build a correct date.
 	 */
 	public TheDate(int day, int month, int year) throws ModelException 
 	{

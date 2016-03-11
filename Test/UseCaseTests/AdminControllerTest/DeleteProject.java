@@ -2,7 +2,6 @@ package UseCaseTests.AdminControllerTest;
 
 import Controller.UserController.AdminController;
 import Controller.UserController.UserController;
-import CustomExceptions.ModelException;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
