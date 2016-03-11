@@ -69,6 +69,18 @@ public class CreateSubSystem extends AdminControllerInit {
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
         adminController.callUseCase(6);
+
     }
 
+    @Test(expected = ModelException.class)
+    public void unsuccessfulCreateSubSystem_wrongSelection() throws Exception{
+        String[] simulatedUserInput = {
+                "X"
+        };
+        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+        TestUI ui = new TestUI(input);
+
+        UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
+        adminController.callUseCase(6);
+    }
 }

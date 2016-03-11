@@ -1,19 +1,13 @@
 package UseCaseTests.AdminControllerTest;
 
-import Controller.IUI;
-import Controller.LoginController;
 import Controller.UserController.AdminController;
 import Controller.UserController.UserController;
 import CustomExceptions.ModelException;
-import UseCaseTests.InitializerTest;
 import UseCaseTests.UseCasesUI.TestUI;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Karina on 10.03.2016.
