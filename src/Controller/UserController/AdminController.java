@@ -52,6 +52,7 @@ public class AdminController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input.
      * @throws IndexOutOfBoundsException
+     * 			thrown when a user puts an incorrect option index.
      *
      */
     public void createProject() throws ModelException, IndexOutOfBoundsException {
@@ -104,6 +105,7 @@ public class AdminController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     * 			thrown when a user puts an incorrect option index.
      *
      */
     public void forkProject() throws ModelException, IndexOutOfBoundsException {
@@ -163,6 +165,7 @@ public class AdminController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      *
      */
     public void updateProject() throws ModelException, IndexOutOfBoundsException {
@@ -215,6 +218,7 @@ public class AdminController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      *
      */
     public void deleteProject() throws ModelException, IndexOutOfBoundsException {
@@ -246,6 +250,7 @@ public class AdminController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      *
      */
     public void createSubSystem() throws ModelException, IndexOutOfBoundsException {
