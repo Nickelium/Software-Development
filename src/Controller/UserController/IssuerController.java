@@ -237,7 +237,7 @@ public class IssuerController extends UserController {
         BugReport bugReport = selectBugReport();
 
         // Step 3
-        String bugReportDetails = Parser.parseDetailBugReport(bugReport);
+        String bugReportDetails = Parser.parseDetailedBugReport(bugReport);
         getUi().display(bugReportDetails);
 
     }

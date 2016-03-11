@@ -1,13 +1,3 @@
-
-
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
@@ -17,6 +7,13 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.Roles.Lead;
 import Model.User.Developer;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class ProjectServiceTest {
 
@@ -135,14 +132,14 @@ public class ProjectServiceTest {
 	{
 		SubSystem s = projectService.createSubsystem("A", "A", p1);
 		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
-		
-		assertEquals(projectService.getProjectContainingBugReport(bug1),p1);
+
+		assertEquals(projectService.getProjectsContainingBugReport(bug1), p1);
 	}
 	
 	@Test (expected = ModelException.class)
 	public void getProjectContainingBugReport_FAIL() throws ModelException
 	{
 		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
-		projectService.getProjectContainingBugReport(bug1);
+		projectService.getProjectsContainingBugReport(bug1);
 	}
 }
