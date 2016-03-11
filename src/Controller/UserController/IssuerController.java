@@ -203,7 +203,7 @@ public class IssuerController extends UserController {
         }
 
         // Step 4
-        getUi().display("Create a comment of the bugreport or on one of the comments (B/C) : ");
+        getUi().display("Create a comment on the bugreport or on one of the comments (B/C) : ");
         String input = getUi().readString();
 
         if (input.equalsIgnoreCase("b")) {
