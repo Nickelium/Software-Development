@@ -38,6 +38,25 @@ public class IssuerController extends UserController {
     }
 
 
+    /**
+     *
+     * Lets an Issuer create a bug report.
+     *
+     * 2. The system shows a list of projects.
+     * 3. The issuer selects a project.
+     * 4. The system shows a list of subsystems of the selected project.
+     * 5. The issuer selects a subsystem.
+     * 6. The system shows the bug report creation form.
+     * 7. The issuer enters the bug report details: title and description.
+     * 8. The system shows a list of possible dependencies of this bug report.
+     *    These are the bug reports of the same project.
+     * 9. The issuer selects the dependencies.
+     * 10. The system creates the bug report.
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     */
     public void createBugReport() throws ModelException, IndexOutOfBoundsException {
 
         // Step 2
@@ -93,6 +112,28 @@ public class IssuerController extends UserController {
 
     }
 
+    /**
+     *
+     * Lets an Issuer or Developer select a bug report. Bug reports are listed after
+     * the execution of a search command.
+     *
+     * 1. The system shows a list of possible searching modes:
+     *     Search for bug reports with a specic string in the title or description
+     *     Search for bug reports led by some specic user
+     *     Search for bug reports assigned to specic user
+     *
+     * 2. The issuer selects a searching mode and provides the required search
+     *    parameters.
+     * 3. The system shows an ordered list of bug reports that matched the
+     *    search query.
+     * 4. The issuer selects a bug report from the ordered list.
+     *
+     * @return BugReport the bug report that has been selected by the user.
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     *
+     */
     protected BugReport selectBugReport() throws ModelException, IndexOutOfBoundsException {
         int chosenNumber;
         List<BugReport> bugReportList = null;
@@ -178,6 +219,18 @@ public class IssuerController extends UserController {
 
     }
 
+    /**
+     *
+     * Lets an Issuer inspect a bug report.
+     *
+     * 2. Include use case Select Bug Report.
+     * 3. The system shows a detailed overview of the selected bug report and
+     * all its comments
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     */
     public void inspectBugReport() throws ModelException, IndexOutOfBoundsException {
 
         // Step 2
@@ -189,6 +242,24 @@ public class IssuerController extends UserController {
 
     }
 
+    /**
+     *
+     * Lets an Issuer create a comment onto a bug report or an other comment.
+     *
+     * 2. Include use case Select Bug Report.
+     * 3. The system shows a list of all comments of the selected bug report.
+     * 4. The issuer indicates if he wants to comment directly on the bug report
+     *    or on some other comment.
+     * 5. The system asks for the text of the comment.
+     * 6. The issuer writes his comment.
+     * 7. The system adds the comment to the selected use case.
+     *
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     *
+     */
     public void createComment() throws ModelException, IndexOutOfBoundsException {
 
         // Step 2

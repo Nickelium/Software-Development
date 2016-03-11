@@ -38,6 +38,22 @@ public class AdminController extends UserController {
         }
     }
 
+    /**
+     *
+     * Lets an administrator create a new project.
+     *
+     * 2. The system shows a form to enter the project details: name,
+     * description, starting date and budget estimate.
+     * 3. The administrator enters all the project details.
+     * 4. The system shows a list of possible lead developers.
+     * 5. The administrator selects a lead developer.
+     * 6. The system creates the project and shows an overview.
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input.
+     * @throws IndexOutOfBoundsException
+     *
+     */
     public void createProject() throws ModelException, IndexOutOfBoundsException {
 
         // Step 2 + 3
@@ -73,6 +89,23 @@ public class AdminController extends UserController {
         getUi().display(project.toString());
     }
 
+    /**
+     *
+     * Method that lets an administrator create a next version of an
+     * existing project. Forked projects are independent and start without
+     * any bug reports.
+     *
+     * 2. The administrator selects an existing project.
+     * 3. The system shows a form to enter the missing project details:
+     * version number, starting date and budget estimate.
+     * 4. The administrator enters all the missing project details.
+     * 5. The use case returns to step 4 of the normal flow
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     *
+     */
     public void forkProject() throws ModelException, IndexOutOfBoundsException {
 
         // Step 1a.1
@@ -116,6 +149,22 @@ public class AdminController extends UserController {
         getUi().display(forkProject.toString());
     }
 
+    /**
+     *
+     * Method that lets an administrator update a project.
+     *
+     * 2. The system shows a list of all projects.
+     * 3. The administrator selects a project.
+     * 4. The system shows a form to update the project details: name,
+     * description, starting date and budget estimate.
+     * 5. The administrator modies the details as he sees t.
+     * 6. The system updates the project.
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     *
+     */
     public void updateProject() throws ModelException, IndexOutOfBoundsException {
 
         // Step 2
@@ -153,6 +202,21 @@ public class AdminController extends UserController {
         getUi().display(project.toString());
     }
 
+    /**
+     *
+     * Method that lets an administrator delete a project.
+     *
+     * 2. The system shows a list of all projects.
+     * 3. The administrator selects a project.
+     * 4. The system deletes a project and recursively all subsystems that are
+     * part of the project. All bug reports fore those subsystem are also
+     * removed from BugTrap.
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     *
+     */
     public void deleteProject() throws ModelException, IndexOutOfBoundsException {
 
         // Step 2
@@ -170,6 +234,20 @@ public class AdminController extends UserController {
         getUi().display("The project has been successfully deleted.\n");
     }
 
+    /**
+     *
+     * Lets an administrator create a subsystem.
+     *
+     * 2. The system shows a list of all projects.
+     * 3. The user selects a project.
+     * 4. The system shows a detailed overview of the selected project and all
+     * its subsystems.
+     *
+     * @throws ModelException
+     *          in case that the method encounters invalid input
+     * @throws IndexOutOfBoundsException
+     *
+     */
     public void createSubSystem() throws ModelException, IndexOutOfBoundsException {
 
         // Step 2

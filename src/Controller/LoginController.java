@@ -32,6 +32,20 @@ public class LoginController {
         this.ui = ui;
     }
 
+	/**
+	 *
+	 * Method to log a user in into BugTrap.
+	 *
+	 * 1. The user indicates if he wants to log in as an administrator, issuer or
+	 * developer.
+	 * 2. The system shows an overview of the users of the selected category.
+	 * 3. The user selects one of the shown users4.
+	 * 4. The system greets the user.
+	 *
+	 * @return 	user
+	 * 			the user that will be logged in
+	 * @throws ModelException in case the method encounters invalid input.
+     */
     public User run() throws ModelException
     {
 	        loginMessage();
