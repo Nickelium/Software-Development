@@ -56,6 +56,7 @@ public class IssuerController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      */
     public void createBugReport() throws ModelException, IndexOutOfBoundsException {
 
@@ -132,6 +133,7 @@ public class IssuerController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      *
      */
     protected BugReport selectBugReport() throws ModelException, IndexOutOfBoundsException {
@@ -230,6 +232,7 @@ public class IssuerController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      */
     public void inspectBugReport() throws ModelException, IndexOutOfBoundsException {
 
@@ -258,6 +261,7 @@ public class IssuerController extends UserController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      *
      */
     public void createComment() throws ModelException, IndexOutOfBoundsException {

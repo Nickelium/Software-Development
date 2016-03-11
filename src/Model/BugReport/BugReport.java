@@ -57,6 +57,9 @@ public class BugReport {
      * @param description The description of the bugreport.
      * @param subSystem The subsystem the bugreport is about.
      * @param creator The creator of the bugreport.
+     * @param creationDate The creation date of this bugreport.
+     * @param tag The tag of this bugreport.
+     * @param initialAssignies The list of assignees for this bugreport.
      *
      * @throws ModelException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.

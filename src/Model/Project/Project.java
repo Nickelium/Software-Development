@@ -33,6 +33,12 @@ public class Project
 	
 	/**
      * Default constructor for project.
+     * 
+     * @param name Name of this project.
+     * @param description Description of this project.
+     * @param startingDate starting date of this project.
+     * @param budget Budget of this project.
+     * @param leadRole The lead developer for this project.
      *
      * @throws ModelException One of the arguments given is not valid. (See setters of arguments for rules)
 	 */

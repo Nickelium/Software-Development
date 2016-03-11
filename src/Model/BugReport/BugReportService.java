@@ -135,6 +135,7 @@ public class BugReportService {
      * @return The BugReport matching the given id.
      *
      * @throws ModelException
+     * 			thrown when no bugreport is found.
      */
     public BugReport getBugReport(BugReportID id) throws ModelException
     {

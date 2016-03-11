@@ -131,6 +131,7 @@ public class DeveloperController extends IssuerController {
      * @throws ModelException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
+     *		   thrown when a user puts an incorrect option index.
      *
      */
     public void assignToBugReport() throws ModelException, IndexOutOfBoundsException {
