@@ -31,12 +31,14 @@ these slides do not have to be presented, but we need the information.
 
 
 
-Your presentation should not consist of slides lled with text, but of slides
+Your presentation should not consist of slides filled with text, but of slides
 with clear design diagrams and keywords or a few short sentences. The goal
 of giving a presentation is to communicate a message, not to write a novel. All
 design diagrams should be clearly readable and use the correct UML notation. It is
 therefore typically a bad idea to create a single class diagram with all information.
 Instead, you can for example use an overview class diagram with only the most
-important classes, and use more detailed class diagrams to document specic parts
+important classes, and use more detailed class diagrams to document specific parts
 of the system. Similarly, use appropriate interaction diagrams to illustrate the
 working of the most important (or complex) parts of the system.
+
+
