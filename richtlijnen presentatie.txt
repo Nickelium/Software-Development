@@ -1,0 +1,42 @@
+2.8.1 Presentation Of The Current Iteration
+
+
+The main part of the presentation should cover the design. The motivation of
+your design decisions must be explained in terms of GRASP principles. Use the
+appropriate design diagrams to illustrate how the most important parts of your
+software work. Your presentation should cover the following elements. Note that
+these are not necessarily all separate sections in the presentation.
+
+
+
+1. A discussion of the high level design of the software (use GRASP patterns).
+Give a rationale for all the important design decisions your team has made.
+
+2. A more detailed discussion of the parts that you think are the most interest-
+ing in terms of design (use GRASP patterns). Again we expect a rationale
+here for the important design decisions.
+
+3. A discussion of the extensibility of the system. Briey discuss how your
+system can deal with a number of change scenarios (e.g. extra constraints,
+additional domain concepts, ...).
+
+4. A discussion of the testing approach used in the current iteration.
+
+5. An overview of the project management. Give an approximation of how
+many hours each team member worked. Use the following categories: group
+work, individual work, and study (excluding the classes and exercise ses-
+sions). In addition, insert a slide that describes the roles of the team mem-
+bers of the current iteration, and the roles for the next iteration. Note that
+these slides do not have to be presented, but we need the information.
+
+
+
+Your presentation should not consist of slides lled with text, but of slides
+with clear design diagrams and keywords or a few short sentences. The goal
+of giving a presentation is to communicate a message, not to write a novel. All
+design diagrams should be clearly readable and use the correct UML notation. It is
+therefore typically a bad idea to create a single class diagram with all information.
+Instead, you can for example use an overview class diagram with only the most
+important classes, and use more detailed class diagrams to document specic parts
+of the system. Similarly, use appropriate interaction diagrams to illustrate the
+working of the most important (or complex) parts of the system.
