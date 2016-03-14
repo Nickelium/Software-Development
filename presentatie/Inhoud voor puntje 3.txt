@@ -1,0 +1,14 @@
+Onze code is gemakkelijk om uit te breiden:
+Voorbeelden:
+– Als een useCase wordt toegevoegd, moet maar een functie worden toegevoegd in een van onze controllers (deze functie moet dan in de lijst worden gestoken) en het is af! De domeinlaag weet niks over de usecases → een usecase toeevoegen gaat meestal niks in de domeinlaag veranderen
+– Een nieuwe soort User is ook heel gemakkelijk geïmplementeerd: er moet een nieuwe klasse & een nieuwe controller worden toegevoegd en alleen de ui moet worden veranderd
+– nieuwe soort UI is gemakkelijk om te implementeren zonder de code te moeten aanpassen
+– het is gemakkelijk om een nieuwe Init state toe te voegen
+– de domein laag is opgesplitst zodat veel functies aan de services worden gegeven, zo hebben de verschillende elementen een lagere koppeling met andere functies uit deze laag. Toevoegen van niewe elementen wordt daardoor gemakkelijk. Voorbeeld: een User weet niks over de andere users en ook niets over de services, een bugreport weet niks over een subsystem, een subsystem niks over een project. Het toevoegen van bv een nieuwe soort subsystem vormt dus geen problemen, omdat bv de bugreports er niks van weten. De domeinlaag heeft nooit een dubbele associatie, waardoor er nooit meer dan één extra klasse veranderd bij een uitbreiding
+– nieuwe Tags kunnen vrij gemakkelijk worden toegevoegd: de mogelijke klassen worden dynamisch opgevangen
+– subsystems/bugreports kunnen van een andere soort klasse worden opgevangen, ze zijn bijna gewoon “value”klassen.
+
+
+Mogelijke verbeteringen:
+– eigenlijk hadden we de klassen Admin, Issuer en Developer kunnen weglaten, al de informatie zit in de controllers
+– mogelijke verbetering: Tags van elkaar niet laten afweten, overgangen in een aparte klasse behandelen
