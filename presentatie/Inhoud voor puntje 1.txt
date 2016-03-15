@@ -1,0 +1,13 @@
+- 4 lagen
+	* Main / UI
+	* UserControllers
+	* Services
+	* Domein
+- Lagen zorgen voor een lage koppeling. vb. Domein laag is niet afhankelijk van de UI (een dynamisch deel van het project)
+- onderste lagen weten niets over de bovenste lagen.
+- Bovenste lagen maken gebruik van de functionaliteiten die door de onderste lagen worden aangeboden.
+- Maincontroller roept logincontroller op -> inloggen van user
+- Maincontroller initializeert correcte controller adhv de ingelogde user verkregen uit de logincontroller.
+- User controller per type user -> deze bevat enkel de usecases die de specifieke user kan uitvoeren.
+- Services bieden functionaliteiten aan die kennis van meerdere domeinobjecten of verzamelingen van domeinobjecten vereisen -> hoge cohesie en lage kopelling.
+- Domein en services samen bieden een systeem aan dat beschermd is voor verkeerd gebruik.
