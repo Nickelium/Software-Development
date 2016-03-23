@@ -172,8 +172,17 @@ public class TheDate
 	 * 
 	 * @throws ModelException The attributes of thedate object are not valid.
 	 */
-	public TheDate copy() throws ModelException
+	public TheDate copy() 
 	{
-		return new TheDate(getDay(),getMonth(),getYear());
+		try
+		{
+			return new TheDate(getDay(),getMonth(),getYear());
+		}
+		catch(ModelException e)
+		{
+			// can never occur
+			throw new AssertionError(e.getMessage() + " copy thedate failed");
+		}
+	
 	}
 }
