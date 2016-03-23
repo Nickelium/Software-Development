@@ -71,7 +71,7 @@ public class LoginController {
 	        }      
 	
 	        ui.display("Choose an user to log in as:");
-	        String parsedTextUsers = Parser.parseUserList(users);
+	        String parsedTextUsers = Formatter.formatUserList(users);
 	        ui.display(parsedTextUsers);
 	
 	        // Step 3

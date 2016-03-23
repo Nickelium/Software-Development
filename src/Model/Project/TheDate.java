@@ -6,7 +6,10 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-//Class for uniform dateformats
+/**
+ * This class represents a date class, which use the following date format dd/MM/yyyy.
+ *
+ */
 public class TheDate
 {
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

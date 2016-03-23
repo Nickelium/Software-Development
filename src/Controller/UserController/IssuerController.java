@@ -1,7 +1,7 @@
 package Controller.UserController;
 
 import Controller.IUI;
-import Controller.Parser;
+import Controller.Formatter;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
@@ -63,7 +63,7 @@ public class IssuerController extends UserController {
         // Step 2
         getUi().display("Select a project:");
         List<Project> projectList = getProjectService().getAllProjects();
-        String parsedProjectList = Parser.parseProjectList(projectList);
+        String parsedProjectList = Formatter.formatProjectList(projectList);
         getUi().display(parsedProjectList);
 
         // Step 3
@@ -73,7 +73,7 @@ public class IssuerController extends UserController {
         // Step 4
         getUi().display("Select a subsystem:");
         List<SubSystem> subSystemList = project.getAllSubSystems();
-        String subSystemsOfProject = Parser.parseSubSystemList(subSystemList);
+        String subSystemsOfProject = Formatter.formatSubSystemList(subSystemList);
         getUi().display(subSystemsOfProject);
 
         // Step 5
@@ -95,7 +95,7 @@ public class IssuerController extends UserController {
 
         // Step 8
         List<BugReport> possibleDependencies = getBugReportService().getBugReportsForProject(project);
-        String possibleDependenciesStr = Parser.parseBugReportList(possibleDependencies);
+        String possibleDependenciesStr = Formatter.formatBugReportList(possibleDependencies);
         while (true) {
 
             // Step 9
@@ -171,7 +171,7 @@ public class IssuerController extends UserController {
             if (bugReportList.size() > 0) {
                 // Step 3
                 getUi().display("The search result for your query is: ");
-                getUi().display(Parser.parseBugReportList(bugReportList));
+                getUi().display(Formatter.formatBugReportList(bugReportList));
 
             } else {
                 throw new ModelException("No bug reports found.");
@@ -189,7 +189,7 @@ public class IssuerController extends UserController {
             if (bugReportList.size() > 0) {
                 // Step 3
                 getUi().display("The search result for your query is: ");
-                getUi().display(Parser.parseBugReportList(bugReportList));
+                getUi().display(Formatter.formatBugReportList(bugReportList));
             } else {
                 throw new ModelException("No bug reports found.");
 
@@ -205,7 +205,7 @@ public class IssuerController extends UserController {
             if (bugReportList.size() > 0) {
                 // Step 3
                 getUi().display("The search result for your query is: ");
-                getUi().display(Parser.parseBugReportList(bugReportList));
+                getUi().display(Formatter.formatBugReportList(bugReportList));
 
             } else {
                 throw new ModelException("No bug reports found.");
@@ -240,7 +240,7 @@ public class IssuerController extends UserController {
         BugReport bugReport = selectBugReport();
 
         // Step 3
-        String bugReportDetails = Parser.parseDetailedBugReport(bugReport);
+        String bugReportDetails = Formatter.formatDetailedBugReport(bugReport);
         getUi().display(bugReportDetails);
 
     }
@@ -273,7 +273,7 @@ public class IssuerController extends UserController {
         List<Comment> listComment = bugReport.getAllComments();
         if (listComment.size() > 0) {
             getUi().display("List of all comments of this bugreport:");
-            String parsedListComment = Parser.parseCommentList(listComment);
+            String parsedListComment = Formatter.formatCommentList(listComment);
             getUi().display(parsedListComment);
         }
 

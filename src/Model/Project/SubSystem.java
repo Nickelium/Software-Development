@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class represent a subsystem with all it's related attributes.
+ *
+ */
 public class SubSystem 
 {
 

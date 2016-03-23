@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ *	This class represents a project with all its related attributes.
+ *
+ */
 public class Project
 {
 

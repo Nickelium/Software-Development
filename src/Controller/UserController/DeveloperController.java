@@ -1,7 +1,7 @@
 package Controller.UserController;
 
 import Controller.IUI;
-import Controller.Parser;
+import Controller.Formatter;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
@@ -81,7 +81,7 @@ public class DeveloperController extends IssuerController {
             // Step 2
             getUi().display("Select the project that you want to assign a new developer to: ");
 
-            String parsedDeveloperProjectList = Parser.parseProjectList(developerProjectList);
+            String parsedDeveloperProjectList = Formatter.formatProjectList(developerProjectList);
             getUi().display(parsedDeveloperProjectList);
 
             // Step 3
@@ -91,7 +91,7 @@ public class DeveloperController extends IssuerController {
             // Step 4
             getUi().display("Please select the a developer that you want to assign to the selected project: ");
             List<User> developerList = getUserService().getDevelopers();
-            String parsedDevelopersList = Parser.parseUserList(developerList);
+            String parsedDevelopersList = Formatter.formatUserList(developerList);
             getUi().display(parsedDevelopersList);
 
             // Step 5
@@ -102,7 +102,7 @@ public class DeveloperController extends IssuerController {
             getUi().display("Please select the role that you want to assign to the developer of the project: ");
 
             List<Class<? extends Role>> roles = Arrays.asList(Programmer.class, Tester.class);
-            getUi().display(Parser.parseProjectRoles(roles));
+            getUi().display(Formatter.formatProjectRoles(roles));
 
             // Step 7
             int selectedIndex = getUi().readInt();
@@ -146,7 +146,7 @@ public class DeveloperController extends IssuerController {
         // Step 3
         getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
         List<Developer> developerList = bugReport.getAssignees();
-        String parsedList = Parser.parseDeveloperList(developerList);
+        String parsedList = Formatter.formatDeveloperList(developerList);
         getUi().display(parsedList);
         // Step 4
         int selectedValue = getUi().readInt();

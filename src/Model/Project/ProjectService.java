@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class is used as a service to operate on projects and subsystems.
+ *
+ */
 public class ProjectService
 {
     private IListWrapper<Project> projectList;
