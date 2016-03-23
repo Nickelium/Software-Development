@@ -91,7 +91,7 @@ public class Initializer implements IInitializer {
                     new Assigned(),
                     Arrays.asList(major, maria));
 
-            bugReportService.createBugReport("SubsystemA2 feezes",
+            bugReportService.createBugReport("SubsystemA2 freezes",
                     "If the function process_dfe is invoked with ...",
                     charlie,
                     subSystemA2,

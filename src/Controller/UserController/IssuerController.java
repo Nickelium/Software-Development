@@ -6,6 +6,10 @@ import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.Comment;
+import Model.BugReport.SearchOnAssigned;
+import Model.BugReport.SearchOnDescription;
+import Model.BugReport.SearchOnFiled;
+import Model.BugReport.SearchOnTitle;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -153,14 +157,15 @@ public class IssuerController extends UserController {
         // Step 2
         int methodIndex = getUi().readInt();
 
-        if (methodIndex == 0) {
+        if (methodIndex == 0) 
+        {
             // Search for bug reports with a specific string in the title or description
             getUi().display("Please enter a search string matching the title or description of the desired bug report.");
             String query = getUi().readString();
 
             // Make List with possible bug reports
-            List<BugReport> list1 = getBugReportService().getBugReportsWithDescriptionContaining(query);
-            List<BugReport> list2 = getBugReportService().getBugReportsWithTitleContaining(query);
+            List<BugReport> list1 = getBugReportService().search(new SearchOnTitle(query));
+            List<BugReport> list2 = getBugReportService().search(new SearchOnDescription(query));
 
             // Combine both lists
             bugReportList = new ArrayList<BugReport>(list1);
@@ -178,19 +183,21 @@ public class IssuerController extends UserController {
             }
 
 
-        } else if (methodIndex == 1) {
+        } 
+        else if (methodIndex == 1)
+        {
 
             // Search for bug reports filed by some specific user
             getUi().display("Please enter the username of the user that filed the desired bug report: ");
             String userName = getUi().readString();
 
             User user = getUserService().getUser(userName);
-            bugReportList = getBugReportService().getBugReportsFiledByUser(user);
+            bugReportList = getBugReportService().search(new SearchOnFiled(user));
             if (bugReportList.size() > 0) {
                 // Step 3
                 getUi().display("The search result for your query is: ");
                 getUi().display(Formatter.formatBugReportList(bugReportList));
-            } else {
+         	} else {
                 throw new ModelException("No bug reports found.");
 
             }
@@ -200,7 +207,7 @@ public class IssuerController extends UserController {
             String userName = getUi().readString();
 
             User user = getUserService().getUser(userName);
-            bugReportList = getBugReportService().getBugReportsAssignedToUser(user);
+            bugReportList = getBugReportService().search(new SearchOnAssigned(user));
 
             if (bugReportList.size() > 0) {
                 // Step 3
