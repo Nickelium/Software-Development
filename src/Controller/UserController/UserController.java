@@ -1,7 +1,7 @@
 package Controller.UserController;
 
 import Controller.IUI;
-import Controller.Parser;
+import Controller.Formatter;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
@@ -123,7 +123,7 @@ public abstract class UserController {
     {
             // Step 2
 	    	List<Project> projectList = projectService.getAllProjects();
-	    	String parsedProjectList = Parser.parseProjectList(projectList);
+	    	String parsedProjectList = Formatter.formatProjectList(projectList);
 	    	getUi().display(parsedProjectList);
 
             // Step 3
@@ -131,7 +131,7 @@ public abstract class UserController {
 	    	Project project = projectList.get(index);
 
             // Step 4
-	    	String projectDetails = Parser.parseDetailedProject(project);
+	    	String projectDetails = Formatter.formatDetailedProject(project);
 	    	getUi().display(projectDetails);
     }
 

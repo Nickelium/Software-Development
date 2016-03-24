@@ -6,7 +6,10 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-//Class for uniform dateformats
+/**
+ * This class represents a date class, which use the following date format dd/MM/yyyy.
+ *
+ */
 public class TheDate
 {
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -169,8 +172,17 @@ public class TheDate
 	 * 
 	 * @throws ModelException The attributes of thedate object are not valid.
 	 */
-	public TheDate copy() throws ModelException
+	public TheDate copy() 
 	{
-		return new TheDate(getDay(),getMonth(),getYear());
+		try
+		{
+			return new TheDate(getDay(),getMonth(),getYear());
+		}
+		catch(ModelException e)
+		{
+			// can never occur
+			throw new AssertionError(e.getMessage() + " copy thedate failed");
+		}
+	
 	}
 }

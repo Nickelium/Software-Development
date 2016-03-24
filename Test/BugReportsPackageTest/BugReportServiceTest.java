@@ -4,6 +4,12 @@ import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportID;
 import Model.BugReport.BugReportService;
+import Model.BugReport.Search;
+import Model.BugReport.SearchOnAssigned;
+import Model.BugReport.SearchOnDescription;
+import Model.BugReport.SearchOnFiled;
+import Model.BugReport.SearchOnTitle;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -45,62 +51,58 @@ public class BugReportServiceTest extends BugReportInitializaton {
     }
 
     @Test
-    public void getBugReportAssignedToUserTest(){
-        assertEquals(2, bugReportService.getBugReportsAssignedToUser(dev2).size());
-        assertEquals(1, bugReportService.getBugReportsAssignedToUser(dev1).size());
+    public void getBugReportAssignedToUserTest() throws ModelException{
+    	Search a = new SearchOnAssigned(dev1);
+        assertEquals(1, bugReportService.search(a).size());
+        Search b = new SearchOnAssigned(dev2);
+        assertEquals(2, bugReportService.search(b).size());
     }
 
     @Test
-    public void getBugReportsFiledByUserTest(){
-        assertEquals(2, bugReportService.getBugReportsFiledByUser(issuer1).size());
-        assertEquals(1, bugReportService.getBugReportsFiledByUser(issuer2).size());
+    public void getBugReportsFiledByUserTest() throws ModelException{
+    	Search a = new SearchOnFiled(issuer1);
+        assertEquals(2, bugReportService.search(a).size());
+        Search b = new SearchOnFiled(issuer2);
+        assertEquals(1, bugReportService.search(b).size());
     }
 
     @Test
     public void getBugReportsWithTitleContainingTest_Valid() throws ModelException{
-        assertEquals(3, bugReportService.getBugReportsWithTitleContaining("Bug").size());
-        assertEquals(1, bugReportService.getBugReportsWithTitleContaining("Bug1").size());
+    	Search a = new SearchOnTitle("Bug");
+        assertEquals(3, bugReportService.search(a).size());
+        Search b = new SearchOnTitle("Bug1");
+        assertEquals(1, bugReportService.search(b).size());
     }
 
-    @Test(expected = ModelException.class)
-    public void getBugReportswithTitleContainingTest_Invalid_EmptyString() throws ModelException{
-        bugReportService.getBugReportsWithTitleContaining("");
+    @Test (expected = ModelException.class)
+    public void getBugReportswithTitleContainingTest_Invalid_EmptyString() throws ModelException {
+    	Search a = new SearchOnTitle("");
+        bugReportService.search(a);
     }
 
-    @Test(expected = ModelException.class)
-    public void getBugReportswithTitleContainingTest_Invalid_WhiteSpace() throws ModelException{
-        bugReportService.getBugReportsWithTitleContaining(" ");
-    }
-
-    @Test
-    public void getBugReportsWithDescriptionContainingTest_Valid() throws ModelException{
-        assertEquals(3, bugReportService.getBugReportsWithDescriptionContaining("Bug").size());
-        assertEquals(1, bugReportService.getBugReportsWithDescriptionContaining("Des Bug1").size());
-    }
-
-    @Test(expected = ModelException.class)
-    public void getBugReportswithDescriptionContainingTest_Invalid_EmptyString() throws ModelException{
-        bugReportService.getBugReportsWithDescriptionContaining("");
-    }
-
-    @Test(expected = ModelException.class)
-    public void getBugReportswithDescriptionContainingTest_Invalid_WhiteSpace() throws ModelException{
-        bugReportService.getBugReportsWithDescriptionContaining(" ");
+    @Test (expected = ModelException.class)
+    public void getBugReportswithTitleContainingTest_Invalid_WhiteSpace() throws ModelException {
+    	Search a = new SearchOnTitle(" ");
+        bugReportService.search(a);
     }
 
     @Test
-    public void isValidTitleString_Test(){
-        assertEquals(false, bugReportService.isValidTitleString(null));
-        assertEquals(false, bugReportService.isValidTitleString(""));
-        assertEquals(false, bugReportService.isValidTitleString(" "));
-        assertEquals(true, bugReportService.isValidTitleString("Test"));
+    public void getBugReportsWithDescriptionContainingTest_Valid() throws ModelException {
+    	Search a = new SearchOnDescription("Bug");
+        assertEquals(3, bugReportService.search(a).size());
+        Search b = new SearchOnDescription("Des Bug1");
+        assertEquals(1, bugReportService.search(b).size());
     }
 
-    @Test
-    public void isValidDescriptionString_Test(){
-        assertEquals(false, bugReportService.isValidDescription(null));
-        assertEquals(false, bugReportService.isValidDescription(""));
-        assertEquals(false, bugReportService.isValidDescription(" "));
-        assertEquals(true, bugReportService.isValidTitleString("Test"));
+    @Test (expected = ModelException.class)
+    public void getBugReportswithDescriptionContainingTest_Invalid_EmptyString() throws ModelException {
+    	Search a = new SearchOnDescription("");
+        bugReportService.search(a);
+    }
+
+    @Test (expected = ModelException.class)
+    public void getBugReportswithDescriptionContainingTest_Invalid_WhiteSpace() throws ModelException {
+    	Search a = new SearchOnDescription(" ");
+        bugReportService.search(a);
     }
 }
