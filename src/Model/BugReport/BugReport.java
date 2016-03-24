@@ -3,6 +3,7 @@ package Model.BugReport;
 import CustomExceptions.ModelException;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
+import Model.Roles.Role;
 import Model.Tags.Tag;
 import Model.Tags.TagTypes.Assigned;
 import Model.Tags.TagTypes.New;
@@ -311,10 +312,22 @@ public class BugReport {
     @Override
     public String toString()
     {
-    	return "Bugreport ID: " + getId() + "\nTitle: " + getTitle()
+    	String str =
+    			"Bugreport ID: " + getId() + "\nTitle: " + getTitle()
     			+ "\nDescription: " + getDescription()+ "\nCreation date: "
     			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
     			+ getCreator();
+    	
+    	str += "\nAssignees: ";
+    	
+    	for (Developer dev : getAssignees()) 
+			str += dev.toString() + ", ";
+			
+		//remove last comma
+		if(str.length() - 2 > 0) 
+			return str.substring(0, str.length() - 2);
+		else 
+			return str;
     }
 
     //endregion

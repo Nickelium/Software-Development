@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import CustomExceptions.ModelException;
+
 public class SearchOnTitle extends Search
 {
 	private String title;
@@ -14,9 +16,9 @@ public class SearchOnTitle extends Search
 	}
 	
 	@Override
-	protected List<BugReport> apply(BugReportService bugReportService) 
+	protected List<BugReport> apply(BugReportService bugReportService) throws ModelException 
 	{
-		if (!isValidTitleString(title)) return new ArrayList<>();
+		if (!isValidTitleString(title)) throw new ModelException("Invalid title");
 	    List<BugReport> bugreports = getAllBugReportsWrapped(bugReportService).getAllMatching(x -> x.getTitle().contains(title));
 	    return Collections.unmodifiableList(bugreports);
 		

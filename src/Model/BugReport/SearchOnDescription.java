@@ -16,9 +16,9 @@ public class SearchOnDescription extends Search
 	}
 	
 	@Override
-	protected List<BugReport> apply(BugReportService bugReportService) 
+	protected List<BugReport> apply(BugReportService bugReportService) throws ModelException
 	{
-		if (!isValidDescriptionString(description)) return new ArrayList<>();
+		if (!isValidDescriptionString(description)) throw new ModelException("Invalid description");
 	    List<BugReport> bugreports = getAllBugReportsWrapped(bugReportService).getAllMatching(x -> x.getDescription().contains(description));
 	    return Collections.unmodifiableList(bugreports);
 		

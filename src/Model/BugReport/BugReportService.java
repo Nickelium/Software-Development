@@ -162,9 +162,10 @@ public class BugReportService {
      * @param searchMethod The method to search for the bugreport
      * 
      * @return	The list of bugreports searched for
+     * @throws ModelException 
      * 
      */
-    public List<BugReport> search(Search searchMethod) 
+    public List<BugReport> search(Search searchMethod) throws ModelException 
     {
     	return searchMethod.apply(this);
     }

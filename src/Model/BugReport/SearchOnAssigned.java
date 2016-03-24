@@ -3,6 +3,7 @@ package Model.BugReport;
 import java.util.Collections;
 import java.util.List;
 
+import CustomExceptions.ModelException;
 import Model.User.User;
 import Model.Wrapper.IListWrapper;
 
@@ -16,7 +17,7 @@ public class SearchOnAssigned extends Search
 	}
 	
 	@Override
-	protected List<BugReport> apply(BugReportService bugReportService)
+	protected List<BugReport> apply(BugReportService bugReportService) 
 	{
 		IListWrapper<BugReport> bugReportList = getAllBugReportsWrapped(bugReportService);
 
