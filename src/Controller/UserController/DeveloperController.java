@@ -17,6 +17,7 @@ import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,12 +62,12 @@ public class DeveloperController extends IssuerController {
      * 7. The lead developer selects a role.
      * 8. The systems assigns the selected role to the selected developer.
      *
-     * @throws Exception
+     * @throws ModelException
      *          if something goes wrong during execution, give user the
      *          chance of retrying.
      *
      */
-    public void assignToProject() throws Exception {
+    public void assignToProject() throws ModelException {
 
         // Get projects with currentUser as Lead Developer.
         List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
@@ -109,9 +110,16 @@ public class DeveloperController extends IssuerController {
             Class<? extends Role> selectedClass = roles.get(selectedIndex);
 
             // Step 8
-            Role role = selectedClass.getDeclaredConstructor(Developer.class).newInstance(developer);
+            try {
+                Role role = selectedClass.getDeclaredConstructor(Developer.class).newInstance(developer);
+                project.addRole(role);
+            } catch (NoSuchMethodException | InstantiationException |
+                    IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
 
-            project.addRole(role);
+
 
             getUi().display("The new developer has been successfully assigned to a new role in the project.\n");
 
@@ -169,12 +177,12 @@ public class DeveloperController extends IssuerController {
      * 3. The developer suggests a new tag for the bug report.
      * 4. The system gives the selected bug report the new tag.
      *
-     * @throws Exception
+     * @throws ModelException
      *          if something goes wrong during execution, give user the
      *          chance of retrying.
      *
      */
-    public void updateBugReport() throws Exception {
+    public void updateBugReport() throws ModelException {
 
         // Step 2
         getUi().display("Please select the bug report that you want to update: ");
@@ -192,8 +200,12 @@ public class DeveloperController extends IssuerController {
         }
 
         // Step 4
-        Tag newTag = (Tag) tag.newInstance();
-        getTagAssignmentService().assignTag(getCurrentUser(), bugReport, newTag);
+        try {
+            Tag newTag = (Tag) tag.newInstance();
+            getTagAssignmentService().assignTag(getCurrentUser(), bugReport, newTag);
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new ModelException("The tag you have given does not exist");
+        }
 
         getUi().display("The tag has successfully been changed.");
     }
