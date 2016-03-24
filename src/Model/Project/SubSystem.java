@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class represent a subsystem with all it's related attributes.
+ *
+ */
 public class SubSystem 
 {
 
@@ -169,6 +173,18 @@ public class SubSystem
 		if(this.getAllSubSystems().contains(subSystem)) return false;
 		else return true;
 	}
+    
+	/**
+	 * Checker to check if the bugreport is a valid bugreport.
+	 *
+	 * @param bugreport The bugreport to check.
+	 *
+	 * @return True if the bugreport is not already a bugreport of this subsystem or recursively.
+     */
+    private boolean isValidBugReport(BugReport bugReport){
+		if(this.getAllBugReports().contains(bugReport)) return false;
+		else return true;
+	}
 
 	/**
 	 * Operations
@@ -195,10 +211,12 @@ public class SubSystem
      * @param bugReport The bugreport to add.
      *
      * @throws IllegalArgumentException The given bugreport is null.
+     * @throws ModelException The bugreport is not a valid bugreport
      */
-	public void addBugReport(BugReport bugReport)
+	public void addBugReport(BugReport bugReport) throws ModelException
 	{
 		if(bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+		if(!isValidBugReport(bugReport)) throw new ModelException("The bugreport cannot be added!");
 		bugReports.add(bugReport);
 	}
 	

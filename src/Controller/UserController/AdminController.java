@@ -1,7 +1,7 @@
 package Controller.UserController;
 
 import Controller.IUI;
-import Controller.Parser;
+import Controller.Formatter;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
@@ -75,7 +75,7 @@ public class AdminController extends UserController {
 
         // Step 4
         List<User> possibleLeadDevelopers = getUserService().getDevelopers();
-        String parsedPossibleLeadDevelopers = Parser.parseUserList(possibleLeadDevelopers);
+        String parsedPossibleLeadDevelopers = Formatter.formatUserList(possibleLeadDevelopers);
 
         // Step 5
         getUi().display("Choose a lead developer for this project: ");
@@ -113,7 +113,7 @@ public class AdminController extends UserController {
         // Step 1a.1
         getUi().display("Select a project you want to fork: ");
         List<Project> projectList = getProjectService().getAllProjects();
-        String parsedProjectList = Parser.parseProjectList(projectList);
+        String parsedProjectList = Formatter.formatProjectList(projectList);
         getUi().display(parsedProjectList);
 
         // Step 1a.2
@@ -139,7 +139,7 @@ public class AdminController extends UserController {
 
         // Step 1a.5
         List<User> possibleLeadDevelopers = getUserService().getDevelopers();
-        String parsedPossibleLeadDevelopers = Parser.parseUserList(possibleLeadDevelopers);
+        String parsedPossibleLeadDevelopers = Formatter.formatUserList(possibleLeadDevelopers);
         getUi().display("Choose a lead developer for this forked project: ");
         getUi().display(parsedPossibleLeadDevelopers);
         int index2 = getUi().readInt();
@@ -173,7 +173,7 @@ public class AdminController extends UserController {
         // Step 2
         getUi().display("Select a project you want to update: ");
         List<Project> projectList = getProjectService().getAllProjects();
-        String parsedProjectList = Parser.parseProjectList(projectList);
+        String parsedProjectList = Formatter.formatProjectList(projectList);
         getUi().display(parsedProjectList);
 
         // Step 3
@@ -226,7 +226,7 @@ public class AdminController extends UserController {
         // Step 2
         getUi().display("Select a project you want to delete: ");
         List<Project> projectList = getProjectService().getAllProjects();
-        String parsedProjectList = Parser.parseProjectList(projectList);
+        String parsedProjectList = Formatter.formatProjectList(projectList);
         getUi().display(parsedProjectList);
 
         // Step 3
@@ -258,12 +258,12 @@ public class AdminController extends UserController {
         // Step 2
         getUi().display("List of all projects:");
         List<Project> projectList = getProjectService().getAllProjects();
-        String parsedProjectList = Parser.parseProjectList(projectList);
+        String parsedProjectList = Formatter.formatProjectList(projectList);
         getUi().display(parsedProjectList);
 
         getUi().display("List of all subsystems:");
         List<SubSystem> subSystemList = getProjectService().getAllSubSystems();
-        String parsedSubSystemList = Parser.parseSubSystemList(subSystemList);
+        String parsedSubSystemList = Formatter.formatSubSystemList(subSystemList);
         getUi().display(parsedSubSystemList);
 
         // Step 3

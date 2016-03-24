@@ -157,93 +157,17 @@ public class BugReportService {
     }
 
     /**
-     * Getter for retrieving all the BugReports assigned to a specific user.
-     *
-     * @param user The user which is assigned the bugReports
-     *
-     * @return A list of all the bugReports assigned to the specified user.
+     * Method to search for bugreports based on the given search method
+     * 
+     * @param searchMethod The method to search for the bugreport
+     * 
+     * @return	The list of bugreports searched for
+     * @throws ModelException 
+     * 
      */
-    public List<BugReport> getBugReportsAssignedToUser(User user)
+    public List<BugReport> search(Search searchMethod) throws ModelException 
     {
-    	IListWrapper<BugReport> bugReportList = getAllBugReportsWrapped();
-    	
-        List<BugReport> bugReports = bugReportList.getAllMatching(x -> x.getAssignees().contains(user));
-        return Collections.unmodifiableList(bugReports);
-    }
-
-    /**
-     * Getter for retrieving all the BugReports issued by a specific user.
-     *
-     * @param user The user which issued the bugReports
-     *
-     * @return A list of all the bugReports issued by the specified user.
-     */
-    public List<BugReport> getBugReportsFiledByUser(User user){
-    	IListWrapper<BugReport> bugReportList = getAllBugReportsWrapped();
-
-        List<BugReport> bugReports = bugReportList.getAllMatching(x -> x.getCreator().equals(user));
-        return Collections.unmodifiableList(bugReports);
-    }
-
-    /**
-     * Method for requesting the bugreports where the title contains de given string.
-     *
-     * @param title The string the title should contain.
-     *
-     * @return An unmodifiable list of bugreports where the title contains the given string.
-     *
-     * @throws ModelException The given string is not a valid string. It is empty or whitespace.
-     */
-    public List<BugReport> getBugReportsWithTitleContaining(String title) throws ModelException{
-        if (!isValidTitleString(title)) throw new ModelException("The string cannot be empty!");
-
-        List<BugReport> bugreports = getAllBugReportsWrapped().getAllMatching(x -> x.getTitle().contains(title));
-        return Collections.unmodifiableList(bugreports);
-
-    }
-
-    /**
-     * Method for requesting the bugreports where the description contains de given string.
-     *
-     * @param description The string the description should contain.
-     *
-     * @return An unmodifiable list of bugreports where the description contains the given string.
-     *
-     * @throws ModelException The given string is not a valid string. It is empty or whitespace.
-     */
-    public List<BugReport> getBugReportsWithDescriptionContaining(String description) throws ModelException{
-        if (!isValidDescription(description)) throw new ModelException("The string cannot be empty!");
-
-        List<BugReport> bugReports = getAllBugReportsWrapped().getAllMatching(x -> x.getDescription().contains(description));
-        return Collections.unmodifiableList(bugReports);
-    }
-
-    /**
-     * Checker to check if the string for filtering is a valid string.
-     *
-     * @param title The string part to check.
-     *
-     * @return True if the title is not null, empty or whitespace.
-     */
-    public boolean isValidTitleString(String title) {
-        if (title == null) return false;
-        if (title.equals("")) return false;
-        if (title.equals(" ")) return false;
-        return true;
-    }
-
-    /**
-     * Checker to check if the string for filtering is a valid string.
-     *
-     * @param description The string part to check.
-     *
-     * @return True if the description is not null, empty or whitespace.
-     */
-    public boolean isValidDescription(String description){
-        if (description == null) return false;
-        if (description.equals("")) return false;
-        if (description.equals(" ")) return false;
-        return true;
+    	return searchMethod.apply(this);
     }
 
     private IListWrapper<BugReport> getAllBugReportsWrapped()

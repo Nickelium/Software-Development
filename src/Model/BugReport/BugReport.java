@@ -3,6 +3,7 @@ package Model.BugReport;
 import CustomExceptions.ModelException;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
+import Model.Roles.Role;
 import Model.Tags.Tag;
 import Model.Tags.TagTypes.Assigned;
 import Model.Tags.TagTypes.New;
@@ -29,6 +30,12 @@ public class BugReport {
     private List<Developer> assignees;
     private List<Comment> comments;
     private List<BugReport> dependencies;
+    
+    //optional attributes
+    //add milestone
+    private String procedureBug;
+    private String stackTrace;
+    private String errorMessage;
 
     //endregion
 
@@ -65,7 +72,7 @@ public class BugReport {
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
     BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ModelException
-     {
+    {
          if (!isValidTitle(title)) throw new ModelException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ModelException("The description cannot be empty!") ;
          if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
@@ -176,6 +183,36 @@ public class BugReport {
      */
     public List<BugReport> getDependencies(){return Collections.unmodifiableList(this.dependencies);}
 
+    /**
+     * Getter to request procedure bug
+     * 
+     * @return The procedureBug
+     */
+    public String getProcedureBug()
+    {
+    	return procedureBug;
+    }
+    
+    /**
+     * Getter to request the stacktrace
+     * 
+     * @return The stacktrace
+     */
+    public String getStackTrace()
+    {
+    	return stackTrace;
+    }
+    
+    /**
+     * Getter to request error message
+     * 
+     * @return The error message
+     */
+    public String getErrorMessage()
+    {
+    	return errorMessage;
+    }
+    
     //endregion
 
     //region Checkers
@@ -192,7 +229,7 @@ public class BugReport {
         if (title.equals("")) return false;
         else return true;
     }
-
+    
     /**
      * Checker to check if the description of the bugreport is valid.
      *
@@ -201,10 +238,34 @@ public class BugReport {
      * @return True if the description is not null or not empty. False otherwise.
      */
     public boolean isValidDescription(String description){
-        if (description == null) return false;
+        if (description == null)return false;
         if (description.equals("")) return false;
         else return true;
     }
+    /**
+     * Checker to check if the procedure is valid
+     * @param procedureBug
+     * @return
+     */
+    public boolean isValidProcedureBug(String procedureBug){
+        if (procedureBug == null) return false;
+        if (procedureBug.equals("")) return false;
+        else return true;
+    }
+    
+    public boolean isValidStackTrace(String stackTrace){
+        if (stackTrace == null) return false;
+        if (stackTrace.equals("")) return false;
+        else return true;
+    }
+    
+    public boolean isValidErrorMessage(String errorMessage){
+        if (errorMessage == null) return false;
+        if (errorMessage.equals("")) return false;
+        else return true;
+    }
+    
+    
 
     //endregion
 
@@ -223,6 +284,26 @@ public class BugReport {
     }
 
     //endregion
+    
+    //region setters
+    public void setProcedureBug(String procedureBug)
+    {
+    	if(isValidProcedureBug(procedureBug)) 
+    		this.procedureBug = procedureBug;
+   
+    }
+    
+    public void setStackTrace(String stackTrace)
+    {
+    	if(isValidStackTrace(stackTrace)) 
+    		this.stackTrace = stackTrace;
+    }
+    
+    public void setErrorMessage(String errorMessage)
+    {
+    	if(isValidErrorMessage(errorMessage)) 
+    		this.errorMessage = errorMessage;
+    }
 
     //region Functions
 
@@ -311,10 +392,22 @@ public class BugReport {
     @Override
     public String toString()
     {
-    	return "Bugreport ID: " + getId() + "\nTitle: " + getTitle()
+    	String str =
+    			"Bugreport ID: " + getId() + "\nTitle: " + getTitle()
     			+ "\nDescription: " + getDescription()+ "\nCreation date: "
     			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
     			+ getCreator();
+    	
+    	str += "\nAssignees: ";
+    	
+    	for (Developer dev : getAssignees()) 
+			str += dev.toString() + ", ";
+			
+		//remove last comma
+		if(str.length() - 2 > 0) 
+			return str.substring(0, str.length() - 2);
+		else 
+			return str;
     }
 
     //endregion
