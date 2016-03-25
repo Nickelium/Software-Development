@@ -52,9 +52,8 @@ public class DeveloperAssignmentService {
      * @return True if the user has the valid permissions to assign the developer to the bugreport or bugreport has permanent tag..
      *
      * @throws IllegalArgumentException One of the given arguments is null.
-     * @throws ModelException The specified bugreport doesn't have a project it is assigned to. (Normally never thrown because system prevents this)
      */
-    public boolean canUserAssignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ModelException{
+    public boolean canUserAssignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) {
         if (user == null) throw new IllegalArgumentException("User is null");
         if (developer == null) throw new IllegalArgumentException("Developer is null");
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
