@@ -1,15 +1,6 @@
 package Controller;
 
-import Controller.UserController.AdminController;
-import Controller.UserController.DeveloperController;
-import Controller.UserController.IssuerController;
-import Controller.UserController.UserController;
 import CustomExceptions.ModelException;
-import Model.BugReport.BugReportService;
-import Model.BugReport.DeveloperAssignmentService;
-import Model.Project.ProjectService;
-import Model.User.Admin;
-import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
 
@@ -46,8 +37,7 @@ public class LoginController {
 	 * 			the user that will be logged in
 	 * @throws ModelException in case the method encounters invalid input.
      */
-    public User run() throws ModelException
-    {
+	public User login() throws ModelException {
 	        loginMessage();
 			// Step 1
 	        int userType = ui.readInt();

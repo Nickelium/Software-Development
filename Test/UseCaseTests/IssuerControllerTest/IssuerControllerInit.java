@@ -25,6 +25,6 @@ public class IssuerControllerInit extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         loginController = new LoginController(ui,userService);
-        loginController.run();
+        loginController.login();
     }
 }

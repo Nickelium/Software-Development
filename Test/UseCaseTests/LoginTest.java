@@ -25,7 +25,7 @@ public class LoginTest extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         LoginController loginController = new LoginController(ui, userService);
-        loginController.run();
+        loginController.login();
         User currentUser = loginController.getCurrentUser();
         assertTrue(currentUser instanceof Model.User.Admin);
     }
@@ -40,7 +40,7 @@ public class LoginTest extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         LoginController loginController = new LoginController(ui, userService);
-        loginController.run();
+        loginController.login();
         User currentUser = loginController.getCurrentUser();
         assertTrue(currentUser instanceof Model.User.Issuer);
     }
@@ -54,7 +54,7 @@ public class LoginTest extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         LoginController loginController = new LoginController(ui, userService);
-        loginController.run();
+        loginController.login();
         User currentUser = loginController.getCurrentUser();
         assertTrue(currentUser instanceof Model.User.Developer);
     }
@@ -68,7 +68,7 @@ public class LoginTest extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         LoginController loginController = new LoginController(ui, userService);
-        loginController.run();
+        loginController.login();
     }
 
 
@@ -81,7 +81,7 @@ public class LoginTest extends InitializerTest {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
         LoginController loginController = new LoginController(ui, userService);
-        loginController.run();
+        loginController.login();
     }
 
 }

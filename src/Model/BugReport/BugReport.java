@@ -3,7 +3,6 @@ package Model.BugReport;
 import CustomExceptions.ModelException;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Roles.Role;
 import Model.Tags.Tag;
 import Model.Tags.TagTypes.Assigned;
 import Model.Tags.TagTypes.New;
@@ -27,9 +26,10 @@ public class BugReport {
     private TheDate creationDate;
     private Tag tag;
     private Issuer creator;
-    private List<Developer> assignees;
+    List<Developer> assignees;
     private List<Comment> comments;
     private List<BugReport> dependencies;
+    private BugReportState state;
     
     //optional attributes
     //add milestone
@@ -85,7 +85,13 @@ public class BugReport {
          this.description = description;
          this.creator = creator;
          this.creationDate = creationDate;
-         this.tag = tag;
+
+        //TODO: Dirty fix --> find solution
+        if (tag.getClass().equals(New.class)) {
+            this.state = new NewBugReportState();
+        } else {
+            this.state = new AssignedBugReportState();
+        }
 
          //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
          // the tag is changed to an assigned tag.
@@ -365,6 +371,15 @@ public class BugReport {
 
         this.dependencies.add(dependency);
 
+    }
+
+    /**
+     * Method to change the state of the bugreport.
+     *
+     * @param state The state to which to switch te bugreport.
+     */
+    void changeState(BugReportState state) {
+        this.state = state;
     }
 
     /**
