@@ -29,7 +29,7 @@ public class MainController {
         LoginController loginController = new LoginController(ui, initializer.getUserService());
         while (true) {
             try {
-                this.currentUser = loginController.run();
+                this.currentUser = loginController.login();
                 break;
             } catch (ModelException e) {
                 ui.display(e.getMessage());
@@ -48,7 +48,7 @@ public class MainController {
         } else if (currentUser instanceof Developer) {
             userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser, initializer.getDeveloperAssignmentService(), initializer.getTagAssignmentService());
         } else {
-            userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser);
+            userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getTagAssignmentService(), currentUser);
         }
 
         chooseUseCase(userController);

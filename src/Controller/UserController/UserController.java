@@ -1,17 +1,15 @@
 package Controller.UserController;
 
 import Controller.IUI;
-import Controller.Formatter;
+import Controller.UserController.UseCases.UserUseCases.ExitProgram;
+import Controller.UserController.UseCases.UserUseCases.ShowProject;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
-import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Karina on 05.03.2016.
@@ -48,27 +46,13 @@ public abstract class UserController {
         }
     }
 
-    public void callUseCase(int number) throws Exception {
-        try {
-            getUseCases().get(number).getFunction().invoke(this);
-        }catch (IllegalAccessException e){
-            e.printStackTrace();
-        }catch (InvocationTargetException e){
-            if (e.getTargetException() instanceof ModelException) throw new ModelException(e.getTargetException().getMessage());
-            else if (e.getTargetException() instanceof IndexOutOfBoundsException) throw new IndexOutOfBoundsException(e.getTargetException().getMessage());
-            else{
-                throw e;
-            }
-        }
+    public void callUseCase(int number) throws ModelException, IndexOutOfBoundsException {
+        getUseCases().get(number).getUseCase().run();
     }
 
     private void initializeUseCasesUser(){
-        try {
-            useCases.add(new FunctionWrap("Show Project", UserController.class.getMethod("showProject")));
-            useCases.add(new FunctionWrap("Exit Program", UserController.class.getMethod("exitProgram")));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        useCases.add(new FunctionWrap("Show Project", new ShowProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
+        useCases.add(new FunctionWrap("Exit Program", new ExitProgram(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
     }
 
     //endregion
@@ -113,31 +97,6 @@ public abstract class UserController {
 
     public User getCurrentUser(){
         return currentUser;
-    }
-
-    //endregion
-
-    //region use cases methods
-
-    public void showProject() throws ModelException, IndexOutOfBoundsException
-    {
-            // Step 2
-	    	List<Project> projectList = projectService.getAllProjects();
-	    	String parsedProjectList = Formatter.formatProjectList(projectList);
-	    	getUi().display(parsedProjectList);
-
-            // Step 3
-	    	int index = ui.readInt();
-	    	Project project = projectList.get(index);
-
-            // Step 4
-	    	String projectDetails = Formatter.formatDetailedProject(project);
-	    	getUi().display(projectDetails);
-    }
-
-    public void exitProgram(){
-        getUi().display("Bye!");
-        System.exit(1);
     }
 
     //endregion
