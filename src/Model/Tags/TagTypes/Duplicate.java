@@ -40,6 +40,11 @@ public class Duplicate extends Tag {
     }
 
     @Override
+    public boolean isPermanent() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "Duplicate";
     }

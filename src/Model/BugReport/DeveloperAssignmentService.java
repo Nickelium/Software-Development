@@ -39,9 +39,7 @@ public class DeveloperAssignmentService {
      */
     public void assignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ModelException{
         if (!canUserAssignDeveloperToBugReport(user, developer, bugReport)) throw new ModelException("Cannot assign developer to bugreport!");
-        if (!bugReport.getAssignees().contains(developer)) {
-            bugReport.addAssignee(developer);
-        }
+        bugReport.addAssignee(developer);
     }
 
     /**
@@ -51,7 +49,7 @@ public class DeveloperAssignmentService {
      * @param developer The developer to be assigned to the bugreport
      * @param bugReport The bugreport to which to assign the developer
      *
-     * @return True if the user has the valid permissions to assign the developer to the bugreport.
+     * @return True if the user has the valid permissions to assign the developer to the bugreport or bugreport has permanent tag..
      *
      * @throws IllegalArgumentException One of the given arguments is null.
      * @throws ModelException The specified bugreport doesn't have a project it is assigned to. (Normally never thrown because system prevents this)
@@ -60,6 +58,8 @@ public class DeveloperAssignmentService {
         if (user == null) throw new IllegalArgumentException("User is null");
         if (developer == null) throw new IllegalArgumentException("Developer is null");
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+
+        if (bugReport.getTag().isPermanent()) return false;
 
         Project project;
         try {

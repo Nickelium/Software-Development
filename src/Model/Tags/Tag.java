@@ -19,6 +19,8 @@ public abstract class Tag{
         return acceptedTags.contains(tag.getClass());
     }
 
+    public abstract boolean isPermanent();
+
     public abstract boolean equals(Object obj);
 
     public abstract String toString();

@@ -17,6 +17,11 @@ public class NotABug extends Tag {
     }
 
     @Override
+    public boolean isPermanent() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "NotABug";
     }

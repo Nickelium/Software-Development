@@ -17,6 +17,11 @@ public class Closed extends Tag {
     }
 
     @Override
+    public boolean isPermanent() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "Closed";
     }

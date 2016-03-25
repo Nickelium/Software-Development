@@ -17,6 +17,11 @@ public class Resolved extends Tag {
     }
 
     @Override
+    public boolean isPermanent() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "Resolved";
     }
