@@ -3,6 +3,8 @@ package Model.Roles;
 import Model.Tags.TagTypes.UnderReview;
 import Model.User.Developer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -17,7 +19,7 @@ public class Tester extends Role {
      */
     public Tester(Developer developer){
         super(developer);
-        this.assignmentPermission = Permission.assignDevelopersToBugReport;
+        this.assignmentPermission = new ArrayList<>(Arrays.asList(Permission.assignDevelopersToBugReport));
         this.tagPermissions = Collections.singletonList(UnderReview.class);
     }
 

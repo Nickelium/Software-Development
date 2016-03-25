@@ -3,6 +3,7 @@ package Model.Roles;
 import Model.Tags.Tag;
 import Model.User.Developer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
 public abstract class Role {
     private Developer developer;
     private double participation;
-    protected Permission assignmentPermission;
+    protected List<Permission> assignmentPermission;
     protected List<Class<? extends Tag>> tagPermissions;
 
     /**
@@ -21,6 +22,7 @@ public abstract class Role {
      */
     public Role(Developer developer){
         this.developer = developer;
+        this.assignmentPermission = new ArrayList<>();
     }
 
     /**
@@ -66,8 +68,7 @@ public abstract class Role {
 
 
     public boolean hasValidAssignmentPermission(Permission permission){
-        if (assignmentPermission == null) return false;
-        else return (this.assignmentPermission.equals(permission));
+        return assignmentPermission.contains(permission);
     }
 
     /**

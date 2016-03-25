@@ -3,6 +3,7 @@ package Model.Roles;
 import Model.Tags.TagTypes.*;
 import Model.User.Developer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -17,7 +18,7 @@ public class Lead extends Role {
      */
     public Lead(Developer developer){
         super(developer);
-        this.assignmentPermission = Permission.assignDevelopersToBugReport;
+        this.assignmentPermission = new ArrayList<>(Arrays.asList(Permission.assignDevelopersToBugReport));
         this.tagPermissions = Arrays.asList(UnderReview.class, Duplicate.class, NotABug.class, Resolved.class, Closed.class);
     }
 

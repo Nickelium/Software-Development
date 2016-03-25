@@ -16,7 +16,6 @@ public class Programmer extends Role {
      * @param developer The developer assigned the programmer role.
      */
     public Programmer(Developer developer){
-
         super(developer);
         this.tagPermissions = Collections.singletonList(UnderReview.class);
     }
