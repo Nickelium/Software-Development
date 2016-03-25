@@ -1,7 +1,7 @@
 package Controller.UserController;
 
 
-import java.lang.reflect.Method;
+import Controller.UserController.UseCases.UseCase;
 
 /**
  * Created by Karina on 05.03.2016.
@@ -9,11 +9,12 @@ import java.lang.reflect.Method;
 public class FunctionWrap{
 
     private String name;
-    private Method function;
 
-    public FunctionWrap(String name, Method function){
+    private UseCase useCase;
+
+    public FunctionWrap(String name, UseCase useCase) {
         setName(name);
-        setFunction(function);
+        setUseCase(useCase);
     }
 
     public String getName() {
@@ -24,11 +25,12 @@ public class FunctionWrap{
         this.name = name;
     }
 
-    public Method getFunction() {
-        return function;
+    public UseCase getUseCase() {
+        return useCase;
     }
 
-    public void setFunction(Method function) {
-        this.function = function;
+    public void setUseCase(UseCase useCase) {
+        this.useCase = useCase;
     }
+
 }

@@ -1,20 +1,16 @@
-package Controller.UserController;
+package Controller.UserController.UseCases;
 
 import Controller.IUI;
-import Controller.UserController.UseCases.UserUseCases.ExitProgram;
-import Controller.UserController.UseCases.UserUseCases.ShowProject;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
 
-import java.util.ArrayList;
-
 /**
- * Created by Karina on 05.03.2016.
+ * Created by Karina on 24.03.2016.
  */
-public abstract class UserController {
+public abstract class UseCase {
 
     private IUI ui;
     private UserService userService;
@@ -22,40 +18,14 @@ public abstract class UserController {
     private BugReportService bugReportService;
     private User currentUser;
 
-    protected ArrayList<FunctionWrap> useCases = new ArrayList<FunctionWrap>();
 
-    public UserController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
+    public UseCase(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
         setUi(ui);
         setUserService(userService);
         setProjectService(projectService);
         setBugReportService(bugReportService);
         setCurrentUser(currentUser);
-        initializeUseCasesUser();
     }
-
-    //region UseCases
-
-    public ArrayList<FunctionWrap> getUseCases(){
-        return useCases;
-    }
-
-    public void showAllUseCases(){
-        for(int i=0; i<useCases.size(); i++){
-            String show = i + " : " + useCases.get(i).getName();
-            ui.display(show);
-        }
-    }
-
-    public void callUseCase(int number) throws ModelException, IndexOutOfBoundsException {
-        getUseCases().get(number).getUseCase().run();
-    }
-
-    private void initializeUseCasesUser(){
-        useCases.add(new FunctionWrap("Show Project", new ShowProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
-        useCases.add(new FunctionWrap("Exit Program", new ExitProgram(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
-    }
-
-    //endregion
 
     //region Getters & setters
 
@@ -100,5 +70,7 @@ public abstract class UserController {
     }
 
     //endregion
+
+    public abstract void run() throws ModelException,IndexOutOfBoundsException;
 
 }
