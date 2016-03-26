@@ -5,10 +5,8 @@ import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Tags.Tag;
 import Model.User.Developer;
 import Model.User.Issuer;
-import Model.User.User;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 

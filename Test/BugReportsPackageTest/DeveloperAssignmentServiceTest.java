@@ -2,10 +2,10 @@ package BugReportsPackageTest;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
+import Model.BugReport.TagTypes.Assigned;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Tags.TagTypes.Assigned;
 import org.junit.Test;
 
 import java.util.Arrays;

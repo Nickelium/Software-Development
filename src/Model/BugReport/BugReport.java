@@ -1,11 +1,10 @@
 package Model.BugReport;
 
 import CustomExceptions.ModelException;
+import Model.BugReport.TagTypes.Assigned;
+import Model.BugReport.TagTypes.New;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Tags.Tag;
-import Model.Tags.TagTypes.Assigned;
-import Model.Tags.TagTypes.New;
 import Model.User.Developer;
 import Model.User.Issuer;
 
@@ -29,7 +28,6 @@ public class BugReport {
     List<Developer> assignees;
     private List<Comment> comments;
     private List<BugReport> dependencies;
-    private BugReportState state;
     
     //optional attributes
     //add milestone
@@ -85,13 +83,7 @@ public class BugReport {
          this.description = description;
          this.creator = creator;
          this.creationDate = creationDate;
-
-        //TODO: Dirty fix --> find solution
-        if (tag.getClass().equals(New.class)) {
-            this.state = new NewBugReportState();
-        } else {
-            this.state = new AssignedBugReportState();
-        }
+        this.tag = tag;
 
          //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
          // the tag is changed to an assigned tag.
@@ -319,16 +311,13 @@ public class BugReport {
      * @param developer The developer to assign to the bugreport.
      *
      * @throws IllegalArgumentException The given developer is null.
+     * @throws ModelException Assigning the developer caused an error.
      */
 
-    void addAssignee(Developer developer)  {
+    void addAssignee(Developer developer) throws ModelException {
         if (developer == null) throw new IllegalArgumentException("Developer to assign is null");
 
-        this.assignees.add(developer);
-
-        if (this.assignees.size() == 1 && this.getTag().getClass().equals(New.class)){
-            this.setTag(new Assigned());
-        }
+        this.getTag().assignDeveloper(this, developer);
     }
 
     /**
@@ -371,15 +360,6 @@ public class BugReport {
 
         this.dependencies.add(dependency);
 
-    }
-
-    /**
-     * Method to change the state of the bugreport.
-     *
-     * @param state The state to which to switch te bugreport.
-     */
-    void changeState(BugReportState state) {
-        this.state = state;
     }
 
     /**

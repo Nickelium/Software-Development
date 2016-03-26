@@ -3,10 +3,10 @@ package BugReportsPackageTest;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReportID;
 import Model.BugReport.Comment;
+import Model.BugReport.TagTypes.Assigned;
+import Model.BugReport.TagTypes.Closed;
+import Model.BugReport.TagTypes.New;
 import Model.Project.TheDate;
-import Model.Tags.TagTypes.Assigned;
-import Model.Tags.TagTypes.Closed;
-import Model.Tags.TagTypes.New;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

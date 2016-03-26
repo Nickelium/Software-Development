@@ -2,13 +2,13 @@ package BugReportsPackageTest;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.*;
+import Model.BugReport.TagTypes.Assigned;
+import Model.BugReport.TagTypes.Closed;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.Roles.Lead;
-import Model.Tags.TagTypes.Assigned;
-import Model.Tags.TagTypes.Closed;
 import Model.User.Developer;
 import Model.User.Issuer;
 import Model.User.UserService;

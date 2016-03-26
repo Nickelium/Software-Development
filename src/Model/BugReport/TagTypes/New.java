@@ -1,6 +1,9 @@
-package Model.Tags.TagTypes;
+package Model.BugReport.TagTypes;
 
-import Model.Tags.Tag;
+import CustomExceptions.ModelException;
+import Model.BugReport.BugReport;
+import Model.BugReport.Tag;
+import Model.User.Developer;
 
 import java.util.Arrays;
 
@@ -17,8 +20,9 @@ public class New extends Tag {
     }
 
     @Override
-    public boolean isPermanent() {
-        return false;
+    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ModelException {
+        super.assignDeveloper(bugReport, developer);
+        super.changeTag(bugReport, new Assigned());
     }
 
     @Override

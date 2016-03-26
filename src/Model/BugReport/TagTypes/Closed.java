@@ -1,6 +1,9 @@
-package Model.Tags.TagTypes;
+package Model.BugReport.TagTypes;
 
-import Model.Tags.Tag;
+import CustomExceptions.ModelException;
+import Model.BugReport.BugReport;
+import Model.BugReport.Tag;
+import Model.User.Developer;
 
 import java.util.Arrays;
 
@@ -17,8 +20,8 @@ public class Closed extends Tag {
     }
 
     @Override
-    public boolean isPermanent() {
-        return true;
+    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ModelException {
+        throw new ModelException("Tag is closed! Bugreport is permanent and cannot be changed.");
     }
 
     @Override

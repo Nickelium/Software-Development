@@ -4,9 +4,9 @@ import Controller.IUI;
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
+import Model.BugReport.Tag;
 import Model.BugReport.TagAssignmentService;
 import Model.Project.ProjectService;
-import Model.Tags.Tag;
 import Model.User.User;
 import Model.User.UserService;
 

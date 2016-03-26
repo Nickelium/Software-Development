@@ -1,6 +1,6 @@
 package Model.Roles;
 
-import Model.Tags.Tag;
+import Model.BugReport.Tag;
 import Model.User.Developer;
 
 import java.util.ArrayList;

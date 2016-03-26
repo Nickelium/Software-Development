@@ -2,13 +2,13 @@ package BugReportsPackageTest;
 
 import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
+import Model.BugReport.TagTypes.Assigned;
+import Model.BugReport.TagTypes.Closed;
+import Model.BugReport.TagTypes.Resolved;
+import Model.BugReport.TagTypes.UnderReview;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
-import Model.Tags.TagTypes.Assigned;
-import Model.Tags.TagTypes.Closed;
-import Model.Tags.TagTypes.Resolved;
-import Model.Tags.TagTypes.UnderReview;
 import org.junit.Test;
 
 import java.util.Arrays;

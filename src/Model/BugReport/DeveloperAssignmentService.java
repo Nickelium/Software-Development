@@ -58,8 +58,6 @@ public class DeveloperAssignmentService {
         if (developer == null) throw new IllegalArgumentException("Developer is null");
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
 
-        if (bugReport.getTag().isPermanent()) return false;
-
         Project project;
         try {
             project = this.projectService.getProjectsContainingBugReport(bugReport);
@@ -80,7 +78,7 @@ public class DeveloperAssignmentService {
      * @param bugReport The bugreport to which the user wishes to assign developers.
      * @return True if the user has the valid permissions to assign developers to the bugreport.
      * @throws IllegalArgumentException One of the given arguments is null.
-  	 *
+     *
      */
     public boolean canUserAssignDevelopers(User user, BugReport bugReport) {
         if (user == null) throw new IllegalArgumentException("User is null");

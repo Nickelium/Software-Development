@@ -1,6 +1,6 @@
-package Model.Tags.TagTypes;
+package Model.BugReport.TagTypes;
 
-import Model.Tags.Tag;
+import Model.BugReport.Tag;
 
 import java.util.Collections;
 
@@ -14,11 +14,6 @@ public class Resolved extends Tag {
      */
     public Resolved(){
         this.acceptedTags = Collections.singletonList(Closed.class);
-    }
-
-    @Override
-    public boolean isPermanent() {
-        return false;
     }
 
     @Override

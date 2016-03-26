@@ -1,7 +1,9 @@
-package Model.Tags.TagTypes;
+package Model.BugReport.TagTypes;
 
+import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
-import Model.Tags.Tag;
+import Model.BugReport.Tag;
+import Model.User.Developer;
 
 import java.util.Arrays;
 
@@ -40,8 +42,8 @@ public class Duplicate extends Tag {
     }
 
     @Override
-    public boolean isPermanent() {
-        return true;
+    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ModelException {
+        throw new ModelException("Tag is duplicate! Bugreport is permanent and cannot be changed.");
     }
 
     @Override

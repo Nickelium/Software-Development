@@ -1,6 +1,6 @@
 package Model.Roles;
 
-import Model.Tags.TagTypes.UnderReview;
+import Model.BugReport.TagTypes.UnderReview;
 import Model.User.Developer;
 
 import java.util.ArrayList;

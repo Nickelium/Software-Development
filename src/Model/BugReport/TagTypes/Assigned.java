@@ -1,6 +1,6 @@
-package Model.Tags.TagTypes;
+package Model.BugReport.TagTypes;
 
-import Model.Tags.Tag;
+import Model.BugReport.Tag;
 
 import java.util.Arrays;
 
@@ -14,11 +14,6 @@ public class Assigned extends Tag {
      */
     public Assigned(){
         this.acceptedTags = Arrays.asList(UnderReview.class, NotABug.class);
-    }
-
-    @Override
-    public boolean isPermanent() {
-        return false;
     }
 
     @Override
