@@ -1,7 +1,7 @@
 package Model.Project;
 
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.Roles.Lead;
 import Model.User.Developer;
@@ -49,9 +49,9 @@ public class ProjectService
      *
      * @return The newly created project.
      *
-     * @throws ModelException One of the given arguments is not valid.
+     * @throws ReportErrorToUserException One of the given arguments is not valid.
      */
-    public Project createProject(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ModelException {
+    public Project createProject(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ReportErrorToUserException {
         Project project = new Project(name, description, startingDate, budget, leadRole);
         projectList.insert(project);
         return project;
@@ -64,9 +64,9 @@ public class ProjectService
      * 
      * @return The forked project
      * 
-     * @throws ModelException One of attributes of the project could not be forked.
+     * @throws ReportErrorToUserException One of attributes of the project could not be forked.
      */
-    public Project forkProject(Project project) throws ModelException
+    public Project forkProject(Project project) throws ReportErrorToUserException
     {
     	Project forkedProject = project.fork();
     	projectList.insert(forkedProject);
@@ -82,9 +82,9 @@ public class ProjectService
      *
      * @return The newly created subsystem.
      *
-     * @throws ModelException One of the string arguments are wrong.
+     * @throws ReportErrorToUserException One of the string arguments are wrong.
      */
-    public SubSystem createSubsystem(String name, String description, SubSystem subSystem) throws ModelException{
+    public SubSystem createSubsystem(String name, String description, SubSystem subSystem) throws ReportErrorToUserException {
         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
         SubSystem newSubsystem = new SubSystem(name, description);
         subSystem.addSubSystem(newSubsystem);
@@ -101,9 +101,9 @@ public class ProjectService
      *
      * @return The newly created subsystem.
      *
-     * @throws ModelException One of the string arguments are wrong.
+     * @throws ReportErrorToUserException One of the string arguments are wrong.
      */
-    public SubSystem createSubsystem(String name, String description, Project project) throws ModelException{
+    public SubSystem createSubsystem(String name, String description, Project project) throws ReportErrorToUserException {
         if (project == null) throw new IllegalArgumentException("Project is null");
         SubSystem newSubsystem = new SubSystem(name, description);
         project.addSubSystem(newSubsystem);
@@ -142,16 +142,16 @@ public class ProjectService
      *
      * @return The project containing the bugreport.
      *
-     * @throws ModelException There is no project containing the given bugreport.
+     * @throws ReportErrorToUserException There is no project containing the given bugreport.
      */
-    public Project getProjectsContainingBugReport(BugReport bugReport) throws ModelException
+    public Project getProjectsContainingBugReport(BugReport bugReport) throws ReportErrorToUserException
     {
         for(Project project : this.getAllProjects()){
             if (project.getAllBugReports().contains(bugReport)){
                 return project;
             }
         }
-        throw new ModelException("There is no project containing the given bugreport.");
+        throw new ReportErrorToUserException("There is no project containing the given bugreport.");
     }
 
     /**

@@ -2,7 +2,7 @@ package Controller.UserController.UseCases.IssuerUseCases;
 
 import Controller.Formatter;
 import Controller.IUI;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.Comment;
@@ -35,14 +35,14 @@ public class CreateComment extends IssuerUseCase {
      * 7. The system adds the comment to the selected use case.
      *
      *
-     * @throws ModelException
+     * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
      *		   thrown when a user puts an incorrect option index.
      *
      */
     @Override
-    public void run() throws ModelException, IndexOutOfBoundsException {
+    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
         // Step 2
         BugReport bugReport = selectBugReport();
 
@@ -90,7 +90,7 @@ public class CreateComment extends IssuerUseCase {
             Comment newComment = getBugReportService().createComment(text, (Issuer) getCurrentUser(), comm);
             getUi().display("The comment was:\n" + newComment + "\nIt has successfully been created.\n");
         } else {
-            throw new ModelException("This is an invalid input");
+            throw new ReportErrorToUserException("This is an invalid input");
         }
     }
 }

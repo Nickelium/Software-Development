@@ -3,7 +3,7 @@ package Controller.UserController.UseCases.IssuerUseCases;
 import Controller.Formatter;
 import Controller.IUI;
 import Controller.UserController.UseCases.UseCase;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.*;
 import Model.Project.ProjectService;
 import Model.User.User;
@@ -53,13 +53,13 @@ public abstract class IssuerUseCase extends UseCase {
      * 4. The issuer selects a bug report from the ordered list.
      *
      * @return BugReport the bug report that has been selected by the user.
-     * @throws ModelException
+     * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
      *		   thrown when a user puts an incorrect option index.
      *
      */
-    protected BugReport selectBugReport() throws ModelException, IndexOutOfBoundsException {
+    protected BugReport selectBugReport() throws ReportErrorToUserException, IndexOutOfBoundsException {
         int chosenNumber;
         List<BugReport> bugReportList = null;
 
@@ -98,7 +98,7 @@ public abstract class IssuerUseCase extends UseCase {
                 getUi().display(Formatter.formatBugReportList(bugReportList));
 
             } else {
-                throw new ModelException("No bug reports found.");
+                throw new ReportErrorToUserException("No bug reports found.");
             }
 
 
@@ -117,7 +117,7 @@ public abstract class IssuerUseCase extends UseCase {
                 getUi().display("The search result for your query is: ");
                 getUi().display(Formatter.formatBugReportList(bugReportList));
             } else {
-                throw new ModelException("No bug reports found.");
+                throw new ReportErrorToUserException("No bug reports found.");
 
             }
         } else if (methodIndex == 2) {
@@ -134,10 +134,10 @@ public abstract class IssuerUseCase extends UseCase {
                 getUi().display(Formatter.formatBugReportList(bugReportList));
 
             } else {
-                throw new ModelException("No bug reports found.");
+                throw new ReportErrorToUserException("No bug reports found.");
             }
         } else {
-            throw new ModelException("Enter a valid number.");
+            throw new ReportErrorToUserException("Enter a valid number.");
         }
 
         // Step 4
@@ -147,5 +147,5 @@ public abstract class IssuerUseCase extends UseCase {
 
     }
 
-    public abstract void run() throws ModelException,IndexOutOfBoundsException;
+    public abstract void run() throws ReportErrorToUserException,IndexOutOfBoundsException;
 }

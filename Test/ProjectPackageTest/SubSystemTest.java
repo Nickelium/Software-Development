@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import CustomExceptions.ReportErrorToUserException;
 import org.junit.Before;
 import org.junit.Test;
 
-import CustomExceptions.ModelException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
@@ -42,7 +42,7 @@ public class SubSystemTest {
 	private Programmer programmer;
 
 	@Before
-	public void setup() throws ModelException{
+	public void setup() throws ReportErrorToUserException {
 		
 		projectService = new ProjectService();
 		userService = new UserService();
@@ -64,57 +64,57 @@ public class SubSystemTest {
 		this.programmer	 = new Programmer(dev);
 	}
 	
-//	@Test (expected = ModelException.class)
-//	public void setVersionID_FAIL() throws ModelException{
+//	@Test (expected = ReportErrorToUserException.class)
+//	public void setVersionID_FAIL() throws ReportErrorToUserException{
 //		s.setVersionID(-1.0);
 //	}
 //
 //	@Test
-//	public void setVersionID_SUCCES() throws ModelException{
+//	public void setVersionID_SUCCES() throws ReportErrorToUserException{
 //		s.setVersionID(this.versionID);
 //
 //		assertEquals(s.getVersionID(), this.versionID,0.0);
 //	}
 	
-	@Test (expected = ModelException.class)
-	public void setName_FAILNULL() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setName_FAILNULL() throws ReportErrorToUserException {
 		s.setName(null);
 	}
 	
-	@Test (expected = ModelException.class)
-	public void setName_FAILEMPTY() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setName_FAILEMPTY() throws ReportErrorToUserException {
 		s.setName("");
 	}
 	
-	@Test (expected = ModelException.class)
-	public void setDescription_FAILNULL() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setDescription_FAILNULL() throws ReportErrorToUserException {
 		s.setDescription(null);
 	}
 	
-	@Test (expected = ModelException.class)
-	public void setDescription_FAILEMPTY() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setDescription_FAILEMPTY() throws ReportErrorToUserException {
 		s.setDescription("");
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void addSubSystem_FAILNULL() throws ModelException{
+	public void addSubSystem_FAILNULL() throws ReportErrorToUserException {
 		s.addSubSystem(null);
 	}
 	
-	@Test (expected = ModelException.class)
-	public void addSubSystem_FAILSELFDEEP() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void addSubSystem_FAILSELFDEEP() throws ReportErrorToUserException {
 		s.addSubSystem(ss);
 		ss.addSubSystem(sss);
 		s.addSubSystem(sss);
 	}
 	
-	@Test (expected = ModelException.class)
-	public void addSubSystem_FAILSELF() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void addSubSystem_FAILSELF() throws ReportErrorToUserException {
 		s.addSubSystem(s);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void addBugReport_FAIL() throws ModelException{
+	public void addBugReport_FAIL() throws ReportErrorToUserException {
 		s.addBugReport(null);
 	}
 	
@@ -134,7 +134,7 @@ public class SubSystemTest {
 	}
 	
 	@Test 
-	public void getSubSystem_SUCCES() throws ModelException{
+	public void getSubSystem_SUCCES() throws ReportErrorToUserException {
 		s.addSubSystem(ss);
 		s.addSubSystem(sss);
 		List<SubSystem> list = new ArrayList<>();

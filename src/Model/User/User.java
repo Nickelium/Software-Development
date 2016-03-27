@@ -1,6 +1,6 @@
 package Model.User;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 
 
 /**
@@ -24,11 +24,11 @@ public abstract class User {
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      *
-     * @throws ModelException Username is empty.
+     * @throws ReportErrorToUserException Username is empty.
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
-    User(String firstName, String middleName, String lastName, String userName) throws ModelException{
-        if (!isValidUserName(userName)) throw new ModelException("Username is empty");
+    User(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
+        if (!isValidUserName(userName)) throw new ReportErrorToUserException("Username is empty");
         if (firstName == null) throw new IllegalArgumentException("First name is null, use empty string");
         if (middleName == null) throw new IllegalArgumentException("Middle name is null, use empty string");
         if (lastName == null) throw new IllegalArgumentException("Last name is null, use empty string");

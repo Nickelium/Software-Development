@@ -1,7 +1,7 @@
 package UseCaseTests;
 
 import Controller.LoginController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.User.User;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class LoginTest extends InitializerTest {
 
     @Test
-    public void loginAsAdmin() throws ModelException{
+    public void loginAsAdmin() throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "1",
                 "0"
@@ -32,7 +32,7 @@ public class LoginTest extends InitializerTest {
 
 
     @Test
-    public void loginAsIssuer() throws ModelException{
+    public void loginAsIssuer() throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "2",
                 "0"
@@ -46,7 +46,7 @@ public class LoginTest extends InitializerTest {
     }
 
     @Test
-    public void loginAsDeveloper() throws ModelException{
+    public void loginAsDeveloper() throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "3",
                 "0"
@@ -59,8 +59,8 @@ public class LoginTest extends InitializerTest {
         assertTrue(currentUser instanceof Model.User.Developer);
     }
 
-    @Test(expected = ModelException.class)
-    public void loginChoiceFails() throws ModelException{
+    @Test(expected = ReportErrorToUserException.class)
+    public void loginChoiceFails() throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "4",
                 "0"
@@ -72,8 +72,8 @@ public class LoginTest extends InitializerTest {
     }
 
 
-    @Test(expected = ModelException.class)
-    public void userChoiceFails() throws ModelException{
+    @Test(expected = ReportErrorToUserException.class)
+    public void userChoiceFails() throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "1",
                 "5"

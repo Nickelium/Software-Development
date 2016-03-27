@@ -2,7 +2,7 @@ package Controller.UserController.UseCases.DeveloperUseCases;
 
 import Controller.Formatter;
 import Controller.IUI;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
@@ -44,13 +44,13 @@ public class AssignToProject extends DeveloperUseCase {
      * 7. The lead developer selects a role.
      * 8. The systems assigns the selected role to the selected developer.
      *
-     * @throws ModelException
+     * @throws ReportErrorToUserException
      *          if something goes wrong during execution, give user the
      *          chance of retrying.
      *
      */
     @Override
-    public void run() throws ModelException, IndexOutOfBoundsException {
+    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
         // Get projects with currentUser as Lead Developer.
         List<Project> developerProjectList = getProjectService().getProjectsOfLeadRole((Developer) getCurrentUser());
 
@@ -58,7 +58,7 @@ public class AssignToProject extends DeveloperUseCase {
         if (developerProjectList.size() == 0) {
 
             // Step 2a
-            throw new ModelException("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
+            throw new ReportErrorToUserException("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
         } else {
 
             // Step 2

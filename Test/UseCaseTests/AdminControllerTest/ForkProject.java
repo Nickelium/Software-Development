@@ -2,7 +2,7 @@ package UseCaseTests.AdminControllerTest;
 
 import Controller.UserController.AdminController;
 import Controller.UserController.UserController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class ForkProject  extends AdminControllerInit {
     }
 
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfullyForkProject_invalidVersionID() throws Exception{
         String[] simulatedUserInput = {
                 "0",
@@ -49,7 +49,7 @@ public class ForkProject  extends AdminControllerInit {
 
     }
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfullyForkProject_invalidStartingDate() throws Exception{
         String[] simulatedUserInput = {
                 "0",
@@ -67,7 +67,7 @@ public class ForkProject  extends AdminControllerInit {
     }
 
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfullyForkProject_invalidBudget() throws Exception{
         String[] simulatedUserInput = {
                 "0",

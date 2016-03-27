@@ -1,6 +1,6 @@
 package BugReportsPackageTest;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.*;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
@@ -42,7 +42,7 @@ public class BugReportInitializaton {
     protected Comment comment1;
 
     @Before
-    public void initialization() throws ModelException {
+    public void initialization() throws ReportErrorToUserException {
         projectService = new ProjectService();
         bugReportService = new BugReportService(projectService);
         userService = new UserService();

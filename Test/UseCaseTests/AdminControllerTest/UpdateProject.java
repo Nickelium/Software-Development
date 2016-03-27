@@ -2,7 +2,7 @@ package UseCaseTests.AdminControllerTest;
 
 import Controller.UserController.AdminController;
 import Controller.UserController.UserController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
@@ -30,7 +30,7 @@ public class UpdateProject extends AdminControllerInit{
         adminController.callUseCase(4);
     }
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfulUpdatedProject_invalidDate() throws Exception{
         String[] simulatedUserInput = {
                 "0",
@@ -49,7 +49,7 @@ public class UpdateProject extends AdminControllerInit{
     }
 
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfulUpdatedProject_invalidBudget() throws Exception{
         String[] simulatedUserInput = {
                 "0",

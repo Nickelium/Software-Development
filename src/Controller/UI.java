@@ -1,6 +1,6 @@
 package Controller;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 
 import java.util.Scanner;
 
@@ -36,26 +36,26 @@ public class UI implements IUI {
 	}
 	
 	@Override
-	public double readDouble() throws ModelException
+	public double readDouble() throws ReportErrorToUserException
 	{
 		String text = scanner.nextLine();
 		try {
 			return Double.parseDouble(text);
 		} catch (NumberFormatException e) {
-			throw new ModelException("The value should be of type double!");
+			throw new ReportErrorToUserException("The value should be of type double!");
 		}
 
 	}
 	
 	@Override
-	public int readInt() throws ModelException
+	public int readInt() throws ReportErrorToUserException
 	{
 		String text = scanner.nextLine();
 		try {
 			return Integer.parseInt(text);
 
 		} catch (NumberFormatException e) {
-			throw new ModelException("The value should be of type integer!");
+			throw new ReportErrorToUserException("The value should be of type integer!");
 		}
 
 	}

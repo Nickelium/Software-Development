@@ -1,10 +1,9 @@
 package Model.BugReport;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 
 public class SearchOnDescription extends Search
 {
@@ -16,9 +15,9 @@ public class SearchOnDescription extends Search
 	}
 	
 	@Override
-	protected List<BugReport> apply(BugReportService bugReportService) throws ModelException
+	protected List<BugReport> apply(BugReportService bugReportService) throws ReportErrorToUserException
 	{
-		if (!isValidDescriptionString(description)) throw new ModelException("Invalid description");
+		if (!isValidDescriptionString(description)) throw new ReportErrorToUserException("Invalid description");
 	    List<BugReport> bugreports = getAllBugReportsWrapped(bugReportService).getAllMatching(x -> x.getDescription().contains(description));
 	    return Collections.unmodifiableList(bugreports);
 		

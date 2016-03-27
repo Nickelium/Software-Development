@@ -2,7 +2,7 @@ package Controller.UserController.UseCases.DeveloperUseCases;
 
 import Controller.Formatter;
 import Controller.IUI;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
@@ -33,20 +33,20 @@ public class AssignToBugReport extends DeveloperUseCase {
      *    to the selected bug report on top of those already assigned.
      * 5. The systems assigns the selected developers to the selected bug report.
      *
-     * @throws ModelException
+     * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
      *		   thrown when a user puts an incorrect option index.
      *
      */
     @Override
-    public void run() throws ModelException, IndexOutOfBoundsException {
+    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
 
         // Step 2
         getUi().display("Please select the bug report that you want to assign a new developer to: ");
         BugReport bugReport = selectBugReport();
         if (!getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport)) {
-            throw new ModelException("You are not allowed to assign developers to this bugreport.");
+            throw new ReportErrorToUserException("You are not allowed to assign developers to this bugreport.");
         }
 
         // Step 3

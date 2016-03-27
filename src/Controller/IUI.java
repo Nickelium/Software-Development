@@ -1,6 +1,6 @@
 package Controller;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 
 /**
  * Created by Karina on 10.03.2016.
@@ -12,9 +12,9 @@ public interface IUI {
 
     String readMultiline();
 
-    double readDouble() throws ModelException;
+    double readDouble() throws ReportErrorToUserException;
 
-    int readInt() throws ModelException;
+    int readInt() throws ReportErrorToUserException;
 
     void errorDisplay(String str);
 }

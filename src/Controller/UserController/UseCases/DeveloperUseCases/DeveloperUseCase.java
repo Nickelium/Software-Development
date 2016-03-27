@@ -2,7 +2,7 @@ package Controller.UserController.UseCases.DeveloperUseCases;
 
 import Controller.IUI;
 import Controller.UserController.UseCases.IssuerUseCases.IssuerUseCase;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
@@ -22,7 +22,7 @@ public abstract class DeveloperUseCase extends IssuerUseCase {
         setDeveloperAssignmentService(developerAssignmentService);
     }
 
-    public abstract void run() throws ModelException, IndexOutOfBoundsException;
+    public abstract void run() throws ReportErrorToUserException, IndexOutOfBoundsException;
 
     public DeveloperAssignmentService getDeveloperAssignmentService() {
         return developerAssignmentService;

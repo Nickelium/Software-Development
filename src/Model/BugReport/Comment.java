@@ -1,6 +1,6 @@
 package Model.BugReport;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.Project.TheDate;
 import Model.User.Issuer;
 
@@ -30,11 +30,11 @@ public class Comment {
      * @param text The text of the comment.
      * @param issuer The issuer of the comment.
      *
-     * @throws ModelException The text of the comment is empty.
+     * @throws ReportErrorToUserException The text of the comment is empty.
      * @throws IllegalArgumentException The given issuer is null.
      */
-    Comment(String text, Issuer issuer) throws ModelException {
-        if (!isValidText(text)) throw new ModelException("The text of the comment is empty");
+    Comment(String text, Issuer issuer) throws ReportErrorToUserException {
+        if (!isValidText(text)) throw new ReportErrorToUserException("The text of the comment is empty");
         if (issuer == null) throw new IllegalArgumentException("Invalid issuer for comment");
 
         this.text = text;

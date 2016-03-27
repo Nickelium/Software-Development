@@ -1,6 +1,6 @@
 package Model.Project;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.Roles.Lead;
 import Model.Roles.Role;
@@ -43,9 +43,9 @@ public class Project
      * @param budget Budget of this project.
      * @param leadRole The lead developer for this project.
      *
-     * @throws ModelException One of the arguments given is not valid. (See setters of arguments for rules)
+     * @throws ReportErrorToUserException One of the arguments given is not valid. (See setters of arguments for rules)
 	 */
-	Project(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ModelException
+	Project(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ReportErrorToUserException
 	{
 		this.setName(name);
 		this.setDescription(description);
@@ -159,11 +159,11 @@ public class Project
      *
 	 * @param name The name of the project
      *
-     * @throws ModelException The given name is empty.
+     * @throws ReportErrorToUserException The given name is empty.
 	 */
-	public void setName(String name) throws ModelException
+	public void setName(String name) throws ReportErrorToUserException
 	{
-		if(!isValidName(name)) throw new ModelException("The given name is empty.");
+		if(!isValidName(name)) throw new ReportErrorToUserException("The given name is empty.");
 		
 		this.name = name;
 	}
@@ -173,11 +173,11 @@ public class Project
 	 *
      * @param description The description of the project
      *
-     * @throws ModelException The given description is empty.
+     * @throws ReportErrorToUserException The given description is empty.
 	 */
-	public void setDescription(String description) throws ModelException
+	public void setDescription(String description) throws ReportErrorToUserException
 	{
-		if(!isValidDescription(description)) throw new ModelException("The given description is empty.");
+		if(!isValidDescription(description)) throw new ReportErrorToUserException("The given description is empty.");
 		
 		this.description = description;
 	}
@@ -187,13 +187,13 @@ public class Project
      *
      * @param date The starting date of the project.
      *
-     * @throws ModelException The given date is before the creation date.
+     * @throws ReportErrorToUserException The given date is before the creation date.
      * @throws IllegalArgumentException The given date is null.
 	 */
-	public void setStartingDate(TheDate date) throws ModelException
+	public void setStartingDate(TheDate date) throws ReportErrorToUserException
 	{
 		if(date == null) throw new IllegalArgumentException("Date is null");
-		if (!isValidStartingDate(date)) throw new ModelException("The date is before the creation date.");
+		if (!isValidStartingDate(date)) throw new ReportErrorToUserException("The date is before the creation date.");
         this.startingDate = date;
     }
 	
@@ -202,11 +202,11 @@ public class Project
      *
      * @param newBudget The budget of the project.
      *
-     * @throws ModelException The budget is negative.
+     * @throws ReportErrorToUserException The budget is negative.
 	 */
-	public void setBudget(double newBudget) throws ModelException
+	public void setBudget(double newBudget) throws ReportErrorToUserException
 	{
-		if (!isValidBudget(newBudget)) throw new ModelException("The budget cannot be negative.");
+		if (!isValidBudget(newBudget)) throw new ReportErrorToUserException("The budget cannot be negative.");
 
         budget = newBudget;
 	}
@@ -216,11 +216,11 @@ public class Project
      *
      * @param versionID The versionId to set the project to.
      *
-     * @throws ModelException The given versionId is lower than or equal to the current one.
+     * @throws ReportErrorToUserException The given versionId is lower than or equal to the current one.
      */
-	public void setVersionID(double versionID) throws ModelException
+	public void setVersionID(double versionID) throws ReportErrorToUserException
 	{
-        if(!isValidVersionID(versionID)) throw new ModelException("The version cannot be lower than or equal to the previous one!");
+        if(!isValidVersionID(versionID)) throw new ReportErrorToUserException("The version cannot be lower than or equal to the previous one!");
 		this.versionID = versionID;
 	}
 
@@ -368,10 +368,10 @@ public class Project
 	 * 
 	 * @return The forked project.
 	 * 
-	 * @throws ModelException One of attributes of the project could not be forked.
+	 * @throws ReportErrorToUserException One of attributes of the project could not be forked.
 	 */
     //fork != clone
-	public Project fork () throws ModelException
+	public Project fork () throws ReportErrorToUserException
 	{
 		Project forkedProject = new Project(name,description,startingDate.copy(),budget, (Lead)leadRole.copy());
 		

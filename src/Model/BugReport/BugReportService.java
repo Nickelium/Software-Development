@@ -1,6 +1,6 @@
 package Model.BugReport;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -44,10 +44,10 @@ public class BugReportService {
      *
      * @return The newly created bugreport
      *
-     * @throws ModelException the title or description is empty.
+     * @throws ReportErrorToUserException the title or description is empty.
      * @throws IllegalArgumentException the creator or subsystem is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws ModelException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws ReportErrorToUserException
     {
         BugReport bugReport = new BugReport(title, description, subSystem, creator);
         return bugReport;
@@ -68,10 +68,10 @@ public class BugReportService {
      *
      * @return The newly created bugreport
      *
-     * @throws ModelException the given title of description is empty.
+     * @throws ReportErrorToUserException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ModelException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ReportErrorToUserException
     {
         BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag, initialAssignees);
         return bugReport;
@@ -84,9 +84,9 @@ public class BugReportService {
      * @param issuer    The issuer writing the comment.
      * @param bugReport The bugreport on which the issuer commented.
      * @return The newly created comment.
-     * @throws ModelException One of the given arguments are illegal. See constructor of comment for rules.
+     * @throws ReportErrorToUserException One of the given arguments are illegal. See constructor of comment for rules.
      */
-    public Comment createComment(String text, Issuer issuer, BugReport bugReport) throws ModelException {
+    public Comment createComment(String text, Issuer issuer, BugReport bugReport) throws ReportErrorToUserException {
         Comment comment = new Comment(text, issuer);
         bugReport.addComment(comment);
         return comment;
@@ -101,9 +101,9 @@ public class BugReportService {
      *
      * @return The newly created comment.
      *
-     * @throws ModelException One of the given arguments are illegal. See constructor of comment for rules.
+     * @throws ReportErrorToUserException One of the given arguments are illegal. See constructor of comment for rules.
      */
-    public Comment createComment(String text, Issuer issuer, Comment comment) throws ModelException {
+    public Comment createComment(String text, Issuer issuer, Comment comment) throws ReportErrorToUserException {
         Comment newComment = new Comment(text, issuer);
         comment.addComment(newComment);
         return newComment;
@@ -132,14 +132,14 @@ public class BugReportService {
      *
      * @return The BugReport matching the given id.
      *
-     * @throws ModelException
+     * @throws ReportErrorToUserException
      * 			thrown when no bugreport is found.
      */
-    public BugReport getBugReport(BugReportID id) throws ModelException
+    public BugReport getBugReport(BugReportID id) throws ReportErrorToUserException
     {
         BugReport bugreport = getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
 
-        if (bugreport == null) throw new ModelException("There is no bugreport with the given id.");
+        if (bugreport == null) throw new ReportErrorToUserException("There is no bugreport with the given id.");
         return bugreport;
     }
 
@@ -160,10 +160,10 @@ public class BugReportService {
      * @param searchMethod The method to search for the bugreport
      * 
      * @return	The list of bugreports searched for
-     * @throws ModelException 
+     * @throws ReportErrorToUserException
      * 
      */
-    public List<BugReport> search(Search searchMethod) throws ModelException 
+    public List<BugReport> search(Search searchMethod) throws ReportErrorToUserException
     {
     	return searchMethod.apply(this);
     }

@@ -1,6 +1,6 @@
 package BugReportsPackageTest;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
     @Test
-    public void assignTagTest_ValidDeveloperPermission() throws ModelException {
+    public void assignTagTest_ValidDeveloperPermission() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
         project.addRole(tester1);
         project.addRole(programmer2);
@@ -34,8 +34,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         assertEquals(UnderReview.class, bugreport.getTag().getClass());
     }
 
-    @Test(expected = ModelException.class)
-    public void assignTagTest_IllegalDeveloper() throws ModelException {
+    @Test(expected = ReportErrorToUserException.class)
+    public void assignTagTest_IllegalDeveloper() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
         project.addRole(tester1);
         project.addRole(programmer2);
@@ -48,13 +48,13 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         assertEquals(UnderReview.class, bugreport.getTag().getClass());
     }
 
-    @Test(expected = ModelException.class)
-    public void assignTagTest_IllegalDeveloperPermission() throws ModelException {
+    @Test(expected = ReportErrorToUserException.class)
+    public void assignTagTest_IllegalDeveloperPermission() throws ReportErrorToUserException {
         tagAssignmentService.assignTag(dev5, bugReport2, new UnderReview());
     }
 
     @Test
-    public void assignTagTest_ValidCreatorToResolved() throws ModelException {
+    public void assignTagTest_ValidCreatorToResolved() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
         project.addRole(tester1);
         project.addRole(programmer2);
@@ -68,24 +68,24 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         assertEquals(Resolved.class, bugreport.getTag().getClass());
     }
 
-    @Test(expected = ModelException.class)
-    public void assignTagTest_InValidTagSequence() throws ModelException {
+    @Test(expected = ReportErrorToUserException.class)
+    public void assignTagTest_InValidTagSequence() throws ReportErrorToUserException {
         tagAssignmentService.assignTag(issuer2, bugReport2, new Assigned());
     }
 
-    @Test(expected = ModelException.class)
-    public void assignTagTest_InValidIssuerToClosed() throws ModelException {
+    @Test(expected = ReportErrorToUserException.class)
+    public void assignTagTest_InValidIssuerToClosed() throws ReportErrorToUserException {
         tagAssignmentService.assignTag(issuer2, bugReport2, new Closed());
     }
 
     @Test
-    public void assignTagTest_ValidLeadDeveloperResolvedToClosed() throws ModelException {
+    public void assignTagTest_ValidLeadDeveloperResolvedToClosed() throws ReportErrorToUserException {
         tagAssignmentService.assignTag(dev1, bugReport2, new Closed());
         assertEquals(Closed.class, bugReport2.getTag().getClass());
     }
 
     @Test
-    public void assignTagTest_ValidLeadDeveloperUnderReviewToClosed() throws ModelException {
+    public void assignTagTest_ValidLeadDeveloperUnderReviewToClosed() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
         project.addRole(tester1);
         project.addRole(programmer2);

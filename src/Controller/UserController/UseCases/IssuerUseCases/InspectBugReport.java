@@ -2,7 +2,7 @@ package Controller.UserController.UseCases.IssuerUseCases;
 
 import Controller.Formatter;
 import Controller.IUI;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Project.ProjectService;
@@ -26,13 +26,13 @@ public class InspectBugReport extends IssuerUseCase {
      * 3. The system shows a detailed overview of the selected bug report and
      * all its comments
      *
-     * @throws ModelException
+     * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input
      * @throws IndexOutOfBoundsException
      *		   thrown when a user puts an incorrect option index.
      */
     @Override
-    public void run() throws ModelException, IndexOutOfBoundsException {
+    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
 
         // Step 2
         BugReport bugReport = selectBugReport();

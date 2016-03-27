@@ -1,6 +1,6 @@
 package BugReportsPackageTest;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportID;
 import Model.BugReport.BugReportService;
@@ -35,13 +35,13 @@ public class BugReportServiceTest extends BugReportInitializaton {
     }
 
     @Test
-    public void getBugReportTest_Valid() throws ModelException{
+    public void getBugReportTest_Valid() throws ReportErrorToUserException {
         BugReport report = bugReportService.getBugReport(bugReport2.getId());
         assertEquals(bugReport2, report);
     }
 
-    @Test(expected = ModelException.class)
-    public void getBugReportTest_InValid() throws ModelException{
+    @Test(expected = ReportErrorToUserException.class)
+    public void getBugReportTest_InValid() throws ReportErrorToUserException {
         bugReportService.getBugReport(new BugReportID());
     }
 
@@ -51,7 +51,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
     }
 
     @Test
-    public void getBugReportAssignedToUserTest() throws ModelException{
+    public void getBugReportAssignedToUserTest() throws ReportErrorToUserException {
     	Search a = new SearchOnAssigned(dev1);
         assertEquals(1, bugReportService.search(a).size());
         Search b = new SearchOnAssigned(dev2);
@@ -59,7 +59,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
     }
 
     @Test
-    public void getBugReportsFiledByUserTest() throws ModelException{
+    public void getBugReportsFiledByUserTest() throws ReportErrorToUserException {
     	Search a = new SearchOnFiled(issuer1);
         assertEquals(2, bugReportService.search(a).size());
         Search b = new SearchOnFiled(issuer2);
@@ -67,41 +67,41 @@ public class BugReportServiceTest extends BugReportInitializaton {
     }
 
     @Test
-    public void getBugReportsWithTitleContainingTest_Valid() throws ModelException{
+    public void getBugReportsWithTitleContainingTest_Valid() throws ReportErrorToUserException {
     	Search a = new SearchOnTitle("Bug");
         assertEquals(3, bugReportService.search(a).size());
         Search b = new SearchOnTitle("Bug1");
         assertEquals(1, bugReportService.search(b).size());
     }
 
-    @Test (expected = ModelException.class)
-    public void getBugReportswithTitleContainingTest_Invalid_EmptyString() throws ModelException {
+    @Test (expected = ReportErrorToUserException.class)
+    public void getBugReportswithTitleContainingTest_Invalid_EmptyString() throws ReportErrorToUserException {
     	Search a = new SearchOnTitle("");
         bugReportService.search(a);
     }
 
-    @Test (expected = ModelException.class)
-    public void getBugReportswithTitleContainingTest_Invalid_WhiteSpace() throws ModelException {
+    @Test (expected = ReportErrorToUserException.class)
+    public void getBugReportswithTitleContainingTest_Invalid_WhiteSpace() throws ReportErrorToUserException {
     	Search a = new SearchOnTitle(" ");
         bugReportService.search(a);
     }
 
     @Test
-    public void getBugReportsWithDescriptionContainingTest_Valid() throws ModelException {
+    public void getBugReportsWithDescriptionContainingTest_Valid() throws ReportErrorToUserException {
     	Search a = new SearchOnDescription("Bug");
         assertEquals(3, bugReportService.search(a).size());
         Search b = new SearchOnDescription("Des Bug1");
         assertEquals(1, bugReportService.search(b).size());
     }
 
-    @Test (expected = ModelException.class)
-    public void getBugReportswithDescriptionContainingTest_Invalid_EmptyString() throws ModelException {
+    @Test (expected = ReportErrorToUserException.class)
+    public void getBugReportswithDescriptionContainingTest_Invalid_EmptyString() throws ReportErrorToUserException {
     	Search a = new SearchOnDescription("");
         bugReportService.search(a);
     }
 
-    @Test (expected = ModelException.class)
-    public void getBugReportswithDescriptionContainingTest_Invalid_WhiteSpace() throws ModelException {
+    @Test (expected = ReportErrorToUserException.class)
+    public void getBugReportswithDescriptionContainingTest_Invalid_WhiteSpace() throws ReportErrorToUserException {
     	Search a = new SearchOnDescription(" ");
         bugReportService.search(a);
     }

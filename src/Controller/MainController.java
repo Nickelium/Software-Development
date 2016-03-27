@@ -5,7 +5,7 @@ import Controller.UserController.AdminController;
 import Controller.UserController.DeveloperController;
 import Controller.UserController.IssuerController;
 import Controller.UserController.UserController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.User;
@@ -31,7 +31,7 @@ public class MainController {
             try {
                 this.currentUser = loginController.login();
                 break;
-            } catch (ModelException e) {
+            } catch (ReportErrorToUserException e) {
                 ui.display(e.getMessage());
                 ui.display("Enter 1 if you want to retry. Any other key if not.");
                 if (ui.readInt() != 1) {
@@ -74,7 +74,7 @@ public class MainController {
                     else {
                         ui.display("This is not a valid input! Please retry:");
                     }
-                } catch (ModelException e) {
+                } catch (ReportErrorToUserException e) {
                     ui.errorDisplay(e.getMessage());
                     continue;
                 }
@@ -84,7 +84,7 @@ public class MainController {
                     // call function
                     userController.callUseCase(chosenUseCase);
                     break;
-                } catch (ModelException | IndexOutOfBoundsException e) {
+                } catch (ReportErrorToUserException | IndexOutOfBoundsException e) {
                     ui.errorDisplay(e.getMessage());
                     ui.display("Enter 1 if you want to retry.");
                     if (!ui.readString().equals("1")) break;

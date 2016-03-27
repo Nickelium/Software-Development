@@ -1,6 +1,6 @@
 package Model.Project;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 
 import java.util.ArrayList;
@@ -30,9 +30,9 @@ public class SubSystem
 	 * @param name The name of the project
 	 * @param description The description of the project
      *
-     * @throws ModelException The name or description is not valid. (see attribute setters for rules)
+     * @throws ReportErrorToUserException The name or description is not valid. (see attribute setters for rules)
 	 */
-	public SubSystem(String name, String description) throws ModelException
+	public SubSystem(String name, String description) throws ReportErrorToUserException
 	{
 		this.setName(name);
 		this.setDescription(description);
@@ -89,11 +89,11 @@ public class SubSystem
 //     *
 //	 * @param versionID The versionID of the subsystem.
 //     *
-//	 * @throws ModelException The current versionid is greater than or equal to the new one.
+//	 * @throws ReportErrorToUserException The current versionid is greater than or equal to the new one.
 //	 */
-//	private void setVersionID(double versionID) throws ModelException
+//	private void setVersionID(double versionID) throws ReportErrorToUserException
 //	{
-//		if (!isValidVersionID(versionID)) throw new ModelException("The versionId must be higher than the current one.");
+//		if (!isValidVersionID(versionID)) throw new ReportErrorToUserException("The versionId must be higher than the current one.");
 //		this.versionID = versionID;
 //	}
 	
@@ -102,11 +102,11 @@ public class SubSystem
      *
 	 * @param name The name of the subsystem
      *
-	 * @throws ModelException The given name is empty.
+	 * @throws ReportErrorToUserException The given name is empty.
 	 */
-	public void setName(String name) throws ModelException
+	public void setName(String name) throws ReportErrorToUserException
 	{
-		if (!isValidName(name)) throw new ModelException("The give name is empty.");
+		if (!isValidName(name)) throw new ReportErrorToUserException("The give name is empty.");
 	    this.name = name;
 	}
 	
@@ -115,11 +115,11 @@ public class SubSystem
      *
 	 * @param description The description of the subsystem.
      *
-	 * @throws ModelException The given description is empty.
+	 * @throws ReportErrorToUserException The given description is empty.
 	 */
-	public void setDescription(String description) throws ModelException
+	public void setDescription(String description) throws ReportErrorToUserException
 	{
-		if (!isValidDescription(description)) throw new ModelException("The given description is empty.");
+		if (!isValidDescription(description)) throw new ReportErrorToUserException("The given description is empty.");
 		this.description = description;
 	}
 
@@ -196,12 +196,12 @@ public class SubSystem
      * @param subSystem The subsystem to add.
      *
      * @throws IllegalArgumentException The given subsystem is null.
-	 * @throws ModelException The subsystem is not a valid subsystem.
+	 * @throws ReportErrorToUserException The subsystem is not a valid subsystem.
 	 */
-	public void addSubSystem(SubSystem subSystem) throws ModelException
+	public void addSubSystem(SubSystem subSystem) throws ReportErrorToUserException
 	{
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
-		if(!isValidSubsystem(subSystem)) throw new ModelException("The subsystem cannot be added!");
+		if(!isValidSubsystem(subSystem)) throw new ReportErrorToUserException("The subsystem cannot be added!");
 		subSystems.add(subSystem);
 	}
 
@@ -211,12 +211,12 @@ public class SubSystem
      * @param bugReport The bugreport to add.
      *
      * @throws IllegalArgumentException The given bugreport is null.
-     * @throws ModelException The bugreport is not a valid bugreport
+     * @throws ReportErrorToUserException The bugreport is not a valid bugreport
      */
-	public void addBugReport(BugReport bugReport) throws ModelException
+	public void addBugReport(BugReport bugReport) throws ReportErrorToUserException
 	{
 		if(bugReport == null) throw new IllegalArgumentException("Bugreport is null");
-		if(!isValidBugReport(bugReport)) throw new ModelException("The bugreport cannot be added!");
+		if(!isValidBugReport(bugReport)) throw new ReportErrorToUserException("The bugreport cannot be added!");
 		bugReports.add(bugReport);
 	}
 	
@@ -265,10 +265,10 @@ public class SubSystem
 	 * 
 	 * @return The forked subsystem.
 	 * 
-	 * @throws ModelException One of the attributes of the subsystem could not be forked.
+	 * @throws ReportErrorToUserException One of the attributes of the subsystem could not be forked.
 	 */
     //fork != clone
-    public SubSystem fork() throws ModelException
+    public SubSystem fork() throws ReportErrorToUserException
     {
     	SubSystem forkedSubSystem = new SubSystem(name,description);
     	forkedSubSystem.versionID = versionID;

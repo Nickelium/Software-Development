@@ -1,8 +1,7 @@
 package Model.Project;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -21,14 +20,14 @@ public class TheDate
 	 *
 	 * @param stringDate String representation of the date. (dd/MM/yyyy)
 	 *
-	 * @throws ModelException The given string date cannot be parsed to a date.
+	 * @throws ReportErrorToUserException The given string date cannot be parsed to a date.
      */
-	public TheDate(String stringDate) throws ModelException {
+	public TheDate(String stringDate) throws ReportErrorToUserException {
 		try {
 			String[] parts = retrieveParts(stringDate);
 			this.date = LocalDate.of(Integer.parseInt(parts[2]), Integer.parseInt(parts[1]), Integer.parseInt(parts[0]));
 		} catch (Exception e){
-			throw new ModelException("Incorrect date format!");
+			throw new ReportErrorToUserException("Incorrect date format!");
 		}
 	}
 	
@@ -44,9 +43,9 @@ public class TheDate
 	 * @param month The month of the date.
 	 * @param year The year of the date.
 	 *
-	 * @throws ModelException The given attributes are not valid to build a correct date.
+	 * @throws ReportErrorToUserException The given attributes are not valid to build a correct date.
 	 */
-	public TheDate(int day, int month, int year) throws ModelException 
+	public TheDate(int day, int month, int year) throws ReportErrorToUserException
 	{
 		try
 		{
@@ -54,7 +53,7 @@ public class TheDate
 		}
 		catch(Exception e)
 		{
-			throw new ModelException("Incorrect date format!");
+			throw new ReportErrorToUserException("Incorrect date format!");
 		}
 	}
 
@@ -170,7 +169,7 @@ public class TheDate
 	 * 
 	 * @return The copied date
 	 * 
-	 * @throws ModelException The attributes of thedate object are not valid.
+	 * @throws ReportErrorToUserException The attributes of thedate object are not valid.
 	 */
 	public TheDate copy() 
 	{
@@ -178,7 +177,7 @@ public class TheDate
 		{
 			return new TheDate(getDay(),getMonth(),getYear());
 		}
-		catch(ModelException e)
+		catch(ReportErrorToUserException e)
 		{
 			// can never occur
 			throw new AssertionError(e.getMessage() + " copy thedate failed");

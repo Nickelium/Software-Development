@@ -2,7 +2,7 @@ package UseCaseTests.DeveloperControllerTest;
 
 import Controller.IUI;
 import Controller.UserController.DeveloperController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class assignTobugReport extends DeveloperTestInitializer {
         developerController.callUseCase(6);
     }
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfullyAssignedDeveloperToBugReport() throws Exception {
         String[] simulatedUserInput = {
                 "0",

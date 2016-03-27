@@ -1,6 +1,6 @@
 package BugReportsPackageTest;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportID;
 import Model.BugReport.Comment;
 import Model.BugReport.TagTypes.Assigned;
@@ -37,39 +37,39 @@ public class BugReportTest extends BugReportInitializaton {
     }
 
     @Test
-    public void getCreationDateTest() throws ModelException {
+    public void getCreationDateTest() throws ReportErrorToUserException {
         assertEquals(TheDate.TheDateNow(), bugReport2.getCreationDate());
     }
 
     @Test
-    public void getCreatorTest() throws ModelException {
+    public void getCreatorTest() throws ReportErrorToUserException {
         assertEquals(issuer1, bugReport1.getCreator());
         assertFalse(bugReport1.getCreator().equals(issuer2));
     }
 
     @Test
-    public void getTagTest() throws ModelException {
+    public void getTagTest() throws ReportErrorToUserException {
         assertEquals(New.class, bugReport1.getTag().getClass());
         assertEquals(Closed.class, bugReport2.getTag().getClass());
         assertEquals(Assigned.class, bugReport3.getTag().getClass());
     }
 
     @Test
-    public void getAssigneesTest() throws ModelException {
+    public void getAssigneesTest() throws ReportErrorToUserException {
         assertEquals(0, bugReport1.getAssignees().size());
         assertEquals(1, bugReport2.getAssignees().size());
         assertEquals(2, bugReport3.getAssignees().size());
     }
 
     @Test
-    public void getCommentsTest() throws ModelException {
+    public void getCommentsTest() throws ReportErrorToUserException {
         assertEquals(1, bugReport1.getComments().size());
         bugReportService.createComment("TestComment", issuer1, bugReport1);
         assertEquals(2, bugReport1.getComments().size());
     }
 
     @Test
-    public void getAllCommentsTest() throws ModelException {
+    public void getAllCommentsTest() throws ReportErrorToUserException {
         Comment comment = bugReportService.createComment("Test 3 comment", issuer1, bugReport1);
         Comment subComment = bugReportService.createComment("Test 4 comment", issuer2, comment);
         assert bugReport1.getAllComments().contains(subComment);
@@ -77,7 +77,7 @@ public class BugReportTest extends BugReportInitializaton {
     }
 
     @Test
-    public void getDependencies() throws ModelException {
+    public void getDependencies() throws ReportErrorToUserException {
         assertEquals(0, bugReport1.getDependencies().size());
         bugReport1.addDependency(bugReport2);
         assertEquals(1, bugReport1.getDependencies().size());

@@ -2,7 +2,7 @@ package UseCaseTests.IssuerControllerTest;
 
 import Controller.UserController.IssuerController;
 import Controller.UserController.UserController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
@@ -58,7 +58,7 @@ public class InspectBugReport extends IssuerControllerInit{
     }
 
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfulInspectionByString() throws Exception{
         String[] simulatedUserInput = {
                 "0",
@@ -72,7 +72,7 @@ public class InspectBugReport extends IssuerControllerInit{
         issuerController.callUseCase(3);
     }
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfulInspectionByFiledUser() throws Exception{
         String[] simulatedUserInput = {
                 "1",
@@ -86,7 +86,7 @@ public class InspectBugReport extends IssuerControllerInit{
         issuerController.callUseCase(3);
     }
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfulInspectionByAssignedUser() throws Exception{
         String[] simulatedUserInput = {
                 "2",
@@ -101,7 +101,7 @@ public class InspectBugReport extends IssuerControllerInit{
     }
 
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfulInspection_invalidInput() throws Exception{
         String[] simulatedUserInput = {
                 "3"

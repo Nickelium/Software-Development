@@ -1,6 +1,6 @@
 package BugReportsPackageTest;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.TagTypes.Assigned;
 import Model.Project.Project;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class DeveloperAssignmentServiceTest extends AssignmentTestsInitialization {
     @Test
-    public void assignDeveloperToBugReportTest_ValidTester() throws ModelException {
+    public void assignDeveloperToBugReportTest_ValidTester() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
         project.addRole(tester1);
         project.addRole(programmer1);
@@ -33,7 +33,7 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
     }
 
     @Test
-    public void assignDeveloperToBugReportTest_ValidLead() throws ModelException {
+    public void assignDeveloperToBugReportTest_ValidLead() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
         project.addRole(tester1);
         project.addRole(programmer1);
@@ -48,13 +48,13 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
         assertTrue(bugreport.getAssignees().contains(dev5));
     }
 
-    @Test(expected = ModelException.class)
-    public void assignDeveloperToBugReportTest_InValid_Programmer() throws ModelException {
+    @Test(expected = ReportErrorToUserException.class)
+    public void assignDeveloperToBugReportTest_InValid_Programmer() throws ReportErrorToUserException {
         developerAssignmentService.assignDeveloperToBugReport(programmer1.getDeveloper(), dev5, bugReport1);
     }
 
-    @Test(expected = ModelException.class)
-    public void assignDeveloperToBugReportTest_Invalid_NewAssignee() throws ModelException {
+    @Test(expected = ReportErrorToUserException.class)
+    public void assignDeveloperToBugReportTest_Invalid_NewAssignee() throws ReportErrorToUserException {
         developerAssignmentService.assignDeveloperToBugReport(lead1.getDeveloper(), dev7, bugReport1);
     }
 }

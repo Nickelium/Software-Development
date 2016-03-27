@@ -1,6 +1,6 @@
 package Model.BugReport;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Roles.Permission;
@@ -34,11 +34,11 @@ public class DeveloperAssignmentService {
      * @param developer The developer to be assigned to the bugreport
      * @param bugReport The bugreport to which to assign the developer
      *
-     * @throws ModelException Assigning the developer to the specified bug report caused an error.
+     * @throws ReportErrorToUserException Assigning the developer to the specified bug report caused an error.
      * @throws IllegalArgumentException One of the given arguments is null.
      */
-    public void assignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ModelException{
-        if (!canUserAssignDeveloperToBugReport(user, developer, bugReport)) throw new ModelException("Cannot assign developer to bugreport!");
+    public void assignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ReportErrorToUserException {
+        if (!canUserAssignDeveloperToBugReport(user, developer, bugReport)) throw new ReportErrorToUserException("Cannot assign developer to bugreport!");
         bugReport.addAssignee(developer);
     }
 
@@ -66,7 +66,7 @@ public class DeveloperAssignmentService {
                     && projectContainDeveloper(developer, project)) {
                 return true;
             } else return false;
-        } catch (ModelException e) {
+        } catch (ReportErrorToUserException e) {
             return false;
         }
     }
@@ -95,7 +95,7 @@ public class DeveloperAssignmentService {
             else if (role.hasValidAssignmentPermission(Permission.assignDevelopersToBugReport)) {
                 return true;
             } else return false;
-        } catch (ModelException e) {
+        } catch (ReportErrorToUserException e) {
             return false;
         }
     }

@@ -1,7 +1,7 @@
 package UseCaseTests.IssuerControllerTest;
 
 import Controller.LoginController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import UseCaseTests.InitializerTest;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Before;
@@ -17,7 +17,7 @@ public class IssuerControllerInit extends InitializerTest {
     protected LoginController loginController;
 
     @Before
-    public void subInit() throws ModelException {
+    public void subInit() throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "2",
                 "0"

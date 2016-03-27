@@ -3,7 +3,7 @@ package Controller.UserController.UseCases.UserUseCases;
 import Controller.Formatter;
 import Controller.IUI;
 import Controller.UserController.UseCases.UseCase;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
@@ -23,7 +23,7 @@ public class ShowProject extends UseCase {
     }
 
     //TODO documentatie
-    public void run() throws ModelException,IndexOutOfBoundsException{
+    public void run() throws ReportErrorToUserException,IndexOutOfBoundsException{
         // Step 2
         List<Project> projectList = getProjectService().getAllProjects();
         String parsedProjectList = Formatter.formatProjectList(projectList);

@@ -2,7 +2,7 @@ package UseCaseTests.IssuerControllerTest;
 
 import Controller.UserController.IssuerController;
 import Controller.UserController.UserController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
@@ -91,7 +91,7 @@ public class CreateComment extends IssuerControllerInit{
     }
 
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfulCreatedComment_invalidChoice() throws Exception{
         String[] simulatedUserInput = {
                 "0",

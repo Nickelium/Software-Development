@@ -1,6 +1,6 @@
 package BugReportsPackageTest;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
@@ -58,7 +58,7 @@ public class AssignmentTestsInitialization {
 
 
     @Before
-    public void initialization() throws ModelException {
+    public void initialization() throws ReportErrorToUserException {
         projectService = new ProjectService();
         userService = new UserService();
         bugReportService = new BugReportService(projectService);

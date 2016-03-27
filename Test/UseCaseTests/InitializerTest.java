@@ -2,7 +2,7 @@ package UseCaseTests;
 
 import Controller.IInitializer;
 import Controller.Initializer;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
@@ -23,7 +23,7 @@ public class InitializerTest {
     protected TagAssignmentService tagAssignmentService;
 
     @Before
-    public void initialization() throws ModelException {
+    public void initialization() throws ReportErrorToUserException {
         this.initializer = new Initializer();
         this.projectService = initializer.getProjectService();
         this.bugReportService = initializer.getBugReportService();

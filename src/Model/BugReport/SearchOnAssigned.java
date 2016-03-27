@@ -3,7 +3,6 @@ package Model.BugReport;
 import java.util.Collections;
 import java.util.List;
 
-import CustomExceptions.ModelException;
 import Model.User.User;
 import Model.Wrapper.IListWrapper;
 

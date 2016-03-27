@@ -1,6 +1,6 @@
 package Model.BugReport;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Resolved;
 import Model.Project.Project;
@@ -41,11 +41,11 @@ public class TagAssignmentService {
      * @param bugReport The bugreport to which to assign the tag.
      * @param tag The tag to which to switch the bugreport.
      *
-     * @throws ModelException The user doesn't have the permission to assign the tag to the bugreport.
+     * @throws ReportErrorToUserException The user doesn't have the permission to assign the tag to the bugreport.
      * @throws IllegalArgumentException One of the arguments is null.
      */
-    public void assignTag(User user, BugReport bugReport, Tag tag) throws ModelException{
-        if (!canAssignTag(user, bugReport, tag)) throw new ModelException("Not allowed to preform tag change!");
+    public void assignTag(User user, BugReport bugReport, Tag tag) throws ReportErrorToUserException {
+        if (!canAssignTag(user, bugReport, tag)) throw new ReportErrorToUserException("Not allowed to preform tag change!");
 
         bugReport.setTag(tag);
     }
@@ -60,9 +60,9 @@ public class TagAssignmentService {
      * @return True if the user has the permission to assign the tag to the burgreport.
      *
      * @throws IllegalArgumentException One of the given arguments is null.
-     * @throws ModelException One of the arguments doesn't match.
+     * @throws ReportErrorToUserException One of the arguments doesn't match.
      */
-    public boolean canAssignTag(User user, BugReport bugReport, Tag tag) throws ModelException{
+    public boolean canAssignTag(User user, BugReport bugReport, Tag tag) throws ReportErrorToUserException {
         if (user == null) throw new IllegalArgumentException("User is null");
         if (bugReport == null) throw new IllegalArgumentException("BugReport is null");
         if (tag == null) throw new IllegalArgumentException("Tag is null");
@@ -84,7 +84,7 @@ public class TagAssignmentService {
 
             return role.canAssignTag(tag);
         }
-        catch(ModelException e)
+        catch(ReportErrorToUserException e)
         {
         	return false;
         }

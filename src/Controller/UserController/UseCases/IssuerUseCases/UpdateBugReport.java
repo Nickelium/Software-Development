@@ -1,7 +1,7 @@
 package Controller.UserController.UseCases.IssuerUseCases;
 
 import Controller.IUI;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.Tag;
@@ -33,7 +33,7 @@ public class UpdateBugReport extends IssuerUseCase {
      *
      */
     @Override
-    public void run() throws ModelException, IndexOutOfBoundsException {
+    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
         // Step 2
         getUi().display("Please select the bug report that you want to update: ");
         BugReport bugReport = selectBugReport();
@@ -46,7 +46,7 @@ public class UpdateBugReport extends IssuerUseCase {
             tag = Class.forName("Model.Tags.TagTypes." + input);
             if (input == "-1") return;
         } catch (ClassNotFoundException e) {
-            throw new ModelException("The given tag does not exist!");
+            throw new ReportErrorToUserException("The given tag does not exist!");
         }
 
         // Step 4
@@ -54,7 +54,7 @@ public class UpdateBugReport extends IssuerUseCase {
             Tag newTag = (Tag) tag.newInstance();
             getTagAssignmentService().assignTag(getCurrentUser(), bugReport, newTag);
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new ModelException("The tag you have given does not exist");
+            throw new ReportErrorToUserException("The tag you have given does not exist");
         }
 
         getUi().display("The tag has successfully been changed.");

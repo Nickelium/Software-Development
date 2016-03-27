@@ -3,7 +3,7 @@ package Controller.UserController;
 import Controller.IUI;
 import Controller.UserController.UseCases.UserUseCases.ExitProgram;
 import Controller.UserController.UseCases.UserUseCases.ShowProject;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.Project.ProjectService;
 import Model.User.User;
@@ -46,7 +46,7 @@ public abstract class UserController {
         }
     }
 
-    public void callUseCase(int number) throws ModelException, IndexOutOfBoundsException {
+    public void callUseCase(int number) throws ReportErrorToUserException, IndexOutOfBoundsException {
         getUseCases().get(number).getUseCase().run();
     }
 

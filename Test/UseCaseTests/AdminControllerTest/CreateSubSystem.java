@@ -2,7 +2,7 @@ package UseCaseTests.AdminControllerTest;
 
 import Controller.UserController.AdminController;
 import Controller.UserController.UserController;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
@@ -72,7 +72,7 @@ public class CreateSubSystem extends AdminControllerInit {
 
     }
 
-    @Test(expected = ModelException.class)
+    @Test(expected = ReportErrorToUserException.class)
     public void unsuccessfulCreateSubSystem_wrongSelection() throws Exception{
         String[] simulatedUserInput = {
                 "X"

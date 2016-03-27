@@ -1,6 +1,6 @@
 package Model.BugReport.TagTypes;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.Tag;
 import Model.User.Developer;
@@ -20,7 +20,7 @@ public class New extends Tag {
     }
 
     @Override
-    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ModelException {
+    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ReportErrorToUserException {
         super.assignDeveloper(bugReport, developer);
         super.changeTag(bugReport, new Assigned());
     }

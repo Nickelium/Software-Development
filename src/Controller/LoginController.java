@@ -1,6 +1,6 @@
 package Controller;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.User.User;
 import Model.User.UserService;
 
@@ -35,9 +35,9 @@ public class LoginController {
 	 *
 	 * @return 	user
 	 * 			the user that will be logged in
-	 * @throws ModelException in case the method encounters invalid input.
+	 * @throws ReportErrorToUserException in case the method encounters invalid input.
      */
-	public User login() throws ModelException {
+	public User login() throws ReportErrorToUserException {
 	        loginMessage();
 			// Step 1
 	        int userType = ui.readInt();
@@ -57,7 +57,7 @@ public class LoginController {
 	                users = userService.getDevelopers();
 	                break;
 	            default:
-	               throw new ModelException("This in an invalid input");
+	               throw new ReportErrorToUserException("This in an invalid input");
 	        }      
 	
 	        ui.display("Choose an user to log in as:");
@@ -66,7 +66,7 @@ public class LoginController {
 	
 	        // Step 3
 	        int selectedUserIndex = ui.readInt();
-			if(selectedUserIndex >= users.size()) throw new ModelException("This user does not exist!");
+			if(selectedUserIndex >= users.size()) throw new ReportErrorToUserException("This user does not exist!");
 	        User user = users.get(selectedUserIndex);
 	        setCurrentUser(user);
 

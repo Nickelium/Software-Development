@@ -1,4 +1,4 @@
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
@@ -25,7 +25,7 @@ public class ProjectServiceTest {
 	private SubSystem s;
 	
 	@Before
-	public void setup() throws ModelException {
+	public void setup() throws ReportErrorToUserException {
 		projectService = new ProjectService();
 		bugReportService = new BugReportService(projectService);
 		dev = new Developer("Firstname", "Middlename", "Lastname", "Username");
@@ -46,7 +46,7 @@ public class ProjectServiceTest {
 	}
 	
 	@Test
-	public void forkProject_SUCCES() throws ModelException {
+	public void forkProject_SUCCES() throws ReportErrorToUserException {
 		
 		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
 		p2.addSubSystem(s);
@@ -59,7 +59,7 @@ public class ProjectServiceTest {
 	}
 	
 	@Test
-	public void createSubSystem_forProject() throws ModelException {
+	public void createSubSystem_forProject() throws ReportErrorToUserException {
 		
 		SubSystem s = projectService.createSubsystem("A", "A", p1);
 		
@@ -69,13 +69,13 @@ public class ProjectServiceTest {
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void createSubSystem_forProject_FAIL() throws ModelException {
+	public void createSubSystem_forProject_FAIL() throws ReportErrorToUserException {
 		Project p = null;
 		SubSystem s = projectService.createSubsystem("A", "A", p);		
 	}
 	
 	@Test
-	public void createSubSystem_forSubSystem() throws ModelException {
+	public void createSubSystem_forSubSystem() throws ReportErrorToUserException {
 		
 		SubSystem s = projectService.createSubsystem("A", "A", p1);
 		SubSystem ss = projectService.createSubsystem("B", "B", s);
@@ -85,13 +85,13 @@ public class ProjectServiceTest {
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void createSubSystem_forSubSystem_FAIL() throws ModelException {
+	public void createSubSystem_forSubSystem_FAIL() throws ReportErrorToUserException {
 		SubSystem p = null;
 		SubSystem s = projectService.createSubsystem("A", "A", p);		
 	}
 	
 	@Test
-	public void deleteProject() throws ModelException {
+	public void deleteProject() throws ReportErrorToUserException {
 	
 		projectService.deleteProject(p1);
 		projectService.deleteProject(p2);
@@ -101,7 +101,7 @@ public class ProjectServiceTest {
 	}
 	
 	@Test
-	public void getAllSubSystems() throws ModelException {
+	public void getAllSubSystems() throws ReportErrorToUserException {
 	
 		SubSystem s = projectService.createSubsystem("A", "A", p1);
 		SubSystem ss = projectService.createSubsystem("B", "B", s);
@@ -114,7 +114,7 @@ public class ProjectServiceTest {
 	}
 	
 	@Test
-	public void getProjectsOfLeadRole() throws ModelException
+	public void getProjectsOfLeadRole() throws ReportErrorToUserException
 	{
 		p1.setLeadRole(new Lead(dev));
 		p2.setLeadRole(new Lead(dev));
@@ -128,7 +128,7 @@ public class ProjectServiceTest {
 	}
 
 	@Test
-	public void getProjectContainingBugReport_SUCCES() throws ModelException
+	public void getProjectContainingBugReport_SUCCES() throws ReportErrorToUserException
 	{
 		SubSystem s = projectService.createSubsystem("A", "A", p1);
 		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
@@ -136,8 +136,8 @@ public class ProjectServiceTest {
 		assertEquals(projectService.getProjectsContainingBugReport(bug1), p1);
 	}
 	
-	@Test (expected = ModelException.class)
-	public void getProjectContainingBugReport_FAIL() throws ModelException
+	@Test (expected = ReportErrorToUserException.class)
+	public void getProjectContainingBugReport_FAIL() throws ReportErrorToUserException
 	{
 		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
 		projectService.getProjectsContainingBugReport(bug1);

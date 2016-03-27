@@ -1,6 +1,6 @@
 package Model.BugReport.TagTypes;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.Tag;
 import Model.User.Developer;
@@ -42,8 +42,8 @@ public class Duplicate extends Tag {
     }
 
     @Override
-    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ModelException {
-        throw new ModelException("Tag is duplicate! Bugreport is permanent and cannot be changed.");
+    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ReportErrorToUserException {
+        throw new ReportErrorToUserException("Tag is duplicate! Bugreport is permanent and cannot be changed.");
     }
 
     @Override

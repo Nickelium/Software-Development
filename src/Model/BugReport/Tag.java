@@ -1,6 +1,6 @@
 package Model.BugReport;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.User.Developer;
 
 import java.util.List;
@@ -27,9 +27,9 @@ public abstract class Tag{
      *
      * @param bugReport The bugreport to assign the developer to.
      * @param developer The developer to assign
-     * @throws ModelException Assigning a developer is not possible.
+     * @throws ReportErrorToUserException Assigning a developer is not possible.
      */
-    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ModelException {
+    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ReportErrorToUserException {
         bugReport.assignees.add(developer);
     }
 

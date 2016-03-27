@@ -1,6 +1,6 @@
 package Controller;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
@@ -99,7 +99,7 @@ public class Initializer implements IInitializer {
                     new New(),
                     new ArrayList<>());
 
-        } catch (ModelException e) {
+        } catch (ReportErrorToUserException e) {
             //invalid input
             e.printStackTrace();
             System.exit(1);

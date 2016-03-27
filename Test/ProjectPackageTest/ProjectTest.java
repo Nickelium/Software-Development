@@ -1,5 +1,5 @@
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
@@ -40,7 +40,7 @@ public class ProjectTest {
 	private Programmer programmer;
 
 	@Before
-	public void setup() throws ModelException{
+	public void setup() throws ReportErrorToUserException {
 		
 		projectService = new ProjectService();
 		userService = new UserService();
@@ -63,7 +63,7 @@ public class ProjectTest {
 
 
 	@Test
-	public void constructor_SUCCES() throws ModelException{
+	public void constructor_SUCCES() throws ReportErrorToUserException {
 		Project project = projectService.createProject(this.name,this.description, this.startingDate, this.budget, this.lead);
 		assertEquals(project.getName(), this.name);
 		assertEquals(project.getDescription(), this.description);
@@ -73,41 +73,41 @@ public class ProjectTest {
 		assertTrue(project.getSubSystems().isEmpty());
 	}
 
-	@Test (expected = ModelException.class)
-	public void setName_FAILNULL() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setName_FAILNULL() throws ReportErrorToUserException {
 		p.setName(null);
 	}
 	
-	@Test (expected = ModelException.class)
-	public void setName_FAILEMPTY() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setName_FAILEMPTY() throws ReportErrorToUserException {
 		p.setName("");
 	}
 
 	@Test
-	public void setName_SUCCES() throws ModelException{
+	public void setName_SUCCES() throws ReportErrorToUserException {
 		p.setName(this.name);
 
 		assertEquals(p.getName(), this.name);
 	}
 
-	@Test (expected = ModelException.class)
-	public void setDescription_FAILNULL() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setDescription_FAILNULL() throws ReportErrorToUserException {
 		p.setDescription(null);
 	}
 	
-	@Test (expected = ModelException.class)
-	public void setDescription_FAILEMPTY() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setDescription_FAILEMPTY() throws ReportErrorToUserException {
 		p.setDescription("");
 	}
 
 	@Test
-	public void setDescription_SUCCES() throws ModelException{
+	public void setDescription_SUCCES() throws ReportErrorToUserException {
 		p.setDescription(this.description);
 		assertEquals(p.getDescription(), this.description);
 	}
 
 	@Test
-	public void setStartingDate_SUCCES() throws ModelException
+	public void setStartingDate_SUCCES() throws ReportErrorToUserException
 	{
 		p.setStartingDate(new TheDate(this.day, this.month, this.year));
 		assertEquals(p.getStartingDate().getDay(),this.day);
@@ -116,14 +116,14 @@ public class ProjectTest {
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void setStartingDate_FAILNULL() throws ModelException
+	public void setStartingDate_FAILNULL() throws ReportErrorToUserException
 	{
 		p.setStartingDate(null);
 
 	}
 	
-	@Test (expected = ModelException.class)
-	public void setStartingDate_FAILCONDITION() throws ModelException
+	@Test (expected = ReportErrorToUserException.class)
+	public void setStartingDate_FAILCONDITION() throws ReportErrorToUserException
 	{
 		p.setStartingDate(new TheDate("20/10/2010"));
 
@@ -131,30 +131,30 @@ public class ProjectTest {
 
 
 	@Test
-	public void setBudget_SUCCES() throws ModelException{
+	public void setBudget_SUCCES() throws ReportErrorToUserException {
 		p.setBudget(this.budget);
 		assertEquals(p.getBudget(),this.budget,0.0);
 	}
 	
-	@Test (expected = ModelException.class)
-	public void setBudget_FAIL() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setBudget_FAIL() throws ReportErrorToUserException {
 		p.setBudget(-2.0);
 	
 	}
 	
 	@Test
-	public void setVersionID_SUCCES() throws ModelException{
+	public void setVersionID_SUCCES() throws ReportErrorToUserException {
 		p.setVersionID(this.versionID);
 		assertEquals(p.getVersionID(),this.versionID,0.0);
 	}
 
-	@Test (expected = ModelException.class)
-	public void setVersionID_FAIL() throws ModelException{
+	@Test (expected = ReportErrorToUserException.class)
+	public void setVersionID_FAIL() throws ReportErrorToUserException {
 		p.setVersionID(0.2);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void setLeadRole_FAIL() throws ModelException{
+	public void setLeadRole_FAIL() throws ReportErrorToUserException {
 		p.setLeadRole(null);
 		
 	}

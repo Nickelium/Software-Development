@@ -1,6 +1,6 @@
 package Model.BugReport.TagTypes;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.Tag;
 import Model.User.Developer;
@@ -20,8 +20,8 @@ public class Closed extends Tag {
     }
 
     @Override
-    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ModelException {
-        throw new ModelException("Tag is closed! Bugreport is permanent and cannot be changed.");
+    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ReportErrorToUserException {
+        throw new ReportErrorToUserException("Tag is closed! Bugreport is permanent and cannot be changed.");
     }
 
     @Override

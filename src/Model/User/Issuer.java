@@ -1,6 +1,6 @@
 package Model.User;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 
 /**
  * Created by Karina on 19.02.2016.
@@ -15,10 +15,10 @@ public class Issuer extends User {
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      *
-     * @throws ModelException Username is empty.
+     * @throws ReportErrorToUserException Username is empty.
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
-    public Issuer(String firstName, String middleName, String lastName, String userName) throws ModelException{
+    public Issuer(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
         super(firstName,middleName,lastName,userName);
     }
 

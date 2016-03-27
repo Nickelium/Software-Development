@@ -1,6 +1,5 @@
 package Controller;
 
-import CustomExceptions.ModelException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;

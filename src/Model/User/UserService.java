@@ -1,5 +1,5 @@
 package Model.User;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 
@@ -72,10 +72,10 @@ public class UserService {
      *
      * @return The newly created admin.
      *
-     * @throws ModelException The username is not unique or empty.
+     * @throws ReportErrorToUserException The username is not unique or empty.
      */
-    public Admin createAdmin(String firstName, String middleName, String lastName, String userName) throws ModelException {
-        if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
+    public Admin createAdmin(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
+        if (!isValidUserName(userName)) throw new ReportErrorToUserException("The username already exists.");
 
         User user = new Admin(firstName, middleName, lastName, userName);
 
@@ -93,10 +93,10 @@ public class UserService {
      *
      * @return The newly created issuer.
      *
-     * @throws ModelException The username is not unique or empty.
+     * @throws ReportErrorToUserException The username is not unique or empty.
      */
-    public Issuer createIssuer(String firstName, String middleName, String lastName, String userName) throws ModelException {
-        if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
+    public Issuer createIssuer(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
+        if (!isValidUserName(userName)) throw new ReportErrorToUserException("The username already exists.");
 
         User user = new Issuer(firstName, middleName, lastName, userName);
 
@@ -114,10 +114,10 @@ public class UserService {
      *
      * @return The newly created developer.
      *
-     * @throws ModelException The username is not unique or empty.
+     * @throws ReportErrorToUserException The username is not unique or empty.
      */
-    public Developer createDeveloper(String firstName, String middleName, String lastName, String userName) throws ModelException {
-        if (!isValidUserName(userName)) throw new ModelException("The username already exists.");
+    public Developer createDeveloper(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
+        if (!isValidUserName(userName)) throw new ReportErrorToUserException("The username already exists.");
 
         User user = new Developer(firstName, middleName, lastName, userName);
 
@@ -150,12 +150,12 @@ public class UserService {
      *
      * @return The user with the given username or null if the user does not exist.
      *
-     * @throws ModelException There is no user with the given username.
+     * @throws ReportErrorToUserException There is no user with the given username.
      */
-    public User getUser(String userName) throws ModelException{
+    public User getUser(String userName) throws ReportErrorToUserException {
         User user = this.userList.getOne((s)->s.getUserName().equals(userName));
 
-        if (user == null) throw new ModelException("The user does not exist.");
+        if (user == null) throw new ReportErrorToUserException("The user does not exist.");
         return user;
     }
 }

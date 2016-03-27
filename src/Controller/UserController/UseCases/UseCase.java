@@ -1,7 +1,7 @@
 package Controller.UserController.UseCases;
 
 import Controller.IUI;
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.Project.ProjectService;
 import Model.User.User;
@@ -71,6 +71,6 @@ public abstract class UseCase {
 
     //endregion
 
-    public abstract void run() throws ModelException,IndexOutOfBoundsException;
+    public abstract void run() throws ReportErrorToUserException,IndexOutOfBoundsException;
 
 }

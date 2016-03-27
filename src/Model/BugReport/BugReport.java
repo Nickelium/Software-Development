@@ -1,6 +1,6 @@
 package Model.BugReport;
 
-import CustomExceptions.ModelException;
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
 import Model.Project.SubSystem;
@@ -47,10 +47,10 @@ public class BugReport {
      * @param subSystem The subsystem the bugreport is about.
      * @param creator The issuer of the bugreport.
      *
-     * @throws ModelException The title or description is empty.
+     * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem or creator is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator) throws ModelException
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator) throws ReportErrorToUserException
     {
         this(title,description,subSystem, creator, TheDate.TheDateNow(), new New(), new ArrayList<>());
    }
@@ -66,13 +66,13 @@ public class BugReport {
      * @param tag The tag of this bugreport.
      * @param initialAssignies The list of assignees for this bugreport.
      *
-     * @throws ModelException The title or description is empty.
+     * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ModelException
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ReportErrorToUserException
     {
-         if (!isValidTitle(title)) throw new ModelException("The title cannot be empty!");
-         if (!isValidDescription(description)) throw new ModelException("The description cannot be empty!") ;
+         if (!isValidTitle(title)) throw new ReportErrorToUserException("The title cannot be empty!");
+         if (!isValidDescription(description)) throw new ReportErrorToUserException("The description cannot be empty!") ;
          if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
          if (creator == null) throw new IllegalArgumentException("The issuer is null");
          if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
@@ -312,10 +312,10 @@ public class BugReport {
      * @param developer The developer to assign to the bugreport.
      *
      * @throws IllegalArgumentException The given developer is null.
-     * @throws ModelException Assigning the developer caused an error.
+     * @throws ReportErrorToUserException Assigning the developer caused an error.
      */
 
-    void addAssignee(Developer developer) throws ModelException {
+    void addAssignee(Developer developer) throws ReportErrorToUserException {
         if (developer == null) throw new IllegalArgumentException("Developer to assign is null");
 
         this.getTag().assignDeveloper(this, developer);
