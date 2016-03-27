@@ -1,9 +1,10 @@
-package Model.BugReport;
+package Model.BugReport.SearchMethod;
 
 import java.util.Collections;
 import java.util.List;
 
 import CustomExceptions.ReportErrorToUserException;
+import Model.BugReport.*;
 
 public class SearchOnDescription extends Search
 {

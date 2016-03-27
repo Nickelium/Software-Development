@@ -1,8 +1,9 @@
-package Model.BugReport;
+package Model.BugReport.SearchMethod;
 
 import java.util.Collections;
 import java.util.List;
 
+import Model.BugReport.*;
 import Model.User.User;
 import Model.Wrapper.IListWrapper;
 
