@@ -307,6 +307,7 @@ public class BugReport {
 
     /**
      * Function for adding an assignee to the bugreport.
+     * The bugreport is given the "Assigned" tag.
      *
      * @param developer The developer to assign to the bugreport.
      *

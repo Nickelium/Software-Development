@@ -34,7 +34,7 @@ public class DeveloperAssignmentService {
      * @param developer The developer to be assigned to the bugreport
      * @param bugReport The bugreport to which to assign the developer
      *
-     * @throws ModelException The user doesn't have the permission to add the developer.
+     * @throws ModelException Assigning the developer to the specified bug report caused an error.
      * @throws IllegalArgumentException One of the given arguments is null.
      */
     public void assignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ModelException{
