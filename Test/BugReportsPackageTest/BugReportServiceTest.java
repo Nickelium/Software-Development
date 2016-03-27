@@ -5,10 +5,10 @@ import Model.BugReport.BugReport;
 import Model.BugReport.BugReportID;
 import Model.BugReport.BugReportService;
 import Model.BugReport.Search;
-import Model.BugReport.SearchOnAssigned;
-import Model.BugReport.SearchOnDescription;
-import Model.BugReport.SearchOnFiled;
-import Model.BugReport.SearchOnTitle;
+import Model.BugReport.SearchMethod.SearchOnAssigned;
+import Model.BugReport.SearchMethod.SearchOnDescription;
+import Model.BugReport.SearchMethod.SearchOnFiled;
+import Model.BugReport.SearchMethod.SearchOnTitle;
 
 import org.junit.Test;
 
