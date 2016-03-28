@@ -2,6 +2,8 @@ package Model.Milestone;
 
 import CustomExceptions.ReportErrorToUserException;
 
+import java.util.Objects;
+
 import static java.lang.Character.*;
 
 /**
@@ -31,18 +33,13 @@ public class Milestone {
     }
 
     public boolean isValidMilestoneID(String milestoneID){
-        if(milestoneID.substring(0,1) != "M")
+        if(!(Objects.equals(milestoneID.substring(0, 1), "M")))
             return false;
         char[] chars = new char[milestoneID.length()-1];
         milestoneID.getChars(1,milestoneID.length(),chars, 0);
         for(char c : chars){
-            if(isDigit(c) || c == '.'){
-                // OK
-            }
-            else {
-                // Invalid character in milestoneID!
+            if(!(isDigit(c) || c == '.'))
                 return false;
-            }
         }
 
         // Volledige string is OK!
