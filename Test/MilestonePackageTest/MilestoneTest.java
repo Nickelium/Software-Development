@@ -10,39 +10,33 @@ import static org.junit.Assert.*;
  */
 public class MilestoneTest {
 
-    protected Milestone milestoneNoID;
-    protected Milestone milestoneValidID;
-    protected Milestone milestoneInvalidID1;
-    protected Milestone milestoneInvalidID2;
-
     @Before
-    public void initialization() throws ReportErrorToUserException {
+    public void initialization(){
 
-        Milestone milestoneNoID = new Milestone();
-        Milestone milestoneValidID = new Milestone("M0.5.6");
-        Milestone milestoneInvalidID1 = new Milestone("X0.5.6");
-        Milestone milestoneInvalidID2 = new Milestone("M0.5.6/4");
+        // Niets
 
     }
 
     @Test
     public void isValidIDTest1(){
+        Milestone milestoneNoID = new Milestone();
         assertTrue(milestoneNoID.isValidMilestoneID(milestoneNoID.getMilestoneID()));
     }
 
     @Test
-    public void isValidIDTest2(){
+    public void isValidIDTest2() throws ReportErrorToUserException {
+        Milestone milestoneValidID = new Milestone("M0.5.6");
         assertTrue(milestoneValidID.isValidMilestoneID(milestoneValidID.getMilestoneID()));
     }
 
-    @Test
-    public void isValidIDTest3(){
-        assertFalse(milestoneInvalidID1.isValidMilestoneID(milestoneInvalidID1.getMilestoneID()));
+    @Test (expected = ReportErrorToUserException.class)
+    public void isValidIDTest3() throws ReportErrorToUserException {
+        Milestone milestoneInvalidID1 = new Milestone("X0.5.6");
     }
 
-    @Test
-    public void isValidIDTest4(){
-        assertFalse(milestoneInvalidID2.isValidMilestoneID(milestoneInvalidID2.getMilestoneID()));
+    @Test (expected = ReportErrorToUserException.class)
+    public void isValidIDTest4() throws ReportErrorToUserException {
+        Milestone milestoneInvalidID2 = new Milestone("M0.5.6/4");
     }
 
 }
