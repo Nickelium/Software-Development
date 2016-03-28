@@ -1,0 +1,27 @@
+Wat veranderd van mijn gedeelte?
+1) Regel 24-25 :: DONE
+2) Regel 43-44 :: DONE
+3) Regel 53-55 :: DONE
+4) SearchMethods/Strategy pattern ::
+	Bugreportservice bevat niet meer verschillende methodes om bugreports op te zoeken maar heeft een methode "search" dat een interface ISearch mee krijgt als argument.
+	Ipv. Bugreportservice :: public List<BugReport> searchOnTitle() ; Bugreportservice :: public List<BugReport> searchOnFiledUser() ; ...
+	=>	 Bugreportservice :: public List<BugReport> search(ISearch search) { return search.apply(this); }
+			Met verschillende klassen dat ISearch implementeert (SearchOnTitle implements ISearch, SearchOnFiled implements ISearch, ...)
+		 Er wordt dus steeds de juiste strategie meegegeven aan bugreportservice en die geeft dan naargelang de strategie de lijst van bugreports
+		 Elke strategie wordt aangemaakt in de controller/usecases naargelang de keuze van de gebruiker. Deze aanpak zorgt niet voor meer koppeling omdat 
+		 er al koppeling is vanuit de controller/usecases met de juiste bugreport zoekmethodes. Een strategie kan anderszijds niet uitgevoerd worden zonder de tussenkomst
+		 van bugreportservice, ze zijn protected. Dit verhindert dat de strategie wordt apllied vanuit controller/usecases omdat dit de taak is van bugreportservice 
+		 en dus om cohesie hoog te houden moet bugreportservice deze strategie dan ook effectief toepassen en niet vanuit controller/usecases.
+5) Mailbox/Notifications/Observer ::
+	Een mailbox behoort tot een issuer. Mailbox is een observer van een tag verandering in een specificieke bugreport, een comment verandering in een specificieke bugreport. 
+	Dus moet mailbox zowel ObserverTag als ObserverComment implementeren die beiden erven van Observer interface. Maar Java laat dit niet toe, dus heb ik dit opgelost met innerclass.
+	ObserverTag, ObserverComment ... zijn de innerclasses van mailbox. Deze oplossing zorgt voor een nogal hoge koppeling tussen mailbox en de verschillende observers. 
+	Als er een nieuwe observer bijkomt, moet deze dan ook toegevoegd worden IN de mailbox class. Is deze koppeling aanvaarbaar ? Indien niet, hoe kunnen we koppeling verlagen rekening houdend met Java Constraints ?
+	
+	Een bugreport bevat comments, elke comment kan eventueel ook nog comments bevatten. Bij een toevoeging van een comment c2 aan comment c1 die uiteindelijk behoort bij een bepaalde bugreport,
+	moet de corresponderende bugreport ook verwittigd worden. Dus lijkt mij voor de hand liggend dat comment zowel een observer is van zijn children comments als een subject voor zijn comment observer of bugreport observer. 
+	Dit zorgt wel voor meer koppeling omdat comments al een verwijzing hebben naar hun children comments, maar nu moet de children comments ook een verwijzing hebben naar hun observers (omwille van notifyObservers).
+	Dit geldt ook voor subsystem/bugreport en zorgt uiteindelijk op meerdere plekken een bidirectionele binding ipv oorspronkelijk unidirectioneel. Is deze verhoogde koppeling aanvaarbaar  ? Indien niet, hoe kunnen we 
+	de koppeling verlagen ? Is trouwens de Observer pattern hier de gepaste pattern omdat deze de koppeling nogal verhoogd ?
+	
+	(zie bijlage voor code ivm met bovenstaande punt // vereenvoudigde versie)
