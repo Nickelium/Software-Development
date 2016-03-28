@@ -16,12 +16,16 @@ Wat veranderd van mijn gedeelte?
 	Een mailbox behoort tot een issuer. Mailbox is een observer van een tag verandering in een specificieke bugreport, een comment verandering in een specificieke bugreport. 
 	Dus moet mailbox zowel ObserverTag als ObserverComment implementeren die beiden erven van Observer interface. Maar Java laat dit niet toe, dus heb ik dit opgelost met innerclass.
 	ObserverTag, ObserverComment ... zijn de innerclasses van mailbox. Deze oplossing zorgt voor een nogal hoge koppeling tussen mailbox en de verschillende observers. 
-	Als er een nieuwe observer bijkomt, moet deze dan ook toegevoegd worden IN de mailbox class. Is deze koppeling aanvaarbaar ? Indien niet, hoe kunnen we koppeling verlagen rekening houdend met Java Constraints ?
+	Als er een nieuwe observer bijkomt, moet deze dan ook toegevoegd worden in de mailbox class. Is deze koppeling aanvaarbaar ? Indien niet, hoe kunnen we koppeling verlagen rekening houdend met Java Constraints ?
 	
 	Een bugreport bevat comments, elke comment kan eventueel ook nog comments bevatten. Bij een toevoeging van een comment c2 aan comment c1 die uiteindelijk behoort bij een bepaalde bugreport,
 	moet de corresponderende bugreport ook verwittigd worden. Dus lijkt mij voor de hand liggend dat comment zowel een observer is van zijn children comments als een subject voor zijn comment observer of bugreport observer. 
+	Hetzelfde idee wordt ook gebruikt voor subsystem en project :: ze zijn beide zowel subject als observer. Bij een verandering van comment/tag worden de bovenstaande observers verwittigd door de hele hiërarchie terug te doorlopen
+	Uiteindelijk wordt de notify ontvangen in observerTag/observerMail die dan respectievelijk een mail van de juiste type aanmaken in de mailbox.
 	Dit zorgt wel voor meer koppeling omdat comments al een verwijzing hebben naar hun children comments, maar nu moet de children comments ook een verwijzing hebben naar hun observers (omwille van notifyObservers).
 	Dit geldt ook voor subsystem/bugreport en zorgt uiteindelijk op meerdere plekken een bidirectionele binding ipv oorspronkelijk unidirectioneel. Is deze verhoogde koppeling aanvaarbaar  ? Indien niet, hoe kunnen we 
 	de koppeling verlagen ? Is trouwens de Observer pattern hier de gepaste pattern omdat deze de koppeling nogal verhoogd ?
 	
-	(zie bijlage voor code ivm met bovenstaande punt // vereenvoudigde versie)
+	Dit heeft wel het voordeel dat bij toevoeging van nieuwe type observers in de mailbox, de hiërarchie eronder (project/subsystem/bugreport/comment) ongewijzigd blijven.
+	
+	(zie bijlage voor high level code, Class diagram en sequence diagram)
