@@ -298,7 +298,7 @@ public class SubSystem extends Subject implements Observer<BugReport>
 
 	@Override
 	public void update(Subject s, Object aspect) {
-		// TODO Auto-generated method stub
+		notifyObservers(aspect);
 		
 	}
 }

@@ -8,7 +8,7 @@ import Model.Tags.Tag;
 
 public class Mailbox 
 {
-	List<Mail> mails = new ArrayList<>();
+	List<Notification> notifications = new ArrayList<>();
 	Mailbox() {}
 	
 	public void registerComment(Subject s)
@@ -38,7 +38,7 @@ public class Mailbox
 		public void update(Subject s, Object aspect) 
 		{
 			if(aspect instanceof Tag)
-				mails.add(new Mail("TAG MAIL"));
+				notifications.add(new Notification("TAG MAIL"));
 			
 		}
 		
@@ -57,7 +57,7 @@ public class Mailbox
 		public void update(Subject s, Object aspect) 
 		{
 			if(tag.getClass().isInstance(aspect))
-				mails.add(new Mail("TAG SPECIFIC MAIL"));
+				notifications.add(new Notification("TAG SPECIFIC MAIL"));
 			
 		}
 		
@@ -70,7 +70,7 @@ public class Mailbox
 		public void update(Subject s, Object aspect)
 		{
 			if(aspect instanceof Comment)
-				mails.add(new Mail("COMMENT MAIL"));
+				notifications.add(new Notification("COMMENT MAIL"));
 			
 		}
 		

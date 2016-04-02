@@ -1,11 +1,11 @@
 package Model.Mail;
 
 
-public class Mail 
+public class Notification 
 {
 	String content;
 	
-	public Mail(String str)
+	public Notification(String str)
 	{
 		content = str;
 		System.out.println(content);

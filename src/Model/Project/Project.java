@@ -16,7 +16,7 @@ import java.util.List;
  *	This class represents a project with all its related attributes.
  *
  */
-public class Project extends Subject implements Observer<Comment>
+public class Project extends Subject implements Observer<SubSystem>
 {
 
 	private String name;
@@ -414,7 +414,7 @@ public class Project extends Subject implements Observer<Comment>
 
 	@Override
 	public void update(Subject s, Object aspect) {
-		// TODO Auto-generated method stub
+		notifyObservers(aspect);
 		
 	}
 
