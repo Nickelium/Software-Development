@@ -2,6 +2,9 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.BugReport.Comment;
+import Model.Mail.Observer;
+import Model.Mail.Subject;
 import Model.Roles.Lead;
 import Model.Roles.Role;
 
@@ -13,7 +16,7 @@ import java.util.List;
  *	This class represents a project with all its related attributes.
  *
  */
-public class Project
+public class Project extends Subject implements Observer<Comment>
 {
 
 	private String name;
@@ -407,6 +410,12 @@ public class Project
 
 		return string;
 
+	}
+
+	@Override
+	public void update(Subject s, Object aspect) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

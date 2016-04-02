@@ -2,6 +2,9 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.BugReport.Comment;
+import Model.Mail.Observer;
+import Model.Mail.Subject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +14,7 @@ import java.util.List;
  * This class represent a subsystem with all it's related attributes.
  *
  */
-public class SubSystem 
+public class SubSystem extends Subject implements Observer<BugReport>
 {
 
 	private String name;
@@ -292,4 +295,10 @@ public class SubSystem
     	return "Subsystem name: " + getName() + "\nDescription: " + getDescription() 
     			+ "\nVersionID: " + getVersionID(); 
     }
+
+	@Override
+	public void update(Subject s, Object aspect) {
+		// TODO Auto-generated method stub
+		
+	}
 }

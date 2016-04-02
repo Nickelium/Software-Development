@@ -1,6 +1,7 @@
 package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
+
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
 import Model.Project.SubSystem;
@@ -12,10 +13,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import Model.Mail.*;
+
 /**
  * Created by Tom on 19/02/16.
  */
-public class BugReport {
+public class BugReport extends Subject implements Observer<Comment>{
 
     //region Attributes
 
@@ -279,6 +282,7 @@ public class BugReport {
     void setTag(Tag tag){
         if (tag == null) throw new IllegalArgumentException("Tag is null");
         this.tag = tag;
+        notifyObservers(tag);
     }
 
     //endregion
@@ -332,6 +336,8 @@ public class BugReport {
         if (comment == null) throw new IllegalArgumentException("Comment is null");
 
         this.comments.add(comment);
+        comment.addObserver(this);
+		notifyObservers(comment);
     }
     
     /**
@@ -405,6 +411,12 @@ public class BugReport {
 		else 
 			return str;
     }
+
+	@Override
+	public void update(Model.Mail.Subject s, Object aspect) {
+		if(aspect instanceof Comment)
+			notifyObservers(aspect);
+	}
 
     //endregion
 

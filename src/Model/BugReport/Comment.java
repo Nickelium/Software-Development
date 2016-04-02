@@ -1,6 +1,7 @@
 package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
+
 import Model.Project.TheDate;
 import Model.User.Issuer;
 
@@ -8,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import Model.Mail.*;
+
 /**
  * Created by Tom on 19/02/16.
  */
-public class Comment {
+public class Comment extends Subject implements Observer<Comment>{
 
     //region Attributes
 
@@ -110,6 +113,8 @@ public class Comment {
         if (comment == null) throw new IllegalArgumentException("Comment is null");
 
         this.comments.add(comment);
+        comment.addObserver(this);
+		notifyObservers(comment);
     }
 
     //endregion
@@ -143,6 +148,13 @@ public class Comment {
         return "Comment text: \n" + getText() + "\nIssuer: " + getIssuer()
                 + "\nCreation date: " + getCreationDate();
     }
+
+	@Override
+	public void update(Subject s, Object aspect)
+	{
+		if(aspect instanceof Comment)
+			notifyObservers(aspect);
+	}
 
     //endregion
 }
