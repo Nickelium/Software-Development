@@ -413,9 +413,8 @@ public class BugReport extends Subject implements Observer<Comment>{
     }
 
 	@Override
-	public void update(Model.Mail.Subject s, Object aspect) {
-		if(aspect instanceof Comment)
-			notifyObservers(aspect);
+	public void update(Subject s, Object aspect) {
+		notifyObservers(aspect);
 	}
 
     //endregion

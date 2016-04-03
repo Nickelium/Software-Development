@@ -152,8 +152,7 @@ public class Comment extends Subject implements Observer<Comment>{
 	@Override
 	public void update(Subject s, Object aspect)
 	{
-		if(aspect instanceof Comment)
-			notifyObservers(aspect);
+		notifyObservers(aspect);
 	}
 
     //endregion

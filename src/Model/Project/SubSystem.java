@@ -206,6 +206,7 @@ public class SubSystem extends Subject implements Observer<BugReport>
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
 		if(!isValidSubsystem(subSystem)) throw new ReportErrorToUserException("The subsystem cannot be added!");
 		subSystems.add(subSystem);
+		subSystem.addObserver(this);
 	}
 
     /**
@@ -221,6 +222,9 @@ public class SubSystem extends Subject implements Observer<BugReport>
 		if(bugReport == null) throw new IllegalArgumentException("Bugreport is null");
 		if(!isValidBugReport(bugReport)) throw new ReportErrorToUserException("The bugreport cannot be added!");
 		bugReports.add(bugReport);
+		
+		bugReport.addObserver(this);
+		notifyObservers(bugReport);
 	}
 	
 	/**

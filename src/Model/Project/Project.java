@@ -320,6 +320,7 @@ public class Project extends Subject implements Observer<SubSystem>
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
 		
 		subSystems.add(subSystem);
+		subSystem.addObserver(this);
 	}
 
     /**
@@ -417,5 +418,6 @@ public class Project extends Subject implements Observer<SubSystem>
 		notifyObservers(aspect);
 		
 	}
+
 
 }

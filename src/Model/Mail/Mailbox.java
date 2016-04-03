@@ -1,78 +1,127 @@
 package Model.Mail;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
 import Model.Tags.Tag;
 
 public class Mailbox 
 {
-	List<Notification> notifications = new ArrayList<>();
+	private List<Notification> notifications = new ArrayList<>();
+	
+	private List<ObserverAspect> registrations = new ArrayList<>();
+	
 	Mailbox() {}
+	
+	public List<Notification> getNotifications()
+	{
+		return Collections.unmodifiableList(this.notifications);
+	}
+	
+	public List<ObserverAspect> getRegistrations()
+	{
+		return Collections.unmodifiableList(this.registrations);
+	}
+	
+	public void registerBugReport(Subject s)
+	{
+		ObserverBugReport ObBug = new ObserverBugReport(s);
+		registrations.add(ObBug);
+	}
 	
 	public void registerComment(Subject s)
 	{
-		s.addObserver(new ObserverCommment());
+		ObserverComment ObComm = new ObserverComment(s);
+		registrations.add(ObComm);
 	}
 	
 	public void registerTag(Subject s)
 	{
-		s.addObserver(new ObserverTag());
+		ObserverTag ObTag = new ObserverTag(s);
+		registrations.add(ObTag);
 	}
 	
 	public void registerSpecificTag(Subject s, Tag tag)
 	{
-		s.addObserver(new ObserverSpecificTag(tag));
+		ObserverSpecificTag ObSTag = new ObserverSpecificTag(s, tag);
+		registrations.add(ObSTag);
 	}
 
-	public void unregister()
+	public void unregister(ObserverAspect registration)
 	{
-		
+		if(registrations.contains(registration))
+			registration.destructor();
 	}
 	
-	private class ObserverTag implements Observer<Tag>
+	private class ObserverBugReport extends ObserverAspect
 	{
-
-		@Override
-		public void update(Subject s, Object aspect) 
+		public ObserverBugReport(Subject s)
 		{
-			if(aspect instanceof Tag)
-				notifications.add(new Notification("TAG MAIL"));
-			
+			super(s);
+		}
+		
+		@Override
+		public void update(Subject s, Object aspect) {
+			if(super.s == s && aspect instanceof BugReport)
+				notifications.add(new Notification("BUGREPORT MAIL"));
 		}
 		
 	}
 	
-	private class ObserverSpecificTag implements Observer<Tag>
+	private class ObserverTag extends ObserverAspect
+	{		
+		public ObserverTag(Subject s)
+		{
+			super(s);
+		}
+		
+		@Override
+		public void update(Subject s, Object aspect) 
+		{
+			if(super.s == s && aspect instanceof Tag)
+				notifications.add(new Notification("TAG MAIL"));
+		}
+		
+		
+	}
+	
+	private class ObserverSpecificTag extends ObserverAspect
 	{
 		private Tag tag;
 		
-		ObserverSpecificTag(Tag tag)
+		public ObserverSpecificTag(Subject s, Tag tag)
 		{
+			super(s);
 			this.tag = tag;
 		}
 		
 		@Override
 		public void update(Subject s, Object aspect) 
 		{
-			if(tag.getClass().isInstance(aspect))
+			if(super.s == s && tag.getClass().isInstance(aspect))
 				notifications.add(new Notification("TAG SPECIFIC MAIL"));
 			
 		}
 		
 	}
 	
-	private class ObserverCommment implements Observer<Comment>
+	private class ObserverComment extends ObserverAspect
 	{
-
+		private Subject s;
+		
+		public ObserverComment(Subject s)
+		{
+			super(s);
+		}
+		
 		@Override
 		public void update(Subject s, Object aspect)
 		{
-			if(aspect instanceof Comment)
-				notifications.add(new Notification("COMMENT MAIL"));
-			
+			if(super.s == s && aspect instanceof Comment)
+				notifications.add(new Notification("COMMENT MAIL"));	
 		}
-		
 	}
 }
