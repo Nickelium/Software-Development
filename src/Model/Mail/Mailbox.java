@@ -14,7 +14,7 @@ public class Mailbox
 	
 	private List<ObserverAspect> registrations = new ArrayList<>();
 	
-	Mailbox() {}
+	public Mailbox() {}
 	
 	public List<Notification> getNotifications()
 	{
@@ -66,7 +66,7 @@ public class Mailbox
 		@Override
 		public void update(Subject s, Object aspect) {
 			if(super.s == s && aspect instanceof BugReport)
-				notifications.add(new Notification("BUGREPORT MAIL"));
+				notifications.add(new Notification("New bugreport in " + s.getClass().toString()));
 		}
 		
 	}

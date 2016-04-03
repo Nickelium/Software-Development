@@ -1,6 +1,7 @@
 package Model.User;
 
 import CustomExceptions.ReportErrorToUserException;
+import Model.Mail.Mailbox;
 
 
 /**
@@ -15,6 +16,8 @@ public abstract class User {
     private String middleName;
     private String lastName;
     private String userName;
+    
+    private Mailbox mailbox;
 
     /**
      * Default constructor for a user.
@@ -37,6 +40,8 @@ public abstract class User {
         this.middleName = middleName;
         this.lastName = lastName;
         this.userName = userName;
+        
+        this.mailbox = new Mailbox();
     }
 
     // Getters
@@ -75,6 +80,11 @@ public abstract class User {
      */
     public String getUserName() {
         return userName;
+    }
+    
+    public Mailbox getMailbox()
+    {
+    	return mailbox;
     }
 
     /**

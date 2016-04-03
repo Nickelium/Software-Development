@@ -8,6 +8,10 @@ public class Notification
 	public Notification(String str)
 	{
 		content = str;
-		System.out.println(content);
+	}
+	
+	public String toString()
+	{
+		return content;
 	}
 }

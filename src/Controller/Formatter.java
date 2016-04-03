@@ -2,6 +2,7 @@ package Controller;
 
 import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
+import Model.Mail.Notification;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Roles.Role;
@@ -183,9 +184,14 @@ public class Formatter
 		return parsed;
 	}
 	
+	public static String formatNotificationList(List<Notification> notifications) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	private static String addTabulation(String str)
 	{
 		return str.replace("\n", "\n\t");
 	}
-
 }
