@@ -18,6 +18,7 @@ import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.Issuer;
 import Model.User.UserService;
+import Model.Mail.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ public class Initializer implements IInitializer {
     private BugReportService bugReportService;
     private DeveloperAssignmentService developerAssignmentService;
     private TagAssignmentService tagAssignmentService;
+    private MailboxService mailboxService;
 
     public Initializer() {
         init();
@@ -43,6 +45,7 @@ public class Initializer implements IInitializer {
             this.bugReportService = new BugReportService(projectService);
             this.developerAssignmentService = new DeveloperAssignmentService(projectService);
             this.tagAssignmentService = new TagAssignmentService(projectService);
+            this.mailboxService = new MailboxService();
 
             // init users
             Admin sam = userService.createAdmin("Frederick", "Sam", "Curtis", "curt");
@@ -126,6 +129,10 @@ public class Initializer implements IInitializer {
     public TagAssignmentService getTagAssignmentService() {
         return this.tagAssignmentService;
     }
+
+	public MailboxService getMailboxService() {
+		return this.mailboxService;
+	}
 
 
 }

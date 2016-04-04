@@ -5,6 +5,7 @@ import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
 import Model.Project.ProjectService;
 import Model.User.UserService;
+import Model.Mail.*;
 
 public interface IInitializer 
 {
@@ -18,5 +19,7 @@ public interface IInitializer
 	public DeveloperAssignmentService getDeveloperAssignmentService();
 
 	public TagAssignmentService getTagAssignmentService();
+	
+	public MailboxService getMailboxService();
 
 }

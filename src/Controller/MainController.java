@@ -46,9 +46,9 @@ public class MainController {
         if (currentUser instanceof Admin) {
             userController = new AdminController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser);
         } else if (currentUser instanceof Developer) {
-            userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser, initializer.getDeveloperAssignmentService(), initializer.getTagAssignmentService());
+            userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser, initializer.getDeveloperAssignmentService(), initializer.getTagAssignmentService(), initializer.getMailboxService());
         } else {
-            userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getTagAssignmentService(), currentUser);
+            userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getTagAssignmentService(), initializer.getMailboxService(), currentUser);
         }
 
         chooseUseCase(userController);

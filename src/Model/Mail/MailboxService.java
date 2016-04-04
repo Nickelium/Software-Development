@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Model.BugReport.BugReport;
+import Model.BugReport.*;
 import Model.Project.Project;
 import Model.Project.SubSystem;
-import Model.Tags.Tag;
+
 import Model.User.User;
 
 public class MailboxService 
@@ -38,6 +38,11 @@ public class MailboxService
 	public void registerSpecificTag(User user, Subject s, Tag tag)
 	{
 		user.getMailbox().registerSpecificTag(s,tag);
+	}
+	
+	public void registerComment(User user, Subject s)
+	{
+		user.getMailbox().registerComment(s);
 	}
 	
 	public void unregister(User user, ObserverAspect registration)

@@ -21,8 +21,9 @@ public class UnregisterNotifications extends IssuerUseCase{
 
 	private MailboxService mailboxService;
 	
-    public UnregisterNotifications(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
-        super(ui, userService, projectService, bugReportService,null, currentUser);
+    public UnregisterNotifications(IUI ui, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
+        super(ui, null, projectService, bugReportService,null, currentUser);
+        this.mailboxService = mailboxService;
     }
 
     /**

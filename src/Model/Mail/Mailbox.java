@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Model.BugReport.BugReport;
-import Model.BugReport.Comment;
-import Model.Tags.Tag;
+import Model.BugReport.*;
 
 public class Mailbox 
 {

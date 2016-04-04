@@ -9,6 +9,7 @@ import Model.BugReport.TagAssignmentService;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
+import Model.Mail.*;
 
 /**
  * Created by Karina on 05.03.2016.
@@ -16,10 +17,9 @@ import Model.User.UserService;
 public class DeveloperController extends IssuerController {
 
     private DeveloperAssignmentService developerAssignmentService;
-    private TagAssignmentService tagAssignmentService;
 
-    public DeveloperController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser, DeveloperAssignmentService developerAssignmentService, TagAssignmentService tagAssignmentService) {
-        super(ui, userService, projectService, bugReportService, tagAssignmentService, currentUser);
+    public DeveloperController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser, DeveloperAssignmentService developerAssignmentService, TagAssignmentService tagAssignmentService, MailboxService mailboxService) {
+        super(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         initializeUseCasesDeveloper();
         setDeveloperAssignmentService(developerAssignmentService);
     }

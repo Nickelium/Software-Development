@@ -20,8 +20,9 @@ public class ShowNotifications extends IssuerUseCase{
 
 	private MailboxService mailboxService;
 	
-    public ShowNotifications(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
-        super(ui, userService, projectService, bugReportService,null, currentUser);
+    public ShowNotifications(IUI ui, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
+        super(ui, null, projectService, bugReportService,null, currentUser);
+        this.mailboxService = mailboxService;
     }
 
     /**
