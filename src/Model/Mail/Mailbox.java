@@ -66,7 +66,7 @@ public class Mailbox
 		@Override
 		public void update(Subject s, Object aspect) {
 			if(super.s == s && aspect instanceof BugReport)
-				notifications.add(new Notification("New bugreport in " + s.getClass().toString()));
+				notifications.add(new Notification("New bugreport in : " + super.s));
 		}
 		
 	}
@@ -82,7 +82,7 @@ public class Mailbox
 		public void update(Subject s, Object aspect) 
 		{
 			if(super.s == s && aspect instanceof Tag)
-				notifications.add(new Notification("TAG MAIL"));
+				notifications.add(new Notification("Tag changed in : " + super.s));
 		}
 		
 		
@@ -102,7 +102,7 @@ public class Mailbox
 		public void update(Subject s, Object aspect) 
 		{
 			if(super.s == s && tag.getClass().isInstance(aspect))
-				notifications.add(new Notification("TAG SPECIFIC MAIL"));
+				notifications.add(new Notification("Tag changed to " + tag + " in : " + super.s));
 			
 		}
 		
@@ -121,7 +121,7 @@ public class Mailbox
 		public void update(Subject s, Object aspect)
 		{
 			if(super.s == s && aspect instanceof Comment)
-				notifications.add(new Notification("COMMENT MAIL"));	
+				notifications.add(new Notification("New comment in : " + super.s));	
 		}
 	}
 }

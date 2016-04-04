@@ -16,11 +16,12 @@ import Model.User.UserService;
 
 import java.util.List;
 
-public class ShowNotifications extends IssuerUseCase{
+
+public class RegisterNotifications extends IssuerUseCase{
 
 	private MailboxService mailboxService;
 	
-    public ShowNotifications(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
+    public RegisterNotifications(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
         super(ui, userService, projectService, bugReportService,null, currentUser);
     }
 
@@ -48,10 +49,23 @@ public class ShowNotifications extends IssuerUseCase{
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
 
      
-        getUi().display("Indicate how many notifications to display:");
-        int number = getUi().readInt();
-
-        List<Notification> notifications = mailboxService.getNotifications(getCurrentUser(), number);
+        getUi().display("Register for Project (1) / Subsystem (2) / Bugreport (3) : ");
+        int index = getUi().readInt();
+        switch (index)
+        {
+	        case 1: 
+	        	break;
+	        
+	        case 2:
+	        	break;
+	        
+	        case 3:
+	        	break;
+	        	
+	        default :
+	        	throw new IndexOutOfBoundsException("");
+        }
+        List<Notification> notifications = mailboxService.getNotifications(getCurrentUser(), index);
         String stringNotifications = Formatter.formatNotificationList(notifications);
         
         getUi().display(stringNotifications);

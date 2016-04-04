@@ -16,11 +16,12 @@ import Model.User.UserService;
 
 import java.util.List;
 
-public class ShowNotifications extends IssuerUseCase{
+
+public class UnregisterNotifications extends IssuerUseCase{
 
 	private MailboxService mailboxService;
 	
-    public ShowNotifications(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
+    public UnregisterNotifications(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
         super(ui, userService, projectService, bugReportService,null, currentUser);
     }
 
