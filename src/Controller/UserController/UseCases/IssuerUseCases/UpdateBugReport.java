@@ -43,7 +43,7 @@ public class UpdateBugReport extends IssuerUseCase {
         String input = getUi().readString();
         Class<?> tag;
         try {
-            tag = Class.forName("Model.Tags.TagTypes." + input);
+            tag = Class.forName("Model.BugReport.TagTypes." + input);
             if (input == "-1") return;
         } catch (ClassNotFoundException e) {
             throw new ReportErrorToUserException("The given tag does not exist!");

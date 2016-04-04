@@ -27,7 +27,7 @@ public class CreateBugReport extends IssuerControllerInit{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, loginController.getCurrentUser());
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
         issuerController.callUseCase(2);
     }
 
@@ -39,7 +39,7 @@ public class CreateBugReport extends IssuerControllerInit{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, loginController.getCurrentUser());
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
         issuerController.callUseCase(2);
 
     }
@@ -53,7 +53,7 @@ public class CreateBugReport extends IssuerControllerInit{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, loginController.getCurrentUser());
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
         issuerController.callUseCase(2);
     }
 
@@ -69,7 +69,7 @@ public class CreateBugReport extends IssuerControllerInit{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, loginController.getCurrentUser());
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
         issuerController.callUseCase(2);
     }
 

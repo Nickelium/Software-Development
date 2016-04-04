@@ -64,7 +64,12 @@ public class Mailbox
 		@Override
 		public void update(Subject s, Object aspect) {
 			if(super.s == s && aspect instanceof BugReport)
-				notifications.add(new Notification("New bugreport in : " + super.s));
+				notifications.add(new Notification("New bugreport in \n" + super.s));
+		}
+
+		@Override
+		public String toString() {
+			return "Registration for creation of new bugreport in \n" + super.s;
 		}
 		
 	}
@@ -80,7 +85,12 @@ public class Mailbox
 		public void update(Subject s, Object aspect) 
 		{
 			if(super.s == s && aspect instanceof Tag)
-				notifications.add(new Notification("Tag changed in : " + super.s));
+				notifications.add(new Notification("Tag changed in \n" + super.s));
+		}
+		
+		@Override
+		public String toString() {
+			return "Registration for change of tag in \n" + super.s;
 		}
 		
 		
@@ -100,8 +110,13 @@ public class Mailbox
 		public void update(Subject s, Object aspect) 
 		{
 			if(super.s == s && tag.getClass().isInstance(aspect))
-				notifications.add(new Notification("Tag changed to " + tag + " in : " + super.s));
+				notifications.add(new Notification("Tag changed to " + tag + " in \n" + super.s));
 			
+		}
+		
+		@Override
+		public String toString() {
+			return "Registration for changed of tag to " + tag + " in \n" + super.s;
 		}
 		
 	}
@@ -119,7 +134,12 @@ public class Mailbox
 		public void update(Subject s, Object aspect)
 		{
 			if(super.s == s && aspect instanceof Comment)
-				notifications.add(new Notification("New comment in : " + super.s));	
+				notifications.add(new Notification("New comment in \n" + super.s));	
+		}
+		
+		@Override
+		public String toString() {
+			return "Registration for creation of new comment in \n" + super.s;
 		}
 	}
 }

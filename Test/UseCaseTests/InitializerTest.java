@@ -6,6 +6,7 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
+import Model.Mail.MailboxService;
 import Model.Project.ProjectService;
 import Model.User.UserService;
 import org.junit.Before;
@@ -21,6 +22,7 @@ public class InitializerTest {
     protected UserService userService;
     protected DeveloperAssignmentService developerAssignmentService;
     protected TagAssignmentService tagAssignmentService;
+    protected MailboxService mailboxService;
 
     @Before
     public void initialization() throws ReportErrorToUserException {
@@ -30,6 +32,7 @@ public class InitializerTest {
         this.userService = initializer.getUserService();
         this.developerAssignmentService = initializer.getDeveloperAssignmentService();
         this.tagAssignmentService = initializer.getTagAssignmentService();
+        this.mailboxService = initializer.getMailboxService();
     }
 
 }

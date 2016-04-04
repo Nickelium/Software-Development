@@ -45,7 +45,7 @@ public class TagAssignmentService {
      * @throws IllegalArgumentException One of the arguments is null.
      */
     public void assignTag(User user, BugReport bugReport, Tag tag) throws ReportErrorToUserException {
-        if (!canAssignTag(user, bugReport, tag)) throw new ReportErrorToUserException("Not allowed to preform tag change!");
+        if (!canAssignTag(user, bugReport, tag)) throw new ReportErrorToUserException("Not allowed to perform tag change!");
 
         bugReport.setTag(tag);
     }

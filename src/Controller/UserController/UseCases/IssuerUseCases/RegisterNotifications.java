@@ -84,7 +84,7 @@ public class RegisterNotifications extends IssuerUseCase{
 	         	        Class<?> tag;
 	         	        try 
 	         	        {
-	         	            tag = Class.forName("Model.Tags.TagTypes." + input);
+	         	            tag = Class.forName("Model.BugReport.TagTypes." + input);
 	         	            if (input == "-1") return;
 	         	        } 
 	         	        catch (ClassNotFoundException e)
@@ -198,7 +198,7 @@ public class RegisterNotifications extends IssuerUseCase{
          	        Class<?> tag;
          	        try 
          	        {
-         	            tag = Class.forName("Model.Tags.TagTypes." + input);
+         	            tag = Class.forName("Model.BugReport.TagTypes." + input);
          	            if (input == "-1") return;
          	        } 
          	        catch (ClassNotFoundException e)

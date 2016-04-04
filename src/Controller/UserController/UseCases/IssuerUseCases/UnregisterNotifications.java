@@ -7,6 +7,7 @@ import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Mail.MailboxService;
 import Model.Mail.Notification;
+import Model.Mail.ObserverAspect;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -50,13 +51,18 @@ public class UnregisterNotifications extends IssuerUseCase{
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
 
      
-        getUi().display("Indicate how many notifications to display:");
-        int number = getUi().readInt();
+        getUi().display("The list of all active registrations:");
 
-        List<Notification> notifications = mailboxService.getNotifications(getCurrentUser(), number);
-        String stringNotifications = Formatter.formatNotificationList(notifications);
+        List<ObserverAspect> registrations = mailboxService.getRegistrations(getCurrentUser());
+        String stringRegistrations = Formatter.formatRegistrationList(registrations);
+        getUi().display(stringRegistrations);
         
-        getUi().display(stringNotifications);
-    
+        getUi().display("Choose one of the registration to unregister : ");
+        int index = getUi().readInt();
+        
+        ObserverAspect registrationToUnregister = registrations.get(index);
+        mailboxService.unregister(getCurrentUser(), registrationToUnregister);
+        
+        getUi().display("Unregister completed !");
     }
 }

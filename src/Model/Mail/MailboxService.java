@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.*;
 import Model.Project.Project;
 import Model.Project.SubSystem;
@@ -12,12 +13,18 @@ import Model.User.User;
 
 public class MailboxService 
 {
-	public List<Notification> getNotifications(User user, int number)
+	public List<Notification> getNotifications(User user, int number) throws ReportErrorToUserException
 	{
 		List<Notification> listOriginal = user.getMailbox().getNotifications();
 		List<Notification> listOrderRecent = reverse(listOriginal);
-		
-		return listOrderRecent.subList(0, number);
+		try
+		{
+			return listOrderRecent.subList(0, number);
+		}
+		catch(IllegalArgumentException e)
+		{
+			throw new ReportErrorToUserException("Invalid index input");
+		}
 	}
 	
 	public List<ObserverAspect> getRegistrations(User user)

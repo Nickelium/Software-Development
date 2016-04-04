@@ -24,5 +24,8 @@ public abstract class ObserverAspect implements Observer{
 			s = null;
 		}
 	}
+	
+	@Override
+	public abstract String toString();
 
 }

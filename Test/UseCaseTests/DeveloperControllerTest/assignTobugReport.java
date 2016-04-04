@@ -25,7 +25,7 @@ public class assignTobugReport extends DeveloperTestInitializer {
         ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
         IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService);
+        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
         developerController.callUseCase(6);
     }
 
@@ -40,7 +40,7 @@ public class assignTobugReport extends DeveloperTestInitializer {
         ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
         IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService);
+        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
         developerController.callUseCase(6);
     }
 

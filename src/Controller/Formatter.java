@@ -3,6 +3,7 @@ package Controller;
 import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
 import Model.Mail.Notification;
+import Model.Mail.ObserverAspect;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Roles.Role;
@@ -184,14 +185,24 @@ public class Formatter
 		return parsed;
 	}
 	
-	public static String formatNotificationList(List<Notification> notifications) {
-		// TODO Auto-generated method stub
-		return null;
+	public static String formatNotificationList(List<Notification> notifications) 
+	{
+		String parsed ="";
+		for(int i=0; i< notifications.size(); i++)
+            parsed += i + ": \n" + notifications.get(i).toString() + "\n";
+        return parsed;
 	}
 
+	public static String formatRegistrationList(List<ObserverAspect> registrations) {
+		String parsed ="";
+		for(int i=0; i< registrations.size(); i++)
+            parsed += i + ": \n" + registrations.get(i).toString() + "\n";
+        return parsed;
+	}
 	
 	private static String addTabulation(String str)
 	{
 		return str.replace("\n", "\n\t");
 	}
+
 }
