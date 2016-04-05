@@ -413,6 +413,12 @@ public class Project extends Subject implements Observer<SubSystem>
 
 	}
 
+	 /**
+     * Method called to notify this observer
+     * 
+     * @param s The subject
+     * @param aspect The aspect that has changed
+     */
 	@Override
 	public void update(Subject s, Object aspect) {
 		notifyObservers(aspect);

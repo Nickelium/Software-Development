@@ -6,24 +6,47 @@ import java.util.List;
 
 import Model.BugReport.*;
 
+/**
+ * Class that represents a mailbox of a user.
+ *
+ */
 public class Mailbox 
 {
 	private List<Notification> notifications = new ArrayList<>();
 	
 	private List<ObserverAspect> registrations = new ArrayList<>();
 	
+	/**
+	 * Constructor of this mailbox object
+	 * 
+	 */
 	public Mailbox() {}
 	
+	/**
+	 * Method to get all notifications of this mailbox.
+	 * 
+	 * @return An unmodifiable list of notifications of this mailbox
+	 */
 	public List<Notification> getNotifications()
 	{
 		return Collections.unmodifiableList(this.notifications);
 	}
 	
+	/**
+	 * Method to get all registrations of this mailbox.
+	 * 
+	 * @return An unmodifiable list of ObserverAspect of this mailbox
+	 */
 	public List<ObserverAspect> getRegistrations()
 	{
 		return Collections.unmodifiableList(this.registrations);
 	}
 	
+	/**
+	 * Method to register for a creation of a new bugreport in the given subject
+	 * 
+	 * @param s
+	 */
 	public void registerBugReport(Subject s)
 	{
 		ObserverBugReport ObBug = new ObserverBugReport(s);
