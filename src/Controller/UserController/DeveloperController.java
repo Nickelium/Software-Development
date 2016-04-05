@@ -20,8 +20,8 @@ public class DeveloperController extends IssuerController {
 
     public DeveloperController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser, DeveloperAssignmentService developerAssignmentService, TagAssignmentService tagAssignmentService, MailboxService mailboxService) {
         super(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        initializeUseCasesDeveloper();
         setDeveloperAssignmentService(developerAssignmentService);
+        initializeUseCasesDeveloper();
     }
 
     private void initializeUseCasesDeveloper() {

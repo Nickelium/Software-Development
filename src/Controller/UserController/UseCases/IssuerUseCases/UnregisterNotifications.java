@@ -29,18 +29,11 @@ public class UnregisterNotifications extends IssuerUseCase{
 
     /**
      *
-     * Lets an Issuer create a bug report.
+     * Lets an Issuer unregister a registration.
      *
-     * 2. The system shows a list of projects.
-     * 3. The issuer selects a project.
-     * 4. The system shows a list of subsystems of the selected project.
-     * 5. The issuer selects a subsystem.
-     * 6. The system shows the bug report creation form.
-     * 7. The issuer enters the bug report details: title and description.
-     * 8. The system shows a list of possible dependencies of this bug report.
-     *    These are the bug reports of the same project.
-     * 9. The issuer selects the dependencies.
-     * 10. The system creates the bug report.
+     * 2. The system shows a list of all active registrations.
+     * 3. The issuer selects a registration to unregister.
+     * 4. The system unregister the given registration.
      *
      * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input
@@ -50,17 +43,20 @@ public class UnregisterNotifications extends IssuerUseCase{
     @Override
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
 
-     
+    	//Step 2
         getUi().display("The list of all active registrations:");
 
         List<ObserverAspect> registrations = mailboxService.getRegistrations(getCurrentUser());
         String stringRegistrations = Formatter.formatRegistrationList(registrations);
         getUi().display(stringRegistrations);
         
+        //Step 3
         getUi().display("Choose one of the registration to unregister : ");
         int index = getUi().readInt();
         
         ObserverAspect registrationToUnregister = registrations.get(index);
+        
+        //Step 4
         mailboxService.unregister(getCurrentUser(), registrationToUnregister);
         
         getUi().display("Unregister completed !");

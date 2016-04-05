@@ -27,18 +27,11 @@ public class ShowNotifications extends IssuerUseCase{
 
     /**
      *
-     * Lets an Issuer create a bug report.
+     * Lets an Issuer look to his notifications.
      *
-     * 2. The system shows a list of projects.
-     * 3. The issuer selects a project.
-     * 4. The system shows a list of subsystems of the selected project.
-     * 5. The issuer selects a subsystem.
-     * 6. The system shows the bug report creation form.
-     * 7. The issuer enters the bug report details: title and description.
-     * 8. The system shows a list of possible dependencies of this bug report.
-     *    These are the bug reports of the same project.
-     * 9. The issuer selects the dependencies.
-     * 10. The system creates the bug report.
+     * 2. The system asks for how many notifications to display
+     * 3. The issuer indicate this number
+     * 4. The system displays the specified amount of notifications
      *
      * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input
@@ -49,9 +42,12 @@ public class ShowNotifications extends IssuerUseCase{
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
 
      
+    	//Step 2
         getUi().display("Indicate how many notifications to display:");
+        //Step 3
         int number = getUi().readInt();
 
+        //Step 4
         List<Notification> notifications = mailboxService.getNotifications(getCurrentUser(), number);
         String stringNotifications = Formatter.formatNotificationList(notifications);
         

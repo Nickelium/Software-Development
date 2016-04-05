@@ -45,7 +45,7 @@ public class Mailbox
 	/**
 	 * Method to register for a creation of a new bugreport in the given subject
 	 * 
-	 * @param s
+	 * @param s The subject to observe
 	 */
 	public void registerBugReport(Subject s)
 	{
@@ -53,30 +53,55 @@ public class Mailbox
 		registrations.add(ObBug);
 	}
 	
+	/**
+	 * Method to register for a creation of a new comment in the given subject
+	 * 
+	 * @param s The subject to observe
+	 */
 	public void registerComment(Subject s)
 	{
 		ObserverComment ObComm = new ObserverComment(s);
 		registrations.add(ObComm);
 	}
 	
+	/**
+	 * Method to register for a change of a tag of a bugreport in the given subject
+	 * 
+	 * @param s The subject to observe
+	 */
 	public void registerTag(Subject s)
 	{
 		ObserverTag ObTag = new ObserverTag(s);
 		registrations.add(ObTag);
 	}
 	
+	/**
+	 * Method to register for a change of a tag to a specific tag of a bugreport in the given subject
+	 * 
+	 * @param s The subject to observe
+	 * @param tag The specific tag 
+	 */
 	public void registerSpecificTag(Subject s, Tag tag)
 	{
 		ObserverSpecificTag ObSTag = new ObserverSpecificTag(s, tag);
 		registrations.add(ObSTag);
 	}
 
+	/**
+	 * Method to unregister from a registration
+	 * 
+	 * @param registration The observeraspect to unregister
+	 */
 	public void unregister(ObserverAspect registration)
 	{
 		if(registrations.contains(registration))
 			registration.destructor();
 	}
 	
+	/**
+	 * Inner class observer of a creation of a bugreport
+	 *
+	 */
 	private class ObserverBugReport extends ObserverAspect
 	{
 		public ObserverBugReport(Subject s)
@@ -97,6 +122,10 @@ public class Mailbox
 		
 	}
 	
+	/**
+	 * Inner class observer of a change of tag of a bugreport
+	 *
+	 */
 	private class ObserverTag extends ObserverAspect
 	{		
 		public ObserverTag(Subject s)
@@ -119,6 +148,10 @@ public class Mailbox
 		
 	}
 	
+	/**
+	 * Inner class observer of a change of tag to a specific tag of a bugreport
+	 *
+	 */
 	private class ObserverSpecificTag extends ObserverAspect
 	{
 		private Tag tag;
@@ -144,6 +177,10 @@ public class Mailbox
 		
 	}
 	
+	/**
+	 * Inner class observer of a creation of a comment in a bugreport
+	 *
+	 */
 	private class ObserverComment extends ObserverAspect
 	{
 		private Subject s;
