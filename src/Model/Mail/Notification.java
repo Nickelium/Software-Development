@@ -19,6 +19,16 @@ public class Notification
 	}
 	
 	/**
+	 * Getter to get the content of this notification
+	 * 
+	 * @return The content
+	 */
+	public String getContent()
+	{
+		return content;
+	}
+	
+	/**
 	 * Method to represent this object as a string representation
 	 * 
 	 * @return The string representation of this object

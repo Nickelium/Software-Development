@@ -35,7 +35,7 @@ public class SubSystem extends Subject implements Observer<BugReport>
      *
      * @throws ReportErrorToUserException The name or description is not valid. (see attribute setters for rules)
 	 */
-	public SubSystem(String name, String description) throws ReportErrorToUserException
+	SubSystem(String name, String description) throws ReportErrorToUserException
 	{
 		this.setName(name);
 		this.setDescription(description);

@@ -31,7 +31,7 @@ public class ProjectServiceTest {
 		dev = new Developer("Firstname", "Middlename", "Lastname", "Username");
 		p1 = projectService.createProject("P1", "P1 description", new TheDate("10/02/2020"), 10, new Lead(dev));
 		p2 = projectService.createProject("P2", "P2 description", new TheDate("10/02/2021"), 11, new Lead(dev));
-		this.s = new SubSystem("Test1", "Test1 description");
+		this.s = projectService.createSubsystem("Test 1", "Test 1 description", p2);
 	}
 	
 	@Test
@@ -49,7 +49,6 @@ public class ProjectServiceTest {
 	public void forkProject_SUCCES() throws ReportErrorToUserException {
 		
 		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
-		p2.addSubSystem(s);
 		Project p3 = projectService.forkProject(p2);
 		
 		assertEquals(p3.getName(),p2.getName());
@@ -103,10 +102,9 @@ public class ProjectServiceTest {
 	@Test
 	public void getAllSubSystems() throws ReportErrorToUserException {
 	
-		SubSystem s = projectService.createSubsystem("A", "A", p1);
-		SubSystem ss = projectService.createSubsystem("B", "B", s);
+		SubSystem ss = projectService.createSubsystem("B", "B", this.s);
 		List<SubSystem> list = new ArrayList<>();
-		list.add(s);
+		list.add(this.s);
 		list.add(ss);
 		assertEquals(projectService.getAllSubSystems().size(),list.size());
 		assertTrue(projectService.getAllSubSystems().containsAll(list));
@@ -139,7 +137,9 @@ public class ProjectServiceTest {
 	@Test (expected = ReportErrorToUserException.class)
 	public void getProjectContainingBugReport_FAIL() throws ReportErrorToUserException
 	{
-		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
+		Project pp = projectService.createProject("zae", "des", new TheDate("10/02/14"), 10, new Lead(dev));
+		SubSystem ssss = projectService.createSubsystem("az", "des", pp);
+		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, ssss);
 		projectService.getProjectsContainingBugReport(bug1);
 	}
 }

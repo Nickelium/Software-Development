@@ -56,7 +56,7 @@ public class BugReport extends Subject implements Observer<Comment>{
     BugReport(String title, String description, SubSystem subSystem, Issuer creator) throws ReportErrorToUserException
     {
         this(title,description,subSystem, creator, TheDate.TheDateNow(), new New(), new ArrayList<>());
-   }
+    }
     
     /**
      * Constructor for a Bugreport.

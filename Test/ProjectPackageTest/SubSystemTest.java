@@ -54,27 +54,16 @@ public class SubSystemTest {
 		this.startingDate = new TheDate("19/02/2030");
 		this.budget = 10;
 		this.versionID = 2.0;
-		this.s = new SubSystem("Test1", "Test1 description");
-		this.ss = new SubSystem("Test2", "Test2 description");
-		this.sss = new SubSystem("Test3", "Test3 description");
 		this.p = projectService.createProject(this.name, this.description, this.startingDate, 0.0, lead);
+		this.s = projectService.createSubsystem("Test1", "Test1 description",p);
+		this.ss = projectService.createSubsystem("Test2", "Test2 description",s);
+		this.sss = projectService.createSubsystem("Test3", "Test3 description",ss);
+
 		this.day = 24;
 		this.month = 2;
 		this.year = 2020;
 		this.programmer	 = new Programmer(dev);
 	}
-	
-//	@Test (expected = ReportErrorToUserException.class)
-//	public void setVersionID_FAIL() throws ReportErrorToUserException{
-//		s.setVersionID(-1.0);
-//	}
-//
-//	@Test
-//	public void setVersionID_SUCCES() throws ReportErrorToUserException{
-//		s.setVersionID(this.versionID);
-//
-//		assertEquals(s.getVersionID(), this.versionID,0.0);
-//	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILNULL() throws ReportErrorToUserException {
@@ -126,24 +115,20 @@ public class SubSystemTest {
 		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss);
 		list.add(bug1);
 		list.add(bug2);
-		
-		s.addSubSystem(ss);
-
+	
 		assertEquals(s.getAllBugReports().size(), list.size());
 		assertTrue(s.getAllBugReports().containsAll(list));
 	}
 	
 	@Test 
-	public void getSubSystem_SUCCES() throws ReportErrorToUserException {
-		s.addSubSystem(ss);
-		s.addSubSystem(sss);
+	public void getAllSubSystem_SUCCES() throws ReportErrorToUserException {
 		List<SubSystem> list = new ArrayList<>();
 		list.add(ss);
 		list.add(sss);
 		
 
-		assertEquals(s.getSubSystems().size(), list.size());
-		assertTrue(s.getSubSystems().containsAll(list));
+		assertEquals(s.getAllSubSystems().size(), list.size());
+		assertTrue(s.getAllSubSystems().containsAll(list));
 	}
 	
 	

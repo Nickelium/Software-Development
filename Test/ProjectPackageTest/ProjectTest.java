@@ -38,6 +38,7 @@ public class ProjectTest {
 	private Developer dev;
 	private Lead lead;
 	private Programmer programmer;
+	private Project proj;
 
 	@Before
 	public void setup() throws ReportErrorToUserException {
@@ -52,9 +53,11 @@ public class ProjectTest {
 		this.startingDate = new TheDate("19/02/2030");
 		this.budget = 10;
 		this.versionID = 2.0;
-		this.s = new SubSystem("Test1", "Test1 description");
-		this.ss = new SubSystem("Test2", "Test2 description");
-		this.p = projectService.createProject(this.name, this.description, this.startingDate, 0.0, lead);
+		this.p = projectService.createProject("Project", "Project description", this.startingDate, this.budget, this.lead);
+		this.s = projectService.createSubsystem("Test1", "Test1 description", p);
+		this.ss =projectService.createSubsystem("Test2", "Test2 description", s);
+		//this.s = new SubSystem("Test1", "Test1 description");
+		//this.ss = new SubSystem("Test2", "Test2 description");
 		this.day = 24;
 		this.month = 2;
 		this.year = 2020;
@@ -165,20 +168,11 @@ public class ProjectTest {
 	}
 
 	@Test
-	public void addSubSystem_SUCCES(){
-		p.addSubSystem(s);
-		assertTrue(p.getSubSystems().contains(s));
-	}
-
-	@Test
 	public void getAllSubSystem_SUCCES() throws Exception
 	{
 		List<SubSystem> list = new ArrayList<SubSystem>();
 		list.add(s);
 		list.add(ss);
-
-		p.addSubSystem(s);
-		s.addSubSystem(ss);
 
 		assertEquals(p.getAllSubSystems().size(), list.size());
 		assertTrue(p.getAllSubSystems().containsAll(list));
@@ -207,9 +201,6 @@ public class ProjectTest {
 		list.add(bug1);
 		list.add(bug2);
 
-		p.addSubSystem(s);
-		s.addSubSystem(ss);
-
 		assertEquals(p.getAllBugReports().size(), list.size());
 		assertTrue(p.getAllBugReports().containsAll(list));
 	}
@@ -217,11 +208,9 @@ public class ProjectTest {
 	@Test
 	public void fork_SUCCES() throws Exception
 	{		
-		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s);
 		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss);
 		
-		p.addSubSystem(s);
-		s.addSubSystem(ss);
 		p.addRole(programmer);
 		
 		Project fork = p.fork();
@@ -238,7 +227,7 @@ public class ProjectTest {
 	public void toString_SUCCES() throws Exception
 	{		
 		p.addRole(programmer);
-		String str= "Project name: " + this.name + "\nDescription: " + this.description 
+		String str= "Project name: " + "Project" + "\nDescription: " + "Project description" 
 		+"\nCreation Date: " + p.getCreationDate() 
 		+ "\nStarting Date: " + this.startingDate + "\nBudget: " + p.getBudget()
 		+ "\nVersionID: " + p.getVersionID() + "\nLead developer: " 
@@ -246,5 +235,6 @@ public class ProjectTest {
 		assertEquals(p.toString(), str);
 
 	}
+	
 	
 }
