@@ -25,6 +25,10 @@ public class Milestone {
         return milestoneID;
     }
 
+    public boolean isTargetMilestone(){
+        return false;
+    }
+
     public void setMilestoneID(String milestoneID) throws ReportErrorToUserException {
         if(isValidMilestoneID(milestoneID))
             this.milestoneID = milestoneID;

@@ -3,6 +3,10 @@ package Model.Project;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
+import Model.BugReport.Tag;
+import Model.BugReport.TagTypes.Closed;
+import Model.BugReport.TagTypes.Duplicate;
+import Model.BugReport.TagTypes.NotABug;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Milestone.Milestone;
@@ -417,19 +421,33 @@ public class Project extends Subject implements Observer<BugReport>
 	 */
 	public void setNewProjectMilestone(Milestone newProjectMilestone)throws ReportErrorToUserException{
 
-		double lowestMilestoneID = Double.MAX_VALUE;
-		for (Milestone milestone : this.getAllMilestones()){
+		double highestMilestoneID = 0;
+		for (Milestone milestone : this.getAllMilestones()) {
 			double currentID = milestone.getIDvalue();
-			if(currentID < lowestMilestoneID)
-				lowestMilestoneID = currentID;
+			if (currentID > highestMilestoneID)
+				highestMilestoneID = currentID;
+		}
+		/* If a project or subsystem has a bug report that is not NotABug, Duplicate or
+		Closed and this bug report has a target milestone that is less than or equal
+		to the newly proposed achieved milestone for the project or subsystem, the
+		increment is rejected. */
+
+		for (BugReport bugreport : this.getAllBugReports()) {
+			Tag tag = bugreport.getTag();
+			if (!(tag instanceof NotABug || tag instanceof Duplicate || tag instanceof Closed) && bugreport.getTargetMilestone().getIDvalue() <= newProjectMilestone.getIDvalue()) {
+				throw new ReportErrorToUserException("Bug report is not NotABug, Duplicate or Closed and has a target" +
+						"milestone less than or equal to the new proposed milestone");
+			}
 		}
 
-		if(newProjectMilestone.getIDvalue() <= lowestMilestoneID){
+		/* A project's or subsystem's achieved milestone should at all times be less
+		than or equal to the highest achieved milestone of all the subsystems it
+		(recursively) contains. */
+
+		if (newProjectMilestone.getIDvalue() <= highestMilestoneID) {
 			this.setCurrentMilestone(newProjectMilestone);
 			this.addMilestoneToList(newProjectMilestone);
-		}
-
-		else{
+		} else {
 			throw new ReportErrorToUserException("The new Milestone ID is larger than the lowest" +
 					"achieved currentMilestone of all the subsystems it recursively contains.");
 		}

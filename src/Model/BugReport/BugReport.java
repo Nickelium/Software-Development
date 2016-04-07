@@ -5,6 +5,7 @@ import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Milestone.TargetMilestone;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
@@ -34,9 +35,9 @@ public class BugReport extends Subject implements Observer<Comment>{
     private List<Comment> comments;
     private List<BugReport> dependencies;
     private boolean pblc;
-    
+
     //optional attributes
-    //add milestone
+    private TargetMilestone targetMilestone;
     private String procedureBug;
     private String stackTrace;
     private String errorMessage;
@@ -380,11 +381,18 @@ public class BugReport extends Subject implements Observer<Comment>{
         if (dependency == null) throw new IllegalArgumentException("Dependency is null");
 
         this.dependencies.add(dependency);
+    }
 
+    public TargetMilestone getTargetMilestone() {
+        return this.targetMilestone;
+    }
+
+    public void setTargetMilestone(TargetMilestone targetMilestone) {
+        this.targetMilestone = targetMilestone;
     }
 
     /**
-     * Overrided the equals method to only look at the id to check for equality.
+     * Overrides the equals method to only look at the id to check for equality.
      *
      * @param obj The bugReport to compare this bugReport to.
      *

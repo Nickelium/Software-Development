@@ -1,6 +1,7 @@
 package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
+import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -108,7 +109,6 @@ public class BugReportService {
         Comment newComment = new Comment(text, issuer);
         comment.addComment(newComment);
         return newComment;
-
     }
 
     /**
@@ -155,7 +155,7 @@ public class BugReportService {
      *
      * @param project The project for which to find the bugReports.
      *
-     * @return An unmodifieable list of all the bugreports about the given project.
+     * @return An unmodifyable list of all the bugreports about the given project.
      */
     public List<BugReport> getBugReportsForProject(Project project){
         return project.getAllBugReports();
@@ -174,6 +174,10 @@ public class BugReportService {
     {
         return searchMethod.apply(this, user);
     }
+
+
+
+
 
 
     private boolean isVisibleByUser(User user, BugReport bugReport) {
