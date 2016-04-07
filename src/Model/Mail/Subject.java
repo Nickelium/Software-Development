@@ -36,11 +36,11 @@ public abstract class Subject
 	 * 
 	 * @param aspect The aspect that has changed
 	 */
-	public void notifyObservers(Object aspect)
+	public void notifyObservers(Subject s, Object aspect)
 	{
 		for(Observer obs : observers)
 		{
-			obs.update(this, aspect);
+			obs.update(this, s, aspect);
 		}
 	}
 }

@@ -1,24 +1,26 @@
 package Model.Mail;
 
+import Model.BugReport.BugReport;
+
 /**
  * Abstract class ObserverAspect that has one observed subject and can unbind to that subject.
  *
  */
-public abstract class ObserverAspect implements Observer{
+public abstract class ObserverAspect implements Observer<BugReport>{
 
-	protected Subject s;
+	protected Subject structure;
 	
 	/**
 	 * Constructor of this ObserverAspect
 	 * 
 	 * @param s Subject to observe
 	 */
-	public ObserverAspect(Subject s)
+	public ObserverAspect(Subject structure)
 	{
-		if(s != null)
+		if(structure != null)
 		{
-			this.s = s;
-			s.addObserver(this);
+			this.structure = structure;
+			structure.addObserver(this);
 		}
 	}
 	
@@ -29,7 +31,7 @@ public abstract class ObserverAspect implements Observer{
      * @param aspect The aspect that has changed
      */
 	@Override
-	public abstract void update(Subject s, Object aspect);
+	public abstract void update(Subject structure, BugReport bugreport, Object aspect);
 
 	/**
 	 * Method to destroy this object and at the same time unbind it from his subject
@@ -37,10 +39,10 @@ public abstract class ObserverAspect implements Observer{
 	 */
 	public void destructor()
 	{
-		if(s != null)
+		if(structure != null)
 		{
-			s.removeObserver(this);
-			s = null;
+			structure.removeObserver(this);
+			structure = null;
 		}
 	}
 	

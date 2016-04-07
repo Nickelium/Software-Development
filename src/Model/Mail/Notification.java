@@ -1,21 +1,27 @@
 package Model.Mail;
 
+import Model.BugReport.BugReport;
+
 /**
  * Class that represents a notification
  *
  */
 public class Notification 
 {
-	String content;
+	String changeDescription;
+	BugReport bugReport;
+	Subject structure;
 	
 	/**
 	 * Constructor of this notification
 	 * 
 	 * @param str The content of this notification
 	 */
-	public Notification(String str)
+	Notification(String changeDescription, BugReport bugReport, Subject structure)
 	{
-		content = str;
+		this.changeDescription = changeDescription;
+		this.bugReport = bugReport;
+		this.structure = structure;
 	}
 	
 	/**
@@ -23,10 +29,21 @@ public class Notification
 	 * 
 	 * @return The content
 	 */
-	public String getContent()
+	public String getChangeDescription()
 	{
-		return content;
+		return changeDescription;
 	}
+	
+	public BugReport getBugReport()
+	{
+		return bugReport;
+	}
+	
+	public Subject getStructure()
+	{
+		return structure;
+	}
+	
 	
 	/**
 	 * Method to represent this object as a string representation
@@ -36,6 +53,8 @@ public class Notification
 	@Override
 	public String toString()
 	{
-		return content;
+		if(changeDescription != null & bugReport != null & structure != null)
+			return  changeDescription + "\n"  + bugReport  + "\n in \n" + structure +"\n";
+		return "";
 	}
 }

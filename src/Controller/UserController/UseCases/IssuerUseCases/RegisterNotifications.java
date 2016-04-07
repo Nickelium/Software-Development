@@ -7,7 +7,7 @@ import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.*;
 import Model.Mail.MailboxService;
-import Model.Mail.Notification;
+//import Model.Mail.Notification;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;

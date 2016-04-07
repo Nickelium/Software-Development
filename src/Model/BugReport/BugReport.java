@@ -9,7 +9,6 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +38,7 @@ public class BugReport extends Subject implements Observer<Comment>{
     List<Patch> patches;
     List<Test> tests;
     private Patch selectedPatch;
-    
+
     //optional attributes
     //add milestone
     private String procedureBug;
@@ -263,7 +262,7 @@ public class BugReport extends Subject implements Observer<Comment>{
     public Patch getSelectedPatch() {
         return this.selectedPatch;
     }
-    
+
     //endregion
 
     //region Checkers
@@ -418,9 +417,9 @@ public class BugReport extends Subject implements Observer<Comment>{
 
         this.comments.add(comment);
         comment.addObserver(this);
-		notifyObservers(comment);
+		notifyObservers(this, comment);
     }
-
+    
     /**
      * Function to add a patch to the list of patches.
      *
@@ -521,7 +520,7 @@ public class BugReport extends Subject implements Observer<Comment>{
 			str += dev.toString() + ", ";
 			
 		//remove last comma
-		if(str.length() - 2 > 0) 
+		if(str.length() - 2 > 0 && str.charAt(str.length() - 2) == ',')
 			return str.substring(0, str.length() - 2);
 		else 
 			return str;
@@ -534,8 +533,8 @@ public class BugReport extends Subject implements Observer<Comment>{
      * @param aspect The aspect that has changed
      */
 	@Override
-	public void update(Subject s, Object aspect) {
-		notifyObservers(aspect);
+	public void update(Subject structure, Comment s, Object aspect) {
+		notifyObservers(this, aspect);
 	}
 
     //endregion
