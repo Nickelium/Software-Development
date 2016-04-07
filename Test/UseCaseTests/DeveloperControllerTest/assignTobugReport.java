@@ -26,7 +26,7 @@ public class assignTobugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.callUseCase(6);
+        developerController.getUseCase(6).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -41,7 +41,7 @@ public class assignTobugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.callUseCase(6);
+        developerController.getUseCase(6).run();
     }
 
 }

@@ -26,7 +26,7 @@ public class InspectBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(3);
+        issuerController.getUseCase(3).run();
     }
 
     @Test
@@ -40,7 +40,7 @@ public class InspectBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(3);
+        issuerController.getUseCase(3).run();
     }
 
     @Test
@@ -54,7 +54,7 @@ public class InspectBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(3);
+        issuerController.getUseCase(3).run();
     }
 
 
@@ -69,7 +69,7 @@ public class InspectBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(3);
+        issuerController.getUseCase(3).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -83,7 +83,7 @@ public class InspectBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(3);
+        issuerController.getUseCase(3).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -97,7 +97,7 @@ public class InspectBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(3);
+        issuerController.getUseCase(3).run();
     }
 
 
@@ -110,7 +110,7 @@ public class InspectBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(3);
+        issuerController.getUseCase(3).run();
     }
 
 }

@@ -22,7 +22,7 @@ public class DeleteProject extends AdminControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(5);
+        adminController.getUseCase(5).run();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -34,6 +34,6 @@ public class DeleteProject extends AdminControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(5);
+        adminController.getUseCase(5).run();
     }
 }

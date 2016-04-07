@@ -32,7 +32,7 @@ public class CreateComment extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(4);
+        issuerController.getUseCase(4).run();
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CreateComment extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(4);
+        issuerController.getUseCase(4).run();
     }
 
 
@@ -70,7 +70,7 @@ public class CreateComment extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(4);
+        issuerController.getUseCase(4).run();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -87,7 +87,7 @@ public class CreateComment extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(4);
+        issuerController.getUseCase(4).run();
     }
 
 
@@ -103,7 +103,7 @@ public class CreateComment extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(4);
+        issuerController.getUseCase(4).run();
     }
 
 

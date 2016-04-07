@@ -28,7 +28,7 @@ public class CreateProject extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(2);
+        adminController.getUseCase(2).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -45,7 +45,7 @@ public class CreateProject extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(2);
+        adminController.getUseCase(2).run();
     }
 
 
@@ -63,7 +63,7 @@ public class CreateProject extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(2);
+        adminController.getUseCase(2).run();
 
     }
 
@@ -82,7 +82,7 @@ public class CreateProject extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(2);
+        adminController.getUseCase(2).run();
     }
 
 }
