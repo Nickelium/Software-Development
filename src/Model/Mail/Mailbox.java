@@ -47,9 +47,9 @@ public class Mailbox
 	 * 
 	 * @param s The subject to observe
 	 */
-	public void registerBugReport(Subject s)
+	public void registerBugReport(Subject structure)
 	{
-		ObserverBugReport ObBug = new ObserverBugReport(s);
+		ObserverBugReport ObBug = new ObserverBugReport(structure);
 		registrations.add(ObBug);
 	}
 	
@@ -58,9 +58,9 @@ public class Mailbox
 	 * 
 	 * @param s The subject to observe
 	 */
-	public void registerComment(Subject s)
+	public void registerComment(Subject structure)
 	{
-		ObserverComment ObComm = new ObserverComment(s);
+		ObserverComment ObComm = new ObserverComment(structure);
 		registrations.add(ObComm);
 	}
 	
@@ -69,9 +69,9 @@ public class Mailbox
 	 * 
 	 * @param s The subject to observe
 	 */
-	public void registerTag(Subject s)
+	public void registerTag(Subject structure)
 	{
-		ObserverTag ObTag = new ObserverTag(s);
+		ObserverTag ObTag = new ObserverTag(structure);
 		registrations.add(ObTag);
 	}
 	
@@ -81,9 +81,9 @@ public class Mailbox
 	 * @param s The subject to observe
 	 * @param tag The specific tag 
 	 */
-	public void registerSpecificTag(Subject s, Tag tag)
+	public void registerSpecificTag(Subject structure, Tag tag)
 	{
-		ObserverSpecificTag ObSTag = new ObserverSpecificTag(s, tag);
+		ObserverSpecificTag ObSTag = new ObserverSpecificTag(structure, tag);
 		registrations.add(ObSTag);
 	}
 
@@ -104,20 +104,21 @@ public class Mailbox
 	 */
 	private class ObserverBugReport extends ObserverAspect
 	{
-		public ObserverBugReport(Subject s)
+		public ObserverBugReport(Subject structure)
 		{
-			super(s);
+			super(structure);
 		}
 		
 		@Override
-		public void update(Subject s, Object aspect) {
-			if(super.s == s && aspect instanceof BugReport)
-				notifications.add(new Notification("New bugreport in \n" + super.s));
+		public void update(Subject structure, BugReport bugreport, Object aspect) {
+			if(super.structure == structure && aspect instanceof BugReport)
+				notifications.add(new Notification("New bugreport",bugreport, super.structure));
+			
 		}
 
 		@Override
 		public String toString() {
-			return "Registration for creation of new bugreport in \n" + super.s;
+			return "Registration for creation of new bugreport in \n" + super.structure;
 		}
 		
 	}
@@ -128,21 +129,21 @@ public class Mailbox
 	 */
 	private class ObserverTag extends ObserverAspect
 	{		
-		public ObserverTag(Subject s)
+		public ObserverTag(Subject structure)
 		{
-			super(s);
+			super(structure);
 		}
 		
 		@Override
-		public void update(Subject s, Object aspect) 
+		public void update(Subject structure, BugReport bugreport, Object aspect) 
 		{
-			if(super.s == s && aspect instanceof Tag)
-				notifications.add(new Notification("Tag changed in \n" + super.s));
+			if(super.structure == structure && aspect instanceof Tag)
+				notifications.add(new Notification("Tag changed", bugreport, super.structure));
 		}
 		
 		@Override
 		public String toString() {
-			return "Registration for change of tag in \n" + super.s;
+			return "Registration for change of tag in \n" + super.structure;
 		}
 		
 		
@@ -156,23 +157,23 @@ public class Mailbox
 	{
 		private Tag tag;
 		
-		public ObserverSpecificTag(Subject s, Tag tag)
+		public ObserverSpecificTag(Subject structure, Tag tag)
 		{
-			super(s);
+			super(structure);
 			this.tag = tag;
 		}
 		
 		@Override
-		public void update(Subject s, Object aspect) 
+		public void update(Subject structure, BugReport bugreport, Object aspect) 
 		{
-			if(super.s == s && tag.getClass().isInstance(aspect))
-				notifications.add(new Notification("Tag changed to " + tag + " in \n" + super.s));
+			if(super.structure == structure && tag.getClass().isInstance(aspect))
+				notifications.add(new Notification("Tag changed to " + tag, bugreport, super.structure));
 			
 		}
 		
 		@Override
 		public String toString() {
-			return "Registration for changed of tag to " + tag + " in \n" + super.s;
+			return "Registration for changed of tag to " + tag + " in \n" + super.structure;
 		}
 		
 	}
@@ -183,23 +184,22 @@ public class Mailbox
 	 */
 	private class ObserverComment extends ObserverAspect
 	{
-		private Subject s;
 		
-		public ObserverComment(Subject s)
+		public ObserverComment(Subject structure)
 		{
-			super(s);
+			super(structure);
 		}
 		
 		@Override
-		public void update(Subject s, Object aspect)
+		public void update(Subject structure, BugReport bugreport, Object aspect)
 		{
-			if(super.s == s && aspect instanceof Comment)
-				notifications.add(new Notification("New comment in \n" + super.s));	
+			if(super.structure == structure && aspect instanceof Comment)
+				notifications.add(new Notification("New comment", bugreport, super.structure));	
 		}
 		
 		@Override
 		public String toString() {
-			return "Registration for creation of new comment in \n" + super.s;
+			return "Registration for creation of new comment in \n" + super.structure;
 		}
 	}
 }

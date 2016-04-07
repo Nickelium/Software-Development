@@ -114,7 +114,7 @@ public class Comment extends Subject implements Observer<Comment>{
 
         this.comments.add(comment);
         comment.addObserver(this);
-		notifyObservers(comment);
+		notifyObservers(null,comment);
     }
 
     //endregion
@@ -156,9 +156,9 @@ public class Comment extends Subject implements Observer<Comment>{
      * @param aspect The aspect that has changed
      */
 	@Override
-	public void update(Subject s, Object aspect)
+	public void update(Subject structure, Comment s, Object aspect)
 	{
-		notifyObservers(aspect);
+		notifyObservers(this, aspect);
 	}
 
     //endregion

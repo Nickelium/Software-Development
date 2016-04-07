@@ -282,7 +282,7 @@ public class BugReport extends Subject implements Observer<Comment>{
     void setTag(Tag tag){
         if (tag == null) throw new IllegalArgumentException("Tag is null");
         this.tag = tag;
-        notifyObservers(tag);
+        notifyObservers(this, tag);
     }
 
     //endregion
@@ -337,7 +337,7 @@ public class BugReport extends Subject implements Observer<Comment>{
 
         this.comments.add(comment);
         comment.addObserver(this);
-		notifyObservers(comment);
+		notifyObservers(this, comment);
     }
     
     /**
@@ -406,7 +406,7 @@ public class BugReport extends Subject implements Observer<Comment>{
 			str += dev.toString() + ", ";
 			
 		//remove last comma
-		if(str.length() - 2 > 0) 
+		if(str.length() - 2 > 0 && str.charAt(str.length() - 2) == ',') 
 			return str.substring(0, str.length() - 2);
 		else 
 			return str;
@@ -419,8 +419,8 @@ public class BugReport extends Subject implements Observer<Comment>{
      * @param aspect The aspect that has changed
      */
 	@Override
-	public void update(Subject s, Object aspect) {
-		notifyObservers(aspect);
+	public void update(Subject structure, Comment s, Object aspect) {
+		notifyObservers(this, aspect);
 	}
 
     //endregion

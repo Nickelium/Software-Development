@@ -224,7 +224,7 @@ public class SubSystem extends Subject implements Observer<BugReport>
 		bugReports.add(bugReport);
 		
 		bugReport.addObserver(this);
-		notifyObservers(bugReport);
+		notifyObservers(bugReport, bugReport);
 	}
 	
 	/**
@@ -307,8 +307,8 @@ public class SubSystem extends Subject implements Observer<BugReport>
      * @param aspect The aspect that has changed
      */
 	@Override
-	public void update(Subject s, Object aspect) {
-		notifyObservers(aspect);
+	public void update(Subject s, BugReport bugreport, Object aspect) {
+		notifyObservers(bugreport, aspect);
 		
 	}
 }

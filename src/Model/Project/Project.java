@@ -16,7 +16,7 @@ import java.util.List;
  *	This class represents a project with all its related attributes.
  *
  */
-public class Project extends Subject implements Observer<SubSystem>
+public class Project extends Subject implements Observer<BugReport>
 {
 
 	private String name;
@@ -420,8 +420,8 @@ public class Project extends Subject implements Observer<SubSystem>
      * @param aspect The aspect that has changed
      */
 	@Override
-	public void update(Subject s, Object aspect) {
-		notifyObservers(aspect);
+	public void update(Subject s, BugReport bugreport, Object aspect) {
+		notifyObservers(bugreport, aspect);
 		
 	}
 
