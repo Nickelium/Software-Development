@@ -3,6 +3,7 @@ package UserPackageTest;
 import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.Issuer;
+import Model.User.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,12 +17,14 @@ public class UserTest {
     private Admin admin;
     private Developer developer;
     private Issuer issuer;
+    private UserService userService;
 
     @Before
     public void initialization() throws Exception {
-        this.admin = new Admin("TestFirstName1", "TestMiddleName1", "TestLastName1", "TestUserName1");
-        this.developer = new Developer("TestFirstName2", "TestMiddleName2", "TestLastName2", "TestUserName2");
-        this.issuer = new Issuer("TestFirstName3", "TestMiddleName3", "TestLastName3", "TestUserName3");
+        this.userService = new UserService();
+        this.admin = this.userService.createAdmin("TestFirstName1", "TestMiddleName1", "TestLastName1", "TestUserName1");
+        this.developer = this.userService.createDeveloper("TestFirstName2", "TestMiddleName2", "TestLastName2", "TestUserName2");
+        this.issuer = this.userService.createIssuer("TestFirstName3", "TestMiddleName3", "TestLastName3", "TestUserName3");
     }
 
     @Test

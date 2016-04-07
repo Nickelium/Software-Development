@@ -7,6 +7,7 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.Roles.Lead;
 import Model.User.Developer;
+import Model.User.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +20,7 @@ public class ProjectServiceTest {
 
 	private ProjectService projectService;
 	private BugReportService bugReportService;
+	private UserService userService;
 	private Project p1;
 	private Project p2;
 	private Developer dev;
@@ -28,7 +30,8 @@ public class ProjectServiceTest {
 	public void setup() throws ReportErrorToUserException {
 		projectService = new ProjectService();
 		bugReportService = new BugReportService(projectService);
-		dev = new Developer("Firstname", "Middlename", "Lastname", "Username");
+		userService = new UserService();
+		dev = this.userService.createDeveloper("Firstname", "Middlename", "Lastname", "Username");
 		p1 = projectService.createProject("P1", "P1 description", new TheDate("10/02/2020"), 10, new Lead(dev));
 		p2 = projectService.createProject("P2", "P2 description", new TheDate("10/02/2021"), 11, new Lead(dev));
 		this.s = projectService.createSubsystem("Test 1", "Test 1 description", p2);

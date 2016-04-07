@@ -1,6 +1,7 @@
 package UserPackageTest;
 
 import Model.User.Developer;
+import Model.User.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,10 +13,12 @@ import static junit.framework.TestCase.assertEquals;
 public class DeveloperTest {
 
     private Developer developer;
+    private UserService userService;
 
     @Before
     public void initialization() throws Exception {
-        this.developer = new Developer("TestFirstName1", "TestMiddleName1", "TestLastName1", "TestUserName1");
+        this.userService = new UserService();
+        this.developer = this.userService.createDeveloper("TestFirstName1", "TestMiddleName1", "TestLastName1", "TestUserName1");
     }
 
     @Test
