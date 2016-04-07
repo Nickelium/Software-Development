@@ -290,6 +290,15 @@ public class BugReport extends Subject implements Observer<Comment>{
         notifyObservers(tag);
     }
 
+    /**
+     * Returns if the bugreport is public.
+     *
+     * @return True if the bugreport is public.
+     */
+    public boolean isPublic() {
+        return pblc;
+    }
+
     //endregion
     
     //region setters

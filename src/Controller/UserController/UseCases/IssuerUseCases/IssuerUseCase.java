@@ -4,11 +4,13 @@ import Controller.Formatter;
 import Controller.IUI;
 import Controller.UserController.UseCases.UseCase;
 import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.*;
+import Model.BugReport.BugReport;
+import Model.BugReport.BugReportService;
 import Model.BugReport.SearchMethod.SearchOnAssigned;
 import Model.BugReport.SearchMethod.SearchOnDescription;
 import Model.BugReport.SearchMethod.SearchOnFiled;
 import Model.BugReport.SearchMethod.SearchOnTitle;
+import Model.BugReport.TagAssignmentService;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
@@ -87,8 +89,8 @@ public abstract class IssuerUseCase extends UseCase {
             String query = getUi().readString();
 
             // Make List with possible bug reports
-            List<BugReport> list1 = getBugReportService().search(new SearchOnTitle(query));
-            List<BugReport> list2 = getBugReportService().search(new SearchOnDescription(query));
+            List<BugReport> list1 = getBugReportService().search(new SearchOnTitle(query), this.getCurrentUser());
+            List<BugReport> list2 = getBugReportService().search(new SearchOnDescription(query), this.getCurrentUser());
 
             // Combine both lists
             bugReportList = new ArrayList<BugReport>(list1);
@@ -115,7 +117,7 @@ public abstract class IssuerUseCase extends UseCase {
             String userName = getUi().readString();
 
             User user = getUserService().getUser(userName);
-            bugReportList = getBugReportService().search(new SearchOnFiled(user));
+            bugReportList = getBugReportService().search(new SearchOnFiled(user), getCurrentUser());
             if (bugReportList.size() > 0) {
                 // Step 3
                 getUi().display("The search result for your query is: ");
@@ -130,7 +132,7 @@ public abstract class IssuerUseCase extends UseCase {
             String userName = getUi().readString();
 
             User user = getUserService().getUser(userName);
-            bugReportList = getBugReportService().search(new SearchOnAssigned(user));
+            bugReportList = getBugReportService().search(new SearchOnAssigned(user), getCurrentUser());
 
             if (bugReportList.size() > 0) {
                 // Step 3
