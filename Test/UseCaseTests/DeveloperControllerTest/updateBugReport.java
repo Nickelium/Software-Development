@@ -26,7 +26,7 @@ public class updateBugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.callUseCase(7);
+        developerController.getUseCase(7).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -42,7 +42,7 @@ public class updateBugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.callUseCase(7);
+        developerController.getUseCase(7).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -58,6 +58,6 @@ public class updateBugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.callUseCase(7);
+        developerController.getUseCase(7).run();
     }
 }
