@@ -1,5 +1,8 @@
 package Model.BugReport.TagTypes;
 
+import CustomExceptions.ReportErrorToUserException;
+import Model.BugReport.BugReport;
+import Model.BugReport.Patch;
 import Model.BugReport.Tag;
 
 import java.util.Arrays;
@@ -14,6 +17,12 @@ public class Assigned extends Tag {
      */
     public Assigned(){
         this.acceptedTags = Arrays.asList(UnderReview.class, NotABug.class);
+    }
+
+    @Override
+    protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
+        super.addPatch(bugReport, patch);
+        super.changeTag(bugReport, new UnderReview());
     }
 
     @Override
