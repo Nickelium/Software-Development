@@ -18,7 +18,7 @@ public class Issuer extends User {
      * @throws ReportErrorToUserException Username is empty.
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
-    public Issuer(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
+    Issuer(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
         super(firstName,middleName,lastName,userName);
     }
 
