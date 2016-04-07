@@ -27,9 +27,9 @@ public class UserServiceTest {
 
         // Create ListWrapper for reference
         this.service = new UserService();
-        this.admin = new Admin("adminFirstName", "adminMiddleName", "adminLastName", "adminUserName");
-        this.developer = new Developer("developerFirstName", "developerMiddleName", "developerLastName", "developerUserName");
-        this.issuer = new Issuer("issuerFirstName", "issuerMiddleName", "issuerLastName", "issuerUserName");
+        this.admin = this.service.createAdmin("adminFirstName", "adminMiddleName", "adminLastName", "adminUserName");
+        this.developer = this.service.createDeveloper("developerFirstName", "developerMiddleName", "developerLastName", "developerUserName");
+        this.issuer = this.service.createIssuer("issuerFirstName", "issuerMiddleName", "issuerLastName", "issuerUserName");
         userList.insert(admin);
         userList.insert(developer);
         userList.insert(issuer);

@@ -1,10 +1,13 @@
 package Model.BugReport.SearchMethod;
 
+import CustomExceptions.ReportErrorToUserException;
+import Model.BugReport.BugReport;
+import Model.BugReport.BugReportService;
+import Model.BugReport.Search;
+import Model.User.User;
+
 import java.util.Collections;
 import java.util.List;
-
-import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.*;
 
 public class SearchOnTitle extends Search
 {
@@ -16,11 +19,11 @@ public class SearchOnTitle extends Search
 	}
 	
 	@Override
-	protected List<BugReport> apply(BugReportService bugReportService) throws ReportErrorToUserException
+	protected List<BugReport> apply(BugReportService bugReportService, User user) throws ReportErrorToUserException
 	{
 		if (!isValidTitleString(title)) throw new ReportErrorToUserException("Invalid title");
-	    List<BugReport> bugreports = getAllBugReportsWrapped(bugReportService).getAllMatching(x -> x.getTitle().contains(title));
-	    return Collections.unmodifiableList(bugreports);
+		List<BugReport> bugreports = getAllBugReportsWrapped(bugReportService, user).getAllMatching(x -> x.getTitle().contains(title));
+		return Collections.unmodifiableList(bugreports);
 		
 	}
 	

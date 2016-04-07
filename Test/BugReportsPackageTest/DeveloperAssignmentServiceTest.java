@@ -24,7 +24,7 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
         project.addRole(programmer2);
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1,
+        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
                 TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
 
 
@@ -40,7 +40,7 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
         project.addRole(programmer2);
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1,
+        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
                 TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
 
 

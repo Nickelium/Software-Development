@@ -7,6 +7,7 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
+import Model.User.User;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 
@@ -47,9 +48,9 @@ public class BugReportService {
      * @throws ReportErrorToUserException the title or description is empty.
      * @throws IllegalArgumentException the creator or subsystem is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws ReportErrorToUserException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, subSystem, creator);
+        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc);
         return bugReport;
     }
     
@@ -71,9 +72,9 @@ public class BugReportService {
      * @throws ReportErrorToUserException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ReportErrorToUserException
+    public BugReport createBugReport(String title, String description, Issuer creator, boolean pblc, SubSystem subSystem, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag, initialAssignees);
+        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc, creationDate, tag, initialAssignees);
         return bugReport;
     }
 
@@ -111,14 +112,19 @@ public class BugReportService {
     }
 
     /**
-     * Getter to request all the BugReports there are.
+     * Getter to request all the BugReports that are visible to the user.
      *
-     * @return An unmodifiable list of all the BugReports.
+     * @return An unmodifiable list of all the BugReports visible to the user.
      */
-    public List<BugReport> getAllBugReports()
+    public List<BugReport> getAllBugReports(User user)
     {
     	List<BugReport> bugReports = new ArrayList<>();
         for (Project project: projectService.getAllProjects()){
+            for (BugReport bugReport : project.getAllBugReports()) {
+                if (this.isVisibleByUser(user, bugReport)) {
+                    bugReports.add(bugReport);
+                }
+            }
             bugReports.addAll(project.getAllBugReports());
         }
         return Collections.unmodifiableList(bugReports);
@@ -134,11 +140,13 @@ public class BugReportService {
      *
      * @throws ReportErrorToUserException
      * 			thrown when no bugreport is found.
+     * 		    or bugreport cannot be seen by user.
      */
-    public BugReport getBugReport(BugReportID id) throws ReportErrorToUserException
+    public BugReport getBugReport(BugReportID id, User user) throws ReportErrorToUserException
     {
         BugReport bugreport = getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
-
+        if (!this.isVisibleByUser(user, bugreport))
+            throw new ReportErrorToUserException("You are not allowed to see this bugreport.");
         if (bugreport == null) throw new ReportErrorToUserException("There is no bugreport with the given id.");
         return bugreport;
     }
@@ -163,9 +171,29 @@ public class BugReportService {
      * @throws ReportErrorToUserException
      * 
      */
-    public List<BugReport> search(Search searchMethod) throws ReportErrorToUserException
+    public List<BugReport> search(Search searchMethod, User user) throws ReportErrorToUserException
     {
-    	return searchMethod.apply(this);
+        return searchMethod.apply(this, user);
+    }
+
+
+    private boolean isVisibleByUser(User user, BugReport bugReport) {
+        if (bugReport.isPublic()) {
+            return true;
+        } else {
+
+            if (bugReport.getCreator().equals(user)) {
+                return true;
+            } else {
+                try {
+                    Project project = projectService.getProjectsContainingBugReport(bugReport);
+                    if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user))) return true;
+                } catch (ReportErrorToUserException e) {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     private IListWrapper<BugReport> getAllBugReportsWrapped()

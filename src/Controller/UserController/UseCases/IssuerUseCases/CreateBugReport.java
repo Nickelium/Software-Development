@@ -73,11 +73,21 @@ public class CreateBugReport extends IssuerUseCase{
         String title = getUi().readString();
         getUi().display("Description:");
         String description = getUi().readString();
+        getUi().display("Public true (1) or false (0)?");
+        int value = getUi().readInt();
+        boolean pblc;
+        if (value == 0) {
+            pblc = false;
+        } else if (value == 1) {
+            pblc = true;
+        } else {
+            throw new ReportErrorToUserException("Invalid answer!");
+        }
 
         Issuer issuer = (Issuer) getCurrentUser();
 
         // Step 10
-        BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem);
+        BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem, pblc);
 
         // Step 8
         List<BugReport> possibleDependencies = getBugReportService().getBugReportsForProject(project);

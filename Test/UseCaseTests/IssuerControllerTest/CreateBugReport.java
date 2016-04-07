@@ -28,7 +28,7 @@ public class CreateBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(2);
+        issuerController.getUseCase(2).run();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -40,7 +40,7 @@ public class CreateBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(2);
+        issuerController.getUseCase(2).run();
 
     }
 
@@ -54,7 +54,7 @@ public class CreateBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(2);
+        issuerController.getUseCase(2).run();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -70,7 +70,7 @@ public class CreateBugReport extends IssuerControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, loginController.getCurrentUser());
-        issuerController.callUseCase(2);
+        issuerController.getUseCase(2).run();
     }
 
 }

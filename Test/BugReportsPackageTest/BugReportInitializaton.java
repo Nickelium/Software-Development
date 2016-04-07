@@ -58,9 +58,9 @@ public class BugReportInitializaton {
         subSystem1B = projectService.createSubsystem("Sub1B", "Des Sub1B", project1);
         subSystem1A1 = projectService.createSubsystem("Sub1A1", "Des Sub1A1", subSystem1A);
         subSystem2 = projectService.createSubsystem("Sub2", "Des Sub2", project2);
-        bugReport1 = bugReportService.createBugReport("Bug1", "Des Bug1", issuer1, subSystem1B);
-        bugReport2 = bugReportService.createBugReport("Bug2", "Des Bug2", issuer2, subSystem1A1, TheDate.TheDateNow(), new Closed(), Collections.singletonList(dev2));
-        bugReport3 = bugReportService.createBugReport("Bug3", "Des Bug3", issuer1, subSystem2, TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev1, dev2));
+        bugReport1 = bugReportService.createBugReport("Bug1", "Des Bug1", issuer1, subSystem1B, BugReport.PUBLIC);
+        bugReport2 = bugReportService.createBugReport("Bug2", "Des Bug2", issuer2, BugReport.PUBLIC, subSystem1A1, TheDate.TheDateNow(), new Closed(), Collections.singletonList(dev2));
+        bugReport3 = bugReportService.createBugReport("Bug3", "Des Bug3", issuer1, BugReport.PUBLIC, subSystem2, TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev1, dev2));
         comment1 = bugReportService.createComment("Test Comment", issuer1, bugReport1);
     }
 }

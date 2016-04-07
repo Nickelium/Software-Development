@@ -23,7 +23,7 @@ public class ShowProject extends AdminControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(0);
+        adminController.getUseCase(0).run();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -35,7 +35,7 @@ public class ShowProject extends AdminControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(0);
+        adminController.getUseCase(0).run();
     }
 
 }

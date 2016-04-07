@@ -1,6 +1,7 @@
 package UserPackageTest;
 
 import Model.User.Issuer;
+import Model.User.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,10 +13,12 @@ import static junit.framework.TestCase.assertEquals;
 public class IssuerTest {
 
     private Issuer issuer;
+    private UserService userService;
 
     @Before
     public void initialization() throws Exception {
-        this.issuer = new Issuer("TestFirstName1", "TestMiddleName1", "TestLastName1", "TestUserName1");
+        this.userService = new UserService();
+        this.issuer = this.userService.createIssuer("TestFirstName1", "TestMiddleName1", "TestLastName1", "TestUserName1");
     }
 
     @Test

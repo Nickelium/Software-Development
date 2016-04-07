@@ -18,7 +18,7 @@ public class Admin extends User {
      * @throws ReportErrorToUserException Username is empty.
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
-    public Admin(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
+     Admin(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
         super(firstName,middleName,lastName,userName);
     }
 

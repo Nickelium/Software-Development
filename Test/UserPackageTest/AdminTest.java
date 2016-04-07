@@ -1,6 +1,7 @@
 package UserPackageTest;
 
 import Model.User.Admin;
+import Model.User.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,10 +13,12 @@ import static junit.framework.TestCase.assertEquals;
 public class AdminTest {
 
     private Admin admin1;
+    private UserService userService;
 
     @Before
     public void initialization() throws Exception {
-        this.admin1 = new Admin("TestFirstName1", "TestMiddleName1", "TestLastName1", "TestUserName1");
+        this.userService = new UserService();
+        this.admin1 = this.userService.createAdmin("TestFirstName1", "TestMiddleName1", "TestLastName1", "TestUserName1");
     }
 
     @Test
