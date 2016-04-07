@@ -46,7 +46,7 @@ public class Initializer implements IInitializer {
             this.bugReportService = new BugReportService(projectService);
             this.developerAssignmentService = new DeveloperAssignmentService(projectService);
             this.tagAssignmentService = new TagAssignmentService(projectService);
-            this.mailboxService = new MailboxService();
+            this.mailboxService = new MailboxService(bugReportService);
 
             // init users
             Admin sam = userService.createAdmin("Frederick", "Sam", "Curtis", "curt");
@@ -86,7 +86,9 @@ public class Initializer implements IInitializer {
                     subSystemB1,
                     new TheDate(3, 1, 2016),
                     new Closed(),
-                    Collections.singletonList(maria)
+                    Collections.singletonList(maria),
+                    new ArrayList<>(),
+                    new ArrayList<>()
             );
 
             bugReportService.createBugReport("Crash while processing user input",
@@ -96,7 +98,9 @@ public class Initializer implements IInitializer {
                     subSystemA31,
                     new TheDate(15, 1, 2016),
                     new Assigned(),
-                    Arrays.asList(major, maria)
+                    Arrays.asList(major, maria),
+                    new ArrayList<>(),
+                    new ArrayList<>()
             );
 
             bugReportService.createBugReport("SubsystemA2 freezes",
@@ -106,6 +110,8 @@ public class Initializer implements IInitializer {
                     subSystemA2,
                     new TheDate(4, 2, 2016),
                     new New(),
+                    new ArrayList<>(),
+                    new ArrayList<>(),
                     new ArrayList<>());
 
         } catch (ReportErrorToUserException e) {

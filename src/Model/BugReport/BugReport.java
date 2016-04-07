@@ -10,6 +10,7 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,12 +30,19 @@ public class BugReport extends Subject implements Observer<Comment>{
     private String title;
     private String description;
     private TheDate creationDate;
-    private Tag tag;
+    Tag tag;
     private Issuer creator;
     List<Developer> assignees;
     private List<Comment> comments;
     private List<BugReport> dependencies;
     private boolean pblc;
+<<<<<<< HEAD
+=======
+    private int solutionScore;
+    List<Patch> patches;
+    List<Test> tests;
+    private Patch selectedPatch;
+>>>>>>> 5ccb9df4555f05e77feb8de032e9fbeceb6a8d55
 
     //optional attributes
     private TargetMilestone targetMilestone;
@@ -60,7 +68,7 @@ public class BugReport extends Subject implements Observer<Comment>{
      */
     BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc) throws ReportErrorToUserException
     {
-        this(title, description, subSystem, creator, pblc, TheDate.TheDateNow(), new New(), new ArrayList<>());
+        this(title, description, subSystem, creator, pblc, TheDate.TheDateNow(), new New(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
     
     /**
@@ -77,7 +85,7 @@ public class BugReport extends Subject implements Observer<Comment>{
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ReportErrorToUserException
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc, TheDate creationDate, Tag tag, List<Developer> initialAssignies, List<Patch> patches, List<Test> tests) throws ReportErrorToUserException
     {
          if (!isValidTitle(title)) throw new ReportErrorToUserException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ReportErrorToUserException("The description cannot be empty!") ;
@@ -86,6 +94,7 @@ public class BugReport extends Subject implements Observer<Comment>{
          if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
          if (tag == null) throw new IllegalArgumentException("Tag is null");
          if (initialAssignies == null) throw new IllegalArgumentException("List cannot be null");
+        if (patches == null) throw new IllegalArgumentException("Patches cannot be null");
 
          this.title = title;
          this.description = description;
@@ -104,6 +113,8 @@ public class BugReport extends Subject implements Observer<Comment>{
          this.comments = new ArrayList<>();
          this.dependencies = new ArrayList<>();
          this.assignees = new ArrayList<>(initialAssignies);
+        this.patches = new ArrayList<>(patches);
+        this.tests = new ArrayList<>(tests);
 
     }
 
@@ -219,7 +230,44 @@ public class BugReport extends Subject implements Observer<Comment>{
     {
     	return errorMessage;
     }
-    
+
+    /**
+     * Getter to request the current score of the bugReport.
+     *
+     * @return 0 if not rated and value between 1 and 5 otherwise.
+     */
+    public int getSolutionScore() {
+        return this.solutionScore;
+    }
+
+    /**
+     * Getter to request all the patches of the current bugreport.
+     *
+     * @return An unmodifiable list of all the patches.
+     */
+    public List<Patch> getPatches() {
+        return Collections.unmodifiableList(this.patches);
+    }
+
+    /**
+     * Getter to request all the test of the current bugreport.
+     *
+     * @return An unmodifiable list of all the tests.
+     */
+    public List<Test> getTests() {
+        return Collections.unmodifiableList(this.tests);
+    }
+
+    /**
+     * Getter to request the selected patch.
+     *
+     * @return The selected patch or null if no patch available.
+     */
+    @Nullable
+    public Patch getSelectedPatch() {
+        return this.selectedPatch;
+    }
+
     //endregion
 
     //region Checkers
@@ -283,12 +331,23 @@ public class BugReport extends Subject implements Observer<Comment>{
      *
      * @param tag The tag to which to set the bugreport.
      *
-     * @throws IllegalArgumentException The tag given is null.
+     * @throws ReportErrorToUserException The tag cannot be changed to the new tag.
      */
-    void setTag(Tag tag){
+    void setTag(Tag tag) throws ReportErrorToUserException {
         if (tag == null) throw new IllegalArgumentException("Tag is null");
-        this.tag = tag;
+        this.getTag().changeTag(this, tag);
         notifyObservers(this, tag);
+    }
+
+    /**
+     * Setter to change the patch of the bugreport.
+     *
+     * @param patch The patch to which to set the bugreport.
+     * @throws IllegalArgumentException The patch given is null.
+     */
+    void setSelectedPatch(Patch patch) {
+        if (patch == null) throw new IllegalArgumentException("Patch is null");
+        this.selectedPatch = patch;
     }
 
     /**
@@ -320,6 +379,17 @@ public class BugReport extends Subject implements Observer<Comment>{
     {
     	if(isValidErrorMessage(errorMessage)) 
     		this.errorMessage = errorMessage;
+    }
+
+    /**
+     * Setter to set the solutionscore.
+     *
+     * @param score The score to give the solution.
+     * @throws ReportErrorToUserException The score is an invalid score.
+     */
+    void setSolutionScore(int score) throws ReportErrorToUserException {
+        if (score < 1 || score > 5)
+            throw new ReportErrorToUserException("The score should be a int value between 1 and 5");
     }
 
     //region Functions
@@ -355,6 +425,32 @@ public class BugReport extends Subject implements Observer<Comment>{
 		notifyObservers(this, comment);
     }
     
+    /**
+     * Function to add a patch to the list of patches.
+     *
+     * @param patch The patch to add tot the patches.
+     * @throws IllegalArgumentException The given patch is null.
+     * @throws ReportErrorToUserException Unable to add patch to bugreport.
+     */
+    void addPatch(Patch patch) throws ReportErrorToUserException {
+        if (patch == null) throw new IllegalArgumentException("Patch is null");
+
+        this.getTag().addPatch(this, patch);
+    }
+
+    /**
+     * Function to add a test to the list of tests.
+     *
+     * @param test The test to add tot the tests.
+     * @throws IllegalArgumentException The given test is null.
+     * @throws ReportErrorToUserException Unable to add test to the bugreport.
+     */
+    void addTest(Test test) throws ReportErrorToUserException {
+        if (test == null) throw new IllegalArgumentException("Test is null");
+
+        this.getTag().addTest(this, test);
+    }
+
     /**
      * Getter to get all the comments of the bugreport.
      *
@@ -421,14 +517,22 @@ public class BugReport extends Subject implements Observer<Comment>{
     			+ "\nDescription: " + getDescription()+ "\nCreation date: "
     			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
     			+ getCreator();
-    	
-    	str += "\nAssignees: ";
+
+        if (this.selectedPatch != null) {
+            str += "Selected Patch: " + selectedPatch;
+        }
+
+        if (this.getSolutionScore() != 0) {
+            str += "Score of solution: " + getSolutionScore();
+        }
+
+        str += "\nAssignees: ";
     	
     	for (Developer dev : getAssignees()) 
 			str += dev.toString() + ", ";
 			
 		//remove last comma
-		if(str.length() - 2 > 0 && str.charAt(str.length() - 2) == ',') 
+		if(str.length() - 2 > 0 && str.charAt(str.length() - 2) == ',')
 			return str.substring(0, str.length() - 2);
 		else 
 			return str;

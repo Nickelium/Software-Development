@@ -73,6 +73,22 @@ public class CreateBugReport extends IssuerUseCase{
         String title = getUi().readString();
         getUi().display("Description:");
         String description = getUi().readString();
+
+        Issuer issuer = (Issuer) getCurrentUser();
+
+        // Step 8 + 9
+        getUi().display("Please enter the optional information. (Terminate without any value if you don't want to give this information.)");
+
+        getUi().display("How to reproduce the bug: (Terminate with a . on a new line)");
+        String procedure = getUi().readMultiline();
+
+        getUi().display("Stack trace: (Terminate with a . on a new line)");
+        String stackTrace = getUi().readMultiline();
+
+        getUi().display("Error message: (Terminate with a . on a new line)");
+        String errorMessage = getUi().readMultiline();
+
+        // Step 10+11
         getUi().display("Public true (1) or false (0)?");
         int value = getUi().readInt();
         boolean pblc;
@@ -84,17 +100,18 @@ public class CreateBugReport extends IssuerUseCase{
             throw new ReportErrorToUserException("Invalid answer!");
         }
 
-        Issuer issuer = (Issuer) getCurrentUser();
-
-        // Step 10
+        // Step 14
         BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem, pblc);
+        if(!procedure.equals("")) bugReport.setProcedureBug(procedure);
+        if(!stackTrace.equals("")) bugReport.setStackTrace(stackTrace);
+        if(!errorMessage.equals("")) bugReport.setErrorMessage(errorMessage);
 
-        // Step 8
+        // Step 12
         List<BugReport> possibleDependencies = getBugReportService().getBugReportsForProject(project);
         String possibleDependenciesStr = Formatter.formatBugReportList(possibleDependencies);
         while (true) {
 
-            // Step 9
+            // Step 13
             getUi().display("\n");
             getUi().display("Select a possible dependency (enter -1 to exit): ");
             getUi().display(possibleDependenciesStr);

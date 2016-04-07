@@ -22,7 +22,14 @@ public class New extends Tag {
     @Override
     protected void assignDeveloper(BugReport bugReport, Developer developer) throws ReportErrorToUserException {
         super.assignDeveloper(bugReport, developer);
-        super.changeTag(bugReport, new Assigned());
+        this.changeTag(bugReport, new Assigned());
+    }
+
+    @Override
+    protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
+        if (!bugReport.getDependencies().isEmpty())
+            throw new ReportErrorToUserException("The list of dependencies is not empty!");
+        super.changeTag(bugReport, tag);
     }
 
     @Override
