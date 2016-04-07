@@ -140,11 +140,13 @@ public class BugReportService {
      *
      * @throws ReportErrorToUserException
      * 			thrown when no bugreport is found.
+     * 		    or bugreport cannot be seen by user.
      */
-    public BugReport getBugReport(BugReportID id) throws ReportErrorToUserException
+    public BugReport getBugReport(BugReportID id, User user) throws ReportErrorToUserException
     {
         BugReport bugreport = getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
-
+        if (!this.isVisibleByUser(user, bugreport))
+            throw new ReportErrorToUserException("You are not allowed to see this bugreport.");
         if (bugreport == null) throw new ReportErrorToUserException("There is no bugreport with the given id.");
         return bugreport;
     }

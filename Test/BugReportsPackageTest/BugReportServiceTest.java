@@ -30,13 +30,13 @@ public class BugReportServiceTest extends BugReportInitializaton {
 
     @Test
     public void getBugReportTest_Valid() throws ReportErrorToUserException {
-        BugReport report = bugReportService.getBugReport(bugReport2.getId());
+        BugReport report = bugReportService.getBugReport(bugReport2.getId(), bugReport2.getCreator());
         assertEquals(bugReport2, report);
     }
 
     @Test(expected = ReportErrorToUserException.class)
     public void getBugReportTest_InValid() throws ReportErrorToUserException {
-        bugReportService.getBugReport(new BugReportID());
+        bugReportService.getBugReport(new BugReportID(), issuer1);
     }
 
     @Test
