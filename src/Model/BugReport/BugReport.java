@@ -9,6 +9,7 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -331,7 +332,7 @@ public class BugReport extends Subject implements Observer<Comment>{
     void setTag(Tag tag) throws ReportErrorToUserException {
         if (tag == null) throw new IllegalArgumentException("Tag is null");
         this.getTag().changeTag(this, tag);
-        notifyObservers(tag);
+        notifyObservers(this, tag);
     }
 
     /**

@@ -1,12 +1,5 @@
 package MailPackageTest;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
@@ -22,8 +15,13 @@ import Model.Project.TheDate;
 import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.User.Issuer;
-import Model.User.User;
 import Model.User.UserService;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class MailboxServiceTest {
 	private Issuer user;
@@ -47,7 +45,7 @@ public class MailboxServiceTest {
 		bugReportService = new BugReportService(projectService);
 		p = projectService.createProject("P", "D", new TheDate("10/10/2018"), 10, new Lead(dev));
 		s = projectService.createSubsystem("Sub", "des", p);
-		bugReport = bugReportService.createBugReport("T", "D", user, s);
+		bugReport = bugReportService.createBugReport("T", "D", user, s, BugReport.PUBLIC);
 		tagAssignmentService = new TagAssignmentService(projectService);
 	}
 	
