@@ -5,6 +5,7 @@ import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Milestone.Milestone;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,9 +21,11 @@ public class SubSystem extends Subject implements Observer<BugReport>
 	private String name;
 	private String description;
 	private double versionID = 1.0;
+	private Milestone latestAchievedMilestone = null;
 	
 	private List<SubSystem> subSystems = new ArrayList<>();
 	private List<BugReport> bugReports = new ArrayList<>();
+	private List<Milestone> milestones = new ArrayList<>();
 	
 	/**
 	 * Constructoren
@@ -39,6 +42,7 @@ public class SubSystem extends Subject implements Observer<BugReport>
 	{
 		this.setName(name);
 		this.setDescription(description);
+		this.latestAchievedMilestone = new Milestone();
 	}
 	
 	/**
@@ -259,7 +263,7 @@ public class SubSystem extends Subject implements Observer<BugReport>
     }
 
     /**
-     * Getter to request hte bugreports of the current subsystem.
+     * Getter to request the bugreports of the current subsystem.
      *
      * @return A list of the bugreports of the current subsystem.
      */
@@ -287,6 +291,19 @@ public class SubSystem extends Subject implements Observer<BugReport>
     	
     	return forkedSubSystem;
     }
+
+	public List<Milestone> getAllMilestones(){
+		List<Milestone> milestones = new ArrayList<>();
+		milestones.addAll(this.milestones);
+		for (SubSystem subsystem: this.getAllSubSystems()){
+			milestones.addAll(subsystem.getAllMilestones());
+		}
+		return Collections.unmodifiableList(milestones);
+	}
+
+	List<Milestone> getMilestones(){
+		return this.milestones;
+	}
     
     /**
 	 * Method to represent a subsystem as a string.
