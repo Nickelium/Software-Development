@@ -123,16 +123,11 @@ public class Milestone {
                 i = i+2;
             }
 
-            else if(isDigit(chars[i]) && isDigit(chars[i+1])) {
+            // isDigit(chars[i]) && isDigit(chars[i+1]
+            else {
                 stringValue = stringValue + chars[i] + chars[i+1];
                 i = i+2;
             }
-
-            else{
-                System.out.println("Something else happened");
-                i++;
-            }
-
         }
 
         idValue = Double.parseDouble(stringValue);
