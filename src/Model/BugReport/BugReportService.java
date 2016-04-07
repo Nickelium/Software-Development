@@ -125,7 +125,6 @@ public class BugReportService {
                     bugReports.add(bugReport);
                 }
             }
-            bugReports.addAll(project.getAllBugReports());
         }
         return Collections.unmodifiableList(bugReports);
     }
