@@ -27,7 +27,7 @@ public class CreateSubSystem extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(6);
+        adminController.getUseCase(6).run();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -40,7 +40,7 @@ public class CreateSubSystem extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(6);
+        adminController.getUseCase(6).run();
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CreateSubSystem extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(6);
+        adminController.getUseCase(6).run();
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -68,7 +68,7 @@ public class CreateSubSystem extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(6);
+        adminController.getUseCase(6).run();
 
     }
 
@@ -81,6 +81,6 @@ public class CreateSubSystem extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
-        adminController.callUseCase(6);
+        adminController.getUseCase(6).run();
     }
 }
