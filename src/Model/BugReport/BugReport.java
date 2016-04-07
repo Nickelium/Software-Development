@@ -9,6 +9,7 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +29,7 @@ public class BugReport extends Subject implements Observer<Comment>{
     private String title;
     private String description;
     private TheDate creationDate;
-    private Tag tag;
+    Tag tag;
     private Issuer creator;
     List<Developer> assignees;
     private List<Comment> comments;
@@ -36,7 +37,8 @@ public class BugReport extends Subject implements Observer<Comment>{
     private boolean pblc;
     private int solutionScore;
     List<Patch> patches;
-    private List<Test> tests;
+    List<Test> tests;
+    private Patch selectedPatch;
     
     //optional attributes
     //add milestone
@@ -244,12 +246,22 @@ public class BugReport extends Subject implements Observer<Comment>{
     }
 
     /**
-     * Getter to reqest all the test of the current bugreport.
+     * Getter to request all the test of the current bugreport.
      *
      * @return An unmodifiable list of all the tests.
      */
     public List<Test> getTests() {
         return Collections.unmodifiableList(this.tests);
+    }
+
+    /**
+     * Getter to request the selected patch.
+     *
+     * @return The selected patch or null if no patch available.
+     */
+    @Nullable
+    public Patch getSelectedPatch() {
+        return this.selectedPatch;
     }
     
     //endregion
@@ -315,12 +327,23 @@ public class BugReport extends Subject implements Observer<Comment>{
      *
      * @param tag The tag to which to set the bugreport.
      *
-     * @throws IllegalArgumentException The tag given is null.
+     * @throws ReportErrorToUserException The tag cannot be changed to the new tag.
      */
-    void setTag(Tag tag){
+    void setTag(Tag tag) throws ReportErrorToUserException {
         if (tag == null) throw new IllegalArgumentException("Tag is null");
-        this.tag = tag;
+        this.getTag().changeTag(this, tag);
         notifyObservers(tag);
+    }
+
+    /**
+     * Setter to change the patch of the bugreport.
+     *
+     * @param patch The patch to which to set the bugreport.
+     * @throws IllegalArgumentException The patch given is null.
+     */
+    void setSelectedPatch(Patch patch) {
+        if (patch == null) throw new IllegalArgumentException("Patch is null");
+        this.selectedPatch = patch;
     }
 
     /**
@@ -403,11 +426,12 @@ public class BugReport extends Subject implements Observer<Comment>{
      *
      * @param patch The patch to add tot the patches.
      * @throws IllegalArgumentException The given patch is null.
+     * @throws ReportErrorToUserException Unable to add patch to bugreport.
      */
-    void addPatch(Patch patch) {
+    void addPatch(Patch patch) throws ReportErrorToUserException {
         if (patch == null) throw new IllegalArgumentException("Patch is null");
 
-        this.patches.add(patch);
+        this.getTag().addPatch(this, patch);
     }
 
     /**
@@ -415,13 +439,14 @@ public class BugReport extends Subject implements Observer<Comment>{
      *
      * @param test The test to add tot the tests.
      * @throws IllegalArgumentException The given test is null.
+     * @throws ReportErrorToUserException Unable to add test to the bugreport.
      */
-    void addTest(Test test) {
+    void addTest(Test test) throws ReportErrorToUserException {
         if (test == null) throw new IllegalArgumentException("Test is null");
 
-        this.tests.add(test);
+        this.getTag().addTest(this, test);
     }
-    
+
     /**
      * Getter to get all the comments of the bugreport.
      *
@@ -481,8 +506,16 @@ public class BugReport extends Subject implements Observer<Comment>{
     			+ "\nDescription: " + getDescription()+ "\nCreation date: "
     			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
     			+ getCreator();
-    	
-    	str += "\nAssignees: ";
+
+        if (this.selectedPatch != null) {
+            str += "Selected Patch: " + selectedPatch;
+        }
+
+        if (this.getSolutionScore() != 0) {
+            str += "Score of solution: " + getSolutionScore();
+        }
+
+        str += "\nAssignees: ";
     	
     	for (Developer dev : getAssignees()) 
 			str += dev.toString() + ", ";
