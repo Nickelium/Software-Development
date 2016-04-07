@@ -17,6 +17,12 @@ import Model.User.User;
  */
 public class MailboxService 
 {
+	private BugReportService bugReportService;
+	
+	public MailboxService(BugReportService bugReportService)
+	{
+		this.bugReportService = bugReportService;
+	}
 	/**
 	 * Method to get a list of notifications
 	 * 
@@ -25,7 +31,7 @@ public class MailboxService
 	 * 
 	 * @return The list of notifications
 	 * 
-	 * @throws ReportErrorToUserException when the given number is incorret
+	 * @throws ReportErrorToUserException when the given number is incorrect
 	 */
 	public List<Notification> getNotifications(User user, int number) throws ReportErrorToUserException
 	{
@@ -33,7 +39,12 @@ public class MailboxService
 		List<Notification> listOrderRecent = reverse(listOriginal);
 		try
 		{
-			return listOrderRecent.subList(0, number);
+			 List<Notification> listSubbed = listOrderRecent.subList(0, number);
+			 List<Notification> listFiltered = new ArrayList<>();
+			 for(Notification not : listSubbed)
+				 if(bugReportService.isVisibleByUser(user, not.getBugReport()))
+					 listFiltered.add(not);
+			 return listFiltered;
 		}
 		catch(IllegalArgumentException e)
 		{

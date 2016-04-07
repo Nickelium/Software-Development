@@ -176,7 +176,7 @@ public class BugReportService {
     }
 
 
-    private boolean isVisibleByUser(User user, BugReport bugReport) {
+    public boolean isVisibleByUser(User user, BugReport bugReport) {
         if (bugReport.isPublic()) {
             return true;
         } else {
