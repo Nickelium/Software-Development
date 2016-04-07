@@ -47,8 +47,8 @@ public class ProjectServiceTest {
 	
 	@Test
 	public void forkProject_SUCCES() throws ReportErrorToUserException {
-		
-		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
+
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s, BugReport.PUBLIC);
 		Project p3 = projectService.forkProject(p2);
 		
 		assertEquals(p3.getName(),p2.getName());
@@ -129,7 +129,7 @@ public class ProjectServiceTest {
 	public void getProjectContainingBugReport_SUCCES() throws ReportErrorToUserException
 	{
 		SubSystem s = projectService.createSubsystem("A", "A", p1);
-		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s, BugReport.PUBLIC);
 
 		assertEquals(projectService.getProjectsContainingBugReport(bug1), p1);
 	}
@@ -139,7 +139,7 @@ public class ProjectServiceTest {
 	{
 		Project pp = projectService.createProject("zae", "des", new TheDate("10/02/14"), 10, new Lead(dev));
 		SubSystem ssss = projectService.createSubsystem("az", "des", pp);
-		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, ssss);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, ssss, BugReport.PUBLIC);
 		projectService.getProjectsContainingBugReport(bug1);
 	}
 }

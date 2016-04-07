@@ -1,12 +1,14 @@
 package Controller;
 
 import CustomExceptions.ReportErrorToUserException;
+import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.New;
+import Model.Mail.MailboxService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -18,7 +20,6 @@ import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.Issuer;
 import Model.User.UserService;
-import Model.Mail.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,22 +82,27 @@ public class Initializer implements IInitializer {
             bugReportService.createBugReport("The function parse_ewd returns unexpected results",
                     "If the function parse_ewd is invoked while ...",
                     doc,
+                    BugReport.PUBLIC,
                     subSystemB1,
                     new TheDate(3, 1, 2016),
                     new Closed(),
-                    Collections.singletonList(maria));
+                    Collections.singletonList(maria)
+            );
 
             bugReportService.createBugReport("Crash while processing user input",
                     "If incorrect user input is entered into the system ...",
                     doc,
+                    BugReport.PUBLIC,
                     subSystemA31,
                     new TheDate(15, 1, 2016),
                     new Assigned(),
-                    Arrays.asList(major, maria));
+                    Arrays.asList(major, maria)
+            );
 
             bugReportService.createBugReport("SubsystemA2 freezes",
                     "If the function process_dfe is invoked with ...",
                     charlie,
+                    BugReport.PRIVATE,
                     subSystemA2,
                     new TheDate(4, 2, 2016),
                     new New(),

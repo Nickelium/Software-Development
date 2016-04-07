@@ -27,7 +27,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         project.addRole(programmer2);
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1,
+        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
                 TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
 
         tagAssignmentService.assignTag(dev3, bugreport, new UnderReview());
@@ -41,7 +41,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         project.addRole(programmer2);
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1,
+        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
                 TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
 
         tagAssignmentService.assignTag(dev7, bugreport, new UnderReview());
@@ -60,7 +60,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         project.addRole(programmer2);
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1,
+        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
                 TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
 
         tagAssignmentService.assignTag(dev6, bugreport, new UnderReview());
@@ -91,7 +91,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         project.addRole(programmer2);
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1,
+        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
                 TheDate.TheDateNow(), new UnderReview(), Arrays.asList(dev3, dev6));
 
         tagAssignmentService.assignTag(dev1, bugreport, new Closed());

@@ -196,8 +196,8 @@ public class ProjectTest {
 	public void getAllBugReports_SUCCES() throws Exception
 	{		
 		List<BugReport> list = new ArrayList<>();
-		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s, BugReport.PUBLIC);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss, BugReport.PUBLIC);
 		list.add(bug1);
 		list.add(bug2);
 
@@ -207,9 +207,9 @@ public class ProjectTest {
 	
 	@Test
 	public void fork_SUCCES() throws Exception
-	{		
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss);
+	{
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s, BugReport.PUBLIC);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss, BugReport.PUBLIC);
 		
 		p.addRole(programmer);
 		

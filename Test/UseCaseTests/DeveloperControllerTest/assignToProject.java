@@ -38,6 +38,5 @@ public class assignToProject extends DeveloperTestInitializer {
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
         developerController.callUseCase(5);
-
     }
 }

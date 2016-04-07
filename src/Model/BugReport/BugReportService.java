@@ -47,9 +47,9 @@ public class BugReportService {
      * @throws ReportErrorToUserException the title or description is empty.
      * @throws IllegalArgumentException the creator or subsystem is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem) throws ReportErrorToUserException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, subSystem, creator);
+        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc);
         return bugReport;
     }
     
@@ -71,9 +71,9 @@ public class BugReportService {
      * @throws ReportErrorToUserException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ReportErrorToUserException
+    public BugReport createBugReport(String title, String description, Issuer creator, boolean pblc, SubSystem subSystem, TheDate creationDate, Tag tag, List<Developer> initialAssignees) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title,description,subSystem,creator, creationDate, tag, initialAssignees);
+        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc, creationDate, tag, initialAssignees);
         return bugReport;
     }
 

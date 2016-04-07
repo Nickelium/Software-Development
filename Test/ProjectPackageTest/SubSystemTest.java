@@ -1,14 +1,6 @@
-
-
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
+package ProjectPackageTest;
 
 import CustomExceptions.ReportErrorToUserException;
-import org.junit.Before;
-import org.junit.Test;
-
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Project.Project;
@@ -19,6 +11,14 @@ import Model.Roles.Lead;
 import Model.Roles.Programmer;
 import Model.User.Developer;
 import Model.User.UserService;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class SubSystemTest {
 
@@ -111,8 +111,8 @@ public class SubSystemTest {
 	public void getAllBugReports_SUCCES() throws Exception
 	{
 		List<BugReport> list = new ArrayList<>();
-		BugReport bug1 =bugReportService.createBugReport("bug1", "d", dev, s);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s, BugReport.PUBLIC);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss, BugReport.PUBLIC);
 		list.add(bug1);
 		list.add(bug2);
 	

@@ -93,11 +93,11 @@ public class AssignmentTestsInitialization {
         project2.addRole(tester2);
         project2.addRole(programmer2);
 
-        bugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1,
+        bugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
                 TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
-        bugReport2 = bugReportService.createBugReport("Bugreport2", "Des bugreport2", issuer2, subSystem3,
+        bugReport2 = bugReportService.createBugReport("Bugreport2", "Des bugreport2", issuer2, BugReport.PUBLIC, subSystem3,
                 TheDate.TheDateNow(), new Resolved(), Arrays.asList(dev5));
-        bugReport3 = bugReportService.createBugReport("Bugreport3", "Des bugreport3", issuer1, subSystem4,
+        bugReport3 = bugReportService.createBugReport("Bugreport3", "Des bugreport3", issuer1, BugReport.PUBLIC, subSystem4,
                 TheDate.TheDateNow(), new New(), Arrays.asList(dev4, dev6));
     }
 }

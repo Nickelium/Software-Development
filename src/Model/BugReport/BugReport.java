@@ -1,9 +1,10 @@
 package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
-
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
+import Model.Mail.Observer;
+import Model.Mail.Subject;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
@@ -13,12 +14,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Model.Mail.*;
-
 /**
  * Created by Tom on 19/02/16.
  */
 public class BugReport extends Subject implements Observer<Comment>{
+
+    public static final boolean PUBLIC = true;
+    public static final boolean PRIVATE = false;
 
     //region Attributes
 
@@ -31,6 +33,7 @@ public class BugReport extends Subject implements Observer<Comment>{
     List<Developer> assignees;
     private List<Comment> comments;
     private List<BugReport> dependencies;
+    private boolean pblc;
     
     //optional attributes
     //add milestone
@@ -49,13 +52,14 @@ public class BugReport extends Subject implements Observer<Comment>{
      * @param description The description of the BugReport.
      * @param subSystem The subsystem the bugreport is about.
      * @param creator The issuer of the bugreport.
+     * @param pblc True if the bugreport is public.
      *
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem or creator is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator) throws ReportErrorToUserException
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc) throws ReportErrorToUserException
     {
-        this(title,description,subSystem, creator, TheDate.TheDateNow(), new New(), new ArrayList<>());
+        this(title, description, subSystem, creator, pblc, TheDate.TheDateNow(), new New(), new ArrayList<>());
     }
     
     /**
@@ -72,7 +76,7 @@ public class BugReport extends Subject implements Observer<Comment>{
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ReportErrorToUserException
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc, TheDate creationDate, Tag tag, List<Developer> initialAssignies) throws ReportErrorToUserException
     {
          if (!isValidTitle(title)) throw new ReportErrorToUserException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ReportErrorToUserException("The description cannot be empty!") ;
@@ -87,6 +91,7 @@ public class BugReport extends Subject implements Observer<Comment>{
          this.creator = creator;
          this.creationDate = creationDate;
         this.tag = tag;
+        this.pblc = pblc;
 
          //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
          // the tag is changed to an assigned tag.
