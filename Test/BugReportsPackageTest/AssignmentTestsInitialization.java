@@ -20,6 +20,7 @@ import Model.User.Issuer;
 import Model.User.UserService;
 import org.junit.Before;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -94,10 +95,10 @@ public class AssignmentTestsInitialization {
         project2.addRole(programmer2);
 
         bugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
-                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6), new ArrayList<>(), new ArrayList<>());
         bugReport2 = bugReportService.createBugReport("Bugreport2", "Des bugreport2", issuer2, BugReport.PUBLIC, subSystem3,
-                TheDate.TheDateNow(), new Resolved(), Arrays.asList(dev5));
+                TheDate.TheDateNow(), new Resolved(), Arrays.asList(dev5), new ArrayList<>(), new ArrayList<>());
         bugReport3 = bugReportService.createBugReport("Bugreport3", "Des bugreport3", issuer1, BugReport.PUBLIC, subSystem4,
-                TheDate.TheDateNow(), new New(), Arrays.asList(dev4, dev6));
+                TheDate.TheDateNow(), new New(), Arrays.asList(dev4, dev6), new ArrayList<>(), new ArrayList<>());
     }
 }

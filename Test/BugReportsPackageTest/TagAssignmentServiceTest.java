@@ -11,6 +11,7 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +29,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
-                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6), new ArrayList<>(), new ArrayList<>());
 
         tagAssignmentService.assignTag(dev3, bugreport, new UnderReview());
         assertEquals(UnderReview.class, bugreport.getTag().getClass());
@@ -42,7 +43,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
-                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6), new ArrayList<>(), new ArrayList<>());
 
         tagAssignmentService.assignTag(dev7, bugreport, new UnderReview());
         assertEquals(UnderReview.class, bugreport.getTag().getClass());
@@ -61,7 +62,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
-                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6), new ArrayList<>(), new ArrayList<>());
 
         tagAssignmentService.assignTag(dev6, bugreport, new UnderReview());
         tagAssignmentService.assignTag(issuer1, bugreport, new Resolved());
@@ -92,7 +93,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
-                TheDate.TheDateNow(), new UnderReview(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), new UnderReview(), Arrays.asList(dev3, dev6), new ArrayList<>(), new ArrayList<>());
 
         tagAssignmentService.assignTag(dev1, bugreport, new Closed());
         assertEquals(Closed.class, bugreport.getTag().getClass());
