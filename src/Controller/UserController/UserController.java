@@ -1,9 +1,9 @@
 package Controller.UserController;
 
 import Controller.IUI;
+import Controller.UserController.UseCases.UseCase;
 import Controller.UserController.UseCases.UserUseCases.ExitProgram;
 import Controller.UserController.UseCases.UserUseCases.ShowProject;
-import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.Project.ProjectService;
 import Model.User.User;
@@ -40,14 +40,20 @@ public abstract class UserController {
     }
 
     public void showAllUseCases(){
-        for(int i=0; i<useCases.size(); i++){
+        int i = 0;
+        for (i = 0; i < useCases.size(); i++) {
             String show = i + " : " + useCases.get(i).getName();
             ui.display(show);
         }
+        ui.display(i + " : Log Out");
     }
 
-    public void callUseCase(int number) throws ReportErrorToUserException, IndexOutOfBoundsException {
-        getUseCases().get(number).getUseCase().run();
+    public UseCase getUseCase(int number) {
+        try {
+            return getUseCases().get(number).getUseCase();
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     private void initializeUseCasesUser(){
