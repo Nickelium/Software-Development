@@ -10,7 +10,7 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
-import org.jetbrains.annotations.Nullable;
+import com.sun.istack.internal.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,13 +36,12 @@ public class BugReport extends Subject implements Observer<Comment>{
     private List<Comment> comments;
     private List<BugReport> dependencies;
     private boolean pblc;
-<<<<<<< HEAD
-=======
+
     private int solutionScore;
     List<Patch> patches;
     List<Test> tests;
     private Patch selectedPatch;
->>>>>>> 5ccb9df4555f05e77feb8de032e9fbeceb6a8d55
+
 
     //optional attributes
     private TargetMilestone targetMilestone;

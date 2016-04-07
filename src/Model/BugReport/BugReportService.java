@@ -1,7 +1,6 @@
 package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
-import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -175,16 +174,8 @@ public class BugReportService {
         return searchMethod.apply(this, user);
     }
 
-
-<<<<<<< HEAD
-
-
-
-
-    private boolean isVisibleByUser(User user, BugReport bugReport) {
-=======
     public boolean isVisibleByUser(User user, BugReport bugReport) {
->>>>>>> 5ccb9df4555f05e77feb8de032e9fbeceb6a8d55
+
         if (bugReport.isPublic()) {
             return true;
         } else {
