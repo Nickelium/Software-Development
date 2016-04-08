@@ -2,7 +2,6 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.BugReport.Comment;
 import Model.BugReport.Tag;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.Duplicate;
@@ -31,7 +30,7 @@ public class Project extends Subject implements Observer<BugReport>
 	private double budget;
 	
 	private double versionID = 1.0;
-	private Milestone currentMilestone = null;
+	private Milestone latestAchievedMilestone = null;
 	private List<Milestone> milestones = new ArrayList<>();
 	
 	private List<SubSystem> subSystems = new ArrayList<>();
@@ -63,13 +62,22 @@ public class Project extends Subject implements Observer<BugReport>
 		this.setStartingDate(startingDate);
 		this.setBudget(budget);
 		this.setLeadRole(leadRole);
-		this.currentMilestone = new Milestone();
+		this.latestAchievedMilestone = new Milestone();
 	}
 	
 	/**
 	 * Getters
 	 */
-	
+
+	/**
+	 * Getter to request the latest achieved milestone of the subsystem.
+	 *
+	 * @return The latest achieved milestone of the subsystem
+	 */
+	public Milestone getLatestAchievedMilestone(){
+		return this.latestAchievedMilestone;
+	}
+
 	/**
 	 * Getter to request the name of the project.
 	 *
@@ -402,6 +410,7 @@ public class Project extends Subject implements Observer<BugReport>
 	public List<Milestone> getAllMilestones(){
 
 		List<Milestone> milestones = new ArrayList<>();
+		milestones.add(this.getLatestAchievedMilestone());
 		for (SubSystem subsystem: this.getAllSubSystems()){
 			milestones.addAll(subsystem.getMilestones());
 		}
@@ -436,7 +445,7 @@ public class Project extends Subject implements Observer<BugReport>
 			Tag tag = bugreport.getTag();
 			if (!(tag instanceof NotABug || tag instanceof Duplicate || tag instanceof Closed) && bugreport.getTargetMilestone().getIDvalue() <= newProjectMilestone.getIDvalue()) {
 				throw new ReportErrorToUserException("Bug report is not NotABug, Duplicate or Closed and has a target" +
-						"milestone less than or equal to the new proposed milestone");
+						" milestone less than or equal to the new proposed milestone");
 			}
 		}
 
@@ -445,17 +454,17 @@ public class Project extends Subject implements Observer<BugReport>
 		(recursively) contains. */
 
 		if (newProjectMilestone.getIDvalue() <= highestMilestoneID) {
-			this.setCurrentMilestone(newProjectMilestone);
+			this.setLatestAchievedMilestone(newProjectMilestone);
 			this.addMilestoneToList(newProjectMilestone);
 		} else {
 			throw new ReportErrorToUserException("The new Milestone ID is larger than the lowest" +
-					"achieved currentMilestone of all the subsystems it recursively contains.");
+					" achieved latestAchievedMilestone of all the subsystems it recursively contains.");
 		}
 
 	}
 
-	private void setCurrentMilestone(Milestone currentMilestone){
-		this.currentMilestone = currentMilestone;
+	private void setLatestAchievedMilestone(Milestone latestAchievedMilestone){
+		this.latestAchievedMilestone = latestAchievedMilestone;
 	}
 
 	private void addMilestoneToList(Milestone milestone){
@@ -469,11 +478,13 @@ public class Project extends Subject implements Observer<BugReport>
 	 */
 	@Override
 	public String toString(){
-		String string = "Project name: " + getName() + "\nDescription: " + getDescription()
-				+"\nCreation Date: " + getCreationDate() 
+		String string = "Project name: " + getName()
+				+ "\nDescription: " + getDescription()
+				+ "\nCreation Date: " + getCreationDate()
 				+ "\nStarting Date: " + getStartingDate() + "\nBudget: " + getBudget()
-				+ "\nVersionID: " + versionID + "\nLead developer: "
-				+ getLeadRole().getDeveloper() + "\n";
+				+ "\nVersionID: " + versionID
+				+ "\nMilestone: " + this.getLatestAchievedMilestone().getMilestoneID()
+				+ "\nLead developer: " + getLeadRole().getDeveloper() + "\n";
 
 		for (Role role : devsRoles) {
 			string += role.toString() + "\n";

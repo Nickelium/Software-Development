@@ -13,7 +13,6 @@ import Model.Project.SubSystem;
 import Model.User.User;
 import Model.User.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,20 +64,22 @@ public class DeclareAchievedMilestone extends DeveloperUseCase {
         Project project = projectList.get(projectIndex);
 
         // Step 4
-        getUi().display("Select the subsystem that you want to declare an achieve milestone to, or ");
+        getUi().display("Select the subsystem that you want to declare an achieve milestone to: ");
         List<SubSystem> subSystemList = project.getSubSystems();
-        String formattedSubSystemList = Formatter.formatProjectList(projectList);
+        String formattedSubSystemList = Formatter.formatSubSystemList(subSystemList);
         getUi().display(formattedSubSystemList);
-        getUi().display("Type " + subSystemList.size() + " if you want to declare a milestone for the entire project.");
+        getUi().display((subSystemList.size()) + ": Declare a milestone for the entire project.");
 
         // Step 5
 
         int subSystemIndex = getUi().readInt();
 
-        List<Milestone> milestoneList = new ArrayList<Milestone>();
+        List<Milestone> milestoneList;
+
+        SubSystem subSystem = null;
 
         if(subSystemIndex != subSystemList.size()){
-            SubSystem subSystem = subSystemList.get(subSystemIndex);
+            subSystem = subSystemList.get(subSystemIndex);
             milestoneList = subSystem.getAllMilestones();
         }
 
@@ -95,8 +96,14 @@ public class DeclareAchievedMilestone extends DeveloperUseCase {
 
         // Step 7
         String newMilestone = getUi().readString();
+        Milestone newMilestoneObject = new Milestone(newMilestone);
 
-        // TODO Step 8
-        
+        // Step 8
+        // Step 8a is handled in the Subsystem & Project class, throws a
+        // ReportErrorToUserException when the milestone cannot be assigned.
+        if(subSystem != null )
+            subSystem.setNewSubSystemMilestone(newMilestoneObject);
+        else
+            project.setNewProjectMilestone(newMilestoneObject);
     }
 }

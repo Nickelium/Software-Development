@@ -40,7 +40,7 @@ public class Formatter
 	{
 		String parsed ="";
 		for(int i=0; i< listMilestone.size(); i++)
-			parsed += i + ": " + listMilestone.get(i).toString() + "\n";
+			parsed += i + ": " + listMilestone.get(i).getMilestoneID() + "\n";
 		return parsed;
 
 	}

@@ -2,7 +2,6 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.BugReport.Comment;
 import Model.BugReport.Tag;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.Duplicate;
@@ -23,12 +22,11 @@ public class SubSystem extends Subject implements Observer<BugReport> {
     private String name;
     private String description;
     private double versionID = 1.0;
-    private Milestone latestAchievedMilestone = null;
 
     private List<SubSystem> subSystems = new ArrayList<>();
     private List<BugReport> bugReports = new ArrayList<>();
     private List<Milestone> milestones = new ArrayList<>();
-    private Milestone currentMilestone = null;
+    private Milestone latestAchievedMilestone = null;
 
     /**
      * Constructoren
@@ -50,6 +48,16 @@ public class SubSystem extends Subject implements Observer<BugReport> {
     /**
      * Getters
      */
+
+
+    /**
+     * Getter to request the latest achieved milestone of the subsystem.
+     *
+     * @return The latest achieved milestone of the subsystem
+     */
+    public Milestone getLatestAchievedMilestone(){
+        return this.latestAchievedMilestone;
+    }
 
     /**
      * Getter to request the versionId of the subsystem.
@@ -277,6 +285,7 @@ public class SubSystem extends Subject implements Observer<BugReport> {
 
     public List<Milestone> getAllMilestones() {
         List<Milestone> milestones = new ArrayList<>();
+        milestones.add(this.getLatestAchievedMilestone());
         milestones.addAll(this.getMilestones());
         for (SubSystem subsystem : this.getAllSubSystems()) {
             milestones.addAll(subsystem.getAllMilestones());
@@ -306,7 +315,7 @@ public class SubSystem extends Subject implements Observer<BugReport> {
             Tag tag = bugreport.getTag();
             if (!(tag instanceof NotABug || tag instanceof Duplicate || tag instanceof Closed) && bugreport.getTargetMilestone().getIDvalue() <= newSubSystemMilestone.getIDvalue()) {
                 throw new ReportErrorToUserException("Bug report is not NotABug, Duplicate or Closed and has a target" +
-                        "milestone less than or equal to the new proposed milestone");
+                        " milestone less than or equal to the new proposed milestone");
             }
         }
 
@@ -315,16 +324,16 @@ public class SubSystem extends Subject implements Observer<BugReport> {
 		(recursively) contains. */
 
         if (newSubSystemMilestone.getIDvalue() <= highestMilestoneID) {
-            this.setCurrentMilestone(newSubSystemMilestone);
+            this.setLatestAchievedMilestone(newSubSystemMilestone);
             this.addMilestoneToList(newSubSystemMilestone);
         } else {
             throw new ReportErrorToUserException("The new Milestone ID is larger than the lowest" +
-                    "achieved currentMilestone of all the subsystems it recursively contains.");
+                    " achieved latestAchievedMilestone of all the subsystems it recursively contains.");
         }
     }
 
-    private void setCurrentMilestone(Milestone currentMilestone) {
-        this.currentMilestone = currentMilestone;
+    private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+        this.latestAchievedMilestone = latestAchievedMilestone;
     }
 
     private void addMilestoneToList(Milestone milestone) {
@@ -339,7 +348,8 @@ public class SubSystem extends Subject implements Observer<BugReport> {
     @Override
     public String toString() {
         return "Subsystem name: " + getName() + "\nDescription: " + getDescription()
-                + "\nVersionID: " + getVersionID();
+                + "\nVersionID: " + getVersionID()
+                + "\nMilestone: " + this.getLatestAchievedMilestone().getMilestoneID();
     }
 
     /**

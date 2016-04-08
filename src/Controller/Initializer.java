@@ -9,6 +9,7 @@ import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.MailboxService;
+import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -91,6 +92,9 @@ public class Initializer implements IInitializer {
                     new ArrayList<>()
             );
 
+            TargetMilestone milestone1 = new TargetMilestone("M1.1");
+            bugReportService.getAllBugReports(doc).get(0).setTargetMilestone(milestone1);
+
             bugReportService.createBugReport("Crash while processing user input",
                     "If incorrect user input is entered into the system ...",
                     doc,
@@ -113,6 +117,9 @@ public class Initializer implements IInitializer {
                     new ArrayList<>(),
                     new ArrayList<>(),
                     new ArrayList<>());
+
+            TargetMilestone milestone2 = new TargetMilestone("M3.2");
+            bugReportService.getAllBugReports(charlie).get(0).setTargetMilestone(milestone2);
 
         } catch (ReportErrorToUserException e) {
             //invalid input
