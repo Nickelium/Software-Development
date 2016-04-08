@@ -4,6 +4,7 @@ import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
 import Model.Mail.Notification;
 import Model.Mail.ObserverAspect;
+import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Roles.Role;
@@ -33,6 +34,15 @@ public class Formatter
             parsed += i + ": " + listUser.get(i).toString() + "\n";
         return parsed;
 		
+	}
+
+	public static String formatMilestoneList(List<Milestone> listMilestone)
+	{
+		String parsed ="";
+		for(int i=0; i< listMilestone.size(); i++)
+			parsed += i + ": " + listMilestone.get(i).toString() + "\n";
+		return parsed;
+
 	}
 
 	/**
@@ -86,7 +96,7 @@ public class Formatter
 	/**
 	 * Format the given list of bugreports into a textual representation.
 	 * 
-	 * @param listBugreport The list of bugreports
+	 * @param listBugReport The list of bugreports
 	 * 
 	 * @return The textual representation
 	 */
@@ -163,7 +173,7 @@ public class Formatter
 	/**
 	 * Format the given bugreport into a recursive textual representation.
 	 * 
-	 * @param bugreport The bugreport to format
+	 * @param bugReport The bugreport to format
 	 * 
 	 * @return The textual representation
 	 */
