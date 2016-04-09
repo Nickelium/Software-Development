@@ -2,14 +2,15 @@ package Model.Milestone;
 
 import CustomExceptions.ReportErrorToUserException;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-import static java.lang.Character.*;
+import static java.lang.Character.isDigit;
 
 /**
  * Created by Laurens on 27/03/2016.
  */
-public class Milestone {
+public class Milestone implements Comparator<Milestone>{
 
     private String milestoneID;
 
@@ -136,5 +137,15 @@ public class Milestone {
 
         idValue = Double.parseDouble(stringValue);
         return idValue;
+    }
+
+    @Override
+    public int compare(Milestone m1, Milestone m2) {
+        if(m1.getIDvalue() > m2.getIDvalue())
+            return 1;
+        else if(m1.getIDvalue() == m2.getIDvalue())
+            return 0;
+        else
+            return -1;
     }
 }

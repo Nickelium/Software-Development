@@ -517,6 +517,10 @@ public class BugReport extends Subject implements Observer<Comment>{
     			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
     			+ getCreator();
 
+        if (this.getTargetMilestone() != null){
+            str +=  "\nTarget Milestone: " + getTargetMilestone();
+        }
+
         if (this.selectedPatch != null) {
             str += "Selected Patch: " + selectedPatch;
         }

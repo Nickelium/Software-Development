@@ -326,6 +326,7 @@ public class SubSystem extends Subject implements Observer<BugReport> {
         if (newSubSystemMilestone.getIDvalue() <= highestMilestoneID) {
             this.setLatestAchievedMilestone(newSubSystemMilestone);
             this.addMilestoneToList(newSubSystemMilestone);
+            Collections.sort(this.milestones, new Milestone());
         } else {
             throw new ReportErrorToUserException("The new Milestone ID is larger than the lowest" +
                     " achieved latestAchievedMilestone of all the subsystems it recursively contains.");
