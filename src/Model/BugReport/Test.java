@@ -6,7 +6,7 @@ package Model.BugReport;
 public class Test {
     private String value;
 
-    public Test(String value) {
+    Test(String value) {
         this.setValue(value);
     }
 

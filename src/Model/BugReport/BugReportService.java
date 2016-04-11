@@ -5,6 +5,8 @@ import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
+import Model.Roles.Programmer;
+import Model.Roles.Tester;
 import Model.User.Developer;
 import Model.User.Issuer;
 import Model.User.User;
@@ -110,6 +112,20 @@ public class BugReportService {
         return newComment;
     }
 
+    public Test createTest(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
+        if (!canAddTest(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a patch");
+        Test test = new Test(text);
+        bugReport.addTest(test);
+        return test;
+    }
+
+    public Patch createPatch(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
+        if (!canAddPatch(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a patch");
+        Patch patch = new Patch(text);
+        bugReport.addPatch(patch);
+        return patch;
+    }
+
     /**
      * Getter to request all the BugReports that are visible to the user.
      *
@@ -201,6 +217,22 @@ public class BugReportService {
             bugReports.addAll(project.getAllBugReports());
         }
         return new ListWrapper<>(bugReports);
+    }
+
+    public boolean canAddTest(User user, BugReport bugReport) throws ReportErrorToUserException {
+        Project project = this.projectService.getProjectsContainingBugReport(bugReport);
+        if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Tester))) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canAddPatch(User user, BugReport bugReport) throws ReportErrorToUserException {
+        Project project = this.projectService.getProjectsContainingBugReport(bugReport);
+        if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Programmer))) {
+            return true;
+        }
+        return false;
     }
 
 }
