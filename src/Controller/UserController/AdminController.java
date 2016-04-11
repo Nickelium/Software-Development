@@ -3,6 +3,7 @@ package Controller.UserController;
 import Controller.IUI;
 import Controller.UserController.UseCases.AdminUseCases.*;
 import Model.BugReport.BugReportService;
+import Model.Memento.Caretaker;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
@@ -23,6 +24,9 @@ public class AdminController extends UserController {
         useCases.add(new FunctionWrap("Update Project", new UpdateProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
         useCases.add(new FunctionWrap("Delete Project", new DeleteProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
         useCases.add(new FunctionWrap("Create Subsystem", new CreateSubSystem(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
+        //Caretaker caretaker = new Caretaker(projectService);
+        //useCases.add(new FunctionWrap("Undo", new Undo(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser(),caretaker)));
+
     }
 
 }

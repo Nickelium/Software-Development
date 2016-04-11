@@ -8,6 +8,8 @@ import Model.BugReport.TagTypes.Duplicate;
 import Model.BugReport.TagTypes.NotABug;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Memento.Memento;
+import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 import Model.Roles.Lead;
 import Model.Roles.Role;
@@ -20,7 +22,7 @@ import java.util.List;
  *	This class represents a project with all its related attributes.
  *
  */
-public class Project extends Subject implements Observer<BugReport>
+public class Project extends Subject implements Observer<BugReport>, Originator<ProjectMemento,Project>
 {
 
 	private String name;
@@ -506,4 +508,24 @@ public class Project extends Subject implements Observer<BugReport>
 		notifyObservers(bugreport, aspect);
 		
 	}
+	
+	@Override
+	public ProjectMemento createMemento()
+	{
+		return new ProjectMemento(this);
+	}
+
+	@Override
+	public void restoreMemento(ProjectMemento memento)
+	{
+		this.name = memento.getName();
+		this.description = memento.getDescription();
+		this.startingDate = memento.getStartingDate();
+		this.budget = memento.getBudget();
+		
+		this.subSystems = memento.getSubsystems();
+		
+	}
+
+
 }
