@@ -10,7 +10,10 @@ import Model.User.User;
 
 
 /**
- * Created by Tom on 2/03/16.
+ * Class creates a service that is responsible for assigning developers
+ * to bug reports.
+ *
+ * Also contains checkers for assignment of developers by users.
  */
 public class DeveloperAssignmentService {
     private ProjectService projectService;

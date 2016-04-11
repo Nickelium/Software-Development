@@ -148,4 +148,9 @@ public class Milestone implements Comparator<Milestone>{
         else
             return -1;
     }
+
+    @Override
+    public String toString(){
+        return this.getMilestoneID();
+    }
 }

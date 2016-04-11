@@ -3,7 +3,9 @@ package Model.BugReport;
 import java.util.UUID;
 
 /**
- * Created by Tom on 20/02/16.
+ * Class representing a Bug report ID object.
+ *
+ * Contains an field representing a random ID.
  */
 public class BugReportID {
 

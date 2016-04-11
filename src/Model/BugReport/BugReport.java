@@ -17,7 +17,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Tom on 19/02/16.
+ * Class representing a Bug report object.
+ *
+ * A bug report signals that something is wrong with a specific
+ * subsystem.
+ *
+ * This class provides getters & setters for most attributes.
+ * This class provides a method to create new bug reports.
+ * This class provides public checkers when setting new values to certain attributes.
+ *
  */
 public class BugReport extends Subject implements Observer<Comment>{
 
@@ -296,23 +304,34 @@ public class BugReport extends Subject implements Observer<Comment>{
         if (description.equals("")) return false;
         else return true;
     }
+
     /**
      * Checker to check if the procedure is valid
      * @param procedureBug
-     * @return
+     * @return true when valid, false when invalid
      */
     public boolean isValidProcedureBug(String procedureBug){
         if (procedureBug == null) return false;
         if (procedureBug.equals("")) return false;
         else return true;
     }
-    
+
+    /**
+     * Checker to check if the stack trace is valid
+     * @param stackTrace
+     * @return true when valid, false when invalid
+     */
     public boolean isValidStackTrace(String stackTrace){
         if (stackTrace == null) return false;
         if (stackTrace.equals("")) return false;
         else return true;
     }
-    
+
+    /**
+     * Checker to check fi the error message is valid
+     * @param errorMessage
+     * @return true when valid, false when invalid
+     */
     public boolean isValidErrorMessage(String errorMessage){
         if (errorMessage == null) return false;
         if (errorMessage.equals("")) return false;
@@ -361,19 +380,38 @@ public class BugReport extends Subject implements Observer<Comment>{
     //endregion
     
     //region setters
+
+    /**
+     * Method to set a new procedure bug.
+     *
+     * Method requires the input string to be a valid procedure bug.
+     * @param procedureBug the procedure bug to be set.
+     */
     public void setProcedureBug(String procedureBug)
     {
     	if(isValidProcedureBug(procedureBug)) 
     		this.procedureBug = procedureBug;
    
     }
-    
+
+    /**
+     * Method to set a new stack trace.
+     *
+     * Method requires the input string to be a valid stack trace.
+     * @param stackTrace the procedure bug to be set.
+     */
     public void setStackTrace(String stackTrace)
     {
     	if(isValidStackTrace(stackTrace)) 
     		this.stackTrace = stackTrace;
     }
-    
+
+    /**
+     * Method to set a new error message.
+     *
+     * Method requires the input string to be a valid error message.
+     * @param errorMessage the procedure bug to be set.
+     */
     public void setErrorMessage(String errorMessage)
     {
     	if(isValidErrorMessage(errorMessage)) 
@@ -505,6 +543,9 @@ public class BugReport extends Subject implements Observer<Comment>{
 
     /**
 	 * Method to represent a bugreport as a string.
+     *
+     * Makes use of getters for bugreport attributes to create
+     * one full string which will be passed on to the formatter.
 	 *
 	 * @return The bugreport as a string.
 	 */
@@ -518,7 +559,7 @@ public class BugReport extends Subject implements Observer<Comment>{
     			+ getCreator();
 
         if (this.getTargetMilestone() != null){
-            str +=  "\nTarget Milestone: " + getTargetMilestone();
+            str +=  "\nTarget Milestone: " + getTargetMilestone().toString();
         }
 
         if (this.selectedPatch != null) {

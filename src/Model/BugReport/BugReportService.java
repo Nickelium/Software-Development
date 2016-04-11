@@ -16,7 +16,12 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Tom on 24/02/16.
+ * Class containing services for bug reports.
+ *
+ * Contains methods to provide requested bug reports, visible by the requesting user.
+ *
+ * Contains methods to create bug reports.
+ * Also contains methods to create comments and add them to bug reports or comments.
  */
 public class BugReportService {
 
@@ -174,6 +179,14 @@ public class BugReportService {
         return searchMethod.apply(this, user);
     }
 
+    /**
+     * Method to determine whether a bug report is visible to a certain user.
+     *
+     * @param user The user that wants to see a certain bug report
+     * @param bugReport The bug report that wants to be looked up by the specified user
+     *
+     * @return true if the user is allowed to see the bug report, false if not
+     */
     public boolean isVisibleByUser(User user, BugReport bugReport) {
 
         if (bugReport.isPublic()) {
