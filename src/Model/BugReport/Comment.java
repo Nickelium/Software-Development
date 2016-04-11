@@ -1,7 +1,8 @@
 package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
-
+import Model.Mail.Observer;
+import Model.Mail.Subject;
 import Model.Project.TheDate;
 import Model.User.Issuer;
 
@@ -9,10 +10,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Model.Mail.*;
-
 /**
- * Created by Tom on 19/02/16.
+ * Class representing a comment object.
+ *
+ * Provides methods to create a new comment, and add it to another comment.
+ * Also provides methods to get comments of the comment object itself.
+ *
  */
 public class Comment extends Subject implements Observer<Comment>{
 

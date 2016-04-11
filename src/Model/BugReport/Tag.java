@@ -6,7 +6,8 @@ import Model.User.Developer;
 import java.util.List;
 
 /**
- * Created by Tom on 19/02/16.
+ * Abstract class containing base functionality for tags.
+ * This class needs to be implemented by all tags.
  */
 public abstract class Tag{
     protected List<Class<? extends Tag>> acceptedTags;

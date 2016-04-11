@@ -82,7 +82,7 @@ public class Initializer implements IInitializer {
             TargetMilestone milestone1 = new TargetMilestone("M1.1");
             TargetMilestone milestone2 = new TargetMilestone("M3.2");
 
-            bugReportService.createBugReport("The function parse_ewd returns unexpected results",
+            BugReport bugreport1 = bugReportService.createBugReport("The function parse_ewd returns unexpected results",
                     "If the function parse_ewd is invoked while ...",
                     doc,
                     BugReport.PUBLIC,
@@ -92,9 +92,11 @@ public class Initializer implements IInitializer {
                     Collections.singletonList(maria),
                     new ArrayList<>(),
                     new ArrayList<>()
-            ).setTargetMilestone(milestone1);
+            );
 
-            bugReportService.createBugReport("Crash while processing user input",
+                    bugreport1.setTargetMilestone(milestone1);
+
+            BugReport bugreport2 = bugReportService.createBugReport("Crash while processing user input",
                     "If incorrect user input is entered into the system ...",
                     doc,
                     BugReport.PUBLIC,
@@ -106,7 +108,7 @@ public class Initializer implements IInitializer {
                     new ArrayList<>()
             );
 
-            bugReportService.createBugReport("SubsystemA2 freezes",
+            BugReport bugreport3 = bugReportService.createBugReport("SubsystemA2 freezes",
                     "If the function process_dfe is invoked with ...",
                     charlie,
                     BugReport.PRIVATE,
@@ -116,7 +118,9 @@ public class Initializer implements IInitializer {
                     new ArrayList<>(),
                     new ArrayList<>(),
                     new ArrayList<>()
-            ).setTargetMilestone(milestone2);
+            );
+
+            bugreport3.setTargetMilestone(milestone2);
 
         } catch (ReportErrorToUserException e) {
             //invalid input

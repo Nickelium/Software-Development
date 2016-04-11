@@ -12,7 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Tom on 24/02/16.
+ * Class creates a service that is responsible for assigning tags to bug reports.
+ *
+ * Contains a checker to check whether a user can assign a tag to a specific bug report.
+ * Also contains a method to assign a tag to a specific bug report.
  */
 public class TagAssignmentService {
     private ProjectService projectService;
