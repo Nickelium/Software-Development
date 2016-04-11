@@ -5,11 +5,12 @@ import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Milestone.TargetMilestone;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
-import org.jetbrains.annotations.Nullable;
+import com.sun.istack.internal.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,13 +36,15 @@ public class BugReport extends Subject implements Observer<Comment>{
     private List<Comment> comments;
     private List<BugReport> dependencies;
     private boolean pblc;
+
     private int solutionScore;
     List<Patch> patches;
     List<Test> tests;
     private Patch selectedPatch;
 
+
     //optional attributes
-    //add milestone
+    private TargetMilestone targetMilestone;
     private String procedureBug;
     private String stackTrace;
     private String errorMessage;
@@ -473,11 +476,18 @@ public class BugReport extends Subject implements Observer<Comment>{
         if (dependency == null) throw new IllegalArgumentException("Dependency is null");
 
         this.dependencies.add(dependency);
+    }
 
+    public TargetMilestone getTargetMilestone() {
+        return this.targetMilestone;
+    }
+
+    public void setTargetMilestone(TargetMilestone targetMilestone) {
+        this.targetMilestone = targetMilestone;
     }
 
     /**
-     * Overrided the equals method to only look at the id to check for equality.
+     * Overrides the equals method to only look at the id to check for equality.
      *
      * @param obj The bugReport to compare this bugReport to.
      *
@@ -506,6 +516,10 @@ public class BugReport extends Subject implements Observer<Comment>{
     			+ "\nDescription: " + getDescription()+ "\nCreation date: "
     			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
     			+ getCreator();
+
+        if (this.getTargetMilestone() != null){
+            str +=  "\nTarget Milestone: " + getTargetMilestone();
+        }
 
         if (this.selectedPatch != null) {
             str += "Selected Patch: " + selectedPatch;

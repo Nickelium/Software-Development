@@ -108,7 +108,6 @@ public class BugReportService {
         Comment newComment = new Comment(text, issuer);
         comment.addComment(newComment);
         return newComment;
-
     }
 
     /**
@@ -155,7 +154,7 @@ public class BugReportService {
      *
      * @param project The project for which to find the bugReports.
      *
-     * @return An unmodifieable list of all the bugreports about the given project.
+     * @return An unmodifyable list of all the bugreports about the given project.
      */
     public List<BugReport> getBugReportsForProject(Project project){
         return project.getAllBugReports();
@@ -175,8 +174,8 @@ public class BugReportService {
         return searchMethod.apply(this, user);
     }
 
+    public boolean isVisibleByUser(User user, BugReport bugReport) {
 
-    private boolean isVisibleByUser(User user, BugReport bugReport) {
         if (bugReport.isPublic()) {
             return true;
         } else {

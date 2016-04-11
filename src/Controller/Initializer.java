@@ -9,6 +9,7 @@ import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.MailboxService;
+import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -46,7 +47,7 @@ public class Initializer implements IInitializer {
             this.bugReportService = new BugReportService(projectService);
             this.developerAssignmentService = new DeveloperAssignmentService(projectService);
             this.tagAssignmentService = new TagAssignmentService(projectService);
-            this.mailboxService = new MailboxService();
+            this.mailboxService = new MailboxService(bugReportService);
 
             // init users
             Admin sam = userService.createAdmin("Frederick", "Sam", "Curtis", "curt");
@@ -78,6 +79,8 @@ public class Initializer implements IInitializer {
             SubSystem subSystemB2 = projectService.createSubsystem("SubSystemB2", "SubsystemB2 description", projectB);
             SubSystem subSystemB21 = projectService.createSubsystem("SubSystemB2.1", "SubsystemB2.1 description.", subSystemB2);
 
+            TargetMilestone milestone1 = new TargetMilestone("M1.1");
+            TargetMilestone milestone2 = new TargetMilestone("M3.2");
 
             bugReportService.createBugReport("The function parse_ewd returns unexpected results",
                     "If the function parse_ewd is invoked while ...",
@@ -89,7 +92,7 @@ public class Initializer implements IInitializer {
                     Collections.singletonList(maria),
                     new ArrayList<>(),
                     new ArrayList<>()
-            );
+            ).setTargetMilestone(milestone1);
 
             bugReportService.createBugReport("Crash while processing user input",
                     "If incorrect user input is entered into the system ...",
@@ -112,7 +115,8 @@ public class Initializer implements IInitializer {
                     new New(),
                     new ArrayList<>(),
                     new ArrayList<>(),
-                    new ArrayList<>());
+                    new ArrayList<>()
+            ).setTargetMilestone(milestone2);
 
         } catch (ReportErrorToUserException e) {
             //invalid input
