@@ -22,7 +22,16 @@ public class ProposeTest extends DeveloperUseCase {
     @Override
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
         BugReport bugReport = selectBugReport();
+
+        if (!this.getBugReportService().canAddTest(this.getCurrentUser(), bugReport)) {
+            throw new ReportErrorToUserException("You are not allowed to add a test.");
+        }
+
         getUi().display("Please enter the test code. Stop inserting text with '.' on new line.");
-        bugReport
+        String test = getUi().readMultiline();
+
+        this.getBugReportService().createTest(test, getCurrentUser(), bugReport);
+
+        getUi().display("Successfully added new test.");
     }
 }

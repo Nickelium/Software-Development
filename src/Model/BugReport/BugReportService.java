@@ -118,7 +118,7 @@ public class BugReportService {
     }
 
     public Test createTest(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
-        if (!canAddTest(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a patch");
+        if (!canAddTest(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a test");
         Test test = new Test(text);
         bugReport.addTest(test);
         return test;
