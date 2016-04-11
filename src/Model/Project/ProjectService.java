@@ -3,6 +3,8 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.Memento.Memento;
+import Model.Memento.Originator;
 import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.Wrapper.IListWrapper;
@@ -16,7 +18,7 @@ import java.util.List;
  * This class is used as a service to operate on projects and subsystems.
  *
  */
-public class ProjectService
+public class ProjectService implements Originator<ProjectServiceMemento, ProjectService>
 {
     private IListWrapper<Project> projectList;
 
@@ -165,5 +167,17 @@ public class ProjectService
            subSystems.addAll(project.getAllSubSystems());
         }
         return subSystems;
+    }
+        
+	@Override
+	public ProjectServiceMemento createMemento() 
+	{
+		return new ProjectServiceMemento(this);
+	}
+	
+	@Override
+	public void restoreMemento(ProjectServiceMemento memento)
+    {
+    	this.projectList = new ListWrapper<>(memento.getListProject());
     }
 }
