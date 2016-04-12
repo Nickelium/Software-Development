@@ -9,6 +9,7 @@ import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.MailboxService;
+import Model.Memento.Caretaker;
 import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
@@ -33,6 +34,7 @@ public class Initializer implements IInitializer {
     private DeveloperAssignmentService developerAssignmentService;
     private TagAssignmentService tagAssignmentService;
     private MailboxService mailboxService;
+    private Caretaker caretaker;
 
     public Initializer() {
         init();
@@ -48,6 +50,7 @@ public class Initializer implements IInitializer {
             this.developerAssignmentService = new DeveloperAssignmentService(projectService);
             this.tagAssignmentService = new TagAssignmentService(projectService);
             this.mailboxService = new MailboxService(bugReportService);
+            this.caretaker = new Caretaker(projectService);
 
             // init users
             Admin sam = userService.createAdmin("Frederick", "Sam", "Curtis", "curt");
@@ -152,6 +155,11 @@ public class Initializer implements IInitializer {
 
 	public MailboxService getMailboxService() {
 		return this.mailboxService;
+	}
+	
+	public Caretaker getCaretaker()
+	{
+		return caretaker;
 	}
 
 

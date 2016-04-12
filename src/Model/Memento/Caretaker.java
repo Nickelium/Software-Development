@@ -25,4 +25,9 @@ public class Caretaker
 	{
 		snapshots.get(stateNumber).restore();
 	}
+	
+	public List<Snapshot> getSnapshots()
+	{
+		return snapshots;
+	}
 }

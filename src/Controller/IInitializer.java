@@ -6,6 +6,7 @@ import Model.BugReport.TagAssignmentService;
 import Model.Project.ProjectService;
 import Model.User.UserService;
 import Model.Mail.*;
+import Model.Memento.Caretaker;
 
 public interface IInitializer 
 {
@@ -21,5 +22,7 @@ public interface IInitializer
 	public TagAssignmentService getTagAssignmentService();
 	
 	public MailboxService getMailboxService();
+	
+	public Caretaker getCaretaker();
 
 }

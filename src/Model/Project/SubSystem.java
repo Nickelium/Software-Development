@@ -2,12 +2,15 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.BugReport.BugReportMemento;
 import Model.BugReport.Tag;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.Duplicate;
 import Model.BugReport.TagTypes.NotABug;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Memento.Memento;
+import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ import java.util.List;
 /**
  * This class represent a subsystem with all it's related attributes.
  */
-public class SubSystem extends Subject implements Observer<BugReport> {
+public class SubSystem extends Subject implements Observer<BugReport>, Originator<SubSystemMemento,SubSystem> {
 
     private String name;
     private String description;
@@ -364,4 +367,25 @@ public class SubSystem extends Subject implements Observer<BugReport> {
         notifyObservers(bugreport, aspect);
 
     }
+
+	@Override
+	public SubSystemMemento createMemento() 
+	{
+		return new SubSystemMemento(this);
+	}
+
+	@Override
+	public void restoreMemento(SubSystemMemento memento) 
+	{
+		this.subSystems = memento.getSubSystems();
+		
+		for(SubSystemMemento subsystemMemento : memento.getSubSystemMementos())
+			subsystemMemento.getOriginator().restoreMemento(subsystemMemento);
+		
+		this.bugReports = memento.getBugReports();
+		
+		for(BugReportMemento bugreportMemento : memento.getBugReportMementos())
+			bugreportMemento.getOriginator().restoreMemento(bugreportMemento);
+		
+	}
 }

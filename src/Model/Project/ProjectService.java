@@ -179,5 +179,9 @@ public class ProjectService implements Originator<ProjectServiceMemento, Project
 	public void restoreMemento(ProjectServiceMemento memento)
     {
     	this.projectList = new ListWrapper<>(memento.getListProject());
+    	
+    	for(ProjectMemento projectMemento :	memento.getProjectMementos())
+    		projectMemento.getOriginator().restoreMemento(projectMemento);
+    	
     }
 }

@@ -47,7 +47,13 @@ public class Undo extends UseCase
     @Override
     public void run() throws ReportErrorToUserException,IndexOutOfBoundsException 
     {
-    	caretaker.restoreState(0);
+    	// Step 2 print the usecases completed
+    	
+    	// Step 3
+    	getUi().display("Please indicate how many usecases you want to revert.");
+    	
+    	int number = getUi().readInt();
+    	caretaker.restoreState(number);
     	
     }
 }
