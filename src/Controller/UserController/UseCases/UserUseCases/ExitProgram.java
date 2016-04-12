@@ -14,6 +14,7 @@ public class ExitProgram extends UseCase {
 
     public ExitProgram(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        changeSystem = false;
     }
 
     //TODO documentatie
@@ -22,4 +23,10 @@ public class ExitProgram extends UseCase {
         getUi().display("Bye!");
         System.exit(1);
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Exit Program";
+	}
 }

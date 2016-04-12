@@ -19,6 +19,7 @@ public class DeleteProject extends UseCase {
 
     public DeleteProject(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -54,4 +55,10 @@ public class DeleteProject extends UseCase {
         getProjectService().deleteProject(project);
         getUi().display("The project has been successfully deleted.\n");
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Delete Project";
+	}
 }

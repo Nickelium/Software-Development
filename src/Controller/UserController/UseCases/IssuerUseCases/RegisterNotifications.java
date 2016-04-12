@@ -25,6 +25,7 @@ public class RegisterNotifications extends IssuerUseCase{
     public RegisterNotifications(IUI ui, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
         super(ui, null, projectService, bugReportService,null, currentUser);
         this.mailboxService = mailboxService;
+        changeSystem = true;
     }
 
     /**
@@ -262,4 +263,10 @@ public class RegisterNotifications extends IssuerUseCase{
         getUi().display("Registration completed !\n");
     
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Register for Notifications";
+	}
 }

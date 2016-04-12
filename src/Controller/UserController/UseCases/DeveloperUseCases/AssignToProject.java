@@ -26,6 +26,7 @@ public class AssignToProject extends DeveloperUseCase {
 
     public AssignToProject(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, TagAssignmentService tagAssignmentService, DeveloperAssignmentService developerAssignmentService, User currentUser) {
         super(ui, userService, projectService, bugReportService, tagAssignmentService, developerAssignmentService, currentUser);
+        changeSystem = true;
     }
 
 
@@ -107,4 +108,10 @@ public class AssignToProject extends DeveloperUseCase {
 
         }
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Assign to Project";
+	}
 }

@@ -98,7 +98,8 @@ public class MainController {
                 } 
                 else
                 {
-                	initializer.getCaretaker().saveState();
+                	if(useCase.changeSystem())
+                		initializer.getCaretaker().saveState();
                     useCase.run();
                 }
                 break;

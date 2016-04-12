@@ -16,6 +16,7 @@ public class InspectBugReport extends IssuerUseCase {
 
     public InspectBugReport(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, null, currentUser);
+        changeSystem = false;
     }
 
     /**
@@ -41,4 +42,10 @@ public class InspectBugReport extends IssuerUseCase {
         String bugReportDetails = Formatter.formatDetailedBugReport(bugReport);
         getUi().display(bugReportDetails);
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Inspect Bugreport";
+	}
 }

@@ -21,6 +21,7 @@ public class AssignToBugReport extends DeveloperUseCase {
 
     public AssignToBugReport(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, TagAssignmentService tagAssignmentService, DeveloperAssignmentService developerAssignmentService, User currentUser) {
         super(ui, userService, projectService, bugReportService, tagAssignmentService, developerAssignmentService, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -52,7 +53,7 @@ public class AssignToBugReport extends DeveloperUseCase {
         // Step 3
         getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
         List<Developer> developerList = bugReport.getAssignees();
-        String parsedList = Formatter.formatDeveloperList(developerList);
+        String parsedList = Formatter.formatUserList(developerList);
         getUi().display(parsedList);
         // Step 4
         int selectedValue = getUi().readInt();
@@ -66,4 +67,10 @@ public class AssignToBugReport extends DeveloperUseCase {
             getUi().display("The developer has successfully been assigned to the bugreport.");
         }
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Assign to Bugreport";
+	}
 }

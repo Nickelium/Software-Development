@@ -20,6 +20,7 @@ public class ShowProject extends UseCase {
 
     public ShowProject(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        changeSystem = false;
     }
 
     //TODO documentatie
@@ -37,6 +38,10 @@ public class ShowProject extends UseCase {
         String projectDetails = Formatter.formatDetailedProject(project);
         getUi().display(projectDetails);
     }
-
-
+    
+    @Override
+	public String toString()
+	{
+		return "Show Project";
+	}
 }

@@ -6,6 +6,7 @@ import Controller.UserController.UseCases.UseCase;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.Memento.Caretaker;
+import Model.Memento.Snapshot;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.TheDate;
@@ -24,6 +25,7 @@ public class Undo extends UseCase
     public Undo(IUI ui, UserService userService, ProjectService projectService, 
     				BugReportService bugReportService, User currentUser, Caretaker caretaker) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        changeSystem = true;
         this.caretaker = caretaker;
     }
 
@@ -48,6 +50,11 @@ public class Undo extends UseCase
     public void run() throws ReportErrorToUserException,IndexOutOfBoundsException 
     {
     	// Step 2 print the usecases completed
+    	int numberOfUseCase = 10;
+    	getUi().display("The list of the last " + numberOfUseCase + " usecases that modified the state of Bugtrap\n" );
+    	List<Snapshot> snapshots = caretaker.getSnapshots();
+    	String stringSnapshots = Formatter.formatSnapshots(snapshots);
+    	getUi().display(stringSnapshots);
     	
     	// Step 3
     	getUi().display("Please indicate how many usecases you want to revert.");
@@ -56,4 +63,10 @@ public class Undo extends UseCase
     	caretaker.restoreState(number);
     	
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Undo";
+	}
 }
