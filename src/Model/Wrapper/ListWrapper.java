@@ -20,7 +20,7 @@ public class ListWrapper<T> implements IListWrapper<T> {
     
     public ListWrapper(List<T> list)
     {
-          this.list = list;
+          this.list = new ArrayList<>(list);
     }
     
     @Override

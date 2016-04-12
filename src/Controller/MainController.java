@@ -99,7 +99,7 @@ public class MainController {
                 else
                 {
                 	if(useCase.changeSystem())
-                		initializer.getCaretaker().saveState();
+                		initializer.getCaretaker().saveState(useCase);
                     useCase.run();
                 }
                 break;
