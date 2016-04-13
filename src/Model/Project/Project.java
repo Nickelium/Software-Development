@@ -530,6 +530,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		
 		this.devsRoles = memento.getDevsRoles();
 		
+		this.observers = memento.getObservers();
+		
 	}
 
 
