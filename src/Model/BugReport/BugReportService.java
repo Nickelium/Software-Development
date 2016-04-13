@@ -117,6 +117,7 @@ public class BugReportService {
         return newComment;
     }
 
+    //TODO documentatie
     public Test createTest(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
         if (!canAddTest(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a test");
         Test test = new Test(text);
@@ -124,6 +125,7 @@ public class BugReportService {
         return test;
     }
 
+    //TODO documentatie
     public Patch createPatch(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
         if (!canAddPatch(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a patch");
         Patch patch = new Patch(text);
