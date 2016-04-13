@@ -38,7 +38,7 @@ public abstract class Tag{
     /**
      * Protected method for assigning a test, Method is different for each tag.
      *
-     * @param bugReport The bugreport to assign the test to.
+     * @param bugReport The bug report to assign the test to.
      * @param test      The test to assign.
      * @throws ReportErrorToUserException Assigning the test is not possible.
      */
@@ -49,7 +49,7 @@ public abstract class Tag{
     /**
      * Protected method for assigning a developer. Method is different for each tag.
      *
-     * @param bugReport The bugreport to assign the developer to.
+     * @param bugReport The bug report to assign the developer to.
      * @param developer The developer to assign
      * @throws ReportErrorToUserException Assigning a developer is not possible.
      */

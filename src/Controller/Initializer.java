@@ -9,6 +9,7 @@ import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.Resolved;
 import Model.Mail.MailboxService;
 import Model.Memento.Caretaker;
+import Model.Milestone.Milestone;
 import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
@@ -58,21 +59,30 @@ public class Initializer implements IInitializer {
             Developer major = userService.createDeveloper("Joseph", "", "Mays", "major");
             Developer maria = userService.createDeveloper("Maria", "", "Carney", "maria");
 
+            // project A
             Lead leadMajor = new Lead(major);
             Programmer programmerMajor = new Programmer(major);
             Tester testerMaria = new Tester(maria);
 
             Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2016), 0.0, leadMajor);
+
             projectA.addRole(programmerMajor);
             projectA.addRole(testerMaria);
 
             SubSystem subSystemA1 = projectService.createSubsystem("SubSystemA1", "SubsystemA1 description", projectA);
+            subSystemA1.setNewSubSystemMilestone(new Milestone("M2.5.1"));
             SubSystem subSystemA2 = projectService.createSubsystem("SubSystemA2", "SubsystemA2 description", projectA);
+            subSystemA2.setNewSubSystemMilestone(new Milestone("M2.5"));
             SubSystem subSystemA3 = projectService.createSubsystem("SubSystemA3", "SubsystemA3 description", projectA);
+            subSystemA3.setNewSubSystemMilestone(new Milestone("M2.8.5"));
             SubSystem subSystemA31 = projectService.createSubsystem("SubSystemA3.1", "SubsystemA3.1 description", subSystemA3);
+            subSystemA31.setNewSubSystemMilestone(new Milestone("M2.8.5.3"));
             SubSystem subSystemA32 = projectService.createSubsystem("SubSystemA3.2", "SubsystemA3.2 description", subSystemA3);
+            subSystemA32.setNewSubSystemMilestone(new Milestone("M2.9"));
 
+            projectA.setNewProjectMilestone(new Milestone("M2.5"));
 
+            // project B
             Lead leadMaria = new Lead(maria);
             Programmer programmerMajorB = new Programmer(major);
 
@@ -80,15 +90,18 @@ public class Initializer implements IInitializer {
             Tester testerMajorB = new Tester(major);
 
             Project projectB = projectService.createProject("ProjectB", "ProjectB description", new TheDate(5, 6, 2016), 0.0, leadMaria);
+
             projectB.addRole(programmerMajorB);
             projectB.addRole(testerMajorB);
 
             SubSystem subSystemB1 = projectService.createSubsystem("SubSystemB1", "SubsystemB1 description", projectB);
+            subSystemB1.setNewSubSystemMilestone(new Milestone("M1.3"));
             SubSystem subSystemB2 = projectService.createSubsystem("SubSystemB2", "SubsystemB2 description", projectB);
+            subSystemB2.setNewSubSystemMilestone(new Milestone("M1.2"));
             SubSystem subSystemB21 = projectService.createSubsystem("SubSystemB2.1", "SubsystemB2.1 description.", subSystemB2);
+            subSystemB21.setNewSubSystemMilestone(new Milestone("M1.2"));
 
-            TargetMilestone milestone1 = new TargetMilestone("M1.1");
-            TargetMilestone milestone2 = new TargetMilestone("M3.2");
+            projectB.setNewProjectMilestone(new Milestone("M1.2"));
 
             // Bug report 1
             BugReport bugreport1 = bugReportService.createBugReport("The function parse_ewd returns unexpected results",
@@ -99,7 +112,7 @@ public class Initializer implements IInitializer {
                     new TheDate(3, 1, 2016),
                     Collections.singletonList(maria)
             );
-            bugreport1.setTargetMilestone(milestone1);
+            bugreport1.setTargetMilestone(new TargetMilestone("M1.1"));
             bugReportService.createTest("bool test_inalid_args1(){...}", major, bugreport1);
             bugReportService.createPatch("e3109fcc9...", major, bugreport1);
             tagAssignmentService.assignTag(maria, bugreport1, new Resolved(0));
@@ -125,7 +138,7 @@ public class Initializer implements IInitializer {
                     new TheDate(4, 2, 2016),
                     new ArrayList<>()
             );
-            bugreport3.setTargetMilestone(milestone2);
+            bugreport3.setTargetMilestone(new TargetMilestone("M3.2"));
             bugreport3.setProcedureBug("Launch with command line invocation:...");
             bugreport3.setStackTrace("Exception in thread \"main\" java.lang...");
 
