@@ -34,4 +34,10 @@ public class ProposeTest extends DeveloperUseCase {
 
         getUi().display("Successfully added new test.");
     }
+
+	@Override
+	public String toString()
+	{
+		return "Propose Test";
+	}
 }

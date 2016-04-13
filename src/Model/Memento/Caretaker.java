@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Controller.UserController.UseCases.UseCase;
+import Model.Mail.MailboxService;
 import Model.Project.ProjectService;
 
 public class Caretaker 
@@ -11,15 +12,17 @@ public class Caretaker
 	private List<Snapshot> snapshots = new ArrayList<>();
 	
 	private ProjectService projectService;
+	private MailboxService mailboxService;
 	
-	public Caretaker(ProjectService projectService)
+	public Caretaker(ProjectService projectService, MailboxService mailboxService)
 	{
 		this.projectService = projectService;
+		this.mailboxService = mailboxService;
 	}
 	
 	public void saveState(UseCase usecase)
 	{
-		snapshots.add(new Snapshot(usecase, projectService));
+		snapshots.add(new Snapshot(usecase, projectService, mailboxService));
 	}
 	
 	public void restoreState(int stateNumber)

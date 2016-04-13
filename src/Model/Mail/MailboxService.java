@@ -10,6 +10,7 @@ import Model.Project.Project;
 import Model.Project.SubSystem;
 
 import Model.User.User;
+import Model.User.UserService;
 
 /**
  * Class that provides methods to handle with mailbox and registrations operations
@@ -18,10 +19,12 @@ import Model.User.User;
 public class MailboxService 
 {
 	private BugReportService bugReportService;
+	private UserService userService;
 	
-	public MailboxService(BugReportService bugReportService)
+	public MailboxService(BugReportService bugReportService, UserService userService)
 	{
 		this.bugReportService = bugReportService;
+		this.userService = userService;
 	}
 	/**
 	 * Method to get a list of notifications
@@ -129,6 +132,14 @@ public class MailboxService
 	    	nList.add(list.get(index));
 	    
 	    return nList;
+	}
+	
+	public List<Mailbox> getAllMailboxes()
+	{
+		List<Mailbox> mailboxes = new ArrayList<>();
+		for(User user : userService.getUserList())
+			mailboxes.add(user.getMailbox());
+		return mailboxes;
 	}
 	
 }

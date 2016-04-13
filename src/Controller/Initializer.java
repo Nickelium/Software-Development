@@ -49,8 +49,8 @@ public class Initializer implements IInitializer {
             this.bugReportService = new BugReportService(projectService);
             this.developerAssignmentService = new DeveloperAssignmentService(projectService);
             this.tagAssignmentService = new TagAssignmentService(projectService);
-            this.mailboxService = new MailboxService(bugReportService);
-            this.caretaker = new Caretaker(projectService);
+            this.mailboxService = new MailboxService(bugReportService, userService);
+            this.caretaker = new Caretaker(projectService, mailboxService);
 
             // init users
             Admin sam = userService.createAdmin("Frederick", "Sam", "Curtis", "curt");

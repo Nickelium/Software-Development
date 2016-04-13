@@ -5,12 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 import Model.BugReport.*;
+import Model.Memento.Memento;
+import Model.Memento.Originator;
 
 /**
  * Class that represents a mailbox of a user.
  *
  */
-public class Mailbox 
+public class Mailbox implements Originator<MailboxMemento, Mailbox>
 {
 	private List<Notification> notifications = new ArrayList<>();
 	
@@ -95,8 +97,29 @@ public class Mailbox
 	public void unregister(ObserverAspect registration)
 	{
 		if(registrations.contains(registration))
-			registration.destructor();
+			registration.unbind();
+		
+		registrations.remove(registration);
 	}
+	
+	@Override
+	public MailboxMemento createMemento() 
+	{
+		return new MailboxMemento(this);
+	}
+
+	@Override
+	public void restoreMemento(MailboxMemento memento)
+	{
+		this.registrations	= memento.getRegistrations();
+		
+		for(ObserverAspectMemento registrationMemento : memento.getRegistrationMementos())
+			registrationMemento.getOriginator().restoreMemento(registrationMemento);
+			
+		
+	}
+	
+	
 	
 	/**
 	 * Inner class observer of a creation of a bugreport

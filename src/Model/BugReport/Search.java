@@ -20,5 +20,5 @@ public abstract class Search
 		 return new ListWrapper<>(bugReports);
 	 }
 
-	public Search() {}
+
 }
