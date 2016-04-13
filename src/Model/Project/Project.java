@@ -4,6 +4,7 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 import Model.Roles.Lead;
@@ -17,7 +18,7 @@ import java.util.List;
  *	This class represents a project with all its related attributes.
  *
  */
-public class Project extends Subject implements Observer<BugReport>, Originator<ProjectMemento,Project>
+public class Project extends Subject implements Observer<BugReport>, Originator<Project.ProjectMemento,Project>
 {
 
 	private String name;
@@ -528,20 +529,124 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		this.description = memento.getDescription();
 		this.startingDate = memento.getStartingDate();
 		this.budget = memento.getBudget();
+		this.versionID = memento.getVersionID();
 		
-		this.subSystems = new ArrayList<>(memento.getSubsystems());
+		this.subSystems = memento.getSubsystems();
 		
-		for(SubSystemMemento subsystemMemento : memento.getSubsystemMementos())
+		for(SubSystem.SubSystemMemento subsystemMemento : memento.getSubsystemMementos())
 			subsystemMemento.getOriginator().restoreMemento(subsystemMemento);
 		
-		this.devsRoles = new ArrayList<>(memento.getDevsRoles());
+		this.devsRoles = memento.getDevsRoles();
 		
-		this.observers = new ArrayList<>(memento.getObservers());
+		this.observers = memento.getObservers();
 		
 		this.latestAchievedMilestone = memento.getLatestAchievedMilestone();
-		this.milestones = new ArrayList<>(memento.getMilestones());
+		this.milestones = memento.getMilestones();
 		
 	}
+	
+	/**
+	 * Innerclass
+	 *
+	 */
+	public class ProjectMemento extends Memento<Project>
+	{
+		private String name;
+		private String description;
+		private TheDate startingDate;
+		private double budget;
+		private double versionID;
+		
+		private List<SubSystem> subsystems;
+		
+		private List<SubSystem.SubSystemMemento> subsystemMementos = new ArrayList<>();
+		
+		private List<Observer> observers;
+		
+		private List<Role> devsRoles;
+		
+		private Milestone latestAchievedMilestone;
+		private List<Milestone> milestones;
+		
+		public ProjectMemento(Project originator)
+		{
+			super(originator);
+			this.name = originator.getName();
+			this.description = originator.getDescription();
+			this.startingDate = originator.getStartingDate();
+			this.budget = originator.getBudget();
+			this.versionID = originator.getVersionID();
+			
+			this.subsystems =  new ArrayList<>(originator.getSubSystems());
+			
+			for(SubSystem subsystem : subsystems)
+				subsystemMementos.add(subsystem.createMemento());
+			
+			this.devsRoles =  new ArrayList<>(originator.getDevsRoles());
+			
+			this.observers =  new ArrayList<>(originator.getObservers());
+			
+			this.latestAchievedMilestone = originator.getLatestAchievedMilestone();
+			this.milestones =  new ArrayList<>(originator.getAllMilestones());
+		}
+		
+		
+		private String getName()
+		{
+			return name;
+		}
+		
+		private String getDescription()
+		{
+			return description;
+		}
+		
+		private TheDate getStartingDate()
+		{
+			return startingDate;
+		}
+		
+		private double getBudget()
+		{
+			return budget;
+		}
+		
+		private double getVersionID()
+		{
+			return versionID;
+		}
+		
+		private List<SubSystem> getSubsystems()
+		{
+			return new ArrayList<>(subsystems);
+		}
+		
+		private List<SubSystem.SubSystemMemento> getSubsystemMementos()
+		{
+			return subsystemMementos;
+		}
+		
+		private List<Role> getDevsRoles()
+		{
+			return new ArrayList<>(devsRoles);
+		}
+		
+		private List<Observer> getObservers()
+		{
+			return new ArrayList<>(observers);
+		}
+		
+		private Milestone getLatestAchievedMilestone()
+		{
+			return latestAchievedMilestone;
+		}
+		
+		private List<Milestone> getMilestones()
+		{
+			return new ArrayList<>(milestones);
+		}
+	}
+
 
 
 }

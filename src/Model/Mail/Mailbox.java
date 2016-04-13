@@ -3,6 +3,7 @@ package Model.Mail;
 import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
 import Model.BugReport.Tag;
+import Model.Memento.Memento;
 import Model.Memento.Originator;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
  * A mailbox contains all notifications of which a user is registred to.
  * //TODO Documenteren van Mail package !!!
  */
-public class Mailbox implements Originator<MailboxMemento, Mailbox>
+public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 {
 	private List<Notification> notifications;
 	private List<ObserverAspect> registrations;
@@ -115,15 +116,28 @@ public class Mailbox implements Originator<MailboxMemento, Mailbox>
 	@Override
 	public void restoreMemento(MailboxMemento memento)
 	{
-		this.registrations	= new ArrayList<>(memento.getRegistrations());
-		
-		for(ObserverAspectMemento registrationMemento : memento.getRegistrationMementos())
-			registrationMemento.getOriginator().restoreMemento(registrationMemento);
-			
-		
+		this.registrations	= new ArrayList<>(memento.getRegistrations());	
 	}
 	
-	
+	/**
+	 * Innerclass
+	 */
+	public class MailboxMemento extends Memento<Mailbox>
+	{
+		private List<ObserverAspect> registrations;
+		
+		public MailboxMemento(Mailbox originator) 
+		{
+			super(originator);
+			registrations = originator.getRegistrations();
+		}
+		
+		private List<ObserverAspect> getRegistrations()
+		{
+			return new ArrayList<>(registrations);
+		}
+	}
+
 	
 	/**
 	 * Inner class observer of a creation of a bugreport

@@ -2,9 +2,9 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.BugReport.BugReportMemento;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * This class represent a subsystem with all it's related attributes.
  */
-public class SubSystem extends Subject implements Observer<BugReport>, Originator<SubSystemMemento,SubSystem> {
+public class SubSystem extends Subject implements Observer<BugReport>, Originator<SubSystem.SubSystemMemento,SubSystem> {
 
     private String name;
     private String description;
@@ -380,18 +380,81 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 	@Override
 	public void restoreMemento(SubSystemMemento memento) 
 	{
-		this.subSystems = new ArrayList<>(memento.getSubSystems());
+		this.subSystems = memento.getSubSystems();
 		
 		for(SubSystemMemento subsystemMemento : memento.getSubSystemMementos())
 			subsystemMemento.getOriginator().restoreMemento(subsystemMemento);
 		
-		this.bugReports = new ArrayList<>(memento.getBugReports());
+		this.bugReports = memento.getBugReports();
 		
-		for(BugReportMemento bugreportMemento : memento.getBugReportMementos())
+		for(BugReport.BugReportMemento bugreportMemento : memento.getBugReportMementos())
 			bugreportMemento.getOriginator().restoreMemento(bugreportMemento);
 		
 		this.latestAchievedMilestone = memento.getLatestAchievedMilestone();
-		this.milestones = new ArrayList<>(memento.getMilestones());
+		this.milestones = memento.getMilestones();
 		
+	}
+	
+	/**
+	 * Innerclass
+	 */
+	public class SubSystemMemento extends Memento<SubSystem>
+	{
+		private List<SubSystem> subsystems;
+		private List<SubSystemMemento> subsystemMementos = new ArrayList<>();
+		
+		private List<BugReport> bugreports;
+		private List<BugReport.BugReportMemento> bugreportMementos = new ArrayList<>();
+		
+		private Milestone latestAchievedMilestone;
+		private List<Milestone> milestones;
+		
+		
+		public SubSystemMemento(SubSystem originator)
+		{
+			super(originator);
+			this.subsystems =  new ArrayList<>(originator.getSubSystems());
+			for(SubSystem subsystem : subsystems)
+				subsystemMementos.add(subsystem.createMemento());
+			
+			this.bugreports =  new ArrayList<>(originator.getBugReports());
+			for(BugReport bugreport : bugreports)
+				bugreportMementos.add(bugreport.createMemento());
+			
+			this.latestAchievedMilestone = originator.getLatestAchievedMilestone();
+			this.milestones =  new ArrayList<>(originator.getAllMilestones());
+			
+		}
+		
+		private List<SubSystem> getSubSystems()
+		{
+			return new ArrayList<>(subsystems);
+		}
+		
+		private List<SubSystemMemento> getSubSystemMementos()
+		{
+			return subsystemMementos;
+		}
+		
+		private List<BugReport> getBugReports()
+		{
+			return new ArrayList<>(bugreports);
+		}
+		
+		private List<BugReport.BugReportMemento> getBugReportMementos()
+		{
+			return bugreportMementos;
+		}
+		
+		private Milestone getLatestAchievedMilestone()
+		{
+			return latestAchievedMilestone;
+		}
+		
+		private List<Milestone> getMilestones()
+		{
+			return new ArrayList<>(milestones);
+		}
+
 	}
 }

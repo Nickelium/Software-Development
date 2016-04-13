@@ -5,6 +5,7 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.Memento.Memento;
 import Model.Memento.Originator;
+import Model.Project.Project.ProjectMemento;
 import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.Wrapper.IListWrapper;
@@ -18,7 +19,7 @@ import java.util.List;
  * This class is used as a service to operate on projects and subsystems.
  *
  */
-public class ProjectService implements Originator<ProjectServiceMemento, ProjectService>
+public class ProjectService implements Originator<ProjectService.ProjectServiceMemento, ProjectService>
 {
     private IListWrapper<Project> projectList;
 
@@ -184,4 +185,33 @@ public class ProjectService implements Originator<ProjectServiceMemento, Project
     		projectMemento.getOriginator().restoreMemento(projectMemento);
     	
     }
+	
+	/**
+	 * Innerclass
+	 *
+	 */
+	public class ProjectServiceMemento extends Memento<ProjectService>
+	{
+		private List<Project> listProject;
+		private List<ProjectMemento> projectMementos = new ArrayList<>();
+		
+		public ProjectServiceMemento(ProjectService projectService)
+		{
+			super(projectService);
+			listProject = new ArrayList<>(projectService.getAllProjects());
+			for(Project p : listProject)
+				projectMementos.add(p.createMemento());
+		}
+		
+		private List<Project> getListProject()
+		{
+			return listProject;
+		}
+		
+		private List<ProjectMemento> getProjectMementos()
+		{
+			return projectMementos;
+		}
+	}
+
 }
