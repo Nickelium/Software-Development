@@ -117,6 +117,8 @@ public abstract class Tag{
         bugReport.solutionScore = score;
     }
 
+    public abstract boolean isFinal();
+
     public abstract boolean equals(Object obj);
 
     public abstract String toString();

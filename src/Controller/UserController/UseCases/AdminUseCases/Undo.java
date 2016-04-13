@@ -49,10 +49,10 @@ public class Undo extends UseCase
     @Override
     public void run() throws ReportErrorToUserException,IndexOutOfBoundsException 
     {
-    	// Step 2 print the usecases completed
+    	// Step 2
     	int numberOfUseCase = 10;
     	getUi().display("The list of the last " + numberOfUseCase + " usecases that modified the state of Bugtrap\n" );
-    	List<Snapshot> snapshots = caretaker.getSnapshots();
+    	List<Snapshot> snapshots = caretaker.getSnapshots(numberOfUseCase);
     	String stringSnapshots = Formatter.formatSnapshots(snapshots);
     	getUi().display(stringSnapshots);
     	
@@ -61,6 +61,8 @@ public class Undo extends UseCase
     	
     	int number = getUi().readInt();
     	caretaker.restoreState(number);
+    	
+    	getUi().display("System restore completed !");
     	
     }
     
