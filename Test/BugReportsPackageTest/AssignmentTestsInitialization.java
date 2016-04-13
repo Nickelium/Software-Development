@@ -5,8 +5,6 @@ import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
-import Model.BugReport.TagTypes.Assigned;
-import Model.BugReport.TagTypes.New;
 import Model.BugReport.TagTypes.Resolved;
 import Model.Project.Project;
 import Model.Project.ProjectService;
@@ -20,7 +18,6 @@ import Model.User.Issuer;
 import Model.User.UserService;
 import org.junit.Before;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -94,11 +91,17 @@ public class AssignmentTestsInitialization {
         project2.addRole(tester2);
         project2.addRole(programmer2);
 
-        bugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
-                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6), new ArrayList<>(), new ArrayList<>());
-        bugReport2 = bugReportService.createBugReport("Bugreport2", "Des bugreport2", issuer2, BugReport.PUBLIC, subSystem3,
-                TheDate.TheDateNow(), new Resolved(), Arrays.asList(dev5), new ArrayList<>(), new ArrayList<>());
-        bugReport3 = bugReportService.createBugReport("Bugreport3", "Des bugreport3", issuer1, BugReport.PUBLIC, subSystem4,
-                TheDate.TheDateNow(), new New(), Arrays.asList(dev4, dev6), new ArrayList<>(), new ArrayList<>());
+        bugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
+
+        bugReport2 = bugReportService.createBugReport("Bugreport2", "Des bugreport2", issuer2, subSystem3, BugReport.PUBLIC,
+                TheDate.TheDateNow(), Arrays.asList(dev4, dev5));
+
+        bugReportService.createTest("Test", dev4, bugReport2);
+        bugReportService.createPatch("Patch", dev5, bugReport2);
+        tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(0));
+
+        bugReport3 = bugReportService.createBugReport("Bugreport3", "Des bugreport3", issuer1, subSystem4, BugReport.PUBLIC,
+                TheDate.TheDateNow(), Arrays.asList(dev4, dev6));
     }
 }
