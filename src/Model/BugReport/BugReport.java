@@ -37,6 +37,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
     private BugReportID id;
     private String title;
+
     private String description;
     private TheDate creationDate;
     Tag tag;
@@ -94,30 +95,24 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies) throws ReportErrorToUserException
     {
-         if (!isValidTitle(title)) throw new ReportErrorToUserException("The title cannot be empty!");
-         if (!isValidDescription(description)) throw new ReportErrorToUserException("The description cannot be empty!") ;
-         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
-         if (creator == null) throw new IllegalArgumentException("The issuer is null");
-         if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
-         if (initialAssignies == null) throw new IllegalArgumentException("List cannot be null");
-
-         this.title = title;
-         this.description = description;
-         this.creator = creator;
-         this.creationDate = creationDate;
+        setTitle(title);
+        setDescription(description);
+        setCreator(creator);
+        setCreationDate(creationDate);
         this.tag = new New();
         this.pblc = pblc;
+        this.id = new BugReportID();
 
-         //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
-         // the tag is changed to an assigned tag.
-         if (tag.getClass().equals(New.class) && !initialAssignies.isEmpty()) this.tag = new Assigned();
+        //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
+        // the tag is changed to an assigned tag.
+        if (tag.getClass().equals(New.class) && !initialAssignies.isEmpty()) this.tag = new Assigned();
 
-         this.id = new BugReportID();
-         subSystem.addBugReport(this);
+        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+        subSystem.addBugReport(this);
 
-         this.comments = new ArrayList<>();
-         this.dependencies = new ArrayList<>();
-         this.assignees = new ArrayList<>(initialAssignies);
+        setAssignees(initialAssignies);
+        this.comments = new ArrayList<>();
+        this.dependencies = new ArrayList<>();
         this.patches = new ArrayList<>();
         this.tests = new ArrayList<>();
 
@@ -305,42 +300,77 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
     /**
      * Checker to check if the procedure is valid
-     * @param procedureBug
+     * @param procedureBug TODO
      * @return true when valid, false when invalid
      */
     public boolean isValidProcedureBug(String procedureBug){
         if (procedureBug == null) return false;
-        if (procedureBug.equals("")) return false;
         else return true;
     }
 
     /**
      * Checker to check if the stack trace is valid
-     * @param stackTrace
+     * @param stackTrace TODO
      * @return true when valid, false when invalid
      */
     public boolean isValidStackTrace(String stackTrace){
         if (stackTrace == null) return false;
-        if (stackTrace.equals("")) return false;
         else return true;
     }
 
     /**
      * Checker to check fi the error message is valid
-     * @param errorMessage
+     * @param errorMessage TODO
      * @return true when valid, false when invalid
      */
     public boolean isValidErrorMessage(String errorMessage){
         if (errorMessage == null) return false;
-        if (errorMessage.equals("")) return false;
         else return true;
     }
-    
-    
+
+
+    /**
+     * Returns if the bugreport is public.
+     *
+     * @return True if the bugreport is public.
+     */
+    public boolean isPublic() {
+        return pblc;
+    }
 
     //endregion
 
     //region Setters
+
+    //TODO
+    private void setTitle(String title) throws ReportErrorToUserException {
+        if (!isValidTitle(title)) throw new ReportErrorToUserException("The title cannot be empty!");
+        this.title = title;
+    }
+
+    //TODO
+    private void setDescription(String description) throws ReportErrorToUserException {
+        if (!isValidDescription(description)) throw new ReportErrorToUserException("The description cannot be empty!");
+        this.description = description;
+    }
+
+    //TODO
+    private void setCreationDate(TheDate creationDate) {
+        if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
+        this.creationDate = creationDate;
+    }
+
+    //TODO
+    private void setCreator(Issuer creator) {
+        if (creator == null) throw new IllegalArgumentException("The issuer is null");
+        this.creator = creator;
+    }
+
+    //TODO
+    private void setAssignees(List<Developer> initialAssignies) {
+        if (initialAssignies == null) throw new IllegalArgumentException("List cannot be null");
+        this.assignees = new ArrayList<>(initialAssignies);
+    }
 
     /**
      * Setter to change the tag of the bugreport.
@@ -356,28 +386,17 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
-     * Returns if the bugreport is public.
-     *
-     * @return True if the bugreport is public.
-     */
-    public boolean isPublic() {
-        return pblc;
-    }
-
-    //endregion
-    
-    //region setters
-
-    /**
      * Method to set a new procedure bug.
      *
      * Method requires the input string to be a valid procedure bug.
      * @param procedureBug the procedure bug to be set.
+     *                     TODO exceptions
      */
-    public void setProcedureBug(String procedureBug)
+    public void setProcedureBug(String procedureBug) throws ReportErrorToUserException
     {
-    	if(isValidProcedureBug(procedureBug)) 
-    		this.procedureBug = procedureBug;
+        if (!isValidProcedureBug(procedureBug))
+            throw new ReportErrorToUserException("Invalid value for the way to reproduce the bug.");
+        this.procedureBug = procedureBug;
    
     }
 
@@ -386,11 +405,12 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * Method requires the input string to be a valid stack trace.
      * @param stackTrace the procedure bug to be set.
+     *                     TODO exceptions
      */
-    public void setStackTrace(String stackTrace)
+    public void setStackTrace(String stackTrace) throws ReportErrorToUserException
     {
-    	if(isValidStackTrace(stackTrace)) 
-    		this.stackTrace = stackTrace;
+        if (!isValidStackTrace(stackTrace)) throw new ReportErrorToUserException("Invalid value for the stack trace.");
+        this.stackTrace = stackTrace;
     }
 
     /**
@@ -398,12 +418,16 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * Method requires the input string to be a valid error message.
      * @param errorMessage the procedure bug to be set.
+     *                     TODO exceptions
      */
-    public void setErrorMessage(String errorMessage)
+    public void setErrorMessage(String errorMessage) throws ReportErrorToUserException
     {
-    	if(isValidErrorMessage(errorMessage)) 
-    		this.errorMessage = errorMessage;
+        if (!isValidErrorMessage(errorMessage))
+            throw new ReportErrorToUserException("Invalid value for the error message.");
+        this.errorMessage = errorMessage;
     }
+
+    //endregion
 
     //region Functions
 
@@ -431,7 +455,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     void addComment(Comment comment){
         if (comment == null) throw new IllegalArgumentException("Comment is null");
-
         this.comments.add(comment);
         comment.addObserver(this);
 		notifyObservers(this, comment);
@@ -489,10 +512,12 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         this.dependencies.add(dependency);
     }
 
+    //TODO
     public TargetMilestone getTargetMilestone() {
         return this.targetMilestone;
     }
 
+    //TODO
     public void setTargetMilestone(TargetMilestone targetMilestone) {
         this.targetMilestone = targetMilestone;
     }
@@ -566,13 +591,15 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 		notifyObservers(this, aspect);
 	}
 
-	@Override
+    //TODO
+    @Override
 	public BugReportMemento createMemento()
 	{
 		return new BugReportMemento(this);
 	}
 
-	@Override
+    //TODO
+    @Override
 	public void restoreMemento(BugReportMemento memento) 
 	{
 		this.tag = memento.getTag();

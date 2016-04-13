@@ -1,12 +1,15 @@
 package Model.Memento;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Controller.UserController.UseCases.UseCase;
 import Model.Mail.MailboxService;
 import Model.Project.ProjectService;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * //TODO Documenteren van Mail package !!!
+ */
 public class Caretaker 
 {
 	private List<Snapshot> snapshots = new ArrayList<>();
