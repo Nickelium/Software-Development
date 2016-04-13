@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Memento.Memento;
+import Model.Roles.Role;
 
 public class ProjectMemento extends Memento<Project>
 {
@@ -15,16 +16,25 @@ public class ProjectMemento extends Memento<Project>
 	
 	private List<SubSystem> subsystems;
 	
-	public ProjectMemento(Project project)
+	private List<SubSystemMemento> subsystemMementos = new ArrayList<>();
+	
+	private List<Role> devsRoles;
+	
+	public ProjectMemento(Project originator)
 	{
-		super(project);
-		this.name = project.getName();
-		this.description = project.getDescription();
-		this.startingDate = project.getStartingDate();
-		this.budget = project.getBudget();
-		this.versionID = project.getVersionID();
+		super(originator);
+		this.name = originator.getName();
+		this.description = originator.getDescription();
+		this.startingDate = originator.getStartingDate();
+		this.budget = originator.getBudget();
+		this.versionID = originator.getVersionID();
 		
-		this.subsystems = new ArrayList<>(project.getSubSystems());
+		this.subsystems = new ArrayList<>(originator.getSubSystems());
+		
+		for(SubSystem subsystem : subsystems)
+			subsystemMementos.add(subsystem.createMemento());
+		
+		this.devsRoles = new ArrayList<>(originator.getDevsRoles());
 	}
 	
 	
@@ -56,5 +66,15 @@ public class ProjectMemento extends Memento<Project>
 	List<SubSystem> getSubsystems()
 	{
 		return subsystems;
+	}
+	
+	List<SubSystemMemento> getSubsystemMementos()
+	{
+		return subsystemMementos;
+	}
+	
+	List<Role> getDevsRoles()
+	{
+		return devsRoles;
 	}
 }

@@ -5,6 +5,8 @@ import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Memento.Memento;
+import Model.Memento.Originator;
 import Model.Milestone.TargetMilestone;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
@@ -27,7 +29,7 @@ import java.util.List;
  * This class provides public checkers when setting new values to certain attributes.
  *
  */
-public class BugReport extends Subject implements Observer<Comment>{
+public class BugReport extends Subject implements Observer<Comment>, Originator<BugReportMemento,BugReport>{
 
     public static final boolean PUBLIC = true;
     public static final boolean PRIVATE = false;
@@ -591,6 +593,21 @@ public class BugReport extends Subject implements Observer<Comment>{
 	@Override
 	public void update(Subject structure, Comment s, Object aspect) {
 		notifyObservers(this, aspect);
+	}
+
+	@Override
+	public BugReportMemento createMemento()
+	{
+		return new BugReportMemento(this);
+	}
+
+	@Override
+	public void restoreMemento(BugReportMemento memento) 
+	{
+		this.tag = memento.getTag();
+		this.assignees = memento.getAssignees();
+		this.comments = memento.getComments();
+		
 	}
 
     //endregion

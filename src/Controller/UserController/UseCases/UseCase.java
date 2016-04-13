@@ -18,7 +18,8 @@ public abstract class UseCase {
     private BugReportService bugReportService;
     private User currentUser;
 
-
+    protected boolean changeSystem;
+    
     public UseCase(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
         setUi(ui);
         setUserService(userService);
@@ -68,9 +69,17 @@ public abstract class UseCase {
     public User getCurrentUser(){
         return currentUser;
     }
+    
+    public boolean changeSystem()
+    {
+    	return changeSystem;
+    }
 
     //endregion
 
     public abstract void run() throws ReportErrorToUserException,IndexOutOfBoundsException;
+    
+    @Override
+    public abstract String toString();
 
 }

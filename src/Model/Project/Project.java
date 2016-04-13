@@ -525,6 +525,11 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		
 		this.subSystems = memento.getSubsystems();
 		
+		for(SubSystemMemento subsystemMemento : memento.getSubsystemMementos())
+			subsystemMemento.getOriginator().restoreMemento(subsystemMemento);
+		
+		this.devsRoles = memento.getDevsRoles();
+		
 	}
 
 

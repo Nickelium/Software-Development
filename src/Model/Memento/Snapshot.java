@@ -2,6 +2,7 @@ package Model.Memento;
 
 import java.util.List;
 
+import Controller.UserController.UseCases.UseCase;
 import Model.Project.Project;
 import Model.Project.ProjectMemento;
 import Model.Project.ProjectService;
@@ -9,23 +10,24 @@ import Model.Project.ProjectServiceMemento;
 
 public class Snapshot
 {
+	private UseCase usecase;
+	
 	private ProjectServiceMemento projectServiceMemento;
-	private List<ProjectMemento> projectMementos;
 	
-	
-	public Snapshot(ProjectService projectService)
+	public Snapshot(UseCase usecase, ProjectService projectService)
 	{
 		projectServiceMemento = projectService.createMemento();
-		
-		for(Project project : projectService.getAllProjects())
-			projectMementos.add(project.createMemento());
+		this.usecase = usecase;
 	}
 	
 	public void restore()
 	{
 		projectServiceMemento.getOriginator().restoreMemento(projectServiceMemento);
-		
-		for(ProjectMemento projectMemento : projectMementos)
-			projectMemento.getOriginator().restoreMemento(projectMemento);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Before " + usecase.toString();
 	}
 }

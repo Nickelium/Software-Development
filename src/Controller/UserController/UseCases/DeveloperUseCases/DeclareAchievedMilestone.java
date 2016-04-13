@@ -22,6 +22,7 @@ public class DeclareAchievedMilestone extends DeveloperUseCase {
 
     public DeclareAchievedMilestone(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, TagAssignmentService tagAssignmentService, DeveloperAssignmentService developerAssignmentService, User currentUser) {
         super(ui, userService, projectService, bugReportService, tagAssignmentService, developerAssignmentService, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -106,4 +107,10 @@ public class DeclareAchievedMilestone extends DeveloperUseCase {
         else
             project.setNewProjectMilestone(newMilestoneObject);
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Declare Achieved Milestone";
+	}
 }

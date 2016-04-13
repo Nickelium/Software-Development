@@ -17,6 +17,7 @@ public class UpdateBugReport extends IssuerUseCase {
 
     public UpdateBugReport(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, TagAssignmentService tagAssignmentService, User currentUser) {
         super(ui, userService, projectService, bugReportService, tagAssignmentService,currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -61,4 +62,10 @@ public class UpdateBugReport extends IssuerUseCase {
 
         getUi().display("The tag has successfully been changed.");
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Update Bugreport";
+	}
 }

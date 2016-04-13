@@ -20,6 +20,7 @@ public class UpdateProject extends UseCase {
 
     public UpdateProject(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -76,4 +77,10 @@ public class UpdateProject extends UseCase {
         getUi().display("The project has been successfully updated.\n");
         getUi().display(project.toString());
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Update Project";
+	}
 }

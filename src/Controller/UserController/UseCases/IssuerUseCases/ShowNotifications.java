@@ -23,6 +23,7 @@ public class ShowNotifications extends IssuerUseCase{
     public ShowNotifications(IUI ui, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
         super(ui, null, projectService, bugReportService,null, currentUser);
         this.mailboxService = mailboxService;
+        changeSystem = false;
     }
 
     /**
@@ -54,4 +55,10 @@ public class ShowNotifications extends IssuerUseCase{
         getUi().display(stringNotifications);
     
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Show Notifications";
+	}
 }

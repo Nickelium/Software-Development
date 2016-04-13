@@ -12,9 +12,12 @@ import Model.User.UserService;
  * Created by Karina on 05.03.2016.
  */
 public class AdminController extends UserController {
+	
+	private Caretaker caretaker;
 
-    public AdminController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
+    public AdminController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, Caretaker caretaker, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        this.caretaker = caretaker;
         initializeUseCasesAdmin();
     }
 
@@ -24,8 +27,7 @@ public class AdminController extends UserController {
         useCases.add(new FunctionWrap("Update Project", new UpdateProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
         useCases.add(new FunctionWrap("Delete Project", new DeleteProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
         useCases.add(new FunctionWrap("Create Subsystem", new CreateSubSystem(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
-        //Caretaker caretaker = new Caretaker(projectService);
-        //useCases.add(new FunctionWrap("Undo", new Undo(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser(),caretaker)));
+        useCases.add(new FunctionWrap("Undo", new Undo(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser(),caretaker)));
 
     }
 

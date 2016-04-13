@@ -4,6 +4,7 @@ import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
 import Model.Mail.Notification;
 import Model.Mail.ObserverAspect;
+import Model.Memento.Snapshot;
 import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.SubSystem;
@@ -27,7 +28,7 @@ public class Formatter
 	 * 
 	 * @return The textual representation
 	 */
-	public static String formatUserList(List<User> listUser)
+	public static String formatUserList(List<? extends User> listUser)
 	{
 		String parsed ="";
 		for(int i=0; i< listUser.size(); i++)
@@ -42,22 +43,6 @@ public class Formatter
 		for(int i=0; i< listMilestone.size(); i++)
 			parsed += i + ": " + listMilestone.get(i).toString() + "\n";
 		return parsed;
-
-	}
-
-	/**
-	 * Format the given list of developers into a textual representation.
-	 * 
-	 * @param listDeveloper The list of developers
-	 * 
-	 * @return The textual representation
-	 */
-	public static String formatDeveloperList(List<Developer> listDeveloper)
-	{
-		String parsed ="";
-		for(int i=0; i< listDeveloper.size(); i++)
-            parsed += i + ": " + listDeveloper.get(i).toString() + "\n";
-        return parsed;
 
 	}
 	
@@ -138,6 +123,15 @@ public class Formatter
         }
         return parsed;
 	}
+    
+    public static String formatSnapshots(List<Snapshot> list)
+    {
+    	String parsed = "";
+        for (int i = 0; i < list.size(); i++) 
+            parsed += i + ": " + list.get(i).toString() + "\n";
+        
+        return parsed;
+    }
     
 	/**
 	 * Format the given project into a recursive textual representation.

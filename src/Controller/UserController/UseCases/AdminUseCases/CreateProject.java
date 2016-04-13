@@ -22,6 +22,7 @@ public class CreateProject extends UseCase {
 
     public CreateProject(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -76,4 +77,10 @@ public class CreateProject extends UseCase {
         getUi().display(project.toString());
 
     }
+
+	@Override
+	public String toString()
+	{
+		return "Create Project";
+	}
 }

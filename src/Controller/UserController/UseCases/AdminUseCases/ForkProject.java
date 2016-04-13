@@ -22,6 +22,7 @@ public class ForkProject extends UseCase {
 
     public ForkProject(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -87,4 +88,10 @@ public class ForkProject extends UseCase {
         getUi().display("The project has been successfully forked.\n");
         getUi().display(forkProject.toString());
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Fork Project";
+	}
 }

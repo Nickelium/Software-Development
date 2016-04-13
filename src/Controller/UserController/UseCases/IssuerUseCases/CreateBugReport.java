@@ -21,6 +21,7 @@ public class CreateBugReport extends IssuerUseCase{
 
     public CreateBugReport(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService,null, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -128,4 +129,10 @@ public class CreateBugReport extends IssuerUseCase{
         getUi().display("The bug report has successfully been added.\n");
 
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Create Bugreport";
+	}
 }

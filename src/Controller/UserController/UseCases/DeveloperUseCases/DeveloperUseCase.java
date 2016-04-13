@@ -20,6 +20,7 @@ public abstract class DeveloperUseCase extends IssuerUseCase {
     public DeveloperUseCase(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, TagAssignmentService tagAssignmentService,DeveloperAssignmentService developerAssignmentService, User currentUser) {
         super(ui, userService, projectService, bugReportService, tagAssignmentService, currentUser);
         setDeveloperAssignmentService(developerAssignmentService);
+        changeSystem = true;
     }
 
     public abstract void run() throws ReportErrorToUserException, IndexOutOfBoundsException;

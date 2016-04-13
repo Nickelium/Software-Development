@@ -20,6 +20,7 @@ public class CreateSubSystem extends UseCase {
 
     public CreateSubSystem(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -92,4 +93,10 @@ public class CreateSubSystem extends UseCase {
 
         getUi().display("The subsystem has been successfully created.\n");
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Create Subsystem";
+	}
 }

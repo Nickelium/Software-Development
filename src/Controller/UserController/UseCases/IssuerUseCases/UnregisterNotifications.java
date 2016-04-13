@@ -25,6 +25,7 @@ public class UnregisterNotifications extends IssuerUseCase{
     public UnregisterNotifications(IUI ui, ProjectService projectService, BugReportService bugReportService, MailboxService mailboxService, User currentUser) {
         super(ui, null, projectService, bugReportService,null, currentUser);
         this.mailboxService = mailboxService;
+        changeSystem = true;
     }
 
     /**
@@ -61,4 +62,10 @@ public class UnregisterNotifications extends IssuerUseCase{
         
         getUi().display("Unregister completed !");
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Unregister for Notifications";
+	}
 }

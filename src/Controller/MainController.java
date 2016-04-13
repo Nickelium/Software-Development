@@ -7,6 +7,7 @@ import Controller.UserController.IssuerController;
 import Controller.UserController.UseCases.UseCase;
 import Controller.UserController.UserController;
 import CustomExceptions.ReportErrorToUserException;
+import Model.Memento.Caretaker;
 import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.User;
@@ -46,13 +47,13 @@ public class MainController {
             // choose controller
             UserController userController;
             if (currentUser instanceof Admin) {
-                userController = new AdminController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser);
+                userController = new AdminController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getCaretaker(), currentUser);
             } else if (currentUser instanceof Developer) {
                 userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser, initializer.getDeveloperAssignmentService(), initializer.getTagAssignmentService(), initializer.getMailboxService());
             } else {
                 userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getTagAssignmentService(), initializer.getMailboxService(), currentUser);
             }
-
+   
             boolean logingOut = false;
             do {
                 logingOut = chooseUseCase(userController);
@@ -65,7 +66,8 @@ public class MainController {
         ui.display(msg);
     }
 
-    private boolean chooseUseCase(UserController userController) throws Exception {
+    private boolean chooseUseCase(UserController userController) throws Exception 
+    {
         int chosenUseCase;
         // Step 1 in most Use Cases
 
@@ -83,17 +85,27 @@ public class MainController {
                 continue;
             }
         }
-        while (true) {
-            try {
+        
+        while (true) 
+        {
+            try
+            {
                 // call function
                 UseCase useCase = userController.getUseCase(chosenUseCase);
-                if (useCase == null) {
+                if (useCase == null) 
+                {
                     return true;
-                } else {
+                } 
+                else
+                {
+                	if(useCase.changeSystem())
+                		initializer.getCaretaker().saveState(useCase);
                     useCase.run();
                 }
                 break;
-            } catch (ReportErrorToUserException | IndexOutOfBoundsException e) {
+            } 
+            catch (ReportErrorToUserException | IndexOutOfBoundsException e) 
+            {
                 ui.errorDisplay(e.getMessage());
                 ui.display("Enter 1 if you want to retry.");
                 if (!ui.readString().equals("1")) break;

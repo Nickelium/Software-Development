@@ -20,6 +20,7 @@ public class CreateComment extends IssuerUseCase {
 
     public CreateComment(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         super(ui, userService, projectService, bugReportService, null, currentUser);
+        changeSystem = true;
     }
 
     /**
@@ -93,4 +94,10 @@ public class CreateComment extends IssuerUseCase {
             throw new ReportErrorToUserException("This is an invalid input");
         }
     }
+    
+    @Override
+	public String toString()
+	{
+		return "Create Comment";
+	}
 }

@@ -3,6 +3,7 @@ package Model.Memento;
 import java.util.ArrayList;
 import java.util.List;
 
+import Controller.UserController.UseCases.UseCase;
 import Model.Project.ProjectService;
 
 public class Caretaker 
@@ -16,13 +17,18 @@ public class Caretaker
 		this.projectService = projectService;
 	}
 	
-	public void saveState()
+	public void saveState(UseCase usecase)
 	{
-		snapshots.add(new Snapshot(projectService));
+		snapshots.add(new Snapshot(usecase, projectService));
 	}
 	
 	public void restoreState(int stateNumber)
 	{
 		snapshots.get(stateNumber).restore();
+	}
+	
+	public List<Snapshot> getSnapshots()
+	{
+		return snapshots;
 	}
 }
