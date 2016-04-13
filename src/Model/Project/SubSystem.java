@@ -302,10 +302,18 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     public void setNewSubSystemMilestone(Milestone newSubSystemMilestone) throws ReportErrorToUserException {
 
         double highestMilestoneID = 0;
-        for (Milestone milestone : this.getAllMilestones()) {
-            double currentID = milestone.getIDvalue();
-            if (currentID > highestMilestoneID)
-                highestMilestoneID = currentID;
+
+        // Subsystem bevat geen recusieve subsystems
+        if(this.getAllMilestones().size()==1){
+            highestMilestoneID = newSubSystemMilestone.getIDvalue();
+        }
+
+        else {
+            for (Milestone milestone : this.getAllMilestones()) {
+                double currentID = milestone.getIDvalue();
+                if (currentID > highestMilestoneID)
+                    highestMilestoneID = currentID;
+            }
         }
 
 		/* If a project or subsystem has a bug report that is not NotABug, Duplicate or

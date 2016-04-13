@@ -8,7 +8,6 @@ import Model.BugReport.TagTypes.Duplicate;
 import Model.BugReport.TagTypes.NotABug;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
-import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 import Model.Roles.Lead;
