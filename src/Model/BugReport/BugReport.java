@@ -82,7 +82,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * @param title The title of the bugreport.
      * @param description The description of the bugreport.
-     * @param subSystem The subsystem the bugreport is about.
      * @param creator The creator of the bugreport.
      * @param creationDate The creation date of this bugreport.
      * @param initialAssignies The list of assignees for this bugreport.
@@ -110,7 +109,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         this.dependencies = new ArrayList<>();
         this.patches = new ArrayList<>();
         this.tests = new ArrayList<>();
-        setTargetMilestone(targetMilestone);
+        this.targetMilestone = targetMilestone;
     }
 
     //endregion
@@ -261,6 +260,15 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     @Nullable
     public Patch getSelectedPatch() {
         return this.selectedPatch;
+    }
+
+    /**
+     * Method to get the target milestone of a bug report.
+     *
+     * @return the target milestone of a bug report.
+     */
+    public TargetMilestone getTargetMilestone() {
+        return this.targetMilestone;
     }
 
     //endregion
@@ -527,19 +535,10 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
-     * Method to get the target milestone of a bug report.
-     * @return the target milestone of a bug report.
-     */
-    public TargetMilestone getTargetMilestone() {
-        return this.targetMilestone;
-    }
-
-    /**
      * Method to set a new target milestone of a bug report.
      * @param targetMilestone the new target milestone of a bug report.
      */
     public void setTargetMilestone(TargetMilestone targetMilestone) throws ReportErrorToUserException {
-        if (targetMilestone == null) this.targetMilestone = new TargetMilestone("M0");
         this.targetMilestone = targetMilestone;
     }
 

@@ -58,7 +58,6 @@ public class BugReportService {
      */
     public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc) throws ReportErrorToUserException
     {
-
         BugReport bugReport = new BugReport(title, description, creator, pblc);
         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
         subSystem.addBugReport(bugReport);
@@ -85,7 +84,7 @@ public class BugReportService {
      */
     public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc, TheDate creationDate, List<Developer> initialAssignees) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, creator, pblc, creationDate, initialAssignees);
+        BugReport bugReport = new BugReport(title, description, creator, pblc, creationDate, initialAssignees, null);
         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
         subSystem.addBugReport(bugReport);
 
