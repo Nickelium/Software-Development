@@ -168,38 +168,23 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         }
         return subSystems;
     }
-<<<<<<< HEAD
 
-    /**
-     * //TODO
-     * @return
-=======
-        
     /**
      * Method to create a memento of this object
      * 
      * @return The memento of this object
->>>>>>> e85abd6d5e1b0a0ed4bffe721deb690ee9fb4a7a
      */
 	@Override
 	public ProjectServiceMemento createMemento() 
 	{
 		return new ProjectServiceMemento(this);
 	}
-<<<<<<< HEAD
-
-    /**
-     * //TODO
-     * @param memento
-     */
-=======
 	
 	/**
 	 * Method to restore this object given the memento
 	 * 
 	 * @param memento The memento to restore to
 	 */
->>>>>>> e85abd6d5e1b0a0ed4bffe721deb690ee9fb4a7a
 	@Override
 	public void restoreMemento(ProjectServiceMemento memento)
     {
@@ -209,13 +194,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     		projectMemento.getOriginator().restoreMemento(projectMemento);
     	
     }
-	
-<<<<<<< HEAD
-	/**
-	 * Innerclass
-	 * //TODO
-	 */
-=======
+
 	//Innerclass Memento
 	 /**
      * This class provides utility for saving the state of the system at a certain point in time
@@ -228,7 +207,6 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * This wide interface (private getters + public constructor) is provided to the class ProjectService,
      * while the narrow interface (public constructor) is provided to any class.
      */
->>>>>>> e85abd6d5e1b0a0ed4bffe721deb690ee9fb4a7a
 	public class ProjectServiceMemento extends Memento<ProjectService>
 	{
 		private List<Project> listProject;

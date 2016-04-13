@@ -436,18 +436,12 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 		return new SubSystemMemento(this);
 	}
 
-<<<<<<< HEAD
-    /**
-     * //TODO
-     * @param memento
-     */
-=======
+
 	/**
 	 * Method to restore this object given the memento
 	 * 
 	 * @param memento The memento to restore to
 	 */
->>>>>>> e85abd6d5e1b0a0ed4bffe721deb690ee9fb4a7a
 	@Override
 	public void restoreMemento(SubSystemMemento memento) 
 	{
@@ -465,13 +459,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 		this.milestones = memento.getMilestones();
 		
 	}
-	
-<<<<<<< HEAD
-	/**
-	 * Innerclass
-     * //TODO Whole innerclass
-	 */
-=======
+
 	//Innerclass Memento
 	 /**
     * This class provides utility for saving the state of the system at a certain point in time
@@ -484,7 +472,6 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     * This wide interface (private getters + public constructor) is provided to the class ProjectService,
     * while the narrow interface (public constructor) is provided to any class.
     */
->>>>>>> e85abd6d5e1b0a0ed4bffe721deb690ee9fb4a7a
 	public class SubSystemMemento extends Memento<SubSystem>
 	{
 		private List<SubSystem> subsystems;
