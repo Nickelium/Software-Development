@@ -2,6 +2,7 @@ package UseCaseTests.UserControllerTest;
 
 import Controller.UserController.AdminController;
 import Controller.UserController.UserController;
+import Model.Memento.Caretaker;
 import UseCaseTests.AdminControllerTest.AdminControllerInit;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class ShowProject extends AdminControllerInit{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
         adminController.getUseCase(0).run();
     }
 
@@ -34,7 +35,7 @@ public class ShowProject extends AdminControllerInit{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui,userService,projectService,bugReportService,loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
         adminController.getUseCase(0).run();
     }
 
