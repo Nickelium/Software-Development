@@ -6,7 +6,7 @@ import Model.BugReport.Patch;
 import Model.BugReport.Tag;
 import Model.BugReport.Test;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 /**
  * Created by Tom on 19/02/16.
@@ -19,7 +19,7 @@ public class Resolved extends Tag {
      * Default constructor for the Resolved tag.
      */
     public Resolved(int selectedPatchIndex) {
-        this.manuallyAcceptedTags = Collections.singletonList(Closed.class);
+        this.manuallyAcceptedTags = Arrays.asList(NotABug.class, Duplicate.class);
         this.selectedPatchIndex = selectedPatchIndex;
     }
 

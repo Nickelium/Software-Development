@@ -17,7 +17,7 @@ public class New extends Tag {
      * Default constructor of the New tag.
      */
     public New(){
-        this.manuallyAcceptedTags = Arrays.asList(NotABug.class);
+        this.manuallyAcceptedTags = Arrays.asList(NotABug.class, Duplicate.class);
     }
 
     @Override

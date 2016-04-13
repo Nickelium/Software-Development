@@ -17,7 +17,7 @@ public class Assigned extends Tag {
      * Default constructor for an Assigned tag.
      */
     public Assigned(){
-        this.manuallyAcceptedTags = Arrays.asList(NotABug.class);
+        this.manuallyAcceptedTags = Arrays.asList(NotABug.class, Duplicate.class);
     }
 
     @Override
