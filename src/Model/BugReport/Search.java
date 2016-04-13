@@ -26,7 +26,7 @@ public abstract class Search
 	protected abstract List<BugReport> apply(BugReportService bugReportService, User user) throws ReportErrorToUserException;
 
 	/**
-	 * Method that returns an ILIstWrapper object with all bugreports.
+	 * Method that returns an IListWrapper object with all bugreports.
 	 * @param bugReportService the bugreport service, requesting the search
 	 * @param user the user requesting the search
      * @return an ILIstWrapper object with all bugreports

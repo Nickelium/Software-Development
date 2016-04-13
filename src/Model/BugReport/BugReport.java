@@ -39,9 +39,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     private String title;
     private String description;
     private TheDate creationDate;
-    Tag tag;
     private Issuer creator;
-    List<Developer> assignees;
     private List<Comment> comments;
     private List<BugReport> dependencies;
     private boolean pblc;
@@ -50,7 +48,8 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     List<Patch> patches;
     List<Test> tests;
     Patch selectedPatch;
-
+    Tag tag;
+    List<Developer> assignees;
 
     //optional attributes
     private TargetMilestone targetMilestone;

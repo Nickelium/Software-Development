@@ -57,4 +57,9 @@ public class Assigned extends Tag {
         if (obj instanceof  Assigned) return true;
         else return false;
     }
+
+    @Override
+    public boolean isFinal() {
+        return false;
+    }
 }

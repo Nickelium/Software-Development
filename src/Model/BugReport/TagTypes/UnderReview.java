@@ -45,4 +45,9 @@ public class UnderReview extends Tag {
         if (obj instanceof UnderReview) return true;
         else return false;
     }
+
+    @Override
+    public boolean isFinal() {
+        return false;
+    }
 }

@@ -44,4 +44,9 @@ public class Duplicate extends Tag {
         if (obj instanceof Duplicate)return true;
         else return false;
     }
+
+    @Override
+    public boolean isFinal() {
+        return true;
+    }
 }

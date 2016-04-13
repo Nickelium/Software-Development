@@ -2,10 +2,6 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.BugReport.Tag;
-import Model.BugReport.TagTypes.Closed;
-import Model.BugReport.TagTypes.Duplicate;
-import Model.BugReport.TagTypes.NotABug;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Memento.Originator;
@@ -429,50 +425,52 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * increment is rejected.
 	 *
 	 */
-	public void setNewProjectMilestone(Milestone newProjectMilestone)throws ReportErrorToUserException{
+    public void setNewProjectMilestone(Milestone newProjectMilestone) throws ReportErrorToUserException {
+        if (!milestoneDoesNotExceedSubsystems(newProjectMilestone))
+            throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
+        if (!milestoneDoesNotExceedBugReportMilestone(newProjectMilestone))
+            throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects bugreport!");
 
-		double highestMilestoneID = 0;
+        this.setLatestAchievedMilestone(newProjectMilestone);
+        this.addMilestoneToList(newProjectMilestone);
+        Collections.sort(milestones);
 
-		// Project bevat geen recusieve subsystemen
-		if(this.getAllMilestones().size()==1){
-			highestMilestoneID = newProjectMilestone.getIDvalue();
-		}
+    }
 
-		else{
-			for (Milestone milestone : this.getAllMilestones()) {
-				double currentID = milestone.getIDvalue();
-				if (currentID > highestMilestoneID)
-					highestMilestoneID = currentID;
-			}
-		}
+    private boolean milestoneDoesNotExceedSubsystems(Milestone milestone) {
+        double max = 0.0;
+        List<Milestone> milestones = new ArrayList<>();
 
-		/* If a project or subsystem has a bug report that is not NotABug, Duplicate or
-		Closed and this bug report has a target milestone that is less than or equal
-		to the newly proposed achieved milestone for the project or subsystem, the
-		increment is rejected. */
+        for (SubSystem subSystem : getAllSubSystems()) {
+            milestones.addAll(subSystem.getMilestones());
+        }
 
-		for (BugReport bugreport : this.getAllBugReports()) {
-			Tag tag = bugreport.getTag();
-			if (!(tag instanceof NotABug || tag instanceof Duplicate || tag instanceof Closed) && bugreport.getTargetMilestone().getIDvalue() <= newProjectMilestone.getIDvalue()) {
-				throw new ReportErrorToUserException("Bug report is not NotABug, Duplicate or Closed and has a target" +
-						" milestone less than or equal to the new proposed milestone");
-			}
-		}
+        if (milestones.isEmpty()) return true;
 
-		/* A project's or subsystem's achieved milestone should at all times be less
-		than or equal to the highest achieved milestone of all the subsystems it
-		(recursively) contains. */
+        for (Milestone ms : milestones) {
+            if (ms.getIDvalue() > max) {
+                max = ms.getIDvalue();
+            }
+        }
 
-		if (newProjectMilestone.getIDvalue() <= highestMilestoneID) {
-			this.setLatestAchievedMilestone(newProjectMilestone);
-			this.addMilestoneToList(newProjectMilestone);
-			Collections.sort(this.milestones, new Milestone());
-		} else {
-			throw new ReportErrorToUserException("The new Milestone ID is larger than the lowest" +
-					" achieved latestAchievedMilestone of all the subsystems it recursively contains.");
-		}
+        return milestone.getIDvalue() <= max;
+    }
 
-	}
+    private boolean milestoneDoesNotExceedBugReportMilestone(Milestone milestone) {
+        double max = 0.0;
+        List<BugReport> bugReports = this.getAllBugReports();
+
+        if (bugReports.isEmpty()) return true;
+        for (BugReport br : bugReports) {
+            if (!br.getTag().isFinal() && br.getTargetMilestone() != null && br.getTargetMilestone().getIDvalue() > max) {
+                max = br.getTargetMilestone().getIDvalue();
+            }
+        }
+
+        return milestone.getIDvalue() <= max;
+    }
+
+
 
 	private void setLatestAchievedMilestone(Milestone latestAchievedMilestone){
 		this.latestAchievedMilestone = latestAchievedMilestone;
