@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Abstract class containing base functionality for tags.
- * This class needs to be implemented by all tags.
+ * All tag types inherit from this class.
  */
 public abstract class Tag{
     protected List<Class<? extends Tag>> acceptedTags;
@@ -58,10 +58,23 @@ public abstract class Tag{
         bugReport.assignees.add(developer);
     }
 
+    /**
+     * Protected method for changing a tag of some bug report.
+     *
+     * @param bugReport the bug report of which the tag has to be changed
+     * @param tag the new tag for the specified bug report
+     * @throws ReportErrorToUserException if the operation is not allowed to be executed due to system restrictions.
+     */
     protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
         bugReport.tag = tag;
     }
 
+    /**
+     * Protected method to add a specific test to the list of tests, saved in the bug report object.
+     *
+     * @param bugReport the bug report for which the new test is made
+     * @param test the new test that has to be saved in the list of bug report
+     */
     protected void addTestToTests(BugReport bugReport, Test test) {
         bugReport.tests.add(test);
     }
