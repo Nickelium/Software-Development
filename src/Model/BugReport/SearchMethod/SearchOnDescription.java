@@ -9,6 +9,11 @@ import Model.User.User;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class extending the search class, providing functionality for searching bug reports
+ * by a specific string in the description. The description string is passed on to
+ * the class through the constructor.
+ */
 public class SearchOnDescription extends Search
 {
 	private String description;
@@ -17,14 +22,21 @@ public class SearchOnDescription extends Search
 	{
 		this.description = description;
 	}
-	
+
+	/**
+	 * Method to execute the search command. Method returns a list of all bug reports
+	 * that meet the search requirements.
+	 *
+	 * @param bugReportService the bug report service, requesting the search
+	 * @param user the user requesting the search
+	 * @return an unmodifiable list of all bug reports that meet the search requirements.
+	 */
 	@Override
 	protected List<BugReport> apply(BugReportService bugReportService, User user) throws ReportErrorToUserException
 	{
 		if (!isValidDescriptionString(description)) throw new ReportErrorToUserException("Invalid description");
-		List<BugReport> bugreports = getAllBugReportsWrapped(bugReportService, user).getAllMatching(x -> x.getDescription().contains(description));
-		return Collections.unmodifiableList(bugreports);
-		
+		List<BugReport> bugReports = getAllBugReportsWrapped(bugReportService, user).getAllMatching(x -> x.getDescription().contains(description));
+		return Collections.unmodifiableList(bugReports);
 	}
 	
     /**
