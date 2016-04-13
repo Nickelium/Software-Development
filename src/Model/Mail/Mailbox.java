@@ -119,13 +119,27 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		this.registrations	= new ArrayList<>(memento.getRegistrations());	
 	}
 	
-	/**
-	 * Innerclass
-	 */
+    //Innerclass Memento
+    /**
+     * This class provides utility for saving the state of the system at a certain point in time
+     * during execution of the Bug Trap software.
+     *
+     * The mailbox memento saves the state of the following attributes of the mailbox:
+     * registrations.
+     *
+     * This class provides private methods to request the values of the saved fields.
+     * This wide interface (private getters) is provided to the class Bugreport,
+     * while the narrow interface (public constructor) is provided to any class.
+     */
 	public class MailboxMemento extends Memento<Mailbox>
 	{
 		private List<ObserverAspect> registrations;
 		
+		/**
+    	 * Constructor 
+    	 * 
+    	 * @param originator The originator to build a memento from
+    	 */
 		public MailboxMemento(Mailbox originator) 
 		{
 			super(originator);

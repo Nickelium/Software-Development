@@ -652,18 +652,18 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
     //endregion
     
-    /**
-     * Innerclass
-     */
-    
+
+    //Innerclass Memento
     /**
      * This class provides utility for saving the state of the system at a certain point in time
      * during execution of the Bug Trap software.
      *
-     * The bug report memento saves the state of the following attributes:
+     * The bug report memento saves the state of the following attributes of the bug report:
      * tag, assignees, comments, targetMilestone, tests & patches.
      *
-     * This class provides package-visible methods to request the values of the saved fields.
+     * This class provides private methods to request the values of the saved fields.
+     * This wide interface (private getters) is provided to the class Bugreport,
+     * while the narrow interface (public constructor) is provided to any class.
      */
     public class BugReportMemento extends Memento<BugReport>
     {
@@ -677,6 +677,11 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     	private List<Test> tests;
     	private List<Patch> patches;
     	
+    	/**
+    	 * Constructor 
+    	 * 
+    	 * @param originator The originator to build a memento from
+    	 */
     	public BugReportMemento(BugReport originator)
     	{
     		super(originator);
