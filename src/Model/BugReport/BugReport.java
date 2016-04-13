@@ -536,11 +536,11 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         }
 
         if (this.selectedPatch != null) {
-            str += "Selected Patch: " + selectedPatch;
+            str += "\nSelected Patch: " + selectedPatch;
         }
 
         if (this.getSolutionScore() != 0) {
-            str += "Score of solution: " + getSolutionScore();
+            str += "\nScore of solution: " + getSolutionScore();
         }
 
         str += "\nAssignees: ";
