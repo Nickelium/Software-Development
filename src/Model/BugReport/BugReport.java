@@ -7,7 +7,6 @@ import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Memento.Originator;
 import Model.Milestone.TargetMilestone;
-import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
@@ -75,9 +74,9 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem or creator is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc) throws ReportErrorToUserException
+    BugReport(String title, String description, Issuer creator, boolean pblc) throws ReportErrorToUserException
     {
-        this(title, description, subSystem, creator, pblc, TheDate.TheDateNow(), new ArrayList<>());
+        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList<>());
     }
     
     /**
@@ -93,7 +92,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies) throws ReportErrorToUserException
+    BugReport(String title, String description, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies) throws ReportErrorToUserException
     {
         setTitle(title);
         setDescription(description);
@@ -106,9 +105,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
         // the tag is changed to an assigned tag.
         if (tag.getClass().equals(New.class) && !initialAssignies.isEmpty()) this.tag = new Assigned();
-
-        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
-        subSystem.addBugReport(this);
 
         setAssignees(initialAssignies);
         this.comments = new ArrayList<>();
@@ -640,6 +636,10 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 		this.assignees = new ArrayList<>(memento.getAssignees());
 		this.comments = new ArrayList<>(memento.getComments());
 		
+		this.targetMilestone = memento.getTargetMilestone();
+		
+		this.tests = new ArrayList<>(memento.getTests());
+		this.patches = new ArrayList<>(memento.getPatches());
 	}
 
     //endregion

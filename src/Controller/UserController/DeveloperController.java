@@ -1,9 +1,7 @@
 package Controller.UserController;
 
 import Controller.IUI;
-import Controller.UserController.UseCases.DeveloperUseCases.AssignToBugReport;
-import Controller.UserController.UseCases.DeveloperUseCases.AssignToProject;
-import Controller.UserController.UseCases.DeveloperUseCases.DeclareAchievedMilestone;
+import Controller.UserController.UseCases.DeveloperUseCases.*;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
@@ -29,6 +27,8 @@ public class DeveloperController extends IssuerController {
         useCases.add(new AssignToProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser()));
         useCases.add(new AssignToBugReport(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser()));
         useCases.add(new DeclareAchievedMilestone(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser()));
+        useCases.add(new ProposePatch(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser()));
+        useCases.add(new ProposeTest(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser()));
     }
 
     //region Getters & Setters

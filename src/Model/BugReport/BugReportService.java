@@ -58,7 +58,11 @@ public class BugReportService {
      */
     public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc);
+
+        BugReport bugReport = new BugReport(title, description, creator, pblc);
+        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+        subSystem.addBugReport(bugReport);
+
         return bugReport;
     }
     
@@ -81,7 +85,10 @@ public class BugReportService {
      */
     public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc, TheDate creationDate, List<Developer> initialAssignees) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc, creationDate, initialAssignees);
+        BugReport bugReport = new BugReport(title, description, creator, pblc, creationDate, initialAssignees);
+        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+        subSystem.addBugReport(bugReport);
+
         return bugReport;
     }
 
@@ -256,6 +263,7 @@ public class BugReportService {
         return new ListWrapper<>(bugReports);
     }
 
+    //TODO documentatie
     public boolean canAddTest(User user, BugReport bugReport) throws ReportErrorToUserException {
         Project project = this.projectService.getProjectsContainingBugReport(bugReport);
         if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Tester))) {
@@ -264,6 +272,7 @@ public class BugReportService {
         return false;
     }
 
+    //TODO documentatie
     public boolean canAddPatch(User user, BugReport bugReport) throws ReportErrorToUserException {
         Project project = this.projectService.getProjectsContainingBugReport(bugReport);
         if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Programmer))) {
