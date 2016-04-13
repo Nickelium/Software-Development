@@ -262,7 +262,14 @@ public class BugReportService {
         return new ListWrapper<>(bugReports);
     }
 
-    //TODO documentatie
+    /**
+     * Method determining whether a user is allowed to add a test to a specified bug report.
+     *
+     * @param user the user that wants to add a test
+     * @param bugReport the bug report that the user wants to add the test to
+     * @return true if the user is a developer and assigned as tester, false if not.
+     * @throws ReportErrorToUserException is thrown if there is invalid input.
+     */
     public boolean canAddTest(User user, BugReport bugReport) throws ReportErrorToUserException {
         Project project = this.projectService.getProjectsContainingBugReport(bugReport);
         if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Tester))) {
@@ -271,7 +278,14 @@ public class BugReportService {
         return false;
     }
 
-    //TODO documentatie
+    /**
+     * Method determining whether a user is allowed to add a patch to a specified bug report.
+     *
+     * @param user the user that wants to add a patch
+     * @param bugReport the bug report that the user wants to add the patch to
+     * @return true if the user is a developer and assigned as programmer, false if not.
+     * @throws ReportErrorToUserException is thrown if there is invalid input.
+     */
     public boolean canAddPatch(User user, BugReport bugReport) throws ReportErrorToUserException {
         Project project = this.projectService.getProjectsContainingBugReport(bugReport);
         if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Programmer))) {
