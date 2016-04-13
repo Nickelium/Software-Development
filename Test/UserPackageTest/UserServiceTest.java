@@ -33,11 +33,6 @@ public class UserServiceTest {
         userList.insert(admin);
         userList.insert(developer);
         userList.insert(issuer);
-
-        // Add users into UserService
-        service.createAdmin("adminFirstName", "adminMiddleName", "adminLastName", "adminUserName");
-        service.createDeveloper("developerFirstName", "developerMiddleName", "developerLastName", "developerUserName");
-        service.createIssuer("issuerFirstName", "issuerMiddleName", "issuerLastName", "issuerUserName");
     }
 
     @Test
