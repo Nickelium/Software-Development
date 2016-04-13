@@ -9,7 +9,6 @@ import Model.BugReport.TagTypes.Duplicate;
 import Model.BugReport.TagTypes.NotABug;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
-import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 
@@ -286,7 +285,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         return forkedSubSystem;
     }
 
-    public List<Milestone> getAllMilestones() {
+    private List<Milestone> getAllMilestones() {
         List<Milestone> milestones = new ArrayList<>();
         milestones.add(this.getLatestAchievedMilestone());
         milestones.addAll(this.getMilestones());
@@ -297,7 +296,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     }
 
     List<Milestone> getMilestones() {
-        return this.milestones;
+        return Collections.unmodifiableList(this.milestones);
     }
 
     public void setNewSubSystemMilestone(Milestone newSubSystemMilestone) throws ReportErrorToUserException {
