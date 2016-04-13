@@ -27,7 +27,7 @@ public class AdminController extends UserController {
         useCases.add(new UpdateProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser()));
         useCases.add(new DeleteProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser()));
         useCases.add(new CreateSubSystem(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser()));
-        useCases.add(new Undo(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser(), caretaker));
+        useCases.add(new Undo(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser(), this.caretaker));
 
     }
 

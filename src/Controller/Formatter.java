@@ -9,7 +9,6 @@ import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Roles.Role;
-import Model.User.Developer;
 import Model.User.User;
 
 import java.util.List;
@@ -37,6 +36,7 @@ public class Formatter
 		
 	}
 
+	//TODO
 	public static String formatMilestoneList(List<Milestone> listMilestone)
 	{
 		String parsed ="";

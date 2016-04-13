@@ -90,7 +90,7 @@ public class CreateBugReport extends IssuerUseCase{
         String errorMessage = getUi().readMultiline();
 
         // Step 10+11
-        getUi().display("Public true (1) or false (0)?");
+        getUi().display("Public? true (1) or false (0):");
         int value = getUi().readInt();
         boolean pblc;
         if (value == 0) {

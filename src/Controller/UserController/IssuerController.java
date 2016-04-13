@@ -46,7 +46,8 @@ public class IssuerController extends UserController {
     {
     	return mailboxService;
     }
-    public void setMailboxService(MailboxService mailboxService)
+
+    private void setMailboxService(MailboxService mailboxService)
     {
 		this.mailboxService = mailboxService;
 	}

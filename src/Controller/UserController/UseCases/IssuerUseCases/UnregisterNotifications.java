@@ -3,17 +3,11 @@ package Controller.UserController.UseCases.IssuerUseCases;
 import Controller.Formatter;
 import Controller.IUI;
 import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Mail.MailboxService;
-import Model.Mail.Notification;
 import Model.Mail.ObserverAspect;
-import Model.Project.Project;
 import Model.Project.ProjectService;
-import Model.Project.SubSystem;
-import Model.User.Issuer;
 import Model.User.User;
-import Model.User.UserService;
 
 import java.util.List;
 
@@ -59,8 +53,8 @@ public class UnregisterNotifications extends IssuerUseCase{
         
         //Step 4
         mailboxService.unregister(getCurrentUser(), registrationToUnregister);
-        
-        getUi().display("Unregister completed !");
+
+        getUi().display("Unregister completed!");
     }
     
     @Override

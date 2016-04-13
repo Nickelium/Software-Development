@@ -13,8 +13,8 @@ public abstract class ObserverAspect implements Observer<BugReport>, Originator<
 	
 	/**
 	 * Constructor of this ObserverAspect
-	 * 
-	 * @param s Subject to observe
+	 *
+	 * @param structure Subject to observe
 	 */
 	public ObserverAspect(Subject structure)
 	{
@@ -27,9 +27,9 @@ public abstract class ObserverAspect implements Observer<BugReport>, Originator<
 	
 	 /**
      * Method called to notify this observer
-     * 
-     * @param s The subject
-     * @param aspect The aspect that has changed
+     *
+	  * @param structure The subject
+	  * @param aspect The aspect that has changed
      */
 	@Override
 	public abstract void update(Subject structure, BugReport bugreport, Object aspect);
