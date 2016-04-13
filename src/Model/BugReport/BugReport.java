@@ -66,7 +66,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * @param title The title of the BugReport.
      * @param description The description of the BugReport.
-     * @param subSystem The subsystem the bugreport is about.
      * @param creator The issuer of the bugreport.
      * @param pblc True if the bugreport is public.
      *
@@ -75,7 +74,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     BugReport(String title, String description, Issuer creator, boolean pblc) throws ReportErrorToUserException
     {
-        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList<>());
+        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList<>(), new TargetMilestone("M0"));
     }
     
     /**
@@ -83,15 +82,15 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * @param title The title of the bugreport.
      * @param description The description of the bugreport.
-     * @param subSystem The subsystem the bugreport is about.
      * @param creator The creator of the bugreport.
      * @param creationDate The creation date of this bugreport.
      * @param initialAssignies The list of assignees for this bugreport.
+     * @param targetMilestone TODO
      *
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies) throws ReportErrorToUserException
+    BugReport(String title, String description, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies, TargetMilestone targetMilestone) throws ReportErrorToUserException
     {
         setTitle(title);
         setDescription(description);
@@ -110,7 +109,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         this.dependencies = new ArrayList<>();
         this.patches = new ArrayList<>();
         this.tests = new ArrayList<>();
-
+        this.targetMilestone = targetMilestone;
     }
 
     //endregion
@@ -261,6 +260,15 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     @Nullable
     public Patch getSelectedPatch() {
         return this.selectedPatch;
+    }
+
+    /**
+     * Method to get the target milestone of a bug report.
+     *
+     * @return the target milestone of a bug report.
+     */
+    public TargetMilestone getTargetMilestone() {
+        return this.targetMilestone;
     }
 
     //endregion
@@ -527,18 +535,10 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
-     * Method to get the target milestone of a bug report.
-     * @return the target milestone of a bug report.
-     */
-    public TargetMilestone getTargetMilestone() {
-        return this.targetMilestone;
-    }
-
-    /**
      * Method to set a new target milestone of a bug report.
      * @param targetMilestone the new target milestone of a bug report.
      */
-    public void setTargetMilestone(TargetMilestone targetMilestone) {
+    public void setTargetMilestone(TargetMilestone targetMilestone) throws ReportErrorToUserException {
         this.targetMilestone = targetMilestone;
     }
 
