@@ -71,4 +71,9 @@ public class Closed extends Tag {
         if (obj instanceof Closed) return true;
         else return false;
     }
+
+    @Override
+    public boolean isFinal() {
+        return true;
+    }
 }

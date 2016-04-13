@@ -16,7 +16,7 @@ import java.util.List;
 public class SearchOnAssigned extends Search
 {
 	private User user;
-	
+
 	public SearchOnAssigned(User user)
 	{
 		this.user = user;
@@ -35,8 +35,8 @@ public class SearchOnAssigned extends Search
 	{
 		IListWrapper<BugReport> bugReportList = getAllBugReportsWrapped(bugReportService, user);
 
-        List<BugReport> bugReports = bugReportList.getAllMatching(x -> x.getAssignees().contains(user));
-        return Collections.unmodifiableList(bugReports);
+		List<BugReport> bugReports = bugReportList.getAllMatching(x -> x.getAssignees().contains(this.user));
+		return Collections.unmodifiableList(bugReports);
 		
 	}
 }

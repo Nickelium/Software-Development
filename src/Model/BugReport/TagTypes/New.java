@@ -57,4 +57,9 @@ public class New extends Tag {
         if (obj instanceof New) return true;
         else return false;
     }
+
+    @Override
+    public boolean isFinal() {
+        return false;
+    }
 }

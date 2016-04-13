@@ -33,8 +33,11 @@ public class Caretaker
 		snapshots.get(stateNumber).restore();
 	}
 	
-	public List<Snapshot> getSnapshots()
+	public List<Snapshot> getSnapshots(int number)
 	{
-		return snapshots;
+		int startIndex = snapshots.size() - number;
+		if(startIndex < 0)
+			startIndex = 0;
+		return snapshots.subList(startIndex, snapshots.size());
 	}
 }

@@ -10,7 +10,7 @@ import static java.lang.Character.isDigit;
 /**
  * Created by Laurens on 27/03/2016.
  */
-public class Milestone implements Comparator<Milestone>{
+public class Milestone implements Comparator<Milestone>, Comparable<Milestone> {
 
     private String milestoneID;
 
@@ -152,5 +152,10 @@ public class Milestone implements Comparator<Milestone>{
     @Override
     public String toString(){
         return this.getMilestoneID();
+    }
+
+    @Override
+    public int compareTo(Milestone o) {
+        return this.compare(this, o);
     }
 }

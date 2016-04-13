@@ -71,6 +71,11 @@ public class Resolved extends Tag {
         if (obj instanceof Resolved) return true;
         else return false;
     }
+
+    @Override
+    public boolean isFinal() {
+        return false;
+    }
 }
 
 

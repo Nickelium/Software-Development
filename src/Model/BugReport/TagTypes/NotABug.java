@@ -56,4 +56,9 @@ public class NotABug extends Tag {
         if (obj instanceof NotABug) return true;
         else return false;
     }
+
+    @Override
+    public boolean isFinal() {
+        return true;
+    }
 }
