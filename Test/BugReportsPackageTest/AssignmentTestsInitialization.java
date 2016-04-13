@@ -97,7 +97,7 @@ public class AssignmentTestsInitialization {
         bugReport2 = bugReportService.createBugReport("Bugreport2", "Des bugreport2", issuer2, subSystem3, BugReport.PUBLIC,
                 TheDate.TheDateNow(), Arrays.asList(dev4, dev5));
 
-        bugReportService.createTest("Test", dev4, bugReport2);
+        bugReportService.createTest("Test", dev3, bugReport2);
         bugReportService.createPatch("Patch", dev5, bugReport2);
         tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(0));
 

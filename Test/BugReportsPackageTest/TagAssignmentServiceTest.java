@@ -30,8 +30,10 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
                 TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
 
-        tagAssignmentService.assignTag(dev3, bugreport, new UnderReview());
+        bugReportService.createTest("Test", dev3, bugreport);
+        bugReportService.createPatch("Patch", dev6, bugreport);
         assertEquals(UnderReview.class, bugreport.getTag().getClass());
+
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -64,9 +66,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
                 TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
 
         bugReportService.createTest("Test", dev3, bugreport);
-        bugReportService.createPatch("Patch", dev4, bugreport);
-        tagAssignmentService.assignTag(dev6, bugreport, new UnderReview());
-        tagAssignmentService.assignTag(issuer1, bugreport, new Resolved(0));
+        bugReportService.createPatch("Patch", dev6, bugreport);
+        tagAssignmentService.assignTag(dev1, bugreport, new Resolved(0));
         assertEquals(Resolved.class, bugreport.getTag().getClass());
     }
 
@@ -77,7 +78,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
     @Test(expected = ReportErrorToUserException.class)
     public void assignTagTest_InValidIssuerToClosed() throws ReportErrorToUserException {
-        tagAssignmentService.assignTag(issuer2, bugReport2, new Closed(1));
+        tagAssignmentService.assignTag(issuer1, bugReport2, new Closed(1));
     }
 
     @Test
@@ -96,7 +97,9 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
                 TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
 
-        //to under rev & resolved first
+        bugReportService.createTest("Test", dev3, bugreport);
+        bugReportService.createPatch("Patch", dev5, bugreport);
+        tagAssignmentService.assignTag(dev1, bugreport, new Resolved(0));
 
         tagAssignmentService.assignTag(dev1, bugreport, new Closed(1));
         assertEquals(Closed.class, bugreport.getTag().getClass());

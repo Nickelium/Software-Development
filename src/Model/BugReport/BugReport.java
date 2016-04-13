@@ -86,7 +86,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @param creator The creator of the bugreport.
      * @param creationDate The creation date of this bugreport.
      * @param initialAssignies The list of assignees for this bugreport.
-     * @param targetMilestone TODO
+     * @param targetMilestone The target milestone of a bug report.
      *
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.

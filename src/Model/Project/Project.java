@@ -420,7 +420,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * than or equal to the highest achieved current milestone of all the subsystems it
 	 * (recursively) contains.
 	 *
-	 * //TODO If a project or subsystem has a bug report that is not NotABug, Duplicate or
+	 * If a project or subsystem has a bug report that is not NotABug, Duplicate or
 	 * Closed and this bug report has a target milestone that is less than or equal
 	 * to the newly proposed achieved milestone for the project or subsystem, the
 	 * increment is rejected.
