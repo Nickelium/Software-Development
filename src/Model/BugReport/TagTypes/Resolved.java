@@ -9,7 +9,8 @@ import Model.BugReport.Test;
 import java.util.Arrays;
 
 /**
- * Created by Tom on 19/02/16.
+ * Class inheriting from the Tag Class.
+ * The 'Resolved' tag denotes that a bug is resolved.
  */
 public class Resolved extends Tag {
 
@@ -28,16 +29,38 @@ public class Resolved extends Tag {
         return "Resolved";
     }
 
+    /**
+     * Adding a test to a bug report containing the 'Resolved' tag, will result into an error.
+     *
+     * @param bugReport The bug report to assign the test to.
+     * @param test      The test to assign.
+     * @throws ReportErrorToUserException because a test only can be added to bug reports with
+     *         the 'Assigned' tag.
+     */
     @Override
     protected void addTest(BugReport bugReport, Test test) throws ReportErrorToUserException {
         throw new ReportErrorToUserException("The Bug Report doesn't has the tag Assigned, so no test can be added!");
     }
 
+    /**
+     * Adding a patch to a bug report containing the 'Resolved' tag, will result into an error.
+     *
+     * @param bugReport The bug report to assign the patch to.
+     * @param patch     The patch to assign to a bug report.
+     * @throws ReportErrorToUserException because a patch cannot be added to a bug report with the 'Resolved' tag.
+     */
     @Override
     protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
-        throw new ReportErrorToUserException("No patches can be submitted because the bugreport doesn't have the propper tag.");
+        throw new ReportErrorToUserException("No patches can be submitted because the bug report doesn't have the proper tag.");
     }
 
+    /**
+     * When a tag is changed to another type, specific fields of the related bug report are updated.
+     * In the case of the Resolved tag, the selected patch is updated.
+     *
+     * @param bugReport The bug report of which to update the fields.
+     * @throws ReportErrorToUserException is thrown if the new selected patch index is invalid.
+     */
     @Override
     protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
         this.setSelectedPatch(bugReport, selectedPatchIndex);

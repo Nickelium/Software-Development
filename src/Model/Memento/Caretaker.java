@@ -1,12 +1,15 @@
 package Model.Memento;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Controller.UserController.UseCases.UseCase;
 import Model.Mail.MailboxService;
 import Model.Project.ProjectService;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * //TODO Documenteren van Mail package !!!
+ */
 public class Caretaker 
 {
 	private List<Snapshot> snapshots = new ArrayList<>();
@@ -30,8 +33,11 @@ public class Caretaker
 		snapshots.get(stateNumber).restore();
 	}
 	
-	public List<Snapshot> getSnapshots()
+	public List<Snapshot> getSnapshots(int number)
 	{
-		return snapshots;
+		int startIndex = snapshots.size() - number;
+		if(startIndex < 0)
+			startIndex = 0;
+		return snapshots.subList(startIndex, snapshots.size());
 	}
 }

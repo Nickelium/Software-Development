@@ -7,7 +7,6 @@ import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Memento.Originator;
 import Model.Milestone.TargetMilestone;
-import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
@@ -37,6 +36,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
     private BugReportID id;
     private String title;
+
     private String description;
     private TheDate creationDate;
     private Issuer creator;
@@ -73,9 +73,9 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem or creator is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc) throws ReportErrorToUserException
+    BugReport(String title, String description, Issuer creator, boolean pblc) throws ReportErrorToUserException
     {
-        this(title, description, subSystem, creator, pblc, TheDate.TheDateNow(), new ArrayList<>());
+        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList<>());
     }
     
     /**
@@ -91,32 +91,23 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies) throws ReportErrorToUserException
+    BugReport(String title, String description, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies) throws ReportErrorToUserException
     {
-         if (!isValidTitle(title)) throw new ReportErrorToUserException("The title cannot be empty!");
-         if (!isValidDescription(description)) throw new ReportErrorToUserException("The description cannot be empty!") ;
-         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
-         if (creator == null) throw new IllegalArgumentException("The issuer is null");
-         if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
-         if (initialAssignies == null) throw new IllegalArgumentException("List cannot be null");
-
-         this.title = title;
-         this.description = description;
-         this.creator = creator;
-         this.creationDate = creationDate;
+        setTitle(title);
+        setDescription(description);
+        setCreator(creator);
+        setCreationDate(creationDate);
         this.tag = new New();
         this.pblc = pblc;
+        this.id = new BugReportID();
 
-         //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
-         // the tag is changed to an assigned tag.
-         if (tag.getClass().equals(New.class) && !initialAssignies.isEmpty()) this.tag = new Assigned();
+        //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
+        // the tag is changed to an assigned tag.
+        if (tag.getClass().equals(New.class) && !initialAssignies.isEmpty()) this.tag = new Assigned();
 
-         this.id = new BugReportID();
-         subSystem.addBugReport(this);
-
-         this.comments = new ArrayList<>();
-         this.dependencies = new ArrayList<>();
-         this.assignees = new ArrayList<>(initialAssignies);
+        setAssignees(initialAssignies);
+        this.comments = new ArrayList<>();
+        this.dependencies = new ArrayList<>();
         this.patches = new ArrayList<>();
         this.tests = new ArrayList<>();
 
@@ -304,55 +295,34 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
     /**
      * Checker to check if the procedure is valid
-     * @param procedureBug
+     * @param procedureBug the procedure bug that needs to be checked
      * @return true when valid, false when invalid
      */
     public boolean isValidProcedureBug(String procedureBug){
         if (procedureBug == null) return false;
-        if (procedureBug.equals("")) return false;
         else return true;
     }
 
     /**
      * Checker to check if the stack trace is valid
-     * @param stackTrace
+     * @param stackTrace the stack trace that needs to be checked
      * @return true when valid, false when invalid
      */
     public boolean isValidStackTrace(String stackTrace){
         if (stackTrace == null) return false;
-        if (stackTrace.equals("")) return false;
         else return true;
     }
 
     /**
      * Checker to check fi the error message is valid
-     * @param errorMessage
+     * @param errorMessage the error message that needs to be checked
      * @return true when valid, false when invalid
      */
     public boolean isValidErrorMessage(String errorMessage){
         if (errorMessage == null) return false;
-        if (errorMessage.equals("")) return false;
         else return true;
     }
-    
-    
 
-    //endregion
-
-    //region Setters
-
-    /**
-     * Setter to change the tag of the bugreport.
-     *
-     * @param tag The tag to which to set the bugreport.
-     *
-     * @throws ReportErrorToUserException The tag cannot be changed to the new tag.
-     */
-    void setTag(Tag tag) throws ReportErrorToUserException {
-        if (tag == null) throw new IllegalArgumentException("Tag is null");
-        this.getTag().changeTag(this, tag);
-        notifyObservers(this, tag);
-    }
 
     /**
      * Returns if the bugreport is public.
@@ -364,19 +334,81 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     //endregion
-    
-    //region setters
+
+    //region Setters
+
+    /**
+     * Method to set the title of a bug report.
+     * @param title the title that needs to be set
+     * @throws ReportErrorToUserException is thrown if the new title is not valid.
+     */
+    private void setTitle(String title) throws ReportErrorToUserException {
+        if (!isValidTitle(title)) throw new ReportErrorToUserException("The title cannot be empty!");
+        this.title = title;
+    }
+
+    /**
+     * Method to set the description of a bug report.
+     * @param description the description that needs to be set
+     * @throws ReportErrorToUserException is thrown if the new description is not valid.
+     */
+    private void setDescription(String description) throws ReportErrorToUserException {
+        if (!isValidDescription(description)) throw new ReportErrorToUserException("The description cannot be empty!");
+        this.description = description;
+    }
+
+    /**
+     * Method to set the creation date of a bug report.
+     * @param creationDate the new creation date that needs to be set
+     */
+    private void setCreationDate(TheDate creationDate) {
+        if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
+        this.creationDate = creationDate;
+    }
+
+    /**
+     * Method to set the creator of a bug report.
+     * @param creator the new creator that needs to be set
+     */
+    private void setCreator(Issuer creator) {
+        if (creator == null) throw new IllegalArgumentException("The issuer is null");
+        this.creator = creator;
+    }
+
+    /**
+     * Method to set the assignees of a bug report.
+     * @param initialAssignees the list of assignees that needs to be set
+     */
+    private void setAssignees(List<Developer> initialAssignees) {
+        if (initialAssignees == null) throw new IllegalArgumentException("List cannot be null");
+        this.assignees = new ArrayList<>(initialAssignees);
+    }
+
+    /**
+     * Setter to change the tag of the bug report.
+     *
+     * @param tag The tag to which to set the bug report.
+     *
+     * @throws ReportErrorToUserException is thrown if the tag cannot be changed to the new tag.
+     */
+    void setTag(Tag tag) throws ReportErrorToUserException {
+        if (tag == null) throw new IllegalArgumentException("Tag is null");
+        this.getTag().changeTag(this, tag);
+        notifyObservers(this, tag);
+    }
 
     /**
      * Method to set a new procedure bug.
      *
      * Method requires the input string to be a valid procedure bug.
      * @param procedureBug the procedure bug to be set.
+     * @throws ReportErrorToUserException is thrown if the procedure bug is invalid.
      */
-    public void setProcedureBug(String procedureBug)
+    public void setProcedureBug(String procedureBug) throws ReportErrorToUserException
     {
-    	if(isValidProcedureBug(procedureBug)) 
-    		this.procedureBug = procedureBug;
+        if (!isValidProcedureBug(procedureBug))
+            throw new ReportErrorToUserException("Invalid value for the way to reproduce the bug.");
+        this.procedureBug = procedureBug;
    
     }
 
@@ -385,11 +417,13 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * Method requires the input string to be a valid stack trace.
      * @param stackTrace the procedure bug to be set.
+     * @throws ReportErrorToUserException is thrown if the stack trace is invalid.
+     *
      */
-    public void setStackTrace(String stackTrace)
+    public void setStackTrace(String stackTrace) throws ReportErrorToUserException
     {
-    	if(isValidStackTrace(stackTrace)) 
-    		this.stackTrace = stackTrace;
+        if (!isValidStackTrace(stackTrace)) throw new ReportErrorToUserException("Invalid value for the stack trace.");
+        this.stackTrace = stackTrace;
     }
 
     /**
@@ -397,12 +431,17 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * Method requires the input string to be a valid error message.
      * @param errorMessage the procedure bug to be set.
+     * @throws ReportErrorToUserException is thrown if the error message is invalid.
+     *
      */
-    public void setErrorMessage(String errorMessage)
+    public void setErrorMessage(String errorMessage) throws ReportErrorToUserException
     {
-    	if(isValidErrorMessage(errorMessage)) 
-    		this.errorMessage = errorMessage;
+        if (!isValidErrorMessage(errorMessage))
+            throw new ReportErrorToUserException("Invalid value for the error message.");
+        this.errorMessage = errorMessage;
     }
+
+    //endregion
 
     //region Functions
 
@@ -430,7 +469,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     void addComment(Comment comment){
         if (comment == null) throw new IllegalArgumentException("Comment is null");
-
         this.comments.add(comment);
         comment.addObserver(this);
 		notifyObservers(this, comment);
@@ -451,7 +489,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     /**
      * Function to add a test to the list of tests.
      *
-     * @param test The test to add tot the tests.
+     * @param test The test to add to the tests.
      * @throws IllegalArgumentException The given test is null.
      * @throws ReportErrorToUserException Unable to add test to the bugreport.
      */
@@ -488,10 +526,18 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         this.dependencies.add(dependency);
     }
 
+    /**
+     * Method to get the target milestone of a bug report.
+     * @return the target milestone of a bug report.
+     */
     public TargetMilestone getTargetMilestone() {
         return this.targetMilestone;
     }
 
+    /**
+     * Method to set a new target milestone of a bug report.
+     * @param targetMilestone the new target milestone of a bug report.
+     */
     public void setTargetMilestone(TargetMilestone targetMilestone) {
         this.targetMilestone = targetMilestone;
     }
@@ -565,19 +611,34 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 		notifyObservers(this, aspect);
 	}
 
-	@Override
+    /**
+     * Method used to create a new memento object for the bug report.
+     * @return a memento object for the bug report.
+     */
+    @Override
 	public BugReportMemento createMemento()
 	{
 		return new BugReportMemento(this);
 	}
 
-	@Override
+    /**
+     * Method used to restore an old memento.
+     * This method will restore the tag, assignees and comments of the bug report
+     * to the values as recorded in the memento object.
+     *
+     * @param memento the memento object that contains the old values
+     */
+    @Override
 	public void restoreMemento(BugReportMemento memento) 
 	{
 		this.tag = memento.getTag();
-		this.assignees = memento.getAssignees();
-		this.comments = memento.getComments();
+		this.assignees = new ArrayList<>(memento.getAssignees());
+		this.comments = new ArrayList<>(memento.getComments());
 		
+		this.targetMilestone = memento.getTargetMilestone();
+		
+		this.tests = new ArrayList<>(memento.getTests());
+		this.patches = new ArrayList<>(memento.getPatches());
 	}
 
     //endregion

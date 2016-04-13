@@ -529,14 +529,17 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		this.startingDate = memento.getStartingDate();
 		this.budget = memento.getBudget();
 		
-		this.subSystems = memento.getSubsystems();
+		this.subSystems = new ArrayList<>(memento.getSubsystems());
 		
 		for(SubSystemMemento subsystemMemento : memento.getSubsystemMementos())
 			subsystemMemento.getOriginator().restoreMemento(subsystemMemento);
 		
-		this.devsRoles = memento.getDevsRoles();
+		this.devsRoles = new ArrayList<>(memento.getDevsRoles());
 		
-		this.observers = memento.getObservers();
+		this.observers = new ArrayList<>(memento.getObservers());
+		
+		this.latestAchievedMilestone = memento.getLatestAchievedMilestone();
+		this.milestones = new ArrayList<>(memento.getMilestones());
 		
 	}
 

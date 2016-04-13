@@ -58,7 +58,11 @@ public class BugReportService {
      */
     public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc);
+
+        BugReport bugReport = new BugReport(title, description, creator, pblc);
+        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+        subSystem.addBugReport(bugReport);
+
         return bugReport;
     }
     
@@ -81,7 +85,10 @@ public class BugReportService {
      */
     public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc, TheDate creationDate, List<Developer> initialAssignees) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc, creationDate, initialAssignees);
+        BugReport bugReport = new BugReport(title, description, creator, pblc, creationDate, initialAssignees);
+        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+        subSystem.addBugReport(bugReport);
+
         return bugReport;
     }
 
@@ -117,6 +124,18 @@ public class BugReportService {
         return newComment;
     }
 
+    /**
+     * Method used to create and return a new Test object.
+     * The newly created test is added to the test list of the specified bug report.
+     *
+     * @param text the text of the new test
+     * @param user the user that wants to add the new test
+     * @param bugReport the bug report that the test has to be added to
+     * @return the new test object as created by this method.
+     *
+     * @throws ReportErrorToUserException is thrown if the user has not the rights to add a new test
+     *         to the bug report.
+     */
     public Test createTest(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
         if (!canAddTest(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a test");
         Test test = new Test(text);
@@ -124,6 +143,18 @@ public class BugReportService {
         return test;
     }
 
+    /**
+     * Method used to create and return a new Patch object.
+     * The newly created patch is added to the patch list of the specified bug report.
+     *
+     * @param text the text of the new patch
+     * @param user the user that wants to add the new patch
+     * @param bugReport the bug report that the patch has to be added to
+     * @return the new patch object as created by this method.
+     *
+     * @throws ReportErrorToUserException is thrown if the user has not the rights to add a new patch
+     *         to the bug report.
+     */
     public Patch createPatch(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
         if (!canAddPatch(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a patch");
         Patch patch = new Patch(text);
@@ -232,6 +263,7 @@ public class BugReportService {
         return new ListWrapper<>(bugReports);
     }
 
+    //TODO documentatie
     public boolean canAddTest(User user, BugReport bugReport) throws ReportErrorToUserException {
         Project project = this.projectService.getProjectsContainingBugReport(bugReport);
         if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Tester))) {
@@ -240,6 +272,7 @@ public class BugReportService {
         return false;
     }
 
+    //TODO documentatie
     public boolean canAddPatch(User user, BugReport bugReport) throws ReportErrorToUserException {
         Project project = this.projectService.getProjectsContainingBugReport(bugReport);
         if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Programmer))) {

@@ -10,7 +10,8 @@ import Model.Memento.Originator;
 
 /**
  * Class that represents a mailbox of a user.
- *
+ * A mailbox contains all notifications of which a user is registred to.
+ * //TODO Documenteren van Mail package !!!
  */
 public class Mailbox implements Originator<MailboxMemento, Mailbox>
 {
@@ -111,7 +112,7 @@ public class Mailbox implements Originator<MailboxMemento, Mailbox>
 	@Override
 	public void restoreMemento(MailboxMemento memento)
 	{
-		this.registrations	= memento.getRegistrations();
+		this.registrations	= new ArrayList<>(memento.getRegistrations());
 		
 		for(ObserverAspectMemento registrationMemento : memento.getRegistrationMementos())
 			registrationMemento.getOriginator().restoreMemento(registrationMemento);
