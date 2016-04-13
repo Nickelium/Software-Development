@@ -9,7 +9,6 @@ import Model.BugReport.TagTypes.Duplicate;
 import Model.BugReport.TagTypes.NotABug;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
-import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 
@@ -291,22 +290,30 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         milestones.add(this.getLatestAchievedMilestone());
         milestones.addAll(this.getMilestones());
         for (SubSystem subsystem : this.getAllSubSystems()) {
-            milestones.addAll(subsystem.getAllMilestones());
+            milestones.addAll(subsystem.getMilestones());
         }
         return Collections.unmodifiableList(milestones);
     }
 
     List<Milestone> getMilestones() {
-        return this.milestones;
+        return Collections.unmodifiableList(this.milestones);
     }
 
     public void setNewSubSystemMilestone(Milestone newSubSystemMilestone) throws ReportErrorToUserException {
 
         double highestMilestoneID = 0;
-        for (Milestone milestone : this.getAllMilestones()) {
-            double currentID = milestone.getIDvalue();
-            if (currentID > highestMilestoneID)
-                highestMilestoneID = currentID;
+
+        // Subsystem bevat geen recusieve subsystems
+        if(this.getAllMilestones().size()==1){
+            highestMilestoneID = newSubSystemMilestone.getIDvalue();
+        }
+
+        else {
+            for (Milestone milestone : this.getAllMilestones()) {
+                double currentID = milestone.getIDvalue();
+                if (currentID > highestMilestoneID)
+                    highestMilestoneID = currentID;
+            }
         }
 
 		/* If a project or subsystem has a bug report that is not NotABug, Duplicate or

@@ -36,7 +36,7 @@ public class ShowProject extends UseCase {
 
         // Step 4
         String projectDetails = Formatter.formatDetailedProject(project);
-        getUi().display(projectDetails);
+        getUi().display(projectDetails + "\n");
     }
     
     @Override

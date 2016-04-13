@@ -8,7 +8,6 @@ import Model.BugReport.TagTypes.Duplicate;
 import Model.BugReport.TagTypes.NotABug;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
-import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 import Model.Roles.Lead;
@@ -433,11 +432,20 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	public void setNewProjectMilestone(Milestone newProjectMilestone)throws ReportErrorToUserException{
 
 		double highestMilestoneID = 0;
-		for (Milestone milestone : this.getAllMilestones()) {
-			double currentID = milestone.getIDvalue();
-			if (currentID > highestMilestoneID)
-				highestMilestoneID = currentID;
+
+		// Project bevat geen recusieve subsystemen
+		if(this.getAllMilestones().size()==1){
+			highestMilestoneID = newProjectMilestone.getIDvalue();
 		}
+
+		else{
+			for (Milestone milestone : this.getAllMilestones()) {
+				double currentID = milestone.getIDvalue();
+				if (currentID > highestMilestoneID)
+					highestMilestoneID = currentID;
+			}
+		}
+
 		/* If a project or subsystem has a bug report that is not NotABug, Duplicate or
 		Closed and this bug report has a target milestone that is less than or equal
 		to the newly proposed achieved milestone for the project or subsystem, the
