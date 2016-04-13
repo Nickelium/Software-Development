@@ -111,7 +111,7 @@ public class Mailbox implements Originator<MailboxMemento, Mailbox>
 	@Override
 	public void restoreMemento(MailboxMemento memento)
 	{
-		this.registrations	= memento.getRegistrations();
+		this.registrations	= new ArrayList<>(memento.getRegistrations());
 		
 		for(ObserverAspectMemento registrationMemento : memento.getRegistrationMementos())
 			registrationMemento.getOriginator().restoreMemento(registrationMemento);

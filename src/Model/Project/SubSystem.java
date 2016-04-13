@@ -377,12 +377,12 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 	@Override
 	public void restoreMemento(SubSystemMemento memento) 
 	{
-		this.subSystems = memento.getSubSystems();
+		this.subSystems = new ArrayList<>(memento.getSubSystems());
 		
 		for(SubSystemMemento subsystemMemento : memento.getSubSystemMementos())
 			subsystemMemento.getOriginator().restoreMemento(subsystemMemento);
 		
-		this.bugReports = memento.getBugReports();
+		this.bugReports = new ArrayList<>(memento.getBugReports());
 		
 		for(BugReportMemento bugreportMemento : memento.getBugReportMementos())
 			bugreportMemento.getOriginator().restoreMemento(bugreportMemento);
