@@ -49,6 +49,8 @@ public class UpdateBugReport extends IssuerUseCase {
             throw new ReportErrorToUserException("The given tag does not exist!");
         }
 
+        //TODO step 4+5!
+
         // Step 4
         try {
             Tag newTag = (Tag) tag.newInstance();

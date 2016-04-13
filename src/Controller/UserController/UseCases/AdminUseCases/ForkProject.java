@@ -45,6 +45,8 @@ public class ForkProject extends UseCase {
     @Override
     public void run() throws ReportErrorToUserException,IndexOutOfBoundsException {
 
+        //TODO Milestone op M0 zetten!
+
         // Step 1a.1
         getUi().display("Select a project you want to fork: ");
         List<Project> projectList = getProjectService().getAllProjects();

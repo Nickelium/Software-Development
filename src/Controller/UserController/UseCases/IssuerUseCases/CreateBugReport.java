@@ -124,5 +124,8 @@ public class CreateBugReport extends IssuerUseCase{
             getUi().display(newDependency.toString());
         }
 
+        getUi().display(Formatter.formatDetailedBugReport(bugReport));
+        getUi().display("The bug report has successfully been added.\n");
+
     }
 }
