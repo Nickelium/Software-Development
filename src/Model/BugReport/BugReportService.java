@@ -117,7 +117,18 @@ public class BugReportService {
         return newComment;
     }
 
-    //TODO documentatie
+    /**
+     * Method used to create and return a new Test object.
+     * The newly created test is added to the test list of the specified bug report.
+     *
+     * @param text the text of the new test
+     * @param user the user that wants to add the new test
+     * @param bugReport the bug report that the test has to be added to
+     * @return the new test object as created by this method.
+     *
+     * @throws ReportErrorToUserException is thrown if the user has not the rights to add a new test
+     *         to the bug report.
+     */
     public Test createTest(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
         if (!canAddTest(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a test");
         Test test = new Test(text);
@@ -125,7 +136,18 @@ public class BugReportService {
         return test;
     }
 
-    //TODO documentatie
+    /**
+     * Method used to create and return a new Patch object.
+     * The newly created patch is added to the patch list of the specified bug report.
+     *
+     * @param text the text of the new patch
+     * @param user the user that wants to add the new patch
+     * @param bugReport the bug report that the patch has to be added to
+     * @return the new patch object as created by this method.
+     *
+     * @throws ReportErrorToUserException is thrown if the user has not the rights to add a new patch
+     *         to the bug report.
+     */
     public Patch createPatch(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
         if (!canAddPatch(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a patch");
         Patch patch = new Patch(text);
