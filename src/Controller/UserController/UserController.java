@@ -22,7 +22,7 @@ public abstract class UserController {
     private BugReportService bugReportService;
     private User currentUser;
 
-    protected ArrayList<FunctionWrap> useCases = new ArrayList<FunctionWrap>();
+    protected ArrayList<UseCase> useCases = new ArrayList<UseCase>();
 
     public UserController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
         setUi(ui);
@@ -35,14 +35,14 @@ public abstract class UserController {
 
     //region UseCases
 
-    public ArrayList<FunctionWrap> getUseCases(){
+    public ArrayList<UseCase> getUseCases() {
         return useCases;
     }
 
     public void showAllUseCases(){
         int i = 0;
         for (i = 0; i < useCases.size(); i++) {
-            String show = i + " : " + useCases.get(i).getName();
+            String show = i + " : " + useCases.get(i).toString();
             ui.display(show);
         }
         ui.display(i + " : Log Out");
@@ -50,15 +50,15 @@ public abstract class UserController {
 
     public UseCase getUseCase(int number) {
         try {
-            return getUseCases().get(number).getUseCase();
+            return getUseCases().get(number);
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
     }
 
     private void initializeUseCasesUser(){
-        useCases.add(new FunctionWrap("Show Project", new ShowProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
-        useCases.add(new FunctionWrap("Exit Program", new ExitProgram(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser())));
+        useCases.add(new ShowProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser()));
+        useCases.add(new ExitProgram(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser()));
     }
 
     //endregion
