@@ -285,12 +285,12 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         return forkedSubSystem;
     }
 
-    private List<Milestone> getAllMilestones() {
+    public List<Milestone> getAllMilestones() {
         List<Milestone> milestones = new ArrayList<>();
         milestones.add(this.getLatestAchievedMilestone());
         milestones.addAll(this.getMilestones());
         for (SubSystem subsystem : this.getAllSubSystems()) {
-            milestones.addAll(subsystem.getAllMilestones());
+            milestones.addAll(subsystem.getMilestones());
         }
         return Collections.unmodifiableList(milestones);
     }
