@@ -22,7 +22,7 @@ public abstract class UserController {
     private BugReportService bugReportService;
     private User currentUser;
 
-    protected ArrayList<UseCase> useCases = new ArrayList<UseCase>();
+    protected ArrayList<UseCase> useCases = new ArrayList<>();
 
     public UserController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
         setUi(ui);
@@ -40,7 +40,7 @@ public abstract class UserController {
     }
 
     public void showAllUseCases(){
-        int i = 0;
+        int i;
         for (i = 0; i < useCases.size(); i++) {
             String show = i + " : " + useCases.get(i).toString();
             ui.display(show);
@@ -86,23 +86,23 @@ public abstract class UserController {
     }
 
     public IUI getUi() {
-        return ui;
+        return this.ui;
     }
 
     public UserService getUserService() {
-        return userService;
+        return this.userService;
     }
 
     public ProjectService getProjectService() {
-        return projectService;
+        return this.projectService;
     }
 
     public BugReportService getBugReportService() {
-        return bugReportService;
+        return this.bugReportService;
     }
 
     public User getCurrentUser(){
-        return currentUser;
+        return this.currentUser;
     }
 
     //endregion

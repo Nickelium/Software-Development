@@ -2,13 +2,11 @@ package BugReportsPackageTest;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.BugReport.TagTypes.Assigned;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertTrue;
@@ -25,8 +23,8 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
         project.addRole(programmer2);
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
-                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6), new ArrayList<>(), new ArrayList<>());
+        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
 
 
         developerAssignmentService.assignDeveloperToBugReport(tester1.getDeveloper(), dev5, bugreport);
@@ -41,8 +39,8 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
         project.addRole(programmer2);
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, BugReport.PUBLIC, subSystem1,
-                TheDate.TheDateNow(), new Assigned(), Arrays.asList(dev3, dev6), new ArrayList<>(), new ArrayList<>());
+        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
 
 
         developerAssignmentService.assignDeveloperToBugReport(lead1.getDeveloper(), dev5, bugreport);

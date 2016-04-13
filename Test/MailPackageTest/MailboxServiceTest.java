@@ -37,7 +37,7 @@ public class MailboxServiceTest {
 
 	@Before
 	public void setup() throws ReportErrorToUserException {
-		mailboxService = new MailboxService(bugReportService);
+		mailboxService = new MailboxService(bugReportService, userService);
 		userService  = new UserService();
 		user = userService.createIssuer("F", "M", "L", "U");
 		dev = userService.createDeveloper("FF", "M", "L", "dev");

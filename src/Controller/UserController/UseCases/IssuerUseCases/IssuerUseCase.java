@@ -93,7 +93,7 @@ public abstract class IssuerUseCase extends UseCase {
             List<BugReport> list2 = getBugReportService().search(new SearchOnDescription(query), this.getCurrentUser());
 
             // Combine both lists
-            bugReportList = new ArrayList<BugReport>(list1);
+            bugReportList = new ArrayList<>(list1);
             for (BugReport b : list2) {
                 bugReportList.add(b);
             }

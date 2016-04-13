@@ -4,7 +4,6 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.User.User;
 import Model.User.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,8 +40,8 @@ public class LoginController {
 	        loginMessage();
 			// Step 1
 	        int userType = ui.readInt();
-	
-	        List<User> users = new ArrayList<User>();
+
+		List<User> users;
 
 			// Step 2
 	        switch (userType)

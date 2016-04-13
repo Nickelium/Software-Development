@@ -5,17 +5,16 @@ import Controller.IUI;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
-import Model.BugReport.*;
+import Model.BugReport.Tag;
 import Model.Mail.MailboxService;
-//import Model.Mail.Notification;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
-import Model.User.Issuer;
 import Model.User.User;
-import Model.User.UserService;
 
 import java.util.List;
+
+//import Model.Mail.Notification;
 
 
 public class RegisterNotifications extends IssuerUseCase{
@@ -104,8 +103,8 @@ public class RegisterNotifications extends IssuerUseCase{
 	         	        try 
 	         	        {
 	         	            tag = Class.forName("Model.BugReport.TagTypes." + input);
-	         	            if (input == "-1") return;
-	         	        } 
+							if (input.equals("-1")) return;
+						}
 	         	        catch (ClassNotFoundException e)
 	         	        {
 	         	            throw new ReportErrorToUserException("The given tag does not exist!");
@@ -175,8 +174,8 @@ public class RegisterNotifications extends IssuerUseCase{
 	         	        try 
 	         	        {
 	         	            tag = Class.forName("Model.Tags.TagTypes." + input);
-	         	            if (input == "-1") return;
-	         	        } 
+							if (input.equals("-1")) return;
+						}
 	         	        catch (ClassNotFoundException e)
 	         	        {
 	         	            throw new ReportErrorToUserException("The given tag does not exist!");
@@ -228,8 +227,8 @@ public class RegisterNotifications extends IssuerUseCase{
          	        try 
          	        {
          	            tag = Class.forName("Model.BugReport.TagTypes." + input);
-         	            if (input == "-1") return;
-         	        } 
+						if (input.equals("-1")) return;
+					}
          	        catch (ClassNotFoundException e)
          	        {
          	            throw new ReportErrorToUserException("The given tag does not exist!");

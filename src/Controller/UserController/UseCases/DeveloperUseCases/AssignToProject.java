@@ -59,7 +59,7 @@ public class AssignToProject extends DeveloperUseCase {
         if (developerProjectList.size() == 0) {
 
             // Step 2a
-            throw new ReportErrorToUserException("You are not assigned as lead developer in any project. You are not allowed to assign a new Developer to any project.");
+            throw new ReportErrorToUserException("You are not assigned as lead developer in any project. You are not allowed to assign a new developer to any project.");
         } else {
 
             // Step 2

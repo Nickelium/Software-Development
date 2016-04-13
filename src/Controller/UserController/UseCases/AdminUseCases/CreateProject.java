@@ -48,14 +48,12 @@ public class CreateProject extends UseCase {
         getUi().display("Please enter the project information.");
         getUi().display("Name: ");
         String name = getUi().readString();
-        getUi().display("Description (close with .): ");
+        getUi().display("Description (close with '.' on new line): ");
         String description = getUi().readMultiline();
-
-        TheDate startingDate = null;
 
         getUi().display("Starting date (dd/MM/yyyy): ");
         String stringStartingDate = getUi().readString();
-        startingDate = new TheDate(stringStartingDate);
+        TheDate startingDate = new TheDate(stringStartingDate);
 
         getUi().display("Budget estimate: ");
         double budget = getUi().readDouble();

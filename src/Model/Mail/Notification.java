@@ -13,9 +13,10 @@ public class Notification
 	Subject structure;
 	
 	/**
+	 * TODO: this.setEmotion(emotions.SAD);
 	 * Constructor of this notification
-	 * 
-	 * @param str The content of this notification
+	 *
+	 * @param structure The content of this notification
 	 */
 	Notification(String changeDescription, BugReport bugReport, Subject structure)
 	{
