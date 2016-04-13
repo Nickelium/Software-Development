@@ -44,14 +44,14 @@ public class BugReportService {
 
 
     /**
-     * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     * Function to create a new BugReport and add the bug report to the list of bugreports.
      *
-     * @param title The title of the bugreport
-     * @param description The description of the bugreport
-     * @param creator The creator of the bugreport
-     * @param subSystem The subsystem of the bugreport
+     * @param title The title of the bug report
+     * @param description The description of the bug report
+     * @param creator The creator of the bug report
+     * @param subSystem The subsystem of the bug report
      *
-     * @return The newly created bugreport
+     * @return The newly created bug report
      *
      * @throws ReportErrorToUserException the title or description is empty.
      * @throws IllegalArgumentException the creator or subsystem is null.
@@ -66,18 +66,18 @@ public class BugReportService {
     }
     
     /**
-     * Function to create a new BugReport and add the bugreport to the list of bugreports.
+     * Function to create a new BugReport and add the bug report to the list of bugreports.
      * Van de gebruiker van deze functie wordt verwacht dat de initialAssignies ook developers van het project zijn.
      * Anders zullen tag assignment rechten voor deze gebruiker geweigerd worden.
      *
-     * @param title The title of the bugreport
-     * @param description The description of the bugreport
-     * @param creator The creator of the bugreport
-     * @param subSystem The subsystem of the bugreport
-     * @param creationDate The creation date of the bugreport
-     * @param initialAssignees The list of initialAssignies van de bugreport
+     * @param title The title of the bug report
+     * @param description The description of the bug report
+     * @param creator The creator of the bug report
+     * @param subSystem The subsystem of the bug report
+     * @param creationDate The creation date of the bug report
+     * @param initialAssignees The list of initialAssignies van de bug report
      *
-     * @return The newly created bugreport
+     * @return The newly created bug report
      *
      * @throws ReportErrorToUserException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
@@ -92,11 +92,11 @@ public class BugReportService {
     }
 
     /**
-     * Method for creating a comment and adding it to the list of comments of the bugreport.
+     * Method for creating a comment and adding it to the list of comments of the bug report.
      *
      * @param text      The text of the comment.
      * @param issuer    The issuer writing the comment.
-     * @param bugReport The bugreport on which the issuer commented.
+     * @param bugReport The bug report on which the issuer commented.
      * @return The newly created comment.
      * @throws ReportErrorToUserException One of the given arguments are illegal. See constructor of comment for rules.
      */
@@ -188,16 +188,16 @@ public class BugReportService {
      * @return The BugReport matching the given id.
      *
      * @throws ReportErrorToUserException
-     * 			thrown when no bugreport is found.
-     * 		    or bugreport cannot be seen by user.
+     * 			thrown when no bug report is found.
+     * 		    or bug report cannot be seen by user.
      */
     public BugReport getBugReport(BugReportID id, User user) throws ReportErrorToUserException
     {
-        BugReport bugreport = getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
-        if (!this.isVisibleByUser(user, bugreport))
-            throw new ReportErrorToUserException("You are not allowed to see this bugreport.");
-        if (bugreport == null) throw new ReportErrorToUserException("There is no bugreport with the given id.");
-        return bugreport;
+        BugReport bugReport = getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
+        if (!this.isVisibleByUser(user, bugReport))
+            throw new ReportErrorToUserException("You are not allowed to see this bug report.");
+        if (bugReport == null) throw new ReportErrorToUserException("There is no bug report with the given id.");
+        return bugReport;
     }
 
     /**
@@ -214,7 +214,7 @@ public class BugReportService {
     /**
      * Method to search for bugreports based on the given search method
      * 
-     * @param searchMethod The method to search for the bugreport
+     * @param searchMethod The method to search for the bug report
      * 
      * @return	The list of bugreports searched for
      * @throws ReportErrorToUserException

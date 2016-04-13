@@ -89,7 +89,7 @@ public class UpdateBugReport extends IssuerUseCase {
     private Duplicate requestDuplicateTagInfo(BugReport bugReport) throws ReportErrorToUserException {
         if (!getTagAssignmentService().canAssignTag(getCurrentUser(), bugReport, Duplicate.class))
             throw new ReportErrorToUserException("Cannot preform tag change! No valid permission.");
-        getUi().display("You have to specify the duplicate bugreport.");
+        getUi().display("You have to specify the duplicate bug report.");
         BugReport duplicateBugRep = selectBugReport();
         return new Duplicate(duplicateBugRep);
     }

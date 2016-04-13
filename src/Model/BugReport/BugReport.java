@@ -67,8 +67,8 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * @param title The title of the BugReport.
      * @param description The description of the BugReport.
-     * @param creator The issuer of the bugreport.
-     * @param pblc True if the bugreport is public.
+     * @param creator The issuer of the bug report.
+     * @param pblc True if the bug report is public.
      *
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem or creator is null.
@@ -81,11 +81,11 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     /**
      * Constructor for a Bugreport.
      *
-     * @param title The title of the bugreport.
-     * @param description The description of the bugreport.
-     * @param creator The creator of the bugreport.
-     * @param creationDate The creation date of this bugreport.
-     * @param initialAssignies The list of assignees for this bugreport.
+     * @param title The title of the bug report.
+     * @param description The description of the bug report.
+     * @param creator The creator of the bug report.
+     * @param creationDate The creation date of this bug report.
+     * @param initialAssignies The list of assignees for this bug report.
      * @param targetMilestone The target milestone of a bug report.
      *
      * @throws ReportErrorToUserException The title or description is empty.
@@ -101,7 +101,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         this.pblc = pblc;
         this.id = new BugReportID();
 
-        //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
+        //If tag is set to new, this code checks if there aren't any assignees to the bug report. If so
         // the tag is changed to an assigned tag.
         if (tag.getClass().equals(New.class) && !initialAssignies.isEmpty()) this.tag = new Assigned();
 
@@ -118,81 +118,81 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     //region Getters
 
     /**
-     * Getter to request the unique id of the bugreport.
+     * Getter to request the unique id of the bug report.
      *
-     * @return The unique id of the bugreport.
+     * @return The unique id of the bug report.
      */
     public BugReportID getId(){
         return this.id;
     }
 
     /**
-     * Getter to request the title of the bugreport.
+     * Getter to request the title of the bug report.
      *
-     * @return The title of the bugreport.
+     * @return The title of the bug report.
      */
     public String getTitle() {
         return this.title;
     }
 
     /**
-     * Getter to request the description of the bugreport.
+     * Getter to request the description of the bug report.
      *
-     * @return The description of the bugreport.
+     * @return The description of the bug report.
      */
     public String getDescription() {
         return this.description;
     }
 
     /**
-     * Getter to request the creationDate of the bugreport.
+     * Getter to request the creationDate of the bug report.
      *
-     * @return The creationDate of the bugreport.
+     * @return The creationDate of the bug report.
      */
     public TheDate getCreationDate() {
         return this.creationDate;
     }
 
     /**
-     * Getter to request the creator of the bugreport.
+     * Getter to request the creator of the bug report.
      *
-     * @return The creator of the bugreport.
+     * @return The creator of the bug report.
      */
     public Issuer getCreator(){
         return this.creator;
     }
 
     /**
-     * Getter to request the tag of the bugreport.
+     * Getter to request the tag of the bug report.
      *
-     * @return The tag of the bugreport.
+     * @return The tag of the bug report.
      */
     public Tag getTag() {
         return tag;
     }
 
     /**
-     * Getter to request the developers assigned to the bugreport.
+     * Getter to request the developers assigned to the bug report.
      *
-     * @return The list of developers assigned to the bugreport
+     * @return The list of developers assigned to the bug report
      */
     public List<Developer> getAssignees() {
         return Collections.unmodifiableList(this.assignees);
     }
 
     /**
-     * Getter to request the comments given on the bugreport.
+     * Getter to request the comments given on the bug report.
      *
-     * @return The list of comments given on the bugreport.
+     * @return The list of comments given on the bug report.
      */
     public List<Comment> getComments() {
         return Collections.unmodifiableList(this.comments);
     }
 
     /**
-     * Getter to request the dependencies of the bugreport.
+     * Getter to request the dependencies of the bug report.
      *
-     * @return The list of dependencies of the bugreport.
+     * @return The list of dependencies of the bug report.
      */
     public List<BugReport> getDependencies(){return Collections.unmodifiableList(this.dependencies);}
 
@@ -236,7 +236,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
-     * Getter to request all the patches of the current bugreport.
+     * Getter to request all the patches of the current bug report.
      *
      * @return An unmodifiable list of all the patches.
      */
@@ -245,7 +245,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
-     * Getter to request all the test of the current bugreport.
+     * Getter to request all the test of the current bug report.
      *
      * @return An unmodifiable list of all the tests.
      */
@@ -277,9 +277,9 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     //region Checkers
 
     /**
-     * Checker to check if the title of the bugreport is valid.
+     * Checker to check if the title of the bug report is valid.
      *
-     * @param title The title of the bugreport.
+     * @param title The title of the bug report.
      *
      * @return True if the title is not null or not empty. False otherwise.
      */
@@ -290,9 +290,9 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
     
     /**
-     * Checker to check if the description of the bugreport is valid.
+     * Checker to check if the description of the bug report is valid.
      *
-     * @param description The description of the bugreport.
+     * @param description The description of the bug report.
      *
      * @return True if the description is not null or not empty. False otherwise.
      */
@@ -334,9 +334,9 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
 
     /**
-     * Returns if the bugreport is public.
+     * Returns if the bug report is public.
      *
-     * @return True if the bugreport is public.
+     * @return True if the bug report is public.
      */
     public boolean isPublic() {
         return pblc;
@@ -455,10 +455,10 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     //region Functions
 
     /**
-     * Function for adding an assignee to the bugreport.
-     * The bugreport is given the "Assigned" tag.
+     * Function for adding an assignee to the bug report.
+     * The bug report is given the "Assigned" tag.
      *
-     * @param developer The developer to assign to the bugreport.
+     * @param developer The developer to assign to the bug report.
      *
      * @throws IllegalArgumentException The given developer is null.
      * @throws ReportErrorToUserException Assigning the developer caused an error.
@@ -488,7 +488,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * @param patch The patch to add tot the patches.
      * @throws IllegalArgumentException The given patch is null.
-     * @throws ReportErrorToUserException Unable to add patch to bugreport.
+     * @throws ReportErrorToUserException Unable to add patch to bug report.
      */
     void addPatch(Patch patch) throws ReportErrorToUserException {
         if (patch == null) throw new IllegalArgumentException("Patch is null");
@@ -500,7 +500,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * @param test The test to add to the tests.
      * @throws IllegalArgumentException The given test is null.
-     * @throws ReportErrorToUserException Unable to add test to the bugreport.
+     * @throws ReportErrorToUserException Unable to add test to the bug report.
      */
     void addTest(Test test) throws ReportErrorToUserException {
         if (test == null) throw new IllegalArgumentException("Test is null");
@@ -508,9 +508,9 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
-     * Getter to get all the comments of the bugreport.
+     * Getter to get all the comments of the bug report.
      *
-     * @return An unmodifiable list of all the comments of the bugreport. (recursively)
+     * @return An unmodifiable list of all the comments of the bug report. (recursively)
      */
 	public List<Comment> getAllComments()
 	{
@@ -561,12 +561,12 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
 
     /**
-	 * Method to represent a bugreport as a string.
+	 * Method to represent a bug report as a string.
      *
-     * Makes use of getters for bugreport attributes to create
+     * Makes use of getters for bug report attributes to create
      * one full string which will be passed on to the formatter.
 	 *
-	 * @return The bugreport as a string.
+	 * @return The bug report as a string.
 	 */
     @Override
     public String toString()

@@ -165,9 +165,9 @@ public class Formatter
 	}
 
 	/**
-	 * Format the given bugreport into a recursive textual representation.
+	 * Format the given bug report into a recursive textual representation.
 	 * 
-	 * @param bugReport The bugreport to format
+	 * @param bugReport The bug report to format
 	 * 
 	 * @return The textual representation
 	 */

@@ -31,28 +31,28 @@ public class DeveloperAssignmentService {
     }
 
     /**
-     * Assigns a developer to the given bugreport.
+     * Assigns a developer to the given bug report.
      *
      * @param user The user requesting the assignment
-     * @param developer The developer to be assigned to the bugreport
-     * @param bugReport The bugreport to which to assign the developer
+     * @param developer The developer to be assigned to the bug report
+     * @param bugReport The bug report to which to assign the developer
      *
      * @throws ReportErrorToUserException Assigning the developer to the specified bug report caused an error.
      * @throws IllegalArgumentException One of the given arguments is null.
      */
     public void assignDeveloperToBugReport(User user, Developer developer, BugReport bugReport) throws ReportErrorToUserException {
-        if (!canUserAssignDeveloperToBugReport(user, developer, bugReport)) throw new ReportErrorToUserException("Cannot assign developer to bugreport!");
+        if (!canUserAssignDeveloperToBugReport(user, developer, bugReport)) throw new ReportErrorToUserException("Cannot assign developer to bug report!");
         bugReport.addAssignee(developer);
     }
 
     /**
-     * Checker to check if the user has te permission to assign the developer to the bugreport
+     * Checker to check if the user has te permission to assign the developer to the bug report
      *
      * @param user The user requesting the assignment
-     * @param developer The developer to be assigned to the bugreport
-     * @param bugReport The bugreport to which to assign the developer
+     * @param developer The developer to be assigned to the bug report
+     * @param bugReport The bug report to which to assign the developer
      *
-     * @return True if the user has the valid permissions to assign the developer to the bugreport or bugreport has permanent tag..
+     * @return True if the user has the valid permissions to assign the developer to the bug report or bug report has permanent tag..
      *
      * @throws IllegalArgumentException One of the given arguments is null.
      */
@@ -75,11 +75,11 @@ public class DeveloperAssignmentService {
     }
 
     /**
-     * Checker to check if the user has te permission to assign developers to the bugreport
+     * Checker to check if the user has te permission to assign developers to the bug report
      *
      * @param user      The user requesting the assignment
-     * @param bugReport The bugreport to which the user wishes to assign developers.
-     * @return True if the user has the valid permissions to assign developers to the bugreport.
+     * @param bugReport The bug report to which the user wishes to assign developers.
+     * @return True if the user has the valid permissions to assign developers to the bug report.
      * @throws IllegalArgumentException One of the given arguments is null.
      *
      */

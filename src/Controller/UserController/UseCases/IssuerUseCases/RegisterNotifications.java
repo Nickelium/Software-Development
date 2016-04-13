@@ -29,7 +29,7 @@ public class RegisterNotifications extends IssuerUseCase{
 
     /**
      *
-     * Lets an Issuer register for certain changes in a project/subsystem/bugreport.
+     * Lets an Issuer register for certain changes in a project/subsystem/bug report.
      *
      * 2. The system asks if he wants to register for a project, subsystem or bug
      * report.
@@ -82,8 +82,8 @@ public class RegisterNotifications extends IssuerUseCase{
 	            Project project = projectList.get(indexProject);
 	        	
 	            //Step 6
-	        	getUi().display("What kind of change of bugreport do you want to be notified :");
-	         	getUi().display("Creation of a new bugreport (1) / A bug report receiving a new tag (2)");
+	        	getUi().display("What kind of change of bug report do you want to be notified :");
+	         	getUi().display("Creation of a new bug report (1) / A bug report receiving a new tag (2)");
 	         	getUi().display("A bug report receiving a specific tag (3) / A new comment for a bug report (4)");
 	        	
 	         	int indexChange = getUi().readInt();
@@ -153,8 +153,8 @@ public class RegisterNotifications extends IssuerUseCase{
 	            SubSystem subsystem = subSystemList.get(indexSubsystem);
 
 	            //Step 6
-	        	getUi().display("What kind of change of bugreport do you want to be notified :");
-	         	getUi().display("Creation of a new bugreport (1) / A bug report receiving a new tag (2)");
+	        	getUi().display("What kind of change of bug report do you want to be notified :");
+	         	getUi().display("Creation of a new bug report (1) / A bug report receiving a new tag (2)");
 	         	getUi().display("A bug report receiving a specific tag (3) / A new comment for a bug report (4)");
 	        	
 	         	int indexChange = getUi().readInt();
@@ -208,7 +208,7 @@ public class RegisterNotifications extends IssuerUseCase{
 	        BugReport bugReport = selectBugReport();
 
 	        //Step 6
-        	getUi().display("What kind of change of bugreport do you want to be notified :");
+        	getUi().display("What kind of change of bug report do you want to be notified :");
          	getUi().display("A bug report receiving a new tag (2) / A bug report receiving a specific tag (3)");
          	getUi().display("A new comment for a bug report (3)");
         	

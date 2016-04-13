@@ -154,7 +154,7 @@ extends java.lang.Object</pre>
                java.lang.String&nbsp;description,
                <a href="../../Model/User/Issuer.html" title="class in Model.User">Issuer</a>&nbsp;creator,
                <a href="../../Model/Project/SubSystem.html" title="class in Model.Project">SubSystem</a>&nbsp;subSystem)</code>
-<div class="block">Function to create a new BugReport and add the bugreport to the list of bugreports.</div>
+<div class="block">Function to create a new BugReport and add the bug report to the list of bugreports.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -166,7 +166,7 @@ extends java.lang.Object</pre>
                <a href="../../Model/Project/TheDate.html" title="class in Model.Project">TheDate</a>&nbsp;creationDate,
                <a href="../../Model/Tags/Tag.html" title="class in Model.Tags">Tag</a>&nbsp;tag,
                java.util.List&lt;<a href="../../Model/User/Developer.html" title="class in Model.User">Developer</a>&gt;&nbsp;initialAssignees)</code>
-<div class="block">Function to create a new BugReport and add the bugreport to the list of bugreports.</div>
+<div class="block">Function to create a new BugReport and add the bug report to the list of bugreports.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -174,7 +174,7 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../Model/BugReport/BugReportService.html#createComment-java.lang.String-Model.User.Issuer-Model.BugReport.BugReport-">createComment</a></span>(java.lang.String&nbsp;text,
              <a href="../../Model/User/Issuer.html" title="class in Model.User">Issuer</a>&nbsp;issuer,
              <a href="../../Model/BugReport/BugReport.html" title="class in Model.BugReport">BugReport</a>&nbsp;bugReport)</code>
-<div class="block">Method for creating a comment and adding it to the list of comments of the bugreport.</div>
+<div class="block">Method for creating a comment and adding it to the list of comments of the bug report.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -296,15 +296,15 @@ extends java.lang.Object</pre>
                                  <a href="../../Model/User/Issuer.html" title="class in Model.User">Issuer</a>&nbsp;creator,
                                  <a href="../../Model/Project/SubSystem.html" title="class in Model.Project">SubSystem</a>&nbsp;subSystem)
                           throws <a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></pre>
-<div class="block">Function to create a new BugReport and add the bugreport to the list of bugreports.</div>
+<div class="block">Function to create a new BugReport and add the bug report to the list of bugreports.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>title</code> - The title of the bugreport</dd>
-<dd><code>description</code> - The description of the bugreport</dd>
-<dd><code>creator</code> - The creator of the bugreport</dd>
-<dd><code>subSystem</code> - The subsystem of the bugreport</dd>
+<dd><code>title</code> - The title of the bug report</dd>
+<dd><code>description</code> - The description of the bug report</dd>
+<dd><code>creator</code> - The creator of the bug report</dd>
+<dd><code>subSystem</code> - The subsystem of the bug report</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The newly created bugreport</dd>
+<dd>The newly created bug report</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></code> - the title or description is empty.</dd>
 <dd><code>java.lang.IllegalArgumentException</code> - the creator or subsystem is null.</dd>
@@ -325,20 +325,20 @@ extends java.lang.Object</pre>
                                  <a href="../../Model/Tags/Tag.html" title="class in Model.Tags">Tag</a>&nbsp;tag,
                                  java.util.List&lt;<a href="../../Model/User/Developer.html" title="class in Model.User">Developer</a>&gt;&nbsp;initialAssignees)
                           throws <a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></pre>
-<div class="block">Function to create a new BugReport and add the bugreport to the list of bugreports.
+<div class="block">Function to create a new BugReport and add the bug report to the list of bugreports.
  Van de gebruiker van deze functie wordt verwacht dat de initialAssignies ook developers van het project zijn.
  Anders zullen tag assignment rechten voor deze gebruiker geweigerd worden.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>title</code> - The title of the bugreport</dd>
-<dd><code>description</code> - The description of the bugreport</dd>
-<dd><code>creator</code> - The creator of the bugreport</dd>
-<dd><code>subSystem</code> - The subsystem of the bugreport</dd>
-<dd><code>creationDate</code> - The creation date of the bugreport</dd>
-<dd><code>tag</code> - The initial tag of the bugreport</dd>
-<dd><code>initialAssignees</code> - The list of initialAssignies van de bugreport</dd>
+<dd><code>title</code> - The title of the bug report</dd>
+<dd><code>description</code> - The description of the bug report</dd>
+<dd><code>creator</code> - The creator of the bug report</dd>
+<dd><code>subSystem</code> - The subsystem of the bug report</dd>
+<dd><code>creationDate</code> - The creation date of the bug report</dd>
+<dd><code>tag</code> - The initial tag of the bug report</dd>
+<dd><code>initialAssignees</code> - The list of initialAssignies van de bug report</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The newly created bugreport</dd>
+<dd>The newly created bug report</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></code> - the given title of description is empty.</dd>
 <dd><code>java.lang.IllegalArgumentException</code> - The subsystem, creator, creationdata or tag is null.</dd>
@@ -355,12 +355,12 @@ extends java.lang.Object</pre>
                              <a href="../../Model/User/Issuer.html" title="class in Model.User">Issuer</a>&nbsp;issuer,
                              <a href="../../Model/BugReport/BugReport.html" title="class in Model.BugReport">BugReport</a>&nbsp;bugReport)
                       throws <a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></pre>
-<div class="block">Method for creating a comment and adding it to the list of comments of the bugreport.</div>
+<div class="block">Method for creating a comment and adding it to the list of comments of the bug report.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>text</code> - The text of the comment.</dd>
 <dd><code>issuer</code> - The issuer writing the comment.</dd>
-<dd><code>bugReport</code> - The bugreport on which the issuer commented.</dd>
+<dd><code>bugReport</code> - The bug report on which the issuer commented.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The newly created comment.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -420,7 +420,7 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The BugReport matching the given id.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></code> - thrown when no bugreport is found.</dd>
+<dd><code><a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></code> - thrown when no bug report is found.</dd>
 </dl>
 </li>
 </ul>

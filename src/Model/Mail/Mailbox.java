@@ -50,7 +50,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	/**
-	 * Method to register for a creation of a new bugreport in the given subject
+	 * Method to register for a creation of a new bug report in the given subject
 	 *
 	 * @param structure The subject to observe
 	 */
@@ -72,7 +72,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	/**
-	 * Method to register for a change of a tag of a bugreport in the given subject
+	 * Method to register for a change of a tag of a bug report in the given subject
 	 *
 	 * @param structure The subject to observe
 	 */
@@ -83,7 +83,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	/**
-	 * Method to register for a change of a tag to a specific tag of a bugreport in the given subject
+	 * Method to register for a change of a tag to a specific tag of a bug report in the given subject
 	 *
 	 * @param structure The subject to observe
 	 * @param tag The specific tag 
@@ -140,7 +140,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 
 	
 	/**
-	 * Inner class observer of a creation of a bugreport
+	 * Inner class observer of a creation of a bug report
 	 *
 	 */
 	private class ObserverBugReport extends ObserverAspect
@@ -151,21 +151,21 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		}
 		
 		@Override
-		public void update(Subject structure, BugReport bugreport, Object aspect) {
+		public void update(Subject structure, BugReport bugReport, Object aspect) {
 			if(super.structure == structure && aspect instanceof BugReport)
-				notifications.add(new Notification("New bugreport",bugreport, super.structure));
+				notifications.add(new Notification("New bug report",bugReport, super.structure));
 			
 		}
 
 		@Override
 		public String toString() {
-			return "Registration for creation of new bugreport in \n" + super.structure;
+			return "Registration for creation of new bug report in \n" + super.structure;
 		}
 		
 	}
 	
 	/**
-	 * Inner class observer of a change of tag of a bugreport
+	 * Inner class observer of a change of tag of a bug report
 	 *
 	 */
 	private class ObserverTag extends ObserverAspect
@@ -176,10 +176,10 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		}
 		
 		@Override
-		public void update(Subject structure, BugReport bugreport, Object aspect) 
+		public void update(Subject structure, BugReport bugReport, Object aspect)
 		{
 			if(super.structure == structure && aspect instanceof Tag)
-				notifications.add(new Notification("Tag changed", bugreport, super.structure));
+				notifications.add(new Notification("Tag changed", bugReport, super.structure));
 		}
 		
 		@Override
@@ -191,7 +191,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	/**
-	 * Inner class observer of a change of tag to a specific tag of a bugreport
+	 * Inner class observer of a change of tag to a specific tag of a bug report
 	 *
 	 */
 	private class ObserverSpecificTag extends ObserverAspect
@@ -205,10 +205,10 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		}
 		
 		@Override
-		public void update(Subject structure, BugReport bugreport, Object aspect) 
+		public void update(Subject structure, BugReport bugReport, Object aspect)
 		{
 			if(super.structure == structure && tag.getClass().isInstance(aspect))
-				notifications.add(new Notification("Tag changed to " + tag, bugreport, super.structure));
+				notifications.add(new Notification("Tag changed to " + tag, bugReport, super.structure));
 			
 		}
 		
@@ -220,7 +220,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	/**
-	 * Inner class observer of a creation of a comment in a bugreport
+	 * Inner class observer of a creation of a comment in a bug report
 	 *
 	 */
 	private class ObserverComment extends ObserverAspect
@@ -232,10 +232,10 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		}
 		
 		@Override
-		public void update(Subject structure, BugReport bugreport, Object aspect)
+		public void update(Subject structure, BugReport bugReport, Object aspect)
 		{
 			if(super.structure == structure && aspect instanceof Comment)
-				notifications.add(new Notification("New comment", bugreport, super.structure));	
+				notifications.add(new Notification("New comment", bugReport, super.structure));
 		}
 		
 		@Override

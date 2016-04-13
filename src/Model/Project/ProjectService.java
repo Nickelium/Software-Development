@@ -17,7 +17,6 @@ import java.util.List;
 
 /**
  * This class is used as a service to operate on projects and subsystems.
- *
  */
 public class ProjectService implements Originator<ProjectService.ProjectServiceMemento, ProjectService>
 {
@@ -139,13 +138,13 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     }
 
     /**
-     * Method for requesting the project containing the bugreport.
+     * Method for requesting the project containing the bug report.
      *
      * @param bugReport Bugreport to get the project of.
      *
-     * @return The project containing the bugreport.
+     * @return The project containing the bug report.
      *
-     * @throws ReportErrorToUserException There is no project containing the given bugreport.
+     * @throws ReportErrorToUserException There is no project containing the given bug report.
      */
     public Project getProjectsContainingBugReport(BugReport bugReport) throws ReportErrorToUserException
     {
@@ -154,7 +153,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
                 return project;
             }
         }
-        throw new ReportErrorToUserException("There is no project containing the given bugreport.");
+        throw new ReportErrorToUserException("There is no project containing the given bug report.");
     }
 
     /**
@@ -169,13 +168,21 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         }
         return subSystems;
     }
-        
+
+    /**
+     * //TODO
+     * @return
+     */
 	@Override
 	public ProjectServiceMemento createMemento() 
 	{
 		return new ProjectServiceMemento(this);
 	}
-	
+
+    /**
+     * //TODO
+     * @param memento
+     */
 	@Override
 	public void restoreMemento(ProjectServiceMemento memento)
     {
@@ -188,7 +195,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 	
 	/**
 	 * Innerclass
-	 *
+	 * //TODO
 	 */
 	public class ProjectServiceMemento extends Memento<ProjectService>
 	{

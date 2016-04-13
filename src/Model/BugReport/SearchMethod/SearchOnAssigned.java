@@ -26,7 +26,7 @@ public class SearchOnAssigned extends Search
  * Method to execute the search command. Method returns a list of all bug reports
  * that meet the search requirements.
  *
- * @param bugReportService the bugreport service, requesting the search
+ * @param bugReportService the bug report service, requesting the search
  * @param user the user requesting the search
  * @return an unmodifiable list of all bug reports that meet the search requirements.
  */

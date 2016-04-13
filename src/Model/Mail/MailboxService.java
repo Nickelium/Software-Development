@@ -68,7 +68,7 @@ public class MailboxService
 	}
 	
 	/**
-	 * Method to register for a bugreport creation in the given subject
+	 * Method to register for a bug report creation in the given subject
 	 * 
 	 * @param user The user that wants to register
 	 * @param s The subject to observe

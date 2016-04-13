@@ -411,7 +411,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * Method that returns a list of all milestones added to the project and all
 	 * the subsystems that it (recursively) contains.
 	 *
-	 * @return a list of all the milestones
+	 * @return an unmodifiable list of all the milestones
      */
 	public List<Milestone> getAllMilestones(){
 
@@ -424,15 +424,21 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	}
 
 	/**
-	 * Method to set a new project milestone. //TODO
-	 * @param newProjectMilestone
-	 * @throws ReportErrorToUserException
+	 * Method to set a new project milestone.
+	 *
+	 * There occurs consistency checking:
+	 *		first pass: project milestone should not exceed any subsystem milestone
+	 *		second pass: project milestone should not exceed the target milestone of
+	 *					 any related bug report with a non-final tag.
+	 *
+	 * @param newProjectMilestone the new project milestone that has to be set
+	 * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */
     public void setNewProjectMilestone(Milestone newProjectMilestone) throws ReportErrorToUserException {
         if (!milestoneDoesNotExceedSubsystems(newProjectMilestone))
             throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
         if (!milestoneDoesNotExceedBugReportMilestone(newProjectMilestone))
-            throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects bugreport!");
+            throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects target bug report!");
 
         this.setLatestAchievedMilestone(newProjectMilestone);
         this.addMilestoneToList(newProjectMilestone);
@@ -440,6 +446,15 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 
     }
 
+	/**
+	 * Checks whether a given milestone exceeds any subsystem milestone.
+	 *
+	 * @param milestone the milestone that needs to be checked
+	 * @return true if there are no milestones in any subsystem,
+	 * 		   true if the ID value of the given milestone is lower
+	 * 		        than or equal to the maximum ID value of any subsystem,
+	 * 		   else false
+     */
     private boolean milestoneDoesNotExceedSubsystems(Milestone milestone) {
         double max = 0.0;
         List<Milestone> milestones = new ArrayList<>();
@@ -459,6 +474,14 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
         return milestone.getIDvalue() <= max;
     }
 
+	/**
+	 * Checks whether a given milestone exceeds any target milestone of project-related bug reports.
+	 *
+	 * @param milestone the milestone that needs to be checked
+	 * @return true if the ID value of the given milestone is lower than or equal to the
+	 * 			    maximum ID value of any non-final bug report's target milestone.
+	 * 		   else false
+     */
     private boolean milestoneDoesNotExceedBugReportMilestone(Milestone milestone) {
         double max = 0.0;
         List<BugReport> bugReports = this.getAllBugReports();
@@ -474,11 +497,20 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
     }
 
 
-
+	/**
+	 * Method to set the latest achieved milestone
+	 *
+	 * @param latestAchievedMilestone the latest achieved milestone
+     */
 	private void setLatestAchievedMilestone(Milestone latestAchievedMilestone){
 		this.latestAchievedMilestone = latestAchievedMilestone;
 	}
 
+	/**
+	 * Method to add an older achieved milestone to the milestone list
+	 *
+	 * @param milestone the milestone that needs to be added to the list
+     */
 	private void addMilestoneToList(Milestone milestone){
 		this.milestones.add(milestone);
 	}
@@ -507,23 +539,32 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	}
 
 	 /**
-     * Method called to notify this observer
+     * Method called to notify any observers
      * 
      * @param s The subject
      * @param aspect The aspect that has changed
      */
 	@Override
-	public void update(Subject s, BugReport bugreport, Object aspect) {
-		notifyObservers(bugreport, aspect);
+	public void update(Subject s, BugReport bugReport, Object aspect) {
+		notifyObservers(bugReport, aspect);
 		
 	}
-	
+
+	/**
+	 * Method to create and return a new memento object
+	 *
+	 * @return the new memento object for this project
+     */
 	@Override
 	public ProjectMemento createMemento()
 	{
 		return new ProjectMemento(this);
 	}
 
+	/**
+	 * //TODO
+	 * @param memento
+     */
 	@Override
 	public void restoreMemento(ProjectMemento memento)
 	{
@@ -549,7 +590,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	
 	/**
 	 * Innerclass
-	 *
+	 * //TODO Whole innerclass
 	 */
 	public class ProjectMemento extends Memento<Project>
 	{

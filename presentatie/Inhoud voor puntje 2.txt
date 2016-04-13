@@ -6,16 +6,16 @@
 -BugreportService en ProjectService bieden ook creator functies aan die consistentie afdwingen.
 -de Services bevatten functies om lijsten op te vragen die voldoen aan specifieke criteria. Deze lijsten zijn vervolgens unmodifiable om verkeerd gebruik te vermijden.
 -Toekennen van tags of developers aan de bugreports, gebeurt d.m.v de respectievelijke services.
--Tag assignment service assignTag parameters -> ingelogde user, bugreport en Tag.
+-Tag assignment service assignTag parameters -> ingelogde user, bug report en Tag.
 	*Tags hebben kennis over de juiste overgangen. (flow)
 	*Roles binnen een project hebben permissies om tags toe te kennen.
 	*Tagassignment service maakt gebruik van projectService om de rol van de user binnen het project te kennen.
-	*Controleert integriteit van flow en permissie voor die user, tag en bugreport.
+	*Controleert integriteit van flow en permissie voor die user, tag en bug report.
 	*Permissie OK -> toekennen van tag.
--Developer assignment service assignDeveloper parameters -> ingelogde user, bugreport, developer.
+-Developer assignment service assignDeveloper parameters -> ingelogde user, bug report, developer.
 	*Roles hebben een permissie om developers toe te kennen.
-	*Er wordt gecontroleerd of de developer ook toegekend is aan het project waartoe het bugreport behoord.
-	*OK -> developer wordt toegekend aan de bugreport.
+	*Er wordt gecontroleerd of de developer ook toegekend is aan het project waartoe het bug report behoord.
+	*OK -> developer wordt toegekend aan de bug report.
 -Reden voor aparte klassen -> complexe taken die veel kennis en dependencies van andere klassen gebruiken -> apart (pure fabrication)
 -Services zijn communcatie voor lijsten en complexe taken met de buitenwereld. Simpele taken kunnen rechtstreeks op objecten uitgevoerd worden (bv. properties opvragen of toewijzen)
  

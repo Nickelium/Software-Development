@@ -5,4 +5,4 @@
 - mag een subsystem weten tot welk project het behoort?
 - moeten we vanuit een subsystem alle bugreports kunnen opvragen?
 - moeten/mogen we een database gebruiken?
-- relatie developer en bugreport? moet een developper weten aan welke bugreports hij werkt?
+- relatie developer en bug report? moet een developper weten aan welke bugreports hij werkt?

@@ -47,7 +47,7 @@ public class AssignToBugReport extends DeveloperUseCase {
         getUi().display("Please select the bug report that you want to assign a new developer to: ");
         BugReport bugReport = selectBugReport();
         if (!getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport)) {
-            throw new ReportErrorToUserException("You are not allowed to assign developers to this bugreport.");
+            throw new ReportErrorToUserException("You are not allowed to assign developers to this bug report.");
         }
 
         // Step 3
@@ -64,7 +64,7 @@ public class AssignToBugReport extends DeveloperUseCase {
             //Step 5
             Developer developer = developerList.get(selectedValue);
             getDeveloperAssignmentService().assignDeveloperToBugReport(getCurrentUser(), developer, bugReport);
-            getUi().display("The developer has successfully been assigned to the bugreport.");
+            getUi().display("The developer has successfully been assigned to the bug report.");
         }
     }
     

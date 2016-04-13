@@ -42,9 +42,9 @@ Memento/Undo
 		
 	Is deze koppeling aanvaarbaar ? Indien niet, kunnen we deze koppeling verlagen ? Alternatieven ? 
 	
-- De objecten dat moet worden opgeslagen is List<Project> in projectService (bevat recursief de andere objecten zoals subsystem/bugreport ...) en mailboxen die gebonden zijn aan elke user (of zijn er nog andere objecten dan moet opgeslagen worden?).
+- De objecten dat moet worden opgeslagen is List<Project> in projectService (bevat recursief de andere objecten zoals subsystem/bug report ...) en mailboxen die gebonden zijn aan elke user (of zijn er nog andere objecten dan moet opgeslagen worden?).
 	Een eerste manier om het systeem op te slagen is door een deepcopy te voeren op listProject en users. Bij het undoën vervangen we de referentie van listProject in projectService door 
-	de deepcopy ervan, hetzelfde voor users. Het probleem is dat elke mailbox van elke user een lijst van registrations heeft (observers) die verwijzen naar subjects (project/subsystem/bugreport) en de subjects hebben
+	de deepcopy ervan, hetzelfde voor users. Het probleem is dat elke mailbox van elke user een lijst van registrations heeft (observers) die verwijzen naar subjects (project/subsystem/bug report) en de subjects hebben
 	hebben een verwijzing naar hun observers, maar deze bindingen worden niet consistent gekopieerd met deepcopy. Er ontstaat dus een kopie van projecten en nog andere losse kopiën van projecten
 	bij het kopiëren van de mailboxen. Is dit ten eerste oké qua design al is dit geen memento ? Hoe kunnen het probleem oplossen ? Serialization/Deserialization lost dit op of niet ? Mag dit gebruikt worden ?
 
@@ -52,7 +52,7 @@ Memento/Undo
 	dan is er nog MementoProject/MementoSubsystem/MementoBugReport, elk kan het corresponderende object reverten door te verwijzen naar de shallowcopy attribuut dat bijgehouden wordt.
 	De caretaker houdt een lijst van Snapshots, elke snapshot bevat een MementoListProject, een lijst van MementoProject, een lijst van MementoSubsystem etc ... Bij het reverten zet caretaker
 	de projectList in projectService naar de juiste referentie (shallowcopy uit MementoListProject). Omdat de projecten zelf mogelijk gewijzigd werden, gaan we deze ook reverten met de lijst van MementoProject
-	die dan elke project zijn attributen revert en verwijst naar de shallowcopy subsystem. Hetzelfde idee wordt ook toegepast op subsystem/bugreport etc ...
+	die dan elke project zijn attributen revert en verwijst naar de shallowcopy subsystem. Hetzelfde idee wordt ook toegepast op subsystem/bug report etc ...
 	Elke memento implementeert dan wel een interface memento, waardoor het zoiets zou moeten geven
 	code ::
 	class Snapshot
