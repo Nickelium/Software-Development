@@ -63,7 +63,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
     @Test
     public void getBugReportsWithTitleContainingTest_Valid() throws ReportErrorToUserException {
     	Search a = new SearchOnTitle("Bug");
-        assertEquals(2, bugReportService.search(a, issuer1).size());
+        assertEquals(3, bugReportService.search(a, issuer1).size());
         Search b = new SearchOnTitle("Bug1");
         assertEquals(1, bugReportService.search(b, issuer1).size());
     }
@@ -83,7 +83,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
     @Test
     public void getBugReportsWithDescriptionContainingTest_Valid() throws ReportErrorToUserException {
     	Search a = new SearchOnDescription("Bug");
-        assertEquals(2, bugReportService.search(a, issuer1).size());
+        assertEquals(3, bugReportService.search(a, issuer1).size());
         Search b = new SearchOnDescription("Des Bug1");
         assertEquals(1, bugReportService.search(b, issuer1).size());
     }

@@ -5,6 +5,7 @@ import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
+import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.TargetMilestone;
 import Model.Project.TheDate;
@@ -27,7 +28,7 @@ import java.util.List;
  * This class provides public checkers when setting new values to certain attributes.
  *
  */
-public class BugReport extends Subject implements Observer<Comment>, Originator<BugReportMemento,BugReport>{
+public class BugReport extends Subject implements Observer<Comment>, Originator<BugReport.BugReportMemento,BugReport>{
 
     public static final boolean PUBLIC = true;
     public static final boolean PRIVATE = false;
@@ -579,7 +580,15 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         if (this.getTargetMilestone() != null){
             str +=  "\nTarget Milestone: " + getTargetMilestone().toString();
         }
+        
+        if( !this.getTests().isEmpty()) str += "\nTests : ";
+        for (Test test : getTests()) 
+			str += "\n" + test.toString();
 
+        if( !this.getPatches().isEmpty()) str += "\nPatches : ";
+        for (Patch patch : getPatches()) 
+			str += "\n" + patch.toString();
+        
         if (this.selectedPatch != null) {
             str += "\nSelected Patch: " + selectedPatch;
         }
@@ -632,15 +641,109 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 	public void restoreMemento(BugReportMemento memento) 
 	{
 		this.tag = memento.getTag();
-		this.assignees = new ArrayList<>(memento.getAssignees());
-		this.comments = new ArrayList<>(memento.getComments());
+		this.assignees = memento.getAssignees();
+		this.comments = memento.getComments();
 		
 		this.targetMilestone = memento.getTargetMilestone();
 		
-		this.tests = new ArrayList<>(memento.getTests());
-		this.patches = new ArrayList<>(memento.getPatches());
+		this.tests = memento.getTests();
+		this.patches = memento.getPatches();
 	}
 
     //endregion
+    
+    /**
+     * Innerclass
+     */
+    
+    /**
+     * This class provides utility for saving the state of the system at a certain point in time
+     * during execution of the Bug Trap software.
+     *
+     * The bug report memento saves the state of the following attributes:
+     * tag, assignees, comments, targetMilestone, tests & patches.
+     *
+     * This class provides package-visible methods to request the values of the saved fields.
+     */
+    public class BugReportMemento extends Memento<BugReport>
+    {
+
+    	private Tag tag;
+    	private List<Developer> assignees;
+    	private List<Comment> comments;
+    	
+    	private TargetMilestone targetMilestone;
+    	
+    	private List<Test> tests;
+    	private List<Patch> patches;
+    	
+    	public BugReportMemento(BugReport originator)
+    	{
+    		super(originator);
+    		this.tag = originator.getTag();
+    		this.assignees = new ArrayList<>(originator.getAssignees());
+    		this.comments = new ArrayList<>(originator.getComments());
+    		
+    		this.targetMilestone = originator.getTargetMilestone();
+    		
+    		this.tests =  new ArrayList<>(originator.getTests());
+    		this.patches =  new ArrayList<>(originator.getPatches());
+    	}
+
+    	/**
+    	 * Returns the tag object of the bug report memento
+    	 * @return the tag object of the bug report memento
+         */
+    	private Tag getTag()
+    	{
+    		return tag;
+    	}
+
+    	/**
+    	 * Returns the list with assignees of the bug report memento
+    	 * @return the list with assignees of the bug report memento
+    	 */
+    	private List<Developer> getAssignees()
+    	{
+    		return new ArrayList<>(assignees);
+    	}
+
+    	/**
+    	 * Returns the list with comments of the bug report memento
+    	 * @return the list with comments of the bug report memento
+         */
+    	private List<Comment> getComments()
+    	{
+    		return new ArrayList<>(comments);
+    	}
+
+    	/**
+    	 * Returns the target milestone object of the bug report memento
+    	 * @return the target milestone object of the bug report memento
+         */
+    	private TargetMilestone getTargetMilestone()
+    	{
+    		return targetMilestone;
+    	}
+
+    	/**
+    	 * Returns the list with tests of the bug report memento
+    	 * @return the list with tests of the bug report memento
+         */
+    	private List<Test> getTests()
+    	{
+    		return new ArrayList<>(tests);
+    	}
+
+    	/**
+    	 * Returns the list with patches of the bug report memento
+    	 * @return the list with patches of the bug report memento
+         */
+    	private List<Patch> getPatches()
+    	{
+    		return new ArrayList<>(patches);
+    	}
+    }
+
 
 }
