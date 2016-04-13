@@ -34,4 +34,8 @@ public class ProposeTest extends DeveloperUseCase {
 
         getUi().display("Successfully added new test.");
     }
+
+    public String toString() {
+        return "Propose test.";
+    }
 }

@@ -33,4 +33,8 @@ public class ProposePatch extends DeveloperUseCase {
         getUi().display("Successfully added new patch.");
 
     }
+
+    public String toString() {
+        return "Propose Patch.";
+    }
 }
