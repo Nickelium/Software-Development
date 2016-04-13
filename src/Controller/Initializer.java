@@ -91,7 +91,7 @@ public class Initializer implements IInitializer {
                     BugReport.PUBLIC,
                     subSystemB1,
                     new TheDate(3, 1, 2016),
-                    new Closed(),
+                    new Closed(0),
                     Collections.singletonList(maria),
                     new ArrayList<>(),
                     new ArrayList<>()
