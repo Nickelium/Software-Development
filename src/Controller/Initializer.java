@@ -61,12 +61,12 @@ public class Initializer implements IInitializer {
 
             // project A
             Lead leadMajor = new Lead(major);
-            Programmer programmerMajor = new Programmer(major);
+            Programmer programmerMaria = new Programmer(maria);
             Tester testerMaria = new Tester(maria);
 
             Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2016), 0.0, leadMajor);
 
-            projectA.addRole(programmerMajor);
+            projectA.addRole(programmerMaria);
             projectA.addRole(testerMaria);
 
             SubSystem subSystemA1 = projectService.createSubsystem("SubSystemA1", "SubsystemA1 description", projectA);

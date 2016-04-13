@@ -6,6 +6,7 @@ import java.util.List;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportMemento;
 import Model.Memento.Memento;
+import Model.Milestone.Milestone;
 
 public class SubSystemMemento extends Memento<SubSystem>
 {
@@ -14,6 +15,9 @@ public class SubSystemMemento extends Memento<SubSystem>
 	
 	private List<BugReport> bugreports;
 	private List<BugReportMemento> bugreportMementos = new ArrayList<>();
+	
+	private Milestone latestAchievedMilestone;
+	private List<Milestone> milestones;
 	
 	
 	public SubSystemMemento(SubSystem originator)
@@ -26,6 +30,9 @@ public class SubSystemMemento extends Memento<SubSystem>
 		this.bugreports = new ArrayList<>(originator.getBugReports());
 		for(BugReport bugreport : bugreports)
 			bugreportMementos.add(bugreport.createMemento());
+		
+		this.latestAchievedMilestone = originator.getLatestAchievedMilestone();
+		this.milestones = new ArrayList<>(originator.getAllMilestones());
 		
 	}
 	
@@ -47,6 +54,16 @@ public class SubSystemMemento extends Memento<SubSystem>
 	List<BugReportMemento> getBugReportMementos()
 	{
 		return bugreportMementos;
+	}
+	
+	Milestone getLatestAchievedMilestone()
+	{
+		return latestAchievedMilestone;
+	}
+	
+	List<Milestone> getMilestones()
+	{
+		return milestones;
 	}
 
 }

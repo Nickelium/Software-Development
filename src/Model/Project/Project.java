@@ -540,6 +540,9 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		
 		this.observers = new ArrayList<>(memento.getObservers());
 		
+		this.latestAchievedMilestone = memento.getLatestAchievedMilestone();
+		this.milestones = new ArrayList<>(memento.getMilestones());
+		
 	}
 
 

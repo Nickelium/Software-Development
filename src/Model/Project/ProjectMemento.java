@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Memento.Memento;
+import Model.Milestone.Milestone;
 import Model.Roles.Role;
 import Model.Mail.Observer;
 
@@ -23,6 +24,9 @@ public class ProjectMemento extends Memento<Project>
 	
 	private List<Role> devsRoles;
 	
+	private Milestone latestAchievedMilestone;
+	private List<Milestone> milestones;
+	
 	public ProjectMemento(Project originator)
 	{
 		super(originator);
@@ -40,6 +44,9 @@ public class ProjectMemento extends Memento<Project>
 		this.devsRoles = new ArrayList<>(originator.getDevsRoles());
 		
 		this.observers = new ArrayList<>(originator.getObservers());
+		
+		this.latestAchievedMilestone = originator.getLatestAchievedMilestone();
+		this.milestones = new ArrayList<>(originator.getAllMilestones());
 	}
 	
 	
@@ -86,5 +93,15 @@ public class ProjectMemento extends Memento<Project>
 	List<Observer> getObservers()
 	{
 		return observers;
+	}
+	
+	Milestone getLatestAchievedMilestone()
+	{
+		return latestAchievedMilestone;
+	}
+	
+	List<Milestone> getMilestones()
+	{
+		return milestones;
 	}
 }
