@@ -5,7 +5,6 @@ import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
-import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.TargetMilestone;
 import Model.Project.SubSystem;
@@ -47,10 +46,10 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     private List<BugReport> dependencies;
     private boolean pblc;
 
-    private int solutionScore;
+    int solutionScore;
     List<Patch> patches;
     List<Test> tests;
-    private Patch selectedPatch;
+    Patch selectedPatch;
 
 
     //optional attributes
@@ -360,17 +359,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
-     * Setter to change the patch of the bugreport.
-     *
-     * @param patch The patch to which to set the bugreport.
-     * @throws IllegalArgumentException The patch given is null.
-     */
-    void setSelectedPatch(Patch patch) {
-        if (patch == null) throw new IllegalArgumentException("Patch is null");
-        this.selectedPatch = patch;
-    }
-
-    /**
      * Returns if the bugreport is public.
      *
      * @return True if the bugreport is public.
@@ -420,17 +408,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     		this.errorMessage = errorMessage;
     }
 
-    /**
-     * Setter to set the solutionscore.
-     *
-     * @param score The score to give the solution.
-     * @throws ReportErrorToUserException The score is an invalid score.
-     */
-    void setSolutionScore(int score) throws ReportErrorToUserException {
-        if (score < 1 || score > 5)
-            throw new ReportErrorToUserException("The score should be a int value between 1 and 5");
-    }
-
     //region Functions
 
     /**
@@ -445,7 +422,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
     void addAssignee(Developer developer) throws ReportErrorToUserException {
         if (developer == null) throw new IllegalArgumentException("Developer to assign is null");
-
         this.getTag().assignDeveloper(this, developer);
     }
 
@@ -473,7 +449,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     void addPatch(Patch patch) throws ReportErrorToUserException {
         if (patch == null) throw new IllegalArgumentException("Patch is null");
-
         this.getTag().addPatch(this, patch);
     }
 
@@ -486,7 +461,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     void addTest(Test test) throws ReportErrorToUserException {
         if (test == null) throw new IllegalArgumentException("Test is null");
-
         this.getTag().addTest(this, test);
     }
 

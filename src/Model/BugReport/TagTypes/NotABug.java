@@ -2,8 +2,9 @@ package Model.BugReport.TagTypes;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.BugReport.Patch;
 import Model.BugReport.Tag;
-import Model.User.Developer;
+import Model.BugReport.Test;
 
 import java.util.Arrays;
 
@@ -16,12 +17,17 @@ public class NotABug extends Tag {
      * Default constructor for the notABug tag
      */
     public NotABug(){
-        this.acceptedTags = Arrays.asList();
+        this.manuallyAcceptedTags = Arrays.asList();
     }
 
     @Override
-    protected void assignDeveloper(BugReport bugReport, Developer developer) throws ReportErrorToUserException {
-        throw new ReportErrorToUserException("Tag is NotABug! Bugreport is permanent and cannot be changed.");
+    protected void addTest(BugReport bugReport, Test test) throws ReportErrorToUserException {
+        throw new ReportErrorToUserException("The Bug Report doesn't has the tag Assigned, so no test can be added!");
+    }
+
+    @Override
+    protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
+        throw new ReportErrorToUserException("No patches can be submitted because the bugreport doesn't have the propper tag.");
     }
 
     @Override

@@ -3,6 +3,7 @@ package Model.BugReport;
 import CustomExceptions.ReportErrorToUserException;
 import Model.User.Developer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * This class needs to be implemented by all tags.
  */
 public abstract class Tag{
-    protected List<Class<? extends Tag>> acceptedTags;
+    protected List<Class<? extends Tag>> manuallyAcceptedTags;
 
     /**
      * Method for checking if from this tag can be switched to the given one.
@@ -20,7 +21,7 @@ public abstract class Tag{
      * @return True if the tag can be changed from this tag to te given one.
      */
     public boolean canChangeToTag(Tag tag){
-        return acceptedTags.contains(tag.getClass());
+        return manuallyAcceptedTags.contains(tag.getClass());
     }
 
     /**
@@ -31,8 +32,6 @@ public abstract class Tag{
      * @throws ReportErrorToUserException Assigning the patch is not possible.
      */
     protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
-        if (bugReport.getTests().isEmpty())
-            throw new ReportErrorToUserException("Unable to submit patch because no patches are submitted.");
         bugReport.patches.add(patch);
     }
 
@@ -44,7 +43,7 @@ public abstract class Tag{
      * @throws ReportErrorToUserException Assigning the test is not possible.
      */
     protected void addTest(BugReport bugReport, Test test) throws ReportErrorToUserException {
-        throw new ReportErrorToUserException("Tests can only be added when tag is Assigned");
+        bugReport.tests.add(test);
     }
 
     /**
@@ -60,12 +59,30 @@ public abstract class Tag{
 
     protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
         bugReport.tag = tag;
+        tag.updateTagSpecificFields(bugReport);
     }
 
-    protected void addTestToTests(BugReport bugReport, Test test) {
-        bugReport.tests.add(test);
+    protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
     }
 
+    protected final void removeAllTest(BugReport bugReport) {
+        bugReport.tests = new ArrayList<>();
+    }
+
+    protected final void removeAllPatches(BugReport bugReport) {
+        bugReport.patches = new ArrayList<>();
+    }
+
+    protected final void setSelectedPatch(BugReport bugReport, int indexPath) throws ReportErrorToUserException {
+        if (indexPath >= bugReport.getPatches().size())
+            throw new ReportErrorToUserException("Selected patch does not exist in selected bugreport!");
+        bugReport.selectedPatch = bugReport.getPatches().get(indexPath);
+    }
+
+    protected final void setSolutionScore(BugReport bugReport, int score) throws ReportErrorToUserException {
+        if (score <= 0 || score > 5) throw new ReportErrorToUserException("The given score is not valid");
+        bugReport.solutionScore = score;
+    }
 
     public abstract boolean equals(Object obj);
 
