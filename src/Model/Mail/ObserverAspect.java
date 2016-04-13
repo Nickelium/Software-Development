@@ -1,12 +1,13 @@
 package Model.Mail;
 
 import Model.BugReport.BugReport;
+import Model.Memento.Originator;
 
 /**
  * Abstract class ObserverAspect that has one observed subject and can unbind to that subject.
  *
  */
-public abstract class ObserverAspect implements Observer<BugReport>{
+public abstract class ObserverAspect implements Observer<BugReport>, Originator<ObserverAspectMemento,ObserverAspect>{
 
 	protected Subject structure;
 	
@@ -37,13 +38,10 @@ public abstract class ObserverAspect implements Observer<BugReport>{
 	 * Method to destroy this object and at the same time unbind it from his subject
 	 * 
 	 */
-	public void destructor()
+	public void unbind()
 	{
 		if(structure != null)
-		{
 			structure.removeObserver(this);
-			structure = null;
-		}
 	}
 	
 	/**
@@ -53,5 +51,19 @@ public abstract class ObserverAspect implements Observer<BugReport>{
 	 */
 	@Override
 	public abstract String toString();
+	
+	@Override
+	public ObserverAspectMemento createMemento()
+	{
+		return new ObserverAspectMemento(this);
+	}
+	
+	@Override
+	public void restoreMemento(ObserverAspectMemento memento)
+	{
+		this.structure = memento.getStructure();
+		if(!structure.observers.contains(this))
+			structure.addObserver(this);
+	}
 
 }

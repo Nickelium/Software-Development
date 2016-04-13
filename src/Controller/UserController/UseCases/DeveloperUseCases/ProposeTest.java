@@ -39,3 +39,4 @@ public class ProposeTest extends DeveloperUseCase {
         return "Propose test.";
     }
 }
+}

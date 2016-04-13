@@ -486,7 +486,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 				+ "\nCreation Date: " + getCreationDate()
 				+ "\nStarting Date: " + getStartingDate() + "\nBudget: " + getBudget()
 				+ "\nVersionID: " + versionID
-				+ "\nMilestone: " + this.getLatestAchievedMilestone().getMilestoneID()
+				+ "\nMilestone: " + this.getLatestAchievedMilestone()
 				+ "\nLead developer: " + getLeadRole().getDeveloper() + "\n";
 
 		for (Role role : devsRoles) {

@@ -38,4 +38,8 @@ public abstract class Search
 		 return new ListWrapper<>(bugReports);
 	 }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> d154194eace525d08a9136399631c25d52aef1b3
 }

@@ -353,7 +353,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     public String toString() {
         return "Subsystem name: " + getName() + "\nDescription: " + getDescription()
                 + "\nVersionID: " + getVersionID()
-                + "\nMilestone: " + this.getLatestAchievedMilestone().getMilestoneID();
+                + "\nMilestone: " + this.getLatestAchievedMilestone();
     }
 
     /**
