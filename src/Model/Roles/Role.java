@@ -62,8 +62,8 @@ public abstract class Role {
      *
      * @return True if the user has permission to use te selected tag.
      */
-    public boolean canAssignTag(Tag tag){
-        return this.tagPermissions.contains(tag.getClass());
+    public boolean canAssignTag(Class<? extends Tag> tag) {
+        return this.tagPermissions.contains(tag);
     }
 
 

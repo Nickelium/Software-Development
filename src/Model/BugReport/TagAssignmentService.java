@@ -48,7 +48,8 @@ public class TagAssignmentService {
      * @throws IllegalArgumentException One of the arguments is null.
      */
     public void assignTag(User user, BugReport bugReport, Tag tag) throws ReportErrorToUserException {
-        if (!canAssignTag(user, bugReport, tag)) throw new ReportErrorToUserException("Not allowed to perform tag change!");
+        if (!canAssignTag(user, bugReport, tag.getClass()))
+            throw new ReportErrorToUserException("Not allowed to perform tag change!");
 
         bugReport.setTag(tag);
     }
@@ -65,7 +66,7 @@ public class TagAssignmentService {
      * @throws IllegalArgumentException One of the given arguments is null.
      * @throws ReportErrorToUserException One of the arguments doesn't match.
      */
-    public boolean canAssignTag(User user, BugReport bugReport, Tag tag) throws ReportErrorToUserException {
+    public boolean canAssignTag(User user, BugReport bugReport, Class<? extends Tag> tag) throws ReportErrorToUserException {
         if (user == null) throw new IllegalArgumentException("User is null");
         if (bugReport == null) throw new IllegalArgumentException("BugReport is null");
         if (tag == null) throw new IllegalArgumentException("Tag is null");
@@ -94,12 +95,12 @@ public class TagAssignmentService {
 
     }
 
-    private boolean validTagChangePolicy(BugReport bugReport, Tag tag){
+    private boolean validTagChangePolicy(BugReport bugReport, Class<? extends Tag> tag) {
         return bugReport.getTag().canChangeToTag(tag);
     }
 
-    private boolean validCreatorPermissions(Tag tag){
-        return this.creatorTagPermissons.contains(tag.getClass());
+    private boolean validCreatorPermissions(Class<? extends Tag> tag) {
+        return this.creatorTagPermissons.contains(tag);
     }
 
     private Role getUserRoleWithinProject(User user, Project project){

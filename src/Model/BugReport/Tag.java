@@ -20,8 +20,8 @@ public abstract class Tag{
      *
      * @return True if the tag can be changed from this tag to te given one.
      */
-    public boolean canChangeToTag(Tag tag){
-        return manuallyAcceptedTags.contains(tag.getClass());
+    public boolean canChangeToTag(Class<? extends Tag> tag) {
+        return manuallyAcceptedTags.contains(tag);
     }
 
     /**
