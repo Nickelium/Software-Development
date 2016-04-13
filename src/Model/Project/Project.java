@@ -15,8 +15,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *	This class represents a project with all its related attributes.
+ *	This class represents a project object with all its related attributes.
  *
+ *  This class provides getters and setters for most attributes.
+ *	Consistency is provided thanks to the checker methods.
  */
 public class Project extends Subject implements Observer<BugReport>, Originator<Project.ProjectMemento,Project>
 {
@@ -385,7 +387,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * 
 	 * @return The forked project.
 	 * 
-	 * @throws ReportErrorToUserException One of attributes of the project could not be forked.
+	 * @throws ReportErrorToUserException is thrown if one of attributes of the project could not be forked.
 	 */
     //fork != clone
 	public Project fork () throws ReportErrorToUserException
@@ -405,6 +407,12 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		return forkedProject;
 	}
 
+	/**
+	 * Method that returns a list of all milestones added to the project and all
+	 * the subsystems that it (recursively) contains.
+	 *
+	 * @return a list of all the milestones
+     */
 	public List<Milestone> getAllMilestones(){
 
 		List<Milestone> milestones = new ArrayList<>();
@@ -416,16 +424,10 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	}
 
 	/**
-	 * A project's or subsystem's achieved current milestone should at all times be less
-	 * than or equal to the highest achieved current milestone of all the subsystems it
-	 * (recursively) contains.
-	 *
-	 * If a project or subsystem has a bug report that is not NotABug, Duplicate or
-	 * Closed and this bug report has a target milestone that is less than or equal
-	 * to the newly proposed achieved milestone for the project or subsystem, the
-	 * increment is rejected.
-	 *
-	 */
+	 * Method to set a new project milestone. //TODO
+	 * @param newProjectMilestone
+	 * @throws ReportErrorToUserException
+     */
     public void setNewProjectMilestone(Milestone newProjectMilestone) throws ReportErrorToUserException {
         if (!milestoneDoesNotExceedSubsystems(newProjectMilestone))
             throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
