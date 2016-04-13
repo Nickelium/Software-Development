@@ -76,7 +76,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc) throws ReportErrorToUserException
     {
-        this(title, description, subSystem, creator, pblc, TheDate.TheDateNow(), new New(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        this(title, description, subSystem, creator, pblc, TheDate.TheDateNow(), new ArrayList<>());
     }
     
     /**
@@ -87,28 +87,25 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @param subSystem The subsystem the bugreport is about.
      * @param creator The creator of the bugreport.
      * @param creationDate The creation date of this bugreport.
-     * @param tag The tag of this bugreport.
      * @param initialAssignies The list of assignees for this bugreport.
      *
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc, TheDate creationDate, Tag tag, List<Developer> initialAssignies, List<Patch> patches, List<Test> tests) throws ReportErrorToUserException
+    BugReport(String title, String description, SubSystem subSystem, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies) throws ReportErrorToUserException
     {
          if (!isValidTitle(title)) throw new ReportErrorToUserException("The title cannot be empty!");
          if (!isValidDescription(description)) throw new ReportErrorToUserException("The description cannot be empty!") ;
          if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
          if (creator == null) throw new IllegalArgumentException("The issuer is null");
          if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
-         if (tag == null) throw new IllegalArgumentException("Tag is null");
          if (initialAssignies == null) throw new IllegalArgumentException("List cannot be null");
-        if (patches == null) throw new IllegalArgumentException("Patches cannot be null");
 
          this.title = title;
          this.description = description;
          this.creator = creator;
          this.creationDate = creationDate;
-        this.tag = tag;
+        this.tag = new New();
         this.pblc = pblc;
 
          //If tag is set to new, this code checks if there aren't any assignees to the bugreport. If so
@@ -121,8 +118,8 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
          this.comments = new ArrayList<>();
          this.dependencies = new ArrayList<>();
          this.assignees = new ArrayList<>(initialAssignies);
-        this.patches = new ArrayList<>(patches);
-        this.tests = new ArrayList<>(tests);
+        this.patches = new ArrayList<>();
+        this.tests = new ArrayList<>();
 
     }
 
