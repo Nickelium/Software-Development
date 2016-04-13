@@ -33,10 +33,8 @@ public class ProposePatch extends DeveloperUseCase {
         getUi().display("Successfully added new patch.");
 
     }
-
-	@Override
-	public String toString() 
-	{
-		return "Propose Patch";
-	}
+    @Override
+    public String toString() {
+       return "Propose Patch";
+    }
 }

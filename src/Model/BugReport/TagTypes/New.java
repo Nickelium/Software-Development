@@ -2,6 +2,7 @@ package Model.BugReport.TagTypes;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.BugReport.Patch;
 import Model.BugReport.Tag;
 import Model.User.Developer;
 
@@ -16,7 +17,7 @@ public class New extends Tag {
      * Default constructor of the New tag.
      */
     public New(){
-        this.acceptedTags = Arrays.asList(Assigned.class, NotABug.class);
+        this.manuallyAcceptedTags = Arrays.asList(NotABug.class);
     }
 
     @Override
@@ -26,9 +27,12 @@ public class New extends Tag {
     }
 
     @Override
+    protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
+        throw new ReportErrorToUserException("No patches can be submitted because the bugreport doesn't have the propper tag.");
+    }
+
+    @Override
     protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
-        if (!bugReport.getDependencies().isEmpty())
-            throw new ReportErrorToUserException("The list of dependencies is not empty!");
         super.changeTag(bugReport, tag);
     }
 

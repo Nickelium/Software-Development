@@ -17,25 +17,33 @@ public class Assigned extends Tag {
      * Default constructor for an Assigned tag.
      */
     public Assigned(){
-        this.acceptedTags = Arrays.asList(UnderReview.class, NotABug.class);
+        this.manuallyAcceptedTags = Arrays.asList(NotABug.class);
+    }
+
+    @Override
+    protected void addTest(BugReport bugReport, Test test) throws ReportErrorToUserException {
+        super.addTest(bugReport, test);
     }
 
     @Override
     protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
+        if (bugReport.getTests().isEmpty())
+            throw new ReportErrorToUserException("No tests are submitted yet, so no patches can be added.");
         super.addPatch(bugReport, patch);
         this.changeTag(bugReport, new UnderReview());
     }
 
     @Override
     protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
-        if (!bugReport.getDependencies().isEmpty())
-            throw new ReportErrorToUserException("The list of dependencies is not empty!");
+        if (bugReport.getDependencies().isEmpty())
+            throw new ReportErrorToUserException("The bugreport has dependencies, until all are resolved, the tag cannot change.");
         super.changeTag(bugReport, tag);
     }
 
     @Override
-    protected void addTest(BugReport bugReport, Test test) throws ReportErrorToUserException {
-        super.addTestToTests(bugReport, test);
+    protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
+        this.removeAllPatches(bugReport);
+        this.removeAllTest(bugReport);
     }
 
     @Override
