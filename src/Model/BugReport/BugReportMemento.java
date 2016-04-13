@@ -1,14 +1,16 @@
 package Model.BugReport;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Model.Memento.Memento;
 import Model.Milestone.TargetMilestone;
 import Model.User.Developer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BugReportMemento extends Memento<BugReport>
 {
+
+	//TODO documentatie volledige klasse
 
 	private Tag tag;
 	private List<Developer> assignees;

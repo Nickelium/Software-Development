@@ -4,6 +4,9 @@ package Model.BugReport;
  * Created by Tom on 7/04/16.
  */
 public class Test {
+
+    //TODO documentatie volledige klasse
+
     private String value;
 
     Test(String value) {
