@@ -9,7 +9,7 @@ import java.util.List;
  */
 public abstract class Subject 
 {
-	List<Observer> observers = new ArrayList<>();
+	protected List<Observer> observers = new ArrayList<>();
 	
 	/**
 	 * Method to add an observer that will observe this subject
@@ -42,5 +42,10 @@ public abstract class Subject
 		{
 			obs.update(this, s, aspect);
 		}
+	}
+	
+	public List<Observer> getObservers()
+	{
+		return observers;
 	}
 }

@@ -62,8 +62,6 @@ public abstract class ObserverAspect implements Observer<BugReport>, Originator<
 	public void restoreMemento(ObserverAspectMemento memento)
 	{
 		this.structure = memento.getStructure();
-		if(!structure.observers.contains(this))
-			structure.addObserver(this);
 	}
 
 }

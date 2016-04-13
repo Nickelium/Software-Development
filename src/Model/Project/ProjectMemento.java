@@ -5,6 +5,7 @@ import java.util.List;
 
 import Model.Memento.Memento;
 import Model.Roles.Role;
+import Model.Mail.Observer;
 
 public class ProjectMemento extends Memento<Project>
 {
@@ -17,6 +18,8 @@ public class ProjectMemento extends Memento<Project>
 	private List<SubSystem> subsystems;
 	
 	private List<SubSystemMemento> subsystemMementos = new ArrayList<>();
+	
+	private List<Observer> observers;
 	
 	private List<Role> devsRoles;
 	
@@ -35,6 +38,8 @@ public class ProjectMemento extends Memento<Project>
 			subsystemMementos.add(subsystem.createMemento());
 		
 		this.devsRoles = new ArrayList<>(originator.getDevsRoles());
+		
+		this.observers = new ArrayList<>(originator.getObservers());
 	}
 	
 	
@@ -76,5 +81,10 @@ public class ProjectMemento extends Memento<Project>
 	List<Role> getDevsRoles()
 	{
 		return devsRoles;
+	}
+	
+	List<Observer> getObservers()
+	{
+		return observers;
 	}
 }
