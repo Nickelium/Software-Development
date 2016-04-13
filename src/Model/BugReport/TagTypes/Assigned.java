@@ -9,7 +9,8 @@ import Model.BugReport.Test;
 import java.util.Arrays;
 
 /**
- * Created by Tom on 19/02/16.
+ * Class inheriting from the Tag Class.
+ * The assigned tag denotes that a bug report has been assigned to a user.
  */
 public class Assigned extends Tag {
 
@@ -19,7 +20,7 @@ public class Assigned extends Tag {
     public Assigned(){
         this.manuallyAcceptedTags = Arrays.asList(NotABug.class, Duplicate.class);
     }
-
+    
     @Override
     protected void addTest(BugReport bugReport, Test test) throws ReportErrorToUserException {
         super.addTest(bugReport, test);
