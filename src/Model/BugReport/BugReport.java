@@ -603,8 +603,8 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 	public void restoreMemento(BugReportMemento memento) 
 	{
 		this.tag = memento.getTag();
-		this.assignees = memento.getAssignees();
-		this.comments = memento.getComments();
+		this.assignees = new ArrayList<>(memento.getAssignees());
+		this.comments = new ArrayList<>(memento.getComments());
 		
 	}
 
