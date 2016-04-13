@@ -394,5 +394,8 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 		for(BugReportMemento bugreportMemento : memento.getBugReportMementos())
 			bugreportMemento.getOriginator().restoreMemento(bugreportMemento);
 		
+		this.latestAchievedMilestone = memento.getLatestAchievedMilestone();
+		this.milestones = new ArrayList<>(memento.getMilestones());
+		
 	}
 }

@@ -579,6 +579,10 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 		this.assignees = new ArrayList<>(memento.getAssignees());
 		this.comments = new ArrayList<>(memento.getComments());
 		
+		this.targetMilestone = memento.getTargetMilestone();
+		
+		this.tests = new ArrayList<>(memento.getTests());
+		this.patches = new ArrayList<>(memento.getPatches());
 	}
 
     //endregion
