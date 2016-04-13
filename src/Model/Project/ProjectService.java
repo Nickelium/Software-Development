@@ -170,12 +170,22 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         return subSystems;
     }
         
+    /**
+     * Method to create a memento of this object
+     * 
+     * @return The memento of this object
+     */
 	@Override
 	public ProjectServiceMemento createMemento() 
 	{
 		return new ProjectServiceMemento(this);
 	}
 	
+	/**
+	 * Method to restore this object given the memento
+	 * 
+	 * @param memento The memento to restore to
+	 */
 	@Override
 	public void restoreMemento(ProjectServiceMemento memento)
     {
@@ -186,28 +196,49 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	
     }
 	
-	/**
-	 * Innerclass
-	 *
-	 */
+	//Innerclass Memento
+	 /**
+     * This class provides utility for saving the state of the system at a certain point in time
+     * during execution of the Bug Trap software.
+     *
+     * The projectService memento saves the state of the following attributes of the projectService:
+     * listProject.
+     *
+     * This class provides private methods to request the values of the saved fields.
+     * This wide interface (private getters + public constructor) is provided to the class ProjectService,
+     * while the narrow interface (public constructor) is provided to any class.
+     */
 	public class ProjectServiceMemento extends Memento<ProjectService>
 	{
 		private List<Project> listProject;
 		private List<ProjectMemento> projectMementos = new ArrayList<>();
 		
-		public ProjectServiceMemento(ProjectService projectService)
+		/**
+    	 * Constructor 
+    	 * 
+    	 * @param originator The originator to build a memento from
+    	 */
+		public ProjectServiceMemento(ProjectService originator)
 		{
-			super(projectService);
-			listProject = new ArrayList<>(projectService.getAllProjects());
+			super(originator);
+			listProject = new ArrayList<>(originator.getAllProjects());
 			for(Project p : listProject)
 				projectMementos.add(p.createMemento());
 		}
 		
+		/**
+    	 * Returns the list project of the projectService memento
+    	 * @return the list project of the projectService memento
+    	 */
 		private List<Project> getListProject()
 		{
 			return listProject;
 		}
 		
+		/**
+		 * Returns the list of project mementos.
+		 * @return the list of project mementos.
+		 */
 		private List<ProjectMemento> getProjectMementos()
 		{
 			return projectMementos;

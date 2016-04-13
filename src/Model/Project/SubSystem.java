@@ -371,12 +371,22 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 
     }
 
+    /**
+     * Method to create a memento of this object
+     * 
+     * @return The memento of this object
+     */
 	@Override
 	public SubSystemMemento createMemento() 
 	{
 		return new SubSystemMemento(this);
 	}
 
+	/**
+	 * Method to restore this object given the memento
+	 * 
+	 * @param memento The memento to restore to
+	 */
 	@Override
 	public void restoreMemento(SubSystemMemento memento) 
 	{
@@ -395,9 +405,18 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 		
 	}
 	
-	/**
-	 * Innerclass
-	 */
+	//Innerclass Memento
+	 /**
+    * This class provides utility for saving the state of the system at a certain point in time
+    * during execution of the Bug Trap software.
+    *
+    * The subsystem memento saves the state of the following attributes of the subsystem:
+    * subsystems, bugreports, latestAchievedMilestone, milestones.
+    *
+    * This class provides private methods to request the values of the saved fields.
+    * This wide interface (private getters + public constructor) is provided to the class ProjectService,
+    * while the narrow interface (public constructor) is provided to any class.
+    */
 	public class SubSystemMemento extends Memento<SubSystem>
 	{
 		private List<SubSystem> subsystems;
@@ -409,7 +428,11 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 		private Milestone latestAchievedMilestone;
 		private List<Milestone> milestones;
 		
-		
+		/**
+    	 * Constructor 
+    	 * 
+    	 * @param originator The originator to build a memento from
+    	 */
 		public SubSystemMemento(SubSystem originator)
 		{
 			super(originator);
