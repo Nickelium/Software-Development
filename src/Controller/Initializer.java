@@ -5,9 +5,8 @@ import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
-import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
-import Model.BugReport.TagTypes.New;
+import Model.BugReport.TagTypes.Resolved;
 import Model.Mail.MailboxService;
 import Model.Memento.Caretaker;
 import Model.Milestone.TargetMilestone;
@@ -60,10 +59,11 @@ public class Initializer implements IInitializer {
             Developer maria = userService.createDeveloper("Maria", "", "Carney", "maria");
 
             Lead leadMajor = new Lead(major);
-            Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2016), 0.0, leadMajor);
             Programmer programmerMajor = new Programmer(major);
-            projectA.addRole(programmerMajor);
             Tester testerMaria = new Tester(maria);
+
+            Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2016), 0.0, leadMajor);
+            projectA.addRole(programmerMajor);
             projectA.addRole(testerMaria);
 
             SubSystem subSystemA1 = projectService.createSubsystem("SubSystemA1", "SubsystemA1 description", projectA);
@@ -74,9 +74,14 @@ public class Initializer implements IInitializer {
 
 
             Lead leadMaria = new Lead(maria);
-            Project projectB = projectService.createProject("ProjectB", "ProjectB description", new TheDate(5, 6, 2016), 0.0, leadMaria);
             Programmer programmerMajorB = new Programmer(major);
+
+            // moeten we toevoegen omdat hun opgave bs is
+            Tester testerMajorB = new Tester(major);
+
+            Project projectB = projectService.createProject("ProjectB", "ProjectB description", new TheDate(5, 6, 2016), 0.0, leadMaria);
             projectB.addRole(programmerMajorB);
+            projectB.addRole(testerMajorB);
 
             SubSystem subSystemB1 = projectService.createSubsystem("SubSystemB1", "SubsystemB1 description", projectB);
             SubSystem subSystemB2 = projectService.createSubsystem("SubSystemB2", "SubsystemB2 description", projectB);
@@ -85,45 +90,44 @@ public class Initializer implements IInitializer {
             TargetMilestone milestone1 = new TargetMilestone("M1.1");
             TargetMilestone milestone2 = new TargetMilestone("M3.2");
 
+            // Bug report 1
             BugReport bugreport1 = bugReportService.createBugReport("The function parse_ewd returns unexpected results",
                     "If the function parse_ewd is invoked while ...",
                     doc,
-                    BugReport.PUBLIC,
                     subSystemB1,
+                    BugReport.PUBLIC,
                     new TheDate(3, 1, 2016),
-                    new Closed(),
-                    Collections.singletonList(maria),
-                    new ArrayList<>(),
-                    new ArrayList<>()
+                    Collections.singletonList(maria)
             );
+            bugreport1.setTargetMilestone(milestone1);
+            bugReportService.createTest("bool test_inalid_args1(){...}", major, bugreport1);
+            bugReportService.createPatch("e3109fcc9...", major, bugreport1);
+            tagAssignmentService.assignTag(maria, bugreport1, new Resolved(0));
+            tagAssignmentService.assignTag(doc, bugreport1, new Closed(1));
 
-                    bugreport1.setTargetMilestone(milestone1);
-
+            // Bug report 2
             BugReport bugreport2 = bugReportService.createBugReport("Crash while processing user input",
                     "If incorrect user input is entered into the system ...",
                     doc,
-                    BugReport.PUBLIC,
                     subSystemA31,
+                    BugReport.PUBLIC,
                     new TheDate(15, 1, 2016),
-                    new Assigned(),
-                    Arrays.asList(major, maria),
-                    new ArrayList<>(),
-                    new ArrayList<>()
+                    Arrays.asList(major, maria)
             );
+            bugreport2.setErrorMessage("Internal Error 45: The...");
 
+            // Bug report 3
             BugReport bugreport3 = bugReportService.createBugReport("SubsystemA2 freezes",
                     "If the function process_dfe is invoked with ...",
                     charlie,
-                    BugReport.PRIVATE,
                     subSystemA2,
+                    BugReport.PRIVATE,
                     new TheDate(4, 2, 2016),
-                    new New(),
-                    new ArrayList<>(),
-                    new ArrayList<>(),
                     new ArrayList<>()
             );
-
             bugreport3.setTargetMilestone(milestone2);
+            bugreport3.setProcedureBug("Launch with command line invocation:...");
+            bugreport3.setStackTrace("Exception in thread \"main\" java.lang...");
 
         } catch (ReportErrorToUserException e) {
             //invalid input

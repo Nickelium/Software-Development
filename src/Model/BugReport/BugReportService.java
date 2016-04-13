@@ -42,6 +42,7 @@ public class BugReportService {
         this.projectService = projectService;
     }
 
+
     /**
      * Function to create a new BugReport and add the bugreport to the list of bugreports.
      *
@@ -71,7 +72,6 @@ public class BugReportService {
      * @param creator The creator of the bugreport
      * @param subSystem The subsystem of the bugreport
      * @param creationDate The creation date of the bugreport
-     * @param tag The initial tag of the bugreport
      * @param initialAssignees The list of initialAssignies van de bugreport
      *
      * @return The newly created bugreport
@@ -79,9 +79,9 @@ public class BugReportService {
      * @throws ReportErrorToUserException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, boolean pblc, SubSystem subSystem, TheDate creationDate, Tag tag, List<Developer> initialAssignees, List<Patch> patches, List<Test> tests) throws ReportErrorToUserException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc, TheDate creationDate, List<Developer> initialAssignees) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc, creationDate, tag, initialAssignees, patches, tests);
+        BugReport bugReport = new BugReport(title, description, subSystem, creator, pblc, creationDate, initialAssignees);
         return bugReport;
     }
 
