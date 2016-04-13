@@ -82,7 +82,7 @@ public class CreateComment extends IssuerUseCase {
             Comment comm = listComment.get(index);
 
             // Step 5
-            getUi().display("Comment (Sluit af met . op nieuwe lijn):");
+            getUi().display("Comment (Terminate with '.' on new line):");
 
             // Step 6
             String text = getUi().readMultiline();

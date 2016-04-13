@@ -1,12 +1,13 @@
 package Model.Mail;
 
+import Model.BugReport.BugReport;
+import Model.BugReport.Comment;
+import Model.BugReport.Tag;
+import Model.Memento.Originator;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import Model.BugReport.*;
-import Model.Memento.Memento;
-import Model.Memento.Originator;
 
 /**
  * Class that represents a mailbox of a user.
@@ -15,15 +16,17 @@ import Model.Memento.Originator;
  */
 public class Mailbox implements Originator<MailboxMemento, Mailbox>
 {
-	private List<Notification> notifications = new ArrayList<>();
-	
-	private List<ObserverAspect> registrations = new ArrayList<>();
+	private List<Notification> notifications;
+	private List<ObserverAspect> registrations;
 	
 	/**
 	 * Constructor of this mailbox object
 	 * 
 	 */
-	public Mailbox() {}
+	public Mailbox() {
+		this.notifications = new ArrayList<>();
+		this.registrations = new ArrayList<>();
+	}
 	
 	/**
 	 * Method to get all notifications of this mailbox.
@@ -47,8 +50,8 @@ public class Mailbox implements Originator<MailboxMemento, Mailbox>
 	
 	/**
 	 * Method to register for a creation of a new bugreport in the given subject
-	 * 
-	 * @param s The subject to observe
+	 *
+	 * @param structure The subject to observe
 	 */
 	public void registerBugReport(Subject structure)
 	{
@@ -58,8 +61,8 @@ public class Mailbox implements Originator<MailboxMemento, Mailbox>
 	
 	/**
 	 * Method to register for a creation of a new comment in the given subject
-	 * 
-	 * @param s The subject to observe
+	 *
+	 * @param structure The subject to observe
 	 */
 	public void registerComment(Subject structure)
 	{
@@ -69,8 +72,8 @@ public class Mailbox implements Originator<MailboxMemento, Mailbox>
 	
 	/**
 	 * Method to register for a change of a tag of a bugreport in the given subject
-	 * 
-	 * @param s The subject to observe
+	 *
+	 * @param structure The subject to observe
 	 */
 	public void registerTag(Subject structure)
 	{
@@ -80,8 +83,8 @@ public class Mailbox implements Originator<MailboxMemento, Mailbox>
 	
 	/**
 	 * Method to register for a change of a tag to a specific tag of a bugreport in the given subject
-	 * 
-	 * @param s The subject to observe
+	 *
+	 * @param structure The subject to observe
 	 * @param tag The specific tag 
 	 */
 	public void registerSpecificTag(Subject structure, Tag tag)

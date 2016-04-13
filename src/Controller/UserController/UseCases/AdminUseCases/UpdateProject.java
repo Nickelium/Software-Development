@@ -59,11 +59,10 @@ public class UpdateProject extends UseCase {
         String name = getUi().readString();
         getUi().display("Description (current value: " + project.getDescription() + "): ");
         String description = getUi().readString();
-        TheDate startingDate = null;
 
         getUi().display("Starting date (current value: " + project.getStartingDate() + "): ");
         String stringStartingDate = getUi().readString();
-        startingDate = new TheDate(stringStartingDate);
+        TheDate startingDate = new TheDate(stringStartingDate);
 
         getUi().display("Budget estimate (current value: " + project.getBudget() + "): ");
         double budget = getUi().readDouble();

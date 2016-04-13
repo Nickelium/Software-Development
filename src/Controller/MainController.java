@@ -7,7 +7,6 @@ import Controller.UserController.IssuerController;
 import Controller.UserController.UseCases.UseCase;
 import Controller.UserController.UserController;
 import CustomExceptions.ReportErrorToUserException;
-import Model.Memento.Caretaker;
 import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.User;
@@ -114,12 +113,5 @@ public class MainController {
         return false;
 
     }
-
-
-    // show all usecases
-
-
-    // ipv callUseCase getUseCase
-
 }
 

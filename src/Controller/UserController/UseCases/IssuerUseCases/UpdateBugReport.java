@@ -103,7 +103,7 @@ public class UpdateBugReport extends IssuerUseCase {
     private Resolved requestResolvedTagInfo(BugReport bugReport) throws ReportErrorToUserException {
         if (!getTagAssignmentService().canAssignTag(getCurrentUser(), bugReport, Resolved.class))
             throw new ReportErrorToUserException("Cannot preform tag change! No valid permission.");
-        getUi().display("Please select a Patch that satisfies you:");
+        getUi().display("Please select a patch that satisfies you:");
         this.showPatches(bugReport);
         int index = getUi().readInt();
         return new Resolved(index);
