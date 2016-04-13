@@ -7,10 +7,10 @@ import Controller.UserController.UseCases.DeveloperUseCases.DeclareAchievedMiles
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
+import Model.Mail.MailboxService;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
-import Model.Mail.*;
 
 /**
  * Created by Karina on 05.03.2016.
@@ -26,9 +26,9 @@ public class DeveloperController extends IssuerController {
     }
 
     private void initializeUseCasesDeveloper() {
-        useCases.add(new FunctionWrap("Assign To Project", new AssignToProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser())));
-        useCases.add(new FunctionWrap("Assign To Bug Report", new AssignToBugReport(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser())));
-        useCases.add(new FunctionWrap("Declare Achieved Milestone", new DeclareAchievedMilestone(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser())));
+        useCases.add(new AssignToProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser()));
+        useCases.add(new AssignToBugReport(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser()));
+        useCases.add(new DeclareAchievedMilestone(getUi(), getUserService(), getProjectService(), getBugReportService(), getTagAssignmentService(), getDeveloperAssignmentService(), getCurrentUser()));
     }
 
     //region Getters & Setters

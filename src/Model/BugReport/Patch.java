@@ -21,4 +21,8 @@ public class Patch {
     public String getValue() {
         return this.value;
     }
+
+    public String toString() {
+        return this.getValue();
+    }
 }

@@ -2,7 +2,7 @@ package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.TagTypes.Assigned;
-import Model.BugReport.TagTypes.Resolved;
+import Model.BugReport.TagTypes.Closed;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Roles.Role;
@@ -34,7 +34,7 @@ public class TagAssignmentService {
         if (projectService == null) throw new IllegalArgumentException("Projectservice is null");
 
         this.projectService = projectService;
-        this.creatorTagPermissons = Arrays.asList(Resolved.class, Assigned.class);
+        this.creatorTagPermissons = Arrays.asList(Closed.class, Assigned.class);
     }
 
     /**

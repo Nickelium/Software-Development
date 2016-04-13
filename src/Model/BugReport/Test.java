@@ -18,4 +18,8 @@ public class Test {
         return this.value;
     }
 
+    public String toString() {
+        return this.getValue();
+    }
+
 }

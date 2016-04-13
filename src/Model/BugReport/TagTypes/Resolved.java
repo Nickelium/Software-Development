@@ -19,7 +19,7 @@ public class Resolved extends Tag {
      * Default constructor for the Resolved tag.
      */
     public Resolved(int selectedPatchIndex) {
-        this.manuallyAcceptedTags = Arrays.asList(NotABug.class, Duplicate.class);
+        this.manuallyAcceptedTags = Arrays.asList(NotABug.class, Closed.class, Duplicate.class);
         this.selectedPatchIndex = selectedPatchIndex;
     }
 
