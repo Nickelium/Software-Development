@@ -75,7 +75,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     BugReport(String title, String description, Issuer creator, boolean pblc) throws ReportErrorToUserException
     {
-        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList<>(), new TargetMilestone("M0"));
+        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList<>(), null);
     }
     
     /**
@@ -539,7 +539,8 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * Method to set a new target milestone of a bug report.
      * @param targetMilestone the new target milestone of a bug report.
      */
-    public void setTargetMilestone(TargetMilestone targetMilestone) throws ReportErrorToUserException {
+    void setTargetMilestone(TargetMilestone targetMilestone) throws ReportErrorToUserException {
+
         this.targetMilestone = targetMilestone;
     }
 
@@ -595,6 +596,18 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
 
         if (this.getSolutionScore() != 0) {
             str += "\nScore of solution: " + getSolutionScore();
+        }
+
+        if (this.getProcedureBug() != null) {
+            str += "\nProcedure bug: " + getProcedureBug();
+        }
+
+        if (this.getErrorMessage() != null) {
+            str += "\nError message: " + getErrorMessage();
+        }
+
+        if (this.getStackTrace() != null) {
+            str += "\nStacktrace: " + getStackTrace();
         }
 
         str += "\nAssignees: ";

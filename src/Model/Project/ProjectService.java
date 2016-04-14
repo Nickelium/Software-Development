@@ -241,6 +241,22 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     //region Memento Functions
 
     /**
+     * Method for requesting the subsystem containing the bug report.
+     *
+     * @param bugReport Bugreport to get the subsystem of.
+     * @return The subsystem containing the bug report.
+     * @throws ReportErrorToUserException There is no subsystem containing the given bug report.
+     */
+    public SubSystem getSubsystemWhichContainsBugReport(BugReport bugReport) throws ReportErrorToUserException {
+        for (SubSystem subSystem : this.getAllSubSystems()) {
+            if (subSystem.getBugReports().contains(bugReport)) {
+                return subSystem;
+            }
+        }
+        throw new ReportErrorToUserException("Ther is no subsystem that contains the given bug report.");
+    }
+
+    /**
      * Method to create a memento of this object
      * 
      * @return The memento of this object

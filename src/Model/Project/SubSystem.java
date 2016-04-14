@@ -322,14 +322,20 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */
     public void setNewSubSystemMilestone(Milestone newSubsystemMilestone) throws ReportErrorToUserException {
-        SetMilestoneHelper.setNewProjectMilestone(this, newSubsystemMilestone);
+        if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newSubsystemMilestone))
+            throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
+        if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newSubsystemMilestone))
+            throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects target bug report!");
+
+        setLatestAchievedMilestone(newSubsystemMilestone);
+        addMilestoneToList(newSubsystemMilestone);
     }
 
     /**
      * Method to set the latest achieved milestone to a new value.
      * @param latestAchievedMilestone the new milestone to be set as the latest achieved milestone
      */
-    public void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+    private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
         this.latestAchievedMilestone = latestAchievedMilestone;
     }
 
@@ -337,7 +343,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      * Method to add an old milestone to the list of milestones.
      * @param milestone the old milestone to be add to the milestone list.
      */
-    public void addMilestoneToList(Milestone milestone) {
+    private void addMilestoneToList(Milestone milestone) {
         this.milestones.add(milestone);
         Collections.sort(this.milestones);
     }
