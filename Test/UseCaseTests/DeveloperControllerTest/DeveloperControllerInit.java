@@ -14,7 +14,7 @@ import org.junit.Before;
 /**
  * Created by Karina on 10.03.2016.
  */
-public class DeveloperTestInitializer {
+public class DeveloperControllerInit {
 
     protected IInitializer initializer;
     protected ProjectService projectService;
