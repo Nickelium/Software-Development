@@ -20,7 +20,7 @@ public class Duplicate extends Tag {
      * @param duplicateBugReport The other bug report not containing this tag.
      */
     public Duplicate(BugReport duplicateBugReport){
-        this.manuallyAcceptedTags = Arrays.asList();
+        setManuallyAcceptedTags(Arrays.asList());
         this.duplicateBugReport = duplicateBugReport;
     }
 
@@ -63,5 +63,9 @@ public class Duplicate extends Tag {
     @Override
     public boolean isFinal() {
         return true;
+    }
+
+    private BugReport getDuplicateBugReport() {
+        return duplicateBugReport;
     }
 }

@@ -63,7 +63,7 @@ public class DeveloperAssignmentService {
 
         Project project;
         try {
-            project = this.projectService.getProjectsContainingBugReport(bugReport);
+            project = this.getProjectService().getProjectsContainingBugReport(bugReport);
 
             if (canUserAssignDevelopers(user, bugReport)
                     && projectContainDeveloper(developer, project)) {
@@ -89,7 +89,7 @@ public class DeveloperAssignmentService {
 
         Project project;
         try {
-            project = this.projectService.getProjectsContainingBugReport(bugReport);
+            project = this.getProjectService().getProjectsContainingBugReport(bugReport);
 
             Role role = this.getUserRoleWithinProject(user, project);
 
@@ -125,4 +125,7 @@ public class DeveloperAssignmentService {
         return false;
     }
 
+    private ProjectService getProjectService() {
+        return projectService;
+    }
 }

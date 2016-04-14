@@ -29,7 +29,6 @@ public class TagAssignmentService {
      *
      * @throws  IllegalArgumentException the given projectservice is null.
      */
-
     public TagAssignmentService(ProjectService projectService){
         if (projectService == null) throw new IllegalArgumentException("Projectservice is null");
 
@@ -79,7 +78,7 @@ public class TagAssignmentService {
         }
         try
         {
-            Project project = projectService.getProjectsContainingBugReport(bugReport);
+            Project project = getProjectService().getProjectsContainingBugReport(bugReport);
             Role role = getUserRoleWithinProject(user, project);
 	
 	        if (role == null){
@@ -100,7 +99,7 @@ public class TagAssignmentService {
     }
 
     private boolean validCreatorPermissions(Class<? extends Tag> tag) {
-        return this.creatorTagPermissons.contains(tag);
+        return this.getCreatorTagPermissons().contains(tag);
     }
 
     private Role getUserRoleWithinProject(User user, Project project){
@@ -115,4 +114,11 @@ public class TagAssignmentService {
         return null;
     }
 
+    private ProjectService getProjectService() {
+        return projectService;
+    }
+
+    private List<Class<? extends Tag>> getCreatorTagPermissons() {
+        return creatorTagPermissons;
+    }
 }

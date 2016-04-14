@@ -103,9 +103,9 @@ public class CreateBugReport extends IssuerUseCase{
 
         // Step 14
         BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem, pblc);
-        if(!procedure.equals("")) bugReport.setProcedureBug(procedure);
-        if(!stackTrace.equals("")) bugReport.setStackTrace(stackTrace);
-        if(!errorMessage.equals("")) bugReport.setErrorMessage(errorMessage);
+        if (!procedure.equals("")) getBugReportService().setProcedureBug(bugReport, procedure);
+        if (!stackTrace.equals("")) getBugReportService().setStackTrace(bugReport, stackTrace);
+        if (!errorMessage.equals("")) getBugReportService().setErrorMessage(bugReport, errorMessage);
 
         // Step 12
         List<BugReport> possibleDependencies = getBugReportService().getBugReportsForProject(project);
@@ -120,7 +120,7 @@ public class CreateBugReport extends IssuerUseCase{
             if (indexDep == -1) break;
 
             BugReport newDependency = possibleDependencies.get(indexDep);
-            bugReport.addDependency(newDependency);
+            getBugReportService().addDependency(bugReport, newDependency);
             getUi().display("Dependency is successfully added!");
             getUi().display(newDependency.toString());
         }

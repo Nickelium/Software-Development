@@ -40,13 +40,10 @@ public class Comment extends Subject implements Observer<Comment>{
      * @throws IllegalArgumentException The given issuer is null.
      */
     Comment(String text, Issuer issuer) throws ReportErrorToUserException {
-        if (!isValidText(text)) throw new ReportErrorToUserException("The text of the comment is empty");
-        if (issuer == null) throw new IllegalArgumentException("Invalid issuer for comment");
-
-        this.text = text;
-        this.issuer = issuer;
+        setText(text);
+        setIssuer(issuer);
         this.creationDate = TheDate.TheDateNow();
-        this.comments = new ArrayList<Comment>();
+        this.comments = new ArrayList<>();
     }
 
     //endregion
@@ -107,17 +104,18 @@ public class Comment extends Subject implements Observer<Comment>{
 		return Collections.unmodifiableList(list);
 	}
 
-    /**
-     * Method for adding a comment to the list of comments.
-     *
-     * @param comment Comments to add to the list of comments.
-     */
-    void addComment(Comment comment) {
-        if (comment == null) throw new IllegalArgumentException("Comment is null");
+    //endregion
 
-        this.comments.add(comment);
-        comment.addObserver(this);
-		notifyObservers(null,comment);
+    //region Setters
+
+    private void setIssuer(Issuer issuer) {
+        if (issuer == null) throw new IllegalArgumentException("Invalid issuer for comment");
+        this.issuer = issuer;
+    }
+
+    private void setText(String text) throws ReportErrorToUserException {
+        if (!isValidText(text)) throw new ReportErrorToUserException("The text of the comment is empty");
+        this.text = text;
     }
 
     //endregion
@@ -140,7 +138,24 @@ public class Comment extends Subject implements Observer<Comment>{
     //endregion
 
     //region Functions
-    
+
+    /**
+     * Method for adding a comment to the list of comments.
+     *
+     * @param comment Comments to add to the list of comments.
+     */
+    void addComment(Comment comment) {
+        if (comment == null) throw new IllegalArgumentException("Comment is null");
+
+        this.comments.add(comment);
+        comment.addObserver(this);
+        notifyObservers(null, comment);
+    }
+
+    //endregion
+
+    //region Object Functions
+
     /**
 	 * Method to represent a comment as a string.
 	 * 

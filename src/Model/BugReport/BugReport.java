@@ -11,7 +11,6 @@ import Model.Milestone.TargetMilestone;
 import Model.Project.TheDate;
 import Model.User.Developer;
 import Model.User.Issuer;
-import com.sun.istack.internal.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,14 +29,15 @@ import java.util.List;
  */
 public class BugReport extends Subject implements Observer<Comment>, Originator<BugReport.BugReportMemento,BugReport>{
 
+    //region Static Attributes
     public static final boolean PUBLIC = true;
     public static final boolean PRIVATE = false;
+    //endregion
 
     //region Attributes
 
     private BugReportID id;
     private String title;
-
     private String description;
     private TheDate creationDate;
     private Issuer creator;
@@ -45,6 +45,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     private List<BugReport> dependencies;
     private boolean pblc;
 
+    // default access right attributes
     int solutionScore;
     List<Patch> patches;
     List<Test> tests;
@@ -258,7 +259,6 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * @return The selected patch or null if no patch available.
      */
-    @Nullable
     public Patch getSelectedPatch() {
         return this.selectedPatch;
     }
@@ -270,6 +270,20 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      */
     public TargetMilestone getTargetMilestone() {
         return this.targetMilestone;
+    }
+
+    /**
+     * Getter to get all the comments of the bug report.
+     *
+     * @return An unmodifiable list of all the comments of the bug report. (recursively)
+     */
+    public List<Comment> getAllComments() {
+        List<Comment> list = new ArrayList<>();
+        for (Comment comm : comments) {
+            list.add(comm);
+            list.addAll(comm.getAllComments());
+        }
+        return Collections.unmodifiableList(list);
     }
 
     //endregion
@@ -407,13 +421,23 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
+     * Method to set a new target milestone of a bug report.
+     *
+     * @param targetMilestone the new target milestone of a bug report.
+     */
+    void setTargetMilestone(TargetMilestone targetMilestone) throws ReportErrorToUserException {
+
+        this.targetMilestone = targetMilestone;
+    }
+
+    /**
      * Method to set a new procedure bug.
      *
      * Method requires the input string to be a valid procedure bug.
      * @param procedureBug the procedure bug to be set.
      * @throws ReportErrorToUserException is thrown if the procedure bug is invalid.
      */
-    public void setProcedureBug(String procedureBug) throws ReportErrorToUserException
+    void setProcedureBug(String procedureBug) throws ReportErrorToUserException
     {
         if (!isValidProcedureBug(procedureBug))
             throw new ReportErrorToUserException("Invalid value for the way to reproduce the bug.");
@@ -429,7 +453,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @throws ReportErrorToUserException is thrown if the stack trace is invalid.
      *
      */
-    public void setStackTrace(String stackTrace) throws ReportErrorToUserException
+    void setStackTrace(String stackTrace) throws ReportErrorToUserException
     {
         if (!isValidStackTrace(stackTrace)) throw new ReportErrorToUserException("Invalid value for the stack trace.");
         this.stackTrace = stackTrace;
@@ -443,7 +467,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @throws ReportErrorToUserException is thrown if the error message is invalid.
      *
      */
-    public void setErrorMessage(String errorMessage) throws ReportErrorToUserException
+    void setErrorMessage(String errorMessage) throws ReportErrorToUserException
     {
         if (!isValidErrorMessage(errorMessage))
             throw new ReportErrorToUserException("Invalid value for the error message.");
@@ -508,88 +532,63 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     }
 
     /**
-     * Getter to get all the comments of the bug report.
-     *
-     * @return An unmodifiable list of all the comments of the bug report. (recursively)
-     */
-	public List<Comment> getAllComments()
-	{
-		List<Comment> list = new ArrayList<>();
-		for(Comment comm : comments)
-		{
-			list.add(comm);
-			list.addAll(comm.getAllComments());
-		}
-		return Collections.unmodifiableList(list);
-	}
-
-    /**
      * Method for adding a dependency to the list of dependencies.
      *
      * @param dependency The dependency to add.
      * @throws IllegalArgumentException The given dependency is null.
      */
-    public void addDependency(BugReport dependency) {
+    void addDependency(BugReport dependency) {
         if (dependency == null) throw new IllegalArgumentException("Dependency is null");
 
         this.dependencies.add(dependency);
     }
 
-    /**
-     * Method to set a new target milestone of a bug report.
-     * @param targetMilestone the new target milestone of a bug report.
-     */
-    void setTargetMilestone(TargetMilestone targetMilestone) throws ReportErrorToUserException {
+    //endregion
 
-        this.targetMilestone = targetMilestone;
-    }
+    //region Object Functions
 
     /**
      * Overrides the equals method to only look at the id to check for equality.
      *
      * @param obj The bugReport to compare this bugReport to.
-     *
      * @return True if the id of both bugReport are the same.
      */
-    public boolean equals(Object obj){
-        if (obj instanceof BugReport){
+    public boolean equals(Object obj) {
+        if (obj instanceof BugReport) {
             return ((BugReport) obj).getId().equals(this.getId());
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-
     /**
-	 * Method to represent a bug report as a string.
-     *
+     * Method to represent a bug report as a string.
+     * <p>
      * Makes use of getters for bug report attributes to create
      * one full string which will be passed on to the formatter.
-	 *
-	 * @return The bug report as a string.
-	 */
+     *
+     * @return The bug report as a string.
+     */
     @Override
-    public String toString()
-    {
-    	String str =
-    			"Bugreport ID: " + getId() + "\nTitle: " + getTitle()
-    			+ "\nDescription: " + getDescription()+ "\nCreation date: "
-    			+ getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
-    			+ getCreator();
+    public String toString() {
+        String str =
+                "Bugreport ID: " + getId() + "\nTitle: " + getTitle()
+                        + "\nDescription: " + getDescription() + "\nCreation date: "
+                        + getCreationDate() + "\nTag: " + getTag() + "\nCreator: "
+                        + getCreator();
 
-        if (this.getTargetMilestone() != null){
-            str +=  "\nTarget Milestone: " + getTargetMilestone().toString();
+        if (this.getTargetMilestone() != null) {
+            str += "\nTarget Milestone: " + getTargetMilestone().toString();
         }
-        
-        if( !this.getTests().isEmpty()) str += "\nTests : ";
-        for (Test test : getTests()) 
-			str += "\n" + test.toString();
 
-        if( !this.getPatches().isEmpty()) str += "\nPatches : ";
-        for (Patch patch : getPatches()) 
-			str += "\n" + patch.toString();
-        
+        if (!this.getTests().isEmpty()) str += "\nTests : ";
+        for (Test test : getTests())
+            str += "\n" + test.toString();
+
+        if (!this.getPatches().isEmpty()) str += "\nPatches : ";
+        for (Patch patch : getPatches())
+            str += "\n" + patch.toString();
+
         if (this.selectedPatch != null) {
             str += "\nSelected Patch: " + selectedPatch;
         }
@@ -611,37 +610,41 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         }
 
         str += "\nAssignees: ";
-    	
-    	for (Developer dev : getAssignees()) 
-			str += dev.toString() + ", ";
-			
-		//remove last comma
-		if(str.length() - 2 > 0 && str.charAt(str.length() - 2) == ',')
-			return str.substring(0, str.length() - 2);
-		else 
-			return str;
+
+        for (Developer dev : getAssignees())
+            str += dev.toString() + ", ";
+
+        //remove last comma
+        if (str.length() - 2 > 0 && str.charAt(str.length() - 2) == ',')
+            return str.substring(0, str.length() - 2);
+        else
+            return str;
     }
+
+    //endregion
+
+    //region Memento Functions
 
     /**
      * Method called to notify this observer
-     * 
-     * @param s The subject
+     *
+     * @param s      The subject
      * @param aspect The aspect that has changed
      */
-	@Override
-	public void update(Subject structure, Comment s, Object aspect) {
-		notifyObservers(this, aspect);
-	}
+    @Override
+    public void update(Subject structure, Comment s, Object aspect) {
+        notifyObservers(this, aspect);
+    }
 
     /**
      * Method used to create a new memento object for the bug report.
+     *
      * @return a memento object for the bug report.
      */
     @Override
-	public BugReportMemento createMemento()
-	{
-		return new BugReportMemento(this);
-	}
+    public BugReportMemento createMemento() {
+        return new BugReportMemento(this);
+    }
 
     /**
      * Method used to restore an old memento.
@@ -651,20 +654,18 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @param memento the memento object that contains the old values
      */
     @Override
-	public void restoreMemento(BugReportMemento memento) 
-	{
-		this.tag = memento.getTag();
-		this.assignees = memento.getAssignees();
-		this.comments = memento.getComments();
-		
-		this.targetMilestone = memento.getTargetMilestone();
-		
-		this.tests = memento.getTests();
-		this.patches = memento.getPatches();
-	}
+    public void restoreMemento(BugReportMemento memento) {
+        this.tag = memento.getTag();
+        this.assignees = memento.getAssignees();
+        this.comments = memento.getComments();
+
+        this.targetMilestone = memento.getTargetMilestone();
+
+        this.tests = memento.getTests();
+        this.patches = memento.getPatches();
+    }
 
     //endregion
-    
 
     //Innerclass Memento
     /**

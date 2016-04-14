@@ -20,7 +20,7 @@ public class Resolved extends Tag {
      * Default constructor for the Resolved tag.
      */
     public Resolved(int selectedPatchIndex) {
-        this.manuallyAcceptedTags = Arrays.asList(NotABug.class, Closed.class, Duplicate.class);
+        setManuallyAcceptedTags(Arrays.asList(NotABug.class, Closed.class, Duplicate.class));
         this.selectedPatchIndex = selectedPatchIndex;
     }
 
@@ -63,7 +63,7 @@ public class Resolved extends Tag {
      */
     @Override
     protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
-        this.setSelectedPatch(bugReport, selectedPatchIndex);
+        this.setSelectedPatch(bugReport, getSelectedPatchIndex());
     }
 
     @Override
@@ -75,6 +75,10 @@ public class Resolved extends Tag {
     @Override
     public boolean isFinal() {
         return false;
+    }
+
+    private int getSelectedPatchIndex() {
+        return selectedPatchIndex;
     }
 }
 

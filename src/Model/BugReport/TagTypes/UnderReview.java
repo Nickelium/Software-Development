@@ -17,7 +17,7 @@ public class UnderReview extends Tag {
      * Default constructor for the underReview tag.
      */
     public UnderReview(){
-        this.manuallyAcceptedTags = Arrays.asList(Assigned.class, Resolved.class, Closed.class, NotABug.class, Duplicate.class);
+        setManuallyAcceptedTags(Arrays.asList(Assigned.class, Resolved.class, Closed.class, NotABug.class, Duplicate.class));
     }
 
     @Override

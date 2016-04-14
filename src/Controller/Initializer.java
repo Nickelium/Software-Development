@@ -127,7 +127,7 @@ public class Initializer implements IInitializer {
                     new TheDate(15, 1, 2016),
                     Arrays.asList(major, maria)
             );
-            bugreport2.setErrorMessage("Internal Error 45: The...");
+            bugReportService.setErrorMessage(bugreport2, "Internal Error 45: The...");
 
             // Bug report 3
             BugReport bugreport3 = bugReportService.createBugReport("SubsystemA2 freezes",
@@ -138,9 +138,8 @@ public class Initializer implements IInitializer {
                     new TheDate(4, 2, 2016),
                     new ArrayList<>()
             );
-            bugReportService.setTargetMilestone(bugreport3, new TargetMilestone("M3.2"));
-            bugreport3.setProcedureBug("Launch with command line invocation:...");
-            bugreport3.setStackTrace("Exception in thread \"main\" java.lang...");
+            bugReportService.setProcedureBug(bugreport3, "Launch with command line invocation:...");
+            bugReportService.setStackTrace(bugreport3, "Exception in thread \"main\" java.lang...");
 
         } catch (ReportErrorToUserException e) {
             //invalid input
