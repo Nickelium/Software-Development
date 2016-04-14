@@ -6,6 +6,12 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.Tag;
+import Model.BugReport.TagTypes.Assigned;
+import Model.BugReport.TagTypes.Closed;
+import Model.BugReport.TagTypes.Duplicate;
+import Model.BugReport.TagTypes.NotABug;
+import Model.BugReport.TagTypes.Resolved;
+import Model.BugReport.TagTypes.UnderReview;
 import Model.Mail.MailboxService;
 import Model.Project.Project;
 import Model.Project.ProjectService;
@@ -97,30 +103,35 @@ public class RegisterNotifications extends IssuerUseCase{
 	         			mailboxService.registerTag(getCurrentUser(), project);
 	         			break;
 	         		case 3:
-	         	        getUi().display("Please specify the tag to be notified: ");
-	         	        String input = getUi().readString();
-	         	        Class<?> tag;
-	         	        try 
+	         			getUi().display("Please specify the tag to be notified: ");
+	         			String tagString = getUi().readString();
+	         			Tag tag;
+	         			//Step 4
+	         	        switch (tagString) 
 	         	        {
-	         	            tag = Class.forName("Model.BugReport.TagTypes." + input);
-							if (input.equals("-1")) return;
-						}
-	         	        catch (ClassNotFoundException e)
-	         	        {
-	         	            throw new ReportErrorToUserException("The given tag does not exist!");
+	         	            case "Assigned":
+	         	                tag = new Assigned();
+	         	                break;
+	         	            case "Closed":
+	         	            	tag = new Closed(0);
+	         	            	 break;
+	         	            case "Duplicate":
+	         	            	tag = new Duplicate(null);
+	         	            	 break;
+	         	            case "NotABug":
+	         	            	tag = new NotABug();
+	         	            	 break;
+	         	            case "Resolved":
+	         	            	tag = new Resolved(0);
+	         	            	 break;
+	         	            case "UnderReview":
+	         	            	tag = new UnderReview();
+	         	            	 break;
+	         	            default:
+	         	                throw new ReportErrorToUserException("The tag you entered does not exist.");
 	         	        }
-
-	         	        // Step 4
-	         	        try 
-	         	        {
-	         	           Tag newTag = (Tag) tag.newInstance();
-	         	           mailboxService.registerSpecificTag(getCurrentUser(), project, newTag);
-	         	        } 
-	         	        catch (InstantiationException | IllegalAccessException e)
-	         	        {
-	         	            throw new ReportErrorToUserException("The tag you have given does not exist");
-	         	        }
-	         			break;
+	         	        mailboxService.registerSpecificTag(getCurrentUser(),project, tag);
+	         	        break;
 	         		case 4:
 	         			mailboxService.registerComment(getCurrentUser(), project);
 	         			break;
@@ -168,30 +179,35 @@ public class RegisterNotifications extends IssuerUseCase{
 	         			mailboxService.registerTag(getCurrentUser(), subsystem);
 	         			break;
 	         		case 3:
-	         	        getUi().display("Please specify the tag to be notified: ");
-	         	        String input = getUi().readString();
-	         	        Class<?> tag;
-	         	        try 
+	         			getUi().display("Please specify the tag to be notified: ");
+	         			String tagString = getUi().readString();
+	         			Tag tag;
+	         			//Step 4
+	         	        switch (tagString) 
 	         	        {
-	         	            tag = Class.forName("Model.Tags.TagTypes." + input);
-							if (input.equals("-1")) return;
-						}
-	         	        catch (ClassNotFoundException e)
-	         	        {
-	         	            throw new ReportErrorToUserException("The given tag does not exist!");
+	         	            case "Assigned":
+	         	                tag = new Assigned();
+	         	                break;
+	         	            case "Closed":
+	         	            	tag = new Closed(0);
+	         	            	 break;
+	         	            case "Duplicate":
+	         	            	tag = new Duplicate(null);
+	         	            	 break;
+	         	            case "NotABug":
+	         	            	tag = new NotABug();
+	         	            	 break;
+	         	            case "Resolved":
+	         	            	tag = new Resolved(0);
+	         	            	 break;
+	         	            case "UnderReview":
+	         	            	tag = new UnderReview();
+	         	            	 break;
+	         	            default:
+	         	                throw new ReportErrorToUserException("The tag you entered does not exist.");
 	         	        }
-
-	         	        // Step 4
-	         	        try 
-	         	        {
-	         	           Tag newTag = (Tag) tag.newInstance();
-	         	           mailboxService.registerSpecificTag(getCurrentUser(), subsystem, newTag);
-	         	        } 
-	         	        catch (InstantiationException | IllegalAccessException e)
-	         	        {
-	         	            throw new ReportErrorToUserException("The tag you have given does not exist");
-	         	        }
-	         			break;
+	         	        mailboxService.registerSpecificTag(getCurrentUser(),subsystem, tag);
+	         	        break;
 	         		case 4:
 	         			mailboxService.registerComment(getCurrentUser(), subsystem);
 	         			break;
@@ -221,30 +237,35 @@ public class RegisterNotifications extends IssuerUseCase{
          			mailboxService.registerTag(getCurrentUser(), bugReport);
          			break;
          		case 2:
-         	        getUi().display("Please specify the tag to be notified: ");
-         	        String input = getUi().readString();
-         	        Class<?> tag;
-         	        try 
+         			getUi().display("Please specify the tag to be notified: ");
+         			String tagString = getUi().readString();
+         			Tag tag;
+         			//Step 4
+         	        switch (tagString) 
          	        {
-         	            tag = Class.forName("Model.BugReport.TagTypes." + input);
-						if (input.equals("-1")) return;
-					}
-         	        catch (ClassNotFoundException e)
-         	        {
-         	            throw new ReportErrorToUserException("The given tag does not exist!");
+         	            case "Assigned":
+         	                tag = new Assigned();
+         	                break;
+         	            case "Closed":
+         	            	tag = new Closed(0);
+         	            	 break;
+         	            case "Duplicate":
+         	            	tag = new Duplicate(null);
+         	            	 break;
+         	            case "NotABug":
+         	            	tag = new NotABug();
+         	            	 break;
+         	            case "Resolved":
+         	            	tag = new Resolved(0);
+         	            	 break;
+         	            case "UnderReview":
+         	            	tag = new UnderReview();
+         	            	 break;
+         	            default:
+         	                throw new ReportErrorToUserException("The tag you entered does not exist.");
          	        }
-
-         	        // Step 4
-         	        try 
-         	        {
-         	           Tag newTag = (Tag) tag.newInstance();
-         	           mailboxService.registerSpecificTag(getCurrentUser(), bugReport, newTag);
-         	        } 
-         	        catch (InstantiationException | IllegalAccessException e)
-         	        {
-         	            throw new ReportErrorToUserException("The tag you have given does not exist");
-         	        }
-         			break;
+         	       mailboxService.registerSpecificTag(getCurrentUser(),bugReport, tag);
+         	        break;
          		case 3:
          			mailboxService.registerComment(getCurrentUser(), bugReport);
          			break;
