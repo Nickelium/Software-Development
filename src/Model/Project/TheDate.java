@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * This class represents a date class, which use the following date format dd/MM/yyyy.
- *
  */
 public class TheDate
 {

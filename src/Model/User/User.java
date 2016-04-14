@@ -5,13 +5,14 @@ import Model.Mail.Mailbox;
 
 
 /**
- * Created by Karina on 19.02.2016.
+ * Abstract class representing a user object.
+ *
+ * A user object has attributes for its user name, first name, middle name and last name.
+ * A user object also holds a reference to his personal mailbox, where
+ * he will receive notifications.
  */
 public abstract class User {
 
-    /**
-     * Abstract list of rights.
-     */
     private String firstName;
     private String middleName;
     private String lastName;
@@ -27,8 +28,8 @@ public abstract class User {
      * @param lastName The last name of the user.
      * @param userName The user name of the user.
      *
-     * @throws ReportErrorToUserException Username is empty.
-     * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
+     * @throws ReportErrorToUserException is thrown when username is empty.
+     * @throws IllegalArgumentException is thrown when one of the name arguments is null. (use empty string instead)
      */
     User(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
         setFirstName(firstName);
@@ -51,7 +52,7 @@ public abstract class User {
     }
 
     /**
-     * Getter to request the midle name of the user.
+     * Getter to request the middle name of the user.
      *
      * @return The middle name.
      */
@@ -69,15 +70,19 @@ public abstract class User {
     }
 
     /**
-     *
      * Getter to request the unique username of the user.
+     *
      * @return The unique user name.
      */
     public String getUserName() {
         return userName;
     }
 
-    //TODO doc
+    /**
+     * Returns the mailbox object of a user.
+     *
+     * @return the mailbox of a user.
+     */
     public Mailbox getMailbox()
     {
     	return mailbox;
@@ -87,25 +92,45 @@ public abstract class User {
 
     //region Setters
 
-    //TODO doc
+    /**
+     * Method to set the first name of a user
+     *
+     * @param firstName the first name to be set
+     * @throws ReportErrorToUserException is thrown if the first name is null.
+     */
     private void setFirstName(String firstName) throws ReportErrorToUserException {
         if (firstName == null) throw new IllegalArgumentException("First name is null, use empty string");
         this.firstName = firstName;
     }
 
-    //TODO doc
+    /**
+     * Method to set the middle name of a user
+     *
+     * @param middleName the middle name to be set
+     * @throws ReportErrorToUserException is thrown if the middle name is null.
+     */
     private void setMiddleName(String middleName) throws ReportErrorToUserException {
         if (middleName == null) throw new IllegalArgumentException("Middle name is null, use empty string");
         this.middleName = middleName;
     }
 
-    //TODO doc
+    /**
+     * Method to set the last name of a user
+     *
+     * @param lastName the last name to be set
+     * @throws ReportErrorToUserException is thrown if the last name is null.
+     */
     private void setLastName(String lastName) throws ReportErrorToUserException {
         if (lastName == null) throw new IllegalArgumentException("Last name is null, use empty string");
         this.lastName = lastName;
     }
 
-    //TODO doc
+    /**
+     * Method to set the user name of a user
+     *
+     * @param userName the user name to be set
+     * @throws ReportErrorToUserException is thrown if the user name is not valid (null or empty).
+     */
     private void setUserName(String userName) throws ReportErrorToUserException {
         if (!isValidUserName(userName)) throw new ReportErrorToUserException("Username is empty");
         this.userName = userName;
@@ -114,11 +139,12 @@ public abstract class User {
     //endregion
 
     /**
-     * Checker to check the username of the user.
+     * Checker to check whether the username of the user is not null or empty.
      *
      * @param userName The username to check.
      *
-     * @return True if the username is not empty.
+     * @return True if the username is not empty and not null,
+     *         Else return false
      */
     public boolean isValidUserName(String userName){
         if (userName == null) return false;
@@ -126,6 +152,11 @@ public abstract class User {
         else return true;
     }
 
+    /**
+     * Method to represent a user object in an easy to read string object.
+     *
+     * @return a string consisting of all fields of the user object.
+     */
     @Override
     public String toString(){
         if (getMiddleName().equals("")){

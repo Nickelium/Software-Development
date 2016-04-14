@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by Tom on 19/02/16.
+ * Class extending the Role class, representing a Lead role object.
+ *
+ * The lead role grants permission to assign bug reports to developers.
  */
 public class Lead extends Role {
 
