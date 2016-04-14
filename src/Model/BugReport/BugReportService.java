@@ -1,6 +1,8 @@
 package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
+import Model.Milestone.SetMilestoneHelper;
+import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -253,6 +255,19 @@ public class BugReportService {
         return false;
     }
 
+    /**
+     * Method to set the Targetmilestone of the bugreport.
+     *
+     * @param bugReport The bugreport to set the targetmilestone of.
+     * @param milestone The milestone to set to the bugreport.
+     * @throws ReportErrorToUserException It is not valid to set the target milestone.
+     */
+    public void setTargetMilestone(BugReport bugReport, TargetMilestone milestone) throws ReportErrorToUserException {
+        if (!canUpdateTargetMilestone(bugReport, milestone))
+            throw new ReportErrorToUserException("The milestone is not greater than all the subsystems milestones.");
+        bugReport.setTargetMilestone(milestone);
+    }
+
     private IListWrapper<BugReport> getAllBugReportsWrapped()
     {
         List<BugReport> bugReports = new ArrayList<>();
@@ -260,6 +275,26 @@ public class BugReportService {
             bugReports.addAll(project.getAllBugReports());
         }
         return new ListWrapper<>(bugReports);
+    }
+
+    /**
+     * Method to check if the given milestone can be assigned to the given bugreport.
+     *
+     * @param bugReport The bugreport to assign the milestone to.
+     * @param milestone The milestone to check.
+     * @return True if the milestone is greater than the milestones of the subsystems to which this bugreport belongs.
+     */
+    public boolean canUpdateTargetMilestone(BugReport bugReport, TargetMilestone milestone) {
+        try {
+            SubSystem subSystem = this.projectService.getSubsystemWhichContainsBugReport(bugReport);
+            if (SetMilestoneHelper.milestoneDoesExceedSubsystemMilestone(subSystem, milestone)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ReportErrorToUserException e) {
+            return false;
+        }
     }
 
     /**
