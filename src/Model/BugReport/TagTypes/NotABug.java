@@ -18,7 +18,7 @@ public class NotABug extends Tag {
      * Default constructor for the notABug tag
      */
     public NotABug(){
-        this.manuallyAcceptedTags = Arrays.asList();
+        setManuallyAcceptedTags(Arrays.asList());
     }
 
     /**

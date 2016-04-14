@@ -19,7 +19,7 @@ public class Closed extends Tag {
      * Default constructor for the closed tag.
      */
     public Closed(int score) {
-        this.manuallyAcceptedTags = Arrays.asList();
+        setManuallyAcceptedTags(Arrays.asList());
         this.score = score;
     }
 

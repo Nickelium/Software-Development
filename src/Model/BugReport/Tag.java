@@ -11,18 +11,10 @@ import java.util.List;
  * All tag types inherit from this class.
  */
 public abstract class Tag{
-    protected List<Class<? extends Tag>> manuallyAcceptedTags;
+    private List<Class<? extends Tag>> manuallyAcceptedTags;
 
-    /**
-     * Method for checking if from this tag can be switched to the given one.
-     *
-     * @param tag The tag that the user wants to change to.
-     *
-     * @return True if the tag can be changed from this tag to te given one.
-     */
-    public boolean canChangeToTag(Class<? extends Tag> tag) {
-        return manuallyAcceptedTags.contains(tag);
-    }
+
+    //region State functions
 
     /**
      * Protected method for assigning a patch, Method is different for each tag.
@@ -68,6 +60,21 @@ public abstract class Tag{
         bugReport.tag = tag;
         tag.updateTagSpecificFields(bugReport);
     }
+
+    /**
+     * Method for checking if from this tag can be switched to the given one.
+     *
+     * @param tag The tag that the user wants to change to.
+     *
+     * @return True if the tag can be changed from this tag to te given one.
+     */
+    public boolean canChangeToTag(Class<? extends Tag> tag) {
+        return getManuallyAcceptedTags().contains(tag);
+    }
+
+    //endregion
+
+    //region HelperMethods
 
     /**
      * General method to update fields of the bug report that will be set when bug report is set to this tag.
@@ -117,9 +124,32 @@ public abstract class Tag{
         bugReport.solutionScore = score;
     }
 
+    //endregion
+
+    //region Getters
+
+    protected List<Class<? extends Tag>> getManuallyAcceptedTags() {
+        return manuallyAcceptedTags;
+    }
+
+    //endregion
+
+    //region Setters
+
+    protected void setManuallyAcceptedTags(List<Class<? extends Tag>> manuallyAcceptedTags) {
+        this.manuallyAcceptedTags = manuallyAcceptedTags;
+    }
+
+    //endregion
+
+    //region Functions
+
     public abstract boolean isFinal();
 
     public abstract boolean equals(Object obj);
 
     public abstract String toString();
+
+
+    //endregion
 }

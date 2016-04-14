@@ -29,8 +29,14 @@ import java.util.List;
  */
 public class BugReportService {
 
+    //region Attributes
+
     private ProjectService projectService;
-    
+
+    //endregion
+
+    //region Constructor
+
     /**
      * Constructor for the bugReport service.
      *
@@ -44,6 +50,9 @@ public class BugReportService {
         this.projectService = projectService;
     }
 
+    //endregion
+
+    //region Creators
 
     /**
      * Function to create a new BugReport and add the bug report to the list of bugreports.
@@ -163,6 +172,10 @@ public class BugReportService {
         return patch;
     }
 
+    //endregion
+
+    //region Getters
+
     /**
      * Getter to request all the BugReports that are visible to the user.
      *
@@ -170,8 +183,8 @@ public class BugReportService {
      */
     public List<BugReport> getAllBugReports(User user)
     {
-    	List<BugReport> bugReports = new ArrayList<>();
-        for (Project project: projectService.getAllProjects()){
+        List<BugReport> bugReports = new ArrayList<>();
+        for (Project project : getProjectService().getAllProjects()) {
             for (BugReport bugReport : project.getAllBugReports()) {
                 if (this.isVisibleByUser(user, bugReport)) {
                     bugReports.add(bugReport);
@@ -180,8 +193,7 @@ public class BugReportService {
         }
         return Collections.unmodifiableList(bugReports);
     }
-    
-    
+
     /**
      * Getter to get one specific BugReport.
      *
@@ -193,7 +205,7 @@ public class BugReportService {
      * 			thrown when no bug report is found.
      * 		    or bug report cannot be seen by user.
      */
-    public BugReport getBugReport(BugReportID id, User user) throws ReportErrorToUserException
+    public BugReport getOneBugReport(BugReportID id, User user) throws ReportErrorToUserException
     {
         BugReport bugReport = getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
         if (!this.isVisibleByUser(user, bugReport))
@@ -213,18 +225,122 @@ public class BugReportService {
         return project.getAllBugReports();
     }
 
+
+    private ProjectService getProjectService() {
+        return projectService;
+    }
+
+    private IListWrapper<BugReport> getAllBugReportsWrapped() {
+        List<BugReport> bugReports = new ArrayList<>();
+        for (Project project : getProjectService().getAllProjects()) {
+            bugReports.addAll(project.getAllBugReports());
+        }
+        return new ListWrapper<>(bugReports);
+    }
+
+    //endregion
+
+    //region Setters
+
     /**
-     * Method to search for bugreports based on the given search method
-     * 
-     * @param searchMethod The method to search for the bug report
-     * 
-     * @return	The list of bugreports searched for
-     * @throws ReportErrorToUserException
-     * 
+     * Method to set the Targetmilestone of the bugreport.
+     *
+     * @param bugReport The bugreport to set the targetmilestone of.
+     * @param milestone The milestone to set to the bugreport.
+     * @throws ReportErrorToUserException It is not valid to set the target milestone.
      */
-    public List<BugReport> search(Search searchMethod, User user) throws ReportErrorToUserException
-    {
-        return searchMethod.apply(this, user);
+    public void setTargetMilestone(BugReport bugReport, TargetMilestone milestone) throws ReportErrorToUserException {
+        if (!canUpdateTargetMilestone(bugReport, milestone))
+            throw new ReportErrorToUserException("The milestone is not greater than all the subsystems milestones.");
+        bugReport.setTargetMilestone(milestone);
+    }
+
+    //TODO
+    public void setProcedureBug(BugReport bugReport, String procedureBug) throws ReportErrorToUserException {
+        bugReport.setProcedureBug(procedureBug);
+    }
+
+    //TODO
+    public void setStackTrace(BugReport bugReport, String stackTrace) throws ReportErrorToUserException {
+        bugReport.setStackTrace(stackTrace);
+    }
+
+    //TODO
+    public void setErrorMessage(BugReport bugReport, String errorMessage) throws ReportErrorToUserException {
+        bugReport.setErrorMessage(errorMessage);
+    }
+
+    //TODO
+    public void addDependency(BugReport bugReport, BugReport dependency) throws ReportErrorToUserException {
+        if (!isValidDependency(bugReport, dependency))
+            throw new ReportErrorToUserException("Invalid dependency selected! The dependency is not part of the same project.");
+        bugReport.addDependency(dependency);
+    }
+
+    //endregion
+
+    //region Checkers
+
+    /**
+     * Method to check if the given milestone can be assigned to the given bugreport.
+     *
+     * @param bugReport The bugreport to assign the milestone to.
+     * @param milestone The milestone to check.
+     * @return True if the milestone is greater than the milestones of the subsystems to which this bugreport belongs.
+     */
+    public boolean canUpdateTargetMilestone(BugReport bugReport, TargetMilestone milestone) {
+        try {
+            SubSystem subSystem = this.getProjectService().getSubsystemWhichContainsBugReport(bugReport);
+            if (SetMilestoneHelper.milestoneDoesExceedSubsystemMilestone(subSystem, milestone)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ReportErrorToUserException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Method determining whether a user is allowed to add a patch to a specified bug report.
+     *
+     * @param user the user that wants to add a patch
+     * @param bugReport the bug report that the user wants to add the patch to
+     * @return true if the user is a developer and assigned as programmer, false if not.
+     * @throws ReportErrorToUserException is thrown if there is invalid input.
+     */
+    public boolean canAddPatch(User user, BugReport bugReport) throws ReportErrorToUserException {
+        Project project = this.getProjectService().getProjectsContainingBugReport(bugReport);
+        if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Programmer))) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Method determining whether a user is allowed to add a test to a specified bug report.
+     *
+     * @param user the user that wants to add a test
+     * @param bugReport the bug report that the user wants to add the test to
+     * @return true if the user is a developer and assigned as tester, false if not.
+     * @throws ReportErrorToUserException is thrown if there is invalid input.
+     */
+    public boolean canAddTest(User user, BugReport bugReport) throws ReportErrorToUserException {
+        Project project = this.getProjectService().getProjectsContainingBugReport(bugReport);
+        if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Tester))) {
+            return true;
+        }
+        return false;
+    }
+
+    //TODO Check constraints for the dependency. The dependency should be a bugreport of the same project.
+    public boolean isValidDependency(BugReport bugReport, BugReport dependency) {
+        try {
+            Project bugRepProject = this.getProjectService().getProjectsContainingBugReport(bugReport);
+            return (bugRepProject.getAllBugReports().contains(dependency));
+        } catch (ReportErrorToUserException e) {
+            return false;
+        }
     }
 
     /**
@@ -245,7 +361,7 @@ public class BugReportService {
                 return true;
             } else {
                 try {
-                    Project project = projectService.getProjectsContainingBugReport(bugReport);
+                    Project project = getProjectService().getProjectsContainingBugReport(bugReport);
                     if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user))) return true;
                 } catch (ReportErrorToUserException e) {
                     return false;
@@ -255,78 +371,21 @@ public class BugReportService {
         return false;
     }
 
-    /**
-     * Method to set the Targetmilestone of the bugreport.
-     *
-     * @param bugReport The bugreport to set the targetmilestone of.
-     * @param milestone The milestone to set to the bugreport.
-     * @throws ReportErrorToUserException It is not valid to set the target milestone.
-     */
-    public void setTargetMilestone(BugReport bugReport, TargetMilestone milestone) throws ReportErrorToUserException {
-        if (!canUpdateTargetMilestone(bugReport, milestone))
-            throw new ReportErrorToUserException("The milestone is not greater than all the subsystems milestones.");
-        bugReport.setTargetMilestone(milestone);
-    }
+    //endregion
 
-    private IListWrapper<BugReport> getAllBugReportsWrapped()
-    {
-        List<BugReport> bugReports = new ArrayList<>();
-        for (Project project: projectService.getAllProjects()){
-            bugReports.addAll(project.getAllBugReports());
-        }
-        return new ListWrapper<>(bugReports);
-    }
+    //region Function
 
     /**
-     * Method to check if the given milestone can be assigned to the given bugreport.
+     * Method to search for bugreports based on the given search method
      *
-     * @param bugReport The bugreport to assign the milestone to.
-     * @param milestone The milestone to check.
-     * @return True if the milestone is greater than the milestones of the subsystems to which this bugreport belongs.
+     * @param searchMethod The method to search for the bug report
+     * @throws ReportErrorToUserException
+     * @return The list of bugreports searched for
      */
-    public boolean canUpdateTargetMilestone(BugReport bugReport, TargetMilestone milestone) {
-        try {
-            SubSystem subSystem = this.projectService.getSubsystemWhichContainsBugReport(bugReport);
-            if (SetMilestoneHelper.milestoneDoesExceedSubsystemMilestone(subSystem, milestone)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (ReportErrorToUserException e) {
-            return false;
-        }
+    public List<BugReport> search(Search searchMethod, User user) throws ReportErrorToUserException {
+        return searchMethod.apply(this, user);
     }
 
-    /**
-     * Method determining whether a user is allowed to add a test to a specified bug report.
-     *
-     * @param user the user that wants to add a test
-     * @param bugReport the bug report that the user wants to add the test to
-     * @return true if the user is a developer and assigned as tester, false if not.
-     * @throws ReportErrorToUserException is thrown if there is invalid input.
-     */
-    public boolean canAddTest(User user, BugReport bugReport) throws ReportErrorToUserException {
-        Project project = this.projectService.getProjectsContainingBugReport(bugReport);
-        if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Tester))) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Method determining whether a user is allowed to add a patch to a specified bug report.
-     *
-     * @param user the user that wants to add a patch
-     * @param bugReport the bug report that the user wants to add the patch to
-     * @return true if the user is a developer and assigned as programmer, false if not.
-     * @throws ReportErrorToUserException is thrown if there is invalid input.
-     */
-    public boolean canAddPatch(User user, BugReport bugReport) throws ReportErrorToUserException {
-        Project project = this.projectService.getProjectsContainingBugReport(bugReport);
-        if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Programmer))) {
-            return true;
-        }
-        return false;
-    }
+    //endregion
 
 }
