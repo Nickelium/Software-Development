@@ -18,46 +18,25 @@ public class LoginTest extends InitializerTest {
 
     @Test
     public void loginAsAdmin() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "1",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-        LoginController loginController = new LoginController(ui, userService);
-        loginController.login();
-        User currentUser = loginController.getCurrentUser();
+        User currentUser = Logger.adminLogger(userService);
         assertTrue(currentUser instanceof Model.User.Admin);
     }
 
 
+
     @Test
     public void loginAsIssuer() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "2",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-        LoginController loginController = new LoginController(ui, userService);
-        loginController.login();
-        User currentUser = loginController.getCurrentUser();
+        User currentUser = Logger.issuerLogger(userService);
         assertTrue(currentUser instanceof Model.User.Issuer);
     }
 
+
     @Test
     public void loginAsDeveloper() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "3",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-        LoginController loginController = new LoginController(ui, userService);
-        loginController.login();
-        User currentUser = loginController.getCurrentUser();
+        User currentUser = Logger.developerLogger(userService);
         assertTrue(currentUser instanceof Model.User.Developer);
     }
+
 
     @Test(expected = ReportErrorToUserException.class)
     public void loginChoiceFails() throws ReportErrorToUserException {
