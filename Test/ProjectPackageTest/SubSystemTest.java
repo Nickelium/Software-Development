@@ -67,22 +67,22 @@ public class SubSystemTest {
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILNULL() throws ReportErrorToUserException {
-		s.setName(null);
+		projectService.setSubSystemName(s, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILEMPTY() throws ReportErrorToUserException {
-		s.setName("");
+		projectService.setSubSystemName(s, "");
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setDescription_FAILNULL() throws ReportErrorToUserException {
-		s.setDescription(null);
+		projectService.setSubSystemDescription(s, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setDescription_FAILEMPTY() throws ReportErrorToUserException {
-		s.setDescription("");
+		projectService.setSubSystemDescription(s, "");
 	}
 	
 	@Test (expected = IllegalArgumentException.class)

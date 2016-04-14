@@ -208,8 +208,8 @@ public class ProjectTest {
 		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss, BugReport.PUBLIC);
 		
 		p.addRole(programmer);
-		
-		Project fork = p.fork();
+
+		Project fork = projectService.forkProject(p);
 		
 		assertEquals(p.getName(), fork.getName());
 		assertEquals(p.getDescription(), fork.getDescription());
@@ -220,8 +220,8 @@ public class ProjectTest {
 	}
 	
 	@Test
-	public void toString_SUCCES() throws Exception
-	{		
+	public void toString_SUCCES() throws Exception {
+		//TODO
 		p.addRole(programmer);
 		String str= "Project name: " + "Project" + "\nDescription: " + "Project description" 
 		+"\nCreation Date: " + p.getCreationDate() 
