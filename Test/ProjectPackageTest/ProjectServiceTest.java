@@ -119,8 +119,8 @@ public class ProjectServiceTest {
 	@Test
 	public void getProjectsOfLeadRole() throws ReportErrorToUserException
 	{
-		p1.setLeadRole(new Lead(dev));
-		p2.setLeadRole(new Lead(dev));
+		projectService.setProjectLeadRole(p1, new Lead(dev));
+		projectService.setProjectLeadRole(p2, new Lead(dev));
 		
 		List<Project> list = new ArrayList<>();
 		list.add(p1);

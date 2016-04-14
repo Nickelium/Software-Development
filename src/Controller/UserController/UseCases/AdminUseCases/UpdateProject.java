@@ -68,10 +68,10 @@ public class UpdateProject extends UseCase {
         double budget = getUi().readDouble();
 
         // Step 6
-        project.setName(name);
-        project.setDescription(description);
-        project.setStartingDate(startingDate);
-        project.setBudget(budget);
+        getProjectService().setProjectName(project, name);
+        getProjectService().setProjectDescription(project, description);
+        getProjectService().setProjectStartingDate(project, startingDate);
+        getProjectService().setProjectBudget(project, budget);
 
         getUi().display("The project has been successfully updated.\n");
         getUi().display(project.toString());
