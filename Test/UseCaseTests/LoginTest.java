@@ -18,19 +18,19 @@ public class LoginTest extends InitializerTest {
 
     @Test
     public void loginAsAdmin() throws ReportErrorToUserException {
-        User currentUser = Logger.adminLogger(userService);
+        User currentUser = Logger.adminLogger(userService, 0);
         assertTrue(currentUser instanceof Model.User.Admin);
     }
 
     @Test
     public void loginAsIssuer() throws ReportErrorToUserException {
-        User currentUser = Logger.issuerLogger(userService);
+        User currentUser = Logger.issuerLogger(userService, 0);
         assertTrue(currentUser instanceof Model.User.Issuer);
     }
 
     @Test
     public void loginAsDeveloper() throws ReportErrorToUserException {
-        User currentUser = Logger.developerLogger(userService);
+        User currentUser = Logger.developerLogger(userService, 0);
         assertTrue(currentUser instanceof Model.User.Developer);
     }
 

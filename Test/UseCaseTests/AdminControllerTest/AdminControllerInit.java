@@ -1,31 +1,21 @@
 package UseCaseTests.AdminControllerTest;
 
-import Controller.LoginController;
 import CustomExceptions.ReportErrorToUserException;
+import Model.User.User;
 import UseCaseTests.InitializerTest;
-import UseCaseTests.UseCasesUI.TestUI;
+import UseCaseTests.Logger;
 import org.junit.Before;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Karina on 10.03.2016.
  */
 public class AdminControllerInit extends InitializerTest {
 
-    protected LoginController loginController;
+    protected User currentUser;
 
     @Before
     public void subInit() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "1",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-        loginController = new LoginController(ui,userService);
-        loginController.login();
+        currentUser = Logger.adminLogger(userService, 0);
     }
 
 }
