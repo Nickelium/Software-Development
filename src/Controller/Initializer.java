@@ -66,8 +66,8 @@ public class Initializer implements IInitializer {
 
             Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2016), 0.0, leadMajor);
 
-            projectA.addRole(programmerMaria);
-            projectA.addRole(testerMaria);
+            projectService.assignRole(projectA, programmerMaria, leadMajor.getDeveloper());
+            projectService.assignRole(projectA, testerMaria, leadMajor.getDeveloper());
 
             SubSystem subSystemA1 = projectService.createSubsystem("SubSystemA1", "SubsystemA1 description", projectA);
             projectService.setNewSubSystemMilestone(subSystemA1, new Milestone("M2.5.1"));
@@ -91,8 +91,8 @@ public class Initializer implements IInitializer {
 
             Project projectB = projectService.createProject("ProjectB", "ProjectB description", new TheDate(5, 6, 2016), 0.0, leadMaria);
 
-            projectB.addRole(programmerMajorB);
-            projectB.addRole(testerMajorB);
+            projectService.assignRole(projectB, programmerMajorB, leadMaria.getDeveloper());
+            projectService.assignRole(projectB, testerMajorB, leadMaria.getDeveloper());
 
             SubSystem subSystemB1 = projectService.createSubsystem("SubSystemB1", "SubsystemB1 description", projectB);
             SubSystem subSystemB2 = projectService.createSubsystem("SubSystemB2", "SubsystemB2 description", projectB);

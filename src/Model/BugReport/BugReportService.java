@@ -340,14 +340,17 @@ public class BugReportService {
      * @param user the user that wants to add a patch
      * @param bugReport the bug report that the user wants to add the patch to
      * @return true if the user is a developer and assigned as programmer, false if not.
-     * @throws ReportErrorToUserException is thrown if there is invalid input.
      */
-    public boolean canAddPatch(User user, BugReport bugReport) throws ReportErrorToUserException {
-        Project project = this.getProjectService().getProjectsContainingBugReport(bugReport);
-        if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Programmer))) {
-            return true;
+    public boolean canAddPatch(User user, BugReport bugReport) {
+        try {
+            Project project = this.getProjectService().getProjectsContainingBugReport(bugReport);
+            if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Programmer))) {
+                return true;
+            }
+            return false;
+        } catch (ReportErrorToUserException e) {
+            return false;
         }
-        return false;
     }
 
     /**
@@ -356,14 +359,17 @@ public class BugReportService {
      * @param user the user that wants to add a test
      * @param bugReport the bug report that the user wants to add the test to
      * @return true if the user is a developer and assigned as tester, false if not.
-     * @throws ReportErrorToUserException is thrown if there is invalid input.
      */
-    public boolean canAddTest(User user, BugReport bugReport) throws ReportErrorToUserException {
-        Project project = this.getProjectService().getProjectsContainingBugReport(bugReport);
-        if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Tester))) {
-            return true;
+    public boolean canAddTest(User user, BugReport bugReport) {
+        try {
+            Project project = this.getProjectService().getProjectsContainingBugReport(bugReport);
+            if (project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(user) && (x instanceof Tester))) {
+                return true;
+            }
+            return false;
+        } catch (ReportErrorToUserException e) {
+            return false;
         }
-        return false;
     }
 
     /**

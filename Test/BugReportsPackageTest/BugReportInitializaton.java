@@ -64,8 +64,8 @@ public class BugReportInitializaton {
         project1 = projectService.createProject("Test1", "Des Test1", TheDate.TheDateNow(), 0.0, new Lead(dev1));
         project2 = projectService.createProject("Test2", "Des Test2", TheDate.TheDateNow(), 0.0, new Lead(dev2));
 
-        project1.addRole(new Tester(dev3));
-        project1.addRole(new Programmer(dev4));
+        projectService.assignRole(project1, new Tester(dev3), dev1);
+        projectService.assignRole(project1, new Programmer(dev4), dev1);
 
         subSystem1A = projectService.createSubsystem("Sub1A", "Des Sub1A", project1);
         subSystem1B = projectService.createSubsystem("Sub1B", "Des Sub1B", project1);
