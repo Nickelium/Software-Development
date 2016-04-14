@@ -2,6 +2,7 @@ package BugReportsPackageTest;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.BugReport.DeveloperAssignmentService;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 import Model.Project.TheDate;
@@ -31,6 +32,11 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
                 TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void constructor_FAIL()
+    {
+    	DeveloperAssignmentService d = new DeveloperAssignmentService(null);
+    }
 
     @Test
     public void assignDeveloperToBugReportTest_ValidTester() throws ReportErrorToUserException {

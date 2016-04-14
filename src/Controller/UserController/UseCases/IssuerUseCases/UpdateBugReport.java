@@ -116,7 +116,7 @@ public class UpdateBugReport extends IssuerUseCase {
     }
 
     private void showPatches(BugReport bugReport) {
-        for (int i = 0; i < bugReport.getDependencies().size(); i++) {
+        for (int i = 0; i < bugReport.getPatches().size(); i++) {
             getUi().display(i + ": " + bugReport.getPatches().get(i));
         }
     }
