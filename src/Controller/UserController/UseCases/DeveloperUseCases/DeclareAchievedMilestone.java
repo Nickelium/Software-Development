@@ -66,7 +66,7 @@ public class DeclareAchievedMilestone extends DeveloperUseCase {
 
         // Step 4
         getUi().display("Select the subsystem that you want to declare an achieve milestone to: ");
-        List<SubSystem> subSystemList = project.getSubSystems();
+        List<SubSystem> subSystemList = project.getAllSubSystems();
         String formattedSubSystemList = Formatter.formatSubSystemList(subSystemList);
         getUi().display(formattedSubSystemList);
         getUi().display((subSystemList.size()) + ": Declare a milestone for the entire project.");

@@ -7,11 +7,7 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.Memento.Caretaker;
 import Model.Memento.Snapshot;
-import Model.Project.Project;
 import Model.Project.ProjectService;
-import Model.Project.TheDate;
-import Model.Roles.Lead;
-import Model.User.Developer;
 import Model.User.User;
 import Model.User.UserService;
 
@@ -57,9 +53,9 @@ public class Undo extends UseCase
     	getUi().display(stringSnapshots);
     	
     	// Step 3
-    	getUi().display("Please indicate how many usecases you want to revert.");
-    	
-    	int number = getUi().readInt();
+		getUi().display("Please indicate to which state you want to revert:");
+
+		int number = getUi().readInt();
     	caretaker.restoreState(snapshots.get(number));
     	
     	getUi().display("System restore completed !");

@@ -66,6 +66,11 @@ public class SetMilestoneHelper {
         return ms.getIDvalue() > max;
     }
 
+    //TODO
+    public static boolean mileStoneIsBiggerThanCurrent(MilestoneContainer cont, Milestone ms) {
+        return ms.compareTo(cont.getLatestAchievedMilestone()) > 0;
+    }
+
     /**
      * Check that the given milestone does not exceed the milestones of the bugreports.
      *

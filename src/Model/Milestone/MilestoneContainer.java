@@ -15,4 +15,6 @@ public interface MilestoneContainer {
 
     List<BugReport> getAllBugReports();
 
+    Milestone getLatestAchievedMilestone();
+
 }
