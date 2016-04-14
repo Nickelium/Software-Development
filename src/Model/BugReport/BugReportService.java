@@ -226,10 +226,18 @@ public class BugReportService {
     }
 
 
+    /**
+     * Method to return the project service object.
+     * @return the project service object
+     */
     private ProjectService getProjectService() {
         return projectService;
     }
 
+    /**
+     * Method to get a IListWrapper containing all bug reports.
+     * @return a IListWrapper containing all bug reports
+     */
     private IListWrapper<BugReport> getAllBugReportsWrapped() {
         List<BugReport> bugReports = new ArrayList<>();
         for (Project project : getProjectService().getAllProjects()) {
@@ -243,11 +251,12 @@ public class BugReportService {
     //region Setters
 
     /**
-     * Method to set the Targetmilestone of the bugreport.
+     * Method to set the Target milestone of a bug report.
      *
-     * @param bugReport The bugreport to set the targetmilestone of.
-     * @param milestone The milestone to set to the bugreport.
-     * @throws ReportErrorToUserException It is not valid to set the target milestone.
+     * @param bugReport The bug report to set the target milestone of.
+     * @param milestone The milestone to set to the bug report.
+     * @throws ReportErrorToUserException is thrown when the new target milestone
+     *                                    is not greater than all the subsystems' milestones.
      */
     public void setTargetMilestone(BugReport bugReport, TargetMilestone milestone) throws ReportErrorToUserException {
         if (!canUpdateTargetMilestone(bugReport, milestone))
@@ -255,22 +264,46 @@ public class BugReportService {
         bugReport.setTargetMilestone(milestone);
     }
 
-    //TODO
+    /**
+     * Method to set a new procedure bug of a bug report.
+     *
+     * @param bugReport The bug report to set the procedure bug of
+     * @param procedureBug The procedure bug that has to be set
+     * @throws ReportErrorToUserException is thrown when the new procedure bug is invalid.
+     */
     public void setProcedureBug(BugReport bugReport, String procedureBug) throws ReportErrorToUserException {
         bugReport.setProcedureBug(procedureBug);
     }
 
-    //TODO
+    /**
+     * Method to set a new stack trace of a bug report.
+     *
+     * @param bugReport The bug report to set the stack trace of
+     * @param stackTrace The stack trace that has to be set
+     * @throws ReportErrorToUserException is thrown when the new stack trace is invalid.
+     */
     public void setStackTrace(BugReport bugReport, String stackTrace) throws ReportErrorToUserException {
         bugReport.setStackTrace(stackTrace);
     }
 
-    //TODO
+    /**
+     * Method to set a new error message of a bug report.
+     *
+     * @param bugReport The bug report to set the error message of
+     * @param errorMessage The error message that has to be set
+     * @throws ReportErrorToUserException is thrown when the new error message is invalid.
+     */
     public void setErrorMessage(BugReport bugReport, String errorMessage) throws ReportErrorToUserException {
         bugReport.setErrorMessage(errorMessage);
     }
 
-    //TODO
+    /**
+     * Method to add a new dependency to a bug report.
+     *
+     * @param bugReport the bug report to which the new dependency has to be added
+     * @param dependency the new dependency to be added to the specified bug report
+     * @throws ReportErrorToUserException is thrown when an invalid dependency has been selected.
+     */
     public void addDependency(BugReport bugReport, BugReport dependency) throws ReportErrorToUserException {
         if (!isValidDependency(bugReport, dependency))
             throw new ReportErrorToUserException("Invalid dependency selected! The dependency is not part of the same project.");
@@ -333,7 +366,15 @@ public class BugReportService {
         return false;
     }
 
-    //TODO Check constraints for the dependency. The dependency should be a bugreport of the same project.
+    /**
+     * Method to check the constraints for the dependency:
+     * The dependency should be a bug report of the same project.
+     *
+     * @param bugReport the bug report to which the dependency needs to be added
+     * @param dependency the dependency that has to be added to the specified bug report
+     * @return true if the dependency is a bug report of the same project as the specified bug report
+     *         false if otherwise
+     */
     public boolean isValidDependency(BugReport bugReport, BugReport dependency) {
         try {
             Project bugRepProject = this.getProjectService().getProjectsContainingBugReport(bugReport);

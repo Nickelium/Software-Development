@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 /**
  * Class implementing the IListWrapper interface.
- * //TODO: class documentation
  */
 public class ListWrapper<T> implements IListWrapper<T> {
 
