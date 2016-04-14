@@ -14,7 +14,55 @@ import java.util.Arrays;
 public class CreateBugReport extends IssuerControllerInit{
 
     @Test
-    public void successfullyCreatedBugReport() throws Exception{
+    public void successfullyCreatedPublicBugReport() throws Exception {
+        String[] simulatedUserInput = {
+                "0",
+                "0",
+                "Bug Report Test Title",
+                "Bug Report Test Description",
+                "How to reproduce",
+                ".",
+                ".",
+                "Error!!",
+                ".",
+                "1",
+                "0",
+                "1",
+                "-1"
+        };
+        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+        TestUI ui = new TestUI(input);
+
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        issuerController.getUseCase(2).run();
+
+    }
+
+    @Test
+    public void successfullyCreatedPrivateBugReport() throws Exception {
+        String[] simulatedUserInput = {
+                "0",
+                "0",
+                "Bug Report Test Title",
+                "Bug Report Test Description",
+                "How to reproduce",
+                ".",
+                ".",
+                "Error!!",
+                ".",
+                "0",
+                "0",
+                "-1"
+        };
+        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+        TestUI ui = new TestUI(input);
+
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        issuerController.getUseCase(2).run();
+    }
+
+    @Test
+    public void successfullyCreatedPrivateBugReport_NoOptionalValues() throws Exception {
         String[] simulatedUserInput = {
                 "0",
                 "0",
@@ -23,9 +71,8 @@ public class CreateBugReport extends IssuerControllerInit{
                 ".",
                 ".",
                 ".",
-                "1",
                 "0",
-                "1",
+                "0",
                 "-1"
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
