@@ -20,6 +20,10 @@ public class CreateBugReport extends IssuerControllerInit{
                 "0",
                 "Bug Report Test Title",
                 "Bug Report Test Description",
+                ".",
+                ".",
+                ".",
+                "1",
                 "0",
                 "1",
                 "-1"
