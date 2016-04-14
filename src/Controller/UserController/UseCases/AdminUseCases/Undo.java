@@ -27,14 +27,15 @@ public class Undo extends UseCase
 
     /**
      *
-     * Lets an administrator create a new project.
+     * Lets an administrator revert one or more use cases.
      *
-     * 2. The system shows a form to enter the project details: name,
-     * description, starting date and budget estimate.
-     * 3. The administrator enters all the project details.
-     * 4. The system shows a list of possible lead developers.
-     * 5. The administrator selects a lead developer.
-     * 6. The system creates the project and shows an overview.
+     * 2. The system shows a list of the last 10 completed use case instances
+	 * that modified the state of BugTrap.
+	 * 3. The administrator indicates how many use cases he wants to revert
+	 * starting with the last.
+	 * 4. The system reverts the selected use cases starting with the last completed one and,
+	 * if necessary, sends the required notifications if some
+	 * object of interest is modified by the undoing of a use case.
      *
      * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input.
@@ -47,7 +48,7 @@ public class Undo extends UseCase
     {
     	// Step 2
     	int numberOfUseCase = 10;
-    	getUi().display("The list of the last " + numberOfUseCase + " usecases that modified the state of Bugtrap\n" );
+    	getUi().display("The list of the last " + numberOfUseCase + " use cases that modified the state of Bug trap\n" );
     	List<Snapshot> snapshots = caretaker.getSnapshots(numberOfUseCase);
     	String stringSnapshots = Formatter.formatSnapshots(snapshots);
     	getUi().display(stringSnapshots);
