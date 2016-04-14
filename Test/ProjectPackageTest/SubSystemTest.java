@@ -138,8 +138,8 @@ public class SubSystemTest {
 
 		projectService.setNewSubSystemMilestone(subsystem1, new Milestone("M1"));
 		projectService.setNewSubSystemMilestone(subsystem1, new Milestone("M2"));
-		assertEquals(subsystem1.getAllMilestones().get(1).getMilestoneID(), "M1");
-		assertEquals(subsystem1.getAllMilestones().get(0).getMilestoneID(), "M2");
+		assertEquals(subsystem1.getAllMilestones().get(1).getMilestoneID(), "M2");
+		assertEquals(subsystem1.getAllMilestones().get(0).getMilestoneID(), "M1");
 
 	}
 

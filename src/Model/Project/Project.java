@@ -444,7 +444,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	void addRole(Role role)
 	{
 		if(role == null) throw new IllegalArgumentException("Role is null");
-		devsRoles.add(role.copy());
+		devsRoles.add(role);
 	}
 
 	/**
