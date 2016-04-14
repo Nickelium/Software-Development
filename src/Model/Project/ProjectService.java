@@ -8,7 +8,9 @@ import Model.Memento.Originator;
 import Model.Milestone.Milestone;
 import Model.Project.Project.ProjectMemento;
 import Model.Roles.Lead;
+import Model.Roles.Role;
 import Model.User.Developer;
+import Model.User.User;
 import Model.Wrapper.IListWrapper;
 import Model.Wrapper.ListWrapper;
 
@@ -288,6 +290,38 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      */
     public void setNewSubSystemMilestone(SubSystem subSystem, Milestone newSubsystemMilestone) throws ReportErrorToUserException {
         subSystem.setNewSubSystemMilestone(newSubsystemMilestone);
+    }
+
+    //endregion
+
+    //region Functions
+
+    //TODO Documentation
+    public void assignRole(Project project, Role role, User user) throws ReportErrorToUserException {
+        if (project == null) throw new IllegalArgumentException("Project is null");
+        if (role == null) throw new IllegalArgumentException("Role is null");
+        if (user == null) throw new IllegalArgumentException("User is null");
+        if (!canAssignRole(project, role, user))
+            throw new ReportErrorToUserException("You cannot assign this developer to the project.");
+        project.addRole(role);
+    }
+
+    //endregion
+
+    //region Checker
+
+    public boolean canAssignRole(Project project, Role role, User user) {
+        if (!project.getLeadRole().getDeveloper().equals(user)) {
+            return false;
+        } else if (isRoleAlreadyInProject(project, role)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isRoleAlreadyInProject(Project project, Role role) {
+        return project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(role.getDeveloper())
+                && x.getClass().equals(role.getClass()));
     }
 
     //endregion

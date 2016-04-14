@@ -82,14 +82,14 @@ public class AssignmentTestsInitialization {
         subSystem1 = projectService.createSubsystem("Subsystem1", "Des Subsystem1", project1);
         subSystem2 = projectService.createSubsystem("Subsystem2", "Des Subsystem2", project1);
         subSystem3 = projectService.createSubsystem("Subsystem3", "Des Subsystem3", subSystem1);
-        project1.addRole(tester1);
-        project1.addRole(programmer1);
-        project1.addRole(programmer2);
+        projectService.assignRole(project1, tester1, lead1.getDeveloper());
+        projectService.assignRole(project1, programmer1, lead1.getDeveloper());
+        projectService.assignRole(project1, programmer2, lead1.getDeveloper());
 
         project2 = projectService.createProject("Project2", "Des Project2", TheDate.TheDateNow(), 0.0, lead2);
         subSystem4 = projectService.createSubsystem("Subsystem4", "Des Subsystem4", project2);
-        project2.addRole(tester2);
-        project2.addRole(programmer2);
+        projectService.assignRole(project2, tester2, lead2.getDeveloper());
+        projectService.assignRole(project2, programmer2, lead2.getDeveloper());
 
         bugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
                 TheDate.TheDateNow(), Arrays.asList(dev3, dev6));

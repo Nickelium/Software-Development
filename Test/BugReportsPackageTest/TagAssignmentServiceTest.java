@@ -23,8 +23,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
     @Test
     public void assignTagTest_ValidDeveloperPermission() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
-        project.addRole(tester1);
-        project.addRole(programmer2);
+        projectService.assignRole(project, tester1, lead1.getDeveloper());
+        projectService.assignRole(project, programmer2, lead1.getDeveloper());
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
@@ -39,8 +39,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
     @Test(expected = ReportErrorToUserException.class)
     public void assignTagTest_IllegalDeveloper() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
-        project.addRole(tester1);
-        project.addRole(programmer2);
+        projectService.assignRole(project, tester1, lead1.getDeveloper());
+        projectService.assignRole(project, programmer2, lead1.getDeveloper());
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
@@ -58,8 +58,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
     @Test(expected = ReportErrorToUserException.class)
     public void assignTagTest_InValidCreatorToResolved() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
-        project.addRole(tester1);
-        project.addRole(programmer2);
+        projectService.assignRole(project, tester1, lead1.getDeveloper());
+        projectService.assignRole(project, programmer2, lead1.getDeveloper());
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
@@ -89,8 +89,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
     @Test
     public void assignTagTest_ValidLeadDeveloperUnderReviewToClosed() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
-        project.addRole(tester1);
-        project.addRole(programmer2);
+        projectService.assignRole(project, tester1, lead1.getDeveloper());
+        projectService.assignRole(project, programmer2, lead1.getDeveloper());
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
