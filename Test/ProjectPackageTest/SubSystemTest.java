@@ -3,6 +3,8 @@ package ProjectPackageTest;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
+import Model.Milestone.Milestone;
+import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -27,10 +29,10 @@ public class SubSystemTest {
 	private TheDate startingDate;
 	private double  budget;
 	private double versionID;
-	private SubSystem s;
-	private SubSystem ss;
-	private SubSystem sss;
-	private Project p;
+	private SubSystem subsystem1;
+	private SubSystem subsystem2;
+	private SubSystem subsystem3;
+	private Project project;
 	private int day;
 	private int month;
 	private int year;
@@ -54,10 +56,10 @@ public class SubSystemTest {
 		this.startingDate = new TheDate("19/02/2030");
 		this.budget = 10;
 		this.versionID = 2.0;
-		this.p = projectService.createProject(this.name, this.description, this.startingDate, 0.0, lead);
-		this.s = projectService.createSubsystem("Test1", "Test1 description",p);
-		this.ss = projectService.createSubsystem("Test2", "Test2 description",s);
-		this.sss = projectService.createSubsystem("Test3", "Test3 description",ss);
+		this.project = projectService.createProject(this.name, this.description, this.startingDate, 0.0, lead);
+		this.subsystem1 = projectService.createSubsystem("Test1", "Test1 description", project);
+		this.subsystem2 = projectService.createSubsystem("Test2", "Test2 description", subsystem1);
+		this.subsystem3 = projectService.createSubsystem("Test3", "Test3 description", subsystem2);
 
 		this.day = 24;
 		this.month = 2;
@@ -67,79 +69,107 @@ public class SubSystemTest {
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILNULL() throws ReportErrorToUserException {
-		projectService.setSubSystemName(s, null);
+		projectService.setSubSystemName(subsystem1, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILEMPTY() throws ReportErrorToUserException {
-		projectService.setSubSystemName(s, "");
+		projectService.setSubSystemName(subsystem1, "");
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setDescription_FAILNULL() throws ReportErrorToUserException {
-		projectService.setSubSystemDescription(s, null);
+		projectService.setSubSystemDescription(subsystem1, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setDescription_FAILEMPTY() throws ReportErrorToUserException {
-		projectService.setSubSystemDescription(s, "");
+		projectService.setSubSystemDescription(subsystem1, "");
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void addSubSystem_FAILNULL() throws ReportErrorToUserException {
-		s.addSubSystem(null);
+		subsystem1.addSubSystem(null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void addSubSystem_FAILSELFDEEP() throws ReportErrorToUserException {
-		s.addSubSystem(ss);
-		ss.addSubSystem(sss);
-		s.addSubSystem(sss);
+		subsystem1.addSubSystem(subsystem2);
+		subsystem2.addSubSystem(subsystem3);
+		subsystem1.addSubSystem(subsystem3);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void addSubSystem_FAILSELF() throws ReportErrorToUserException {
-		s.addSubSystem(s);
+		subsystem1.addSubSystem(subsystem1);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void addBugReport_FAIL() throws ReportErrorToUserException {
-		s.addBugReport(null);
+		subsystem1.addBugReport(null);
 	}
 	
 	@Test
 	public void getAllBugReports_SUCCES() throws Exception
 	{
 		List<BugReport> list = new ArrayList<>();
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s, BugReport.PUBLIC);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss, BugReport.PUBLIC);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC);
 		list.add(bug1);
 		list.add(bug2);
 	
-		assertEquals(s.getAllBugReports().size(), list.size());
-		assertTrue(s.getAllBugReports().containsAll(list));
+		assertEquals(subsystem1.getAllBugReports().size(), list.size());
+		assertTrue(subsystem1.getAllBugReports().containsAll(list));
 	}
 	
 	@Test 
 	public void getAllSubSystem_SUCCES() throws ReportErrorToUserException {
 		List<SubSystem> list = new ArrayList<>();
-		list.add(ss);
-		list.add(sss);
+		list.add(subsystem2);
+		list.add(subsystem3);
 		
 
-		assertEquals(s.getAllSubSystems().size(), list.size());
-		assertTrue(s.getAllSubSystems().containsAll(list));
+		assertEquals(subsystem1.getAllSubSystems().size(), list.size());
+		assertTrue(subsystem1.getAllSubSystems().containsAll(list));
 	}
-	
-	
+
+	@Test
+	public void getAllMilestones_SUCCES() throws Exception{
+
+		projectService.setNewSubSystemMilestone(subsystem1, new Milestone("M1"));
+		projectService.setNewSubSystemMilestone(subsystem1, new Milestone("M2"));
+		assertEquals(subsystem1.getAllMilestones().get(1).getMilestoneID(), "M1");
+		assertEquals(subsystem1.getAllMilestones().get(0).getMilestoneID(), "M2");
+
+	}
+
+	@Test (expected = ReportErrorToUserException.class)
+	public void getAllMilestones_FAIL1() throws Exception{
+
+		projectService.setNewSubSystemMilestone(subsystem1, new Milestone("M1"));
+		SubSystem s2 = projectService.createSubsystem("0","0",subsystem1);
+		projectService.setNewSubSystemMilestone(s2, new Milestone("M1.5"));
+		projectService.setNewSubSystemMilestone(subsystem1, new Milestone("M2"));
+
+	}
+
+	@Test (expected = ReportErrorToUserException.class)
+	public void getAllMilestones_FAIL2() throws Exception{
+
+		projectService.setNewSubSystemMilestone(subsystem1,  new Milestone("M1"));
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
+		bugReportService.setTargetMilestone(bug1, new TargetMilestone("M1.2"));
+		projectService.setNewSubSystemMilestone(subsystem1, new Milestone("M1.5"));
+
+	}
 	
 	@Test
 	public void toString_SUCCES() throws Exception
 	{
 		String string = "Subsystem name: " + "Test1" + "\nDescription: " + "Test1 description"
-				+ "\nVersionID: " + s.getVersionID()
-				+ "\nMilestone: " + s.getLatestAchievedMilestone();
-		assertEquals(s.toString(), string);
+				+ "\nVersionID: " + subsystem1.getVersionID()
+				+ "\nMilestone: " + subsystem1.getLatestAchievedMilestone();
+		assertEquals(subsystem1.toString(), string);
 
 	}
 	

@@ -3,6 +3,8 @@ package ProjectPackageTest;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
+import Model.Milestone.Milestone;
+import Model.Milestone.TargetMilestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -28,9 +30,9 @@ public class ProjectTest {
 	private TheDate startingDate;
 	private double  budget;
 	private double versionID;
-	private SubSystem s;
-	private SubSystem ss;
-	private Project p;
+	private SubSystem subsystem1;
+	private SubSystem subsystem2;
+	private Project project;
 	private int day;
 	private int month;
 	private int year;
@@ -40,7 +42,6 @@ public class ProjectTest {
 	private Developer dev;
 	private Lead lead;
 	private Programmer programmer;
-	private Project proj;
 
 	@Before
 	public void setup() throws ReportErrorToUserException {
@@ -55,11 +56,11 @@ public class ProjectTest {
 		this.startingDate = new TheDate("19/02/2030");
 		this.budget = 10;
 		this.versionID = 2.0;
-		this.p = projectService.createProject("Project", "Project description", this.startingDate, this.budget, this.lead);
-		this.s = projectService.createSubsystem("Test1", "Test1 description", p);
-		this.ss =projectService.createSubsystem("Test2", "Test2 description", s);
-		//this.s = new SubSystem("Test1", "Test1 description");
-		//this.ss = new SubSystem("Test2", "Test2 description");
+		this.project = projectService.createProject("Project", "Project description", this.startingDate, this.budget, this.lead);
+		this.subsystem1 = projectService.createSubsystem("Test1", "Test1 description", project);
+		this.subsystem2 =projectService.createSubsystem("Test2", "Test2 description", subsystem1);
+		//this.subsystem1 = new SubSystem("Test1", "Test1 description");
+		//this.subsystem2 = new SubSystem("Test2", "Test2 description");
 		this.day = 24;
 		this.month = 2;
 		this.year = 2020;
@@ -80,112 +81,112 @@ public class ProjectTest {
 
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILNULL() throws ReportErrorToUserException {
-		projectService.setProjectName(p, null);
+		projectService.setProjectName(project, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILEMPTY() throws ReportErrorToUserException {
-		projectService.setProjectName(p, "");
+		projectService.setProjectName(project, "");
 	}
 
 	@Test
 	public void setName_SUCCES() throws ReportErrorToUserException {
-		projectService.setProjectName(p, this.name);
-		assertEquals(p.getName(), this.name);
+		projectService.setProjectName(project, this.name);
+		assertEquals(project.getName(), this.name);
 	}
 
 	@Test (expected = ReportErrorToUserException.class)
 	public void setDescription_FAILNULL() throws ReportErrorToUserException {
-		projectService.setProjectDescription(p, null);
+		projectService.setProjectDescription(project, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setDescription_FAILEMPTY() throws ReportErrorToUserException {
-		projectService.setProjectDescription(p, "");
+		projectService.setProjectDescription(project, "");
 	}
 
 	@Test
 	public void setDescription_SUCCES() throws ReportErrorToUserException {
-		projectService.setProjectDescription(p, this.description);
-		assertEquals(p.getDescription(), this.description);
+		projectService.setProjectDescription(project, this.description);
+		assertEquals(project.getDescription(), this.description);
 	}
 
 	@Test
 	public void setStartingDate_SUCCES() throws ReportErrorToUserException
 	{
-		projectService.setProjectStartingDate(p, new TheDate(this.day, this.month, this.year));
-		assertEquals(p.getStartingDate().getDay(),this.day);
-		assertEquals(p.getStartingDate().getMonth(),this.month);
-		assertEquals(p.getStartingDate().getYear(),this.year);
+		projectService.setProjectStartingDate(project, new TheDate(this.day, this.month, this.year));
+		assertEquals(project.getStartingDate().getDay(),this.day);
+		assertEquals(project.getStartingDate().getMonth(),this.month);
+		assertEquals(project.getStartingDate().getYear(),this.year);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void setStartingDate_FAILNULL() throws ReportErrorToUserException
 	{
-		projectService.setProjectStartingDate(p, null);
+		projectService.setProjectStartingDate(project, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setStartingDate_FAILCONDITION() throws ReportErrorToUserException
 	{
-		projectService.setProjectStartingDate(p, new TheDate("20/10/2010"));
+		projectService.setProjectStartingDate(project, new TheDate("20/10/2010"));
 	}
 
 
 	@Test
 	public void setBudget_SUCCES() throws ReportErrorToUserException {
-		projectService.setProjectBudget(p, this.budget);
-		assertEquals(p.getBudget(),this.budget,0.0);
+		projectService.setProjectBudget(project, this.budget);
+		assertEquals(project.getBudget(),this.budget,0.0);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setBudget_FAIL() throws ReportErrorToUserException {
-		projectService.setProjectBudget(p, -2.0);
+		projectService.setProjectBudget(project, -2.0);
 	}
 	
 	@Test
 	public void setVersionID_SUCCES() throws ReportErrorToUserException {
-		projectService.setProjectVersionID(p, this.versionID);
-		assertEquals(p.getVersionID(),this.versionID,0.0);
+		projectService.setProjectVersionID(project, this.versionID);
+		assertEquals(project.getVersionID(),this.versionID,0.0);
 	}
 
 	@Test (expected = ReportErrorToUserException.class)
 	public void setVersionID_FAIL() throws ReportErrorToUserException {
-		projectService.setProjectVersionID(p, 0.2);
+		projectService.setProjectVersionID(project, 0.2);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void setLeadRole_FAIL() throws ReportErrorToUserException {
-		projectService.setProjectLeadRole(p, null);
+		projectService.setProjectLeadRole(project, null);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void addSubSystem_FAIL(){
-		p.addSubSystem(null);
+		project.addSubSystem(null);
 	}
 
 	@Test
 	public void getAllSubSystem_SUCCES() throws Exception
 	{
 		List<SubSystem> list = new ArrayList<SubSystem>();
-		list.add(s);
-		list.add(ss);
+		list.add(subsystem1);
+		list.add(subsystem2);
 
-		assertEquals(p.getAllSubSystems().size(), list.size());
-		assertTrue(p.getAllSubSystems().containsAll(list));
+		assertEquals(project.getAllSubSystems().size(), list.size());
+		assertTrue(project.getAllSubSystems().containsAll(list));
 	}
 
 	@Test
 	public void addRole_SUCCES() throws Exception
 	{
-		p.addRole(programmer);
-		assertTrue(p.getDevsRoles().contains(programmer));
+		project.addRole(programmer);
+		assertTrue(project.getDevsRoles().contains(programmer));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void addRole_FAIL() throws Exception
 	{
-		p.addRole(null);
+		project.addRole(null);
 
 	}
 	
@@ -193,50 +194,80 @@ public class ProjectTest {
 	public void getAllBugReports_SUCCES() throws Exception
 	{		
 		List<BugReport> list = new ArrayList<>();
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s, BugReport.PUBLIC);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss, BugReport.PUBLIC);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC);
 		list.add(bug1);
 		list.add(bug2);
 
-		assertEquals(p.getAllBugReports().size(), list.size());
-		assertTrue(p.getAllBugReports().containsAll(list));
+		assertEquals(project.getAllBugReports().size(), list.size());
+		assertTrue(project.getAllBugReports().containsAll(list));
 	}
-	
+
+	@Test
+	public void getAllMilestones_SUCCES() throws Exception{
+
+		projectService.setNewProjectMilestone(project, new Milestone("M1"));
+		assertEquals(project.getLatestAchievedMilestone().getMilestoneID(), "M1");
+		projectService.setNewProjectMilestone(project, new Milestone("M2"));
+		assertEquals(project.getLatestAchievedMilestone().getMilestoneID(), "M2");
+
+	}
+
+	@Test (expected = ReportErrorToUserException.class)
+	public void getAllMilestones_FAIL1() throws Exception{
+
+		projectService.setNewProjectMilestone(project,  new Milestone("M1"));
+		SubSystem s1 = projectService.createSubsystem("0","0",project);
+		projectService.setNewSubSystemMilestone(s1, new Milestone("M1.5"));
+		projectService.setNewProjectMilestone(project, new Milestone("M2"));
+
+	}
+
+	@Test (expected = ReportErrorToUserException.class)
+	public void getAllMilestones_FAIL2() throws Exception{
+
+		projectService.setNewProjectMilestone(project,  new Milestone("M1"));
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
+		bugReportService.setTargetMilestone(bug1, new TargetMilestone("M1.2"));
+		projectService.setNewProjectMilestone(project, new Milestone("M1.5"));
+
+	}
+
 	@Test
 	public void fork_SUCCES() throws Exception
 	{
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, s, BugReport.PUBLIC);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, ss, BugReport.PUBLIC);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC);
 		
-		p.addRole(programmer);
+		project.addRole(programmer);
 
-		Project fork = projectService.forkProject(p);
+		Project fork = projectService.forkProject(project);
 		
-		assertEquals(p.getName(), fork.getName());
-		assertEquals(p.getDescription(), fork.getDescription());
-		assertEquals(p.getStartingDate(), fork.getStartingDate());
-		assertEquals(p.getAllSubSystems().size(), fork.getAllSubSystems().size());
-		assertTrue(p.getAllBugReports().size() != fork.getAllBugReports().size());
+		assertEquals(project.getName(), fork.getName());
+		assertEquals(project.getDescription(), fork.getDescription());
+		assertEquals(project.getStartingDate(), fork.getStartingDate());
+		assertEquals(project.getAllSubSystems().size(), fork.getAllSubSystems().size());
+		assertTrue(project.getAllBugReports().size() != fork.getAllBugReports().size());
 	
 	}
 	
 	@Test
 	public void toString_SUCCES() throws Exception {
-		p.addRole(programmer);
+		project.addRole(programmer);
 
 		String string = "Project name: " + "Project"
 				+ "\nDescription: " + "Project description"
-				+ "\nCreation Date: " + p.getCreationDate()
-				+ "\nStarting Date: " + p.getStartingDate() + "\nBudget: " + p.getBudget()
-				+ "\nVersionID: " + p.getVersionID()
-				+ "\nMilestone: " + p.getLatestAchievedMilestone()
-				+ "\nLead developer: " + p.getLeadRole().getDeveloper() + "\n";
+				+ "\nCreation Date: " + project.getCreationDate()
+				+ "\nStarting Date: " + project.getStartingDate() + "\nBudget: " + project.getBudget()
+				+ "\nVersionID: " + project.getVersionID()
+				+ "\nMilestone: " + project.getLatestAchievedMilestone()
+				+ "\nLead developer: " + project.getLeadRole().getDeveloper() + "\n";
 
-		for (Role role : p.getDevsRoles()) {
+		for (Role role : project.getDevsRoles()) {
 			string += role.toString() + "\n";
 		}
 
-		assertEquals(p.toString(), string);
+		assertEquals(project.toString(), string);
 
 	}
 	
