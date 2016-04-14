@@ -23,7 +23,17 @@ public class ShowProject extends UseCase {
         changeSystem = false;
     }
 
-    //TODO documentatie
+    /**
+     * Lets a user of any type view a project.
+     *
+     * 2. The system shows a list of all projects.
+     * 3. The user selects a project.
+     * 4. The system shows a detailed overview of the selected project and all
+     *    its subsystems.
+     *
+     * @throws ReportErrorToUserException is thrown in case that the method encounters invalid input.
+     * @throws IndexOutOfBoundsException is thrown when a user puts an incorrect option index.
+     */
     public void run() throws ReportErrorToUserException,IndexOutOfBoundsException{
         // Step 2
         List<Project> projectList = getProjectService().getAllProjects();

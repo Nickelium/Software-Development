@@ -17,13 +17,15 @@ public class ExitProgram extends UseCase {
         changeSystem = false;
     }
 
-    //TODO documentatie
+    /**
+     * The software wishes the user goodbye and exits the java program.
+     */
     @Override
     public void run(){
         getUi().display("Bye!");
         System.exit(1);
     }
-    
+
     @Override
 	public String toString()
 	{
