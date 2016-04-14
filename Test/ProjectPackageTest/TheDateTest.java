@@ -1,13 +1,13 @@
-
+package ProjectPackageTest;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.Project.TheDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.time.LocalDate;
+
+import static org.junit.Assert.*;
 
 public class TheDateTest {
 
