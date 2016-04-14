@@ -11,6 +11,8 @@ import java.util.List;
 public interface MilestoneContainer {
     List<SubSystem> getAllSubSystems();
 
+    List<Milestone> getAllMilestones();
+
     List<BugReport> getAllBugReports();
 
 }

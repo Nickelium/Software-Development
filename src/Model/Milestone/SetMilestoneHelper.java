@@ -5,6 +5,7 @@ import Model.Project.SubSystem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Helper class for setting the milestones in project and subsystem. To avoid duplicate code.
@@ -52,10 +53,7 @@ public class SetMilestoneHelper {
      */
     public static boolean milestoneDoesExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) {
         double max = 0.0;
-        List<Milestone> milestones = new ArrayList<>();
-        for (SubSystem subSystem : cont.getAllSubSystems()) {
-            milestones.addAll(subSystem.getCurrentSubsystemMilestones());
-        }
+        List<Milestone> milestones = cont.getAllMilestones();
 
         if (milestones.isEmpty()) return true;
 
@@ -77,11 +75,11 @@ public class SetMilestoneHelper {
      */
     public static boolean milestoneDoesNotExceedBugReportMilestone(MilestoneContainer cont, Milestone ms) {
         double max = 0.0;
-        List<BugReport> bugReports = cont.getAllBugReports();
+        List<BugReport> bugReports = cont.getAllBugReports().stream().filter(x -> !x.getTag().isFinal() && x.getTargetMilestone() != null).collect(Collectors.toList());
 
         if (bugReports.isEmpty()) return true;
         for (BugReport br : bugReports) {
-            if (!br.getTag().isFinal() && br.getTargetMilestone() != null && br.getTargetMilestone().getIDvalue() > max) {
+            if (br.getTargetMilestone().getIDvalue() > max) {
                 max = br.getTargetMilestone().getIDvalue();
             }
         }

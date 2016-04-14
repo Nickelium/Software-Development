@@ -1,7 +1,6 @@
 package Model.BugReport;
 
 import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.New;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
@@ -102,16 +101,16 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
         this.pblc = pblc;
         this.id = new BugReportID();
 
-        //If tag is set to new, this code checks if there aren't any assignees to the bug report. If so
-        // the tag is changed to an assigned tag.
-        if (tag.getClass().equals(New.class) && !initialAssignies.isEmpty()) this.tag = new Assigned();
-
-        setAssignees(initialAssignies);
         this.comments = new ArrayList<>();
         this.dependencies = new ArrayList<>();
         this.patches = new ArrayList<>();
         this.tests = new ArrayList<>();
+        this.assignees = new ArrayList<>();
         this.targetMilestone = targetMilestone;
+
+        for (Developer dev : initialAssignies) {
+            this.addAssignee(dev);
+        }
     }
 
     //endregion

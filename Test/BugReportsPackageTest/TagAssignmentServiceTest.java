@@ -55,8 +55,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
         tagAssignmentService.assignTag(dev5, bugReport2, new UnderReview());
     }
 
-    @Test
-    public void assignTagTest_ValidCreatorToResolved() throws ReportErrorToUserException {
+    @Test(expected = ReportErrorToUserException.class)
+    public void assignTagTest_InValidCreatorToResolved() throws ReportErrorToUserException {
         Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
         project.addRole(tester1);
         project.addRole(programmer2);
@@ -67,8 +67,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         bugReportService.createTest("Test", dev3, bugreport);
         bugReportService.createPatch("Patch", dev6, bugreport);
-        tagAssignmentService.assignTag(dev1, bugreport, new Resolved(0));
-        assertEquals(Resolved.class, bugreport.getTag().getClass());
+        tagAssignmentService.assignTag(issuer1, bugreport, new Resolved(0));
     }
 
     @Test(expected = ReportErrorToUserException.class)
