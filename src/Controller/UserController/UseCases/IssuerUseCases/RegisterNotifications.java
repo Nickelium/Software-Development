@@ -71,7 +71,7 @@ public class RegisterNotifications extends IssuerUseCase{
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
 
     	//Step 2
-        getUi().display("Register for Project (1) / Subsystem (2) / Bugreport (3) : ");
+        getUi().display("Register for Project (1) / Subsystem (2) / Bug report (3) : ");
         int index = getUi().readInt();
         
         //Step 3
