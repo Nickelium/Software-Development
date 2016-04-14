@@ -211,7 +211,11 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		return new ArrayList<>(new LinkedHashSet<>(milestones));
 	}
 
-	//TODO Documentation
+	/**
+	 * Method to get all the developers involved in this project.
+	 *
+	 * @return List of all the developers involved in this project.
+	 */
 	public List<Developer> getAllInvolvedDevelopers() {
 		List<Developer> developers = new ArrayList<>();
 		developers.add(this.getLeadRole().getDeveloper());
