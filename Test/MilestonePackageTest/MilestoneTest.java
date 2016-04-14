@@ -2,11 +2,11 @@ package MilestonePackageTest;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.Milestone.Milestone;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Laurens on 27/03/2016.
@@ -28,6 +28,7 @@ public class MilestoneTest {
     public void isValidIDTest2() throws ReportErrorToUserException {
         Milestone milestoneValidID = new Milestone("M0.5.60");
         assertTrue(milestoneValidID.isValidMilestoneID(milestoneValidID.getMilestoneID()));
+        assertTrue(milestoneValidID.getMilestoneID().equals("M0.5.60"));
     }
 
     @Test (expected = ReportErrorToUserException.class)
@@ -66,7 +67,7 @@ public class MilestoneTest {
     @Test
     public void getIDValueTest4() throws ReportErrorToUserException {
         Milestone milestone = new Milestone("M0.1.2.3.4.5.6.7.8.9");
-        assertEquals(0.010203040506070809, milestone.getIDvalue(), 0.0000001);
+        assertEquals(0.010203040506070809, milestone.getIDvalue(), 0.0000000001);
     }
 
     @Test

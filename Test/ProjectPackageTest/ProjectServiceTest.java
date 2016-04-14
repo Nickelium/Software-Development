@@ -1,3 +1,5 @@
+package ProjectPackageTest;
+
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;

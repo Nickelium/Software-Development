@@ -31,20 +31,15 @@ public abstract class User {
      * @throws IllegalArgumentException One of the name arguments is null. (use empty string instead)
      */
     User(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
-        if (!isValidUserName(userName)) throw new ReportErrorToUserException("Username is empty");
-        if (firstName == null) throw new IllegalArgumentException("First name is null, use empty string");
-        if (middleName == null) throw new IllegalArgumentException("Middle name is null, use empty string");
-        if (lastName == null) throw new IllegalArgumentException("Last name is null, use empty string");
-
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.userName = userName;
+        setFirstName(firstName);
+        setMiddleName(middleName);
+        setLastName(lastName);
+        setUserName(userName);
         
         this.mailbox = new Mailbox();
     }
 
-    // Getters
+    // region Getters
 
     /**
      * Getter to request the first name of the user.
@@ -81,11 +76,42 @@ public abstract class User {
     public String getUserName() {
         return userName;
     }
-    
+
+    //TODO doc
     public Mailbox getMailbox()
     {
     	return mailbox;
     }
+
+    //endregion
+
+    //region Setters
+
+    //TODO doc
+    private void setFirstName(String firstName) throws ReportErrorToUserException {
+        if (firstName == null) throw new IllegalArgumentException("First name is null, use empty string");
+        this.firstName = firstName;
+    }
+
+    //TODO doc
+    private void setMiddleName(String middleName) throws ReportErrorToUserException {
+        if (middleName == null) throw new IllegalArgumentException("Middle name is null, use empty string");
+        this.middleName = middleName;
+    }
+
+    //TODO doc
+    private void setLastName(String lastName) throws ReportErrorToUserException {
+        if (lastName == null) throw new IllegalArgumentException("Last name is null, use empty string");
+        this.lastName = lastName;
+    }
+
+    //TODO doc
+    private void setUserName(String userName) throws ReportErrorToUserException {
+        if (!isValidUserName(userName)) throw new ReportErrorToUserException("Username is empty");
+        this.userName = userName;
+    }
+
+    //endregion
 
     /**
      * Checker to check the username of the user.

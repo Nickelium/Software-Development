@@ -38,13 +38,10 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	private List<SubSystem> subSystems = new ArrayList<>();
 	private Lead leadRole;
 	private List<Role> devsRoles = new ArrayList<>();
-	
-	
-	
-	/**
-	 * Constructoren
-	*/
-	
+
+
+	//region Constructors
+
 	/**
      * Default constructor for project.
      * 
@@ -66,10 +63,10 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		this.setLeadRole(leadRole);
 		this.latestAchievedMilestone = new Milestone();
 	}
-	
-	/**
-	 * Getters
-	 */
+
+	//endregion
+
+	//region Getters
 
 	/**
 	 * Getter to request the latest achieved milestone of the subsystem.
@@ -169,10 +166,10 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	{
 		return Collections.unmodifiableList(this.devsRoles);
 	}
-	
-	/**
-	 * Setters
-	 */
+
+	//endregion
+
+	//region Setters
 	
 	/**
 	 * Setter to set the name of the project.
@@ -319,10 +316,10 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
         if (versionID <= this.getVersionID()) return false;
         else return true;
     }
-	
-	/**
-	 * Operations
-	 */
+
+	//endregion
+
+	// region Operations
 	
 	/**
 	 * Method to add a subsystem to the list of subsystems.
@@ -489,6 +486,10 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 
 	}
 
+	//endregion
+
+	//region Memento Functions
+
 	 /**
      * Method called to notify any observers
      * 
@@ -540,7 +541,10 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		
 	}
 
-	//Innerclass Memento
+	//endregion
+
+	//region Innerclass Memento
+
 	 /**
     * This class provides utility for saving the state of the system at a certain point in time
     * during execution of the Bug Trap software.
@@ -656,6 +660,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		}
 	}
 
+	//endregion
 
 
 }
