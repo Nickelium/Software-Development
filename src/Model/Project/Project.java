@@ -167,6 +167,49 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		return Collections.unmodifiableList(this.devsRoles);
 	}
 
+	/**
+	 * Getter to get all the subsystems of the project.
+	 *
+	 * @return An unmodifiable list of all the subsystems of the project. (recursively)
+	 */
+	public List<SubSystem> getAllSubSystems() {
+		List<SubSystem> list = new ArrayList<>();
+		for (SubSystem s : subSystems) {
+			list.add(s);
+			list.addAll(s.getAllSubSystems());
+		}
+		return Collections.unmodifiableList(list);
+	}
+
+	/**
+	 * Getter to request all the bugreports of the project.
+	 *
+	 * @return An unmodifiable list of all the bugreports of the project. (recursively)
+	 */
+	public List<BugReport> getAllBugReports() {
+		List<BugReport> bugReports = new ArrayList<>();
+		for (SubSystem subsystem : this.getAllSubSystems()) {
+			bugReports.addAll(subsystem.getBugReports());
+		}
+		return Collections.unmodifiableList(bugReports);
+	}
+
+	/**
+	 * Method that returns a list of all milestones added to the project and all
+	 * the subsystems that it (recursively) contains.
+	 *
+	 * @return an unmodifiable list of all the milestones
+	 */
+	public List<Milestone> getAllMilestones() {
+
+		List<Milestone> milestones = new ArrayList<>();
+		milestones.add(this.getLatestAchievedMilestone());
+		for (SubSystem subsystem : this.getAllSubSystems()) {
+			milestones.addAll(subsystem.getCurrentSubsystemMilestones());
+		}
+		return Collections.unmodifiableList(milestones);
+	}
+
 	//endregion
 
 	//region Setters
@@ -276,6 +319,15 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		addMilestoneToList(newProjectMilestone);
 	}
 
+	/**
+	 * Method to set the latest achieved milestone
+	 *
+	 * @param latestAchievedMilestone the latest achieved milestone
+	 */
+	private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+		this.latestAchievedMilestone = latestAchievedMilestone;
+	}
+
 	//endregion
 
 	//region Checkers
@@ -375,37 +427,6 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		devsRoles.add(role);
 	}
 
-
-    /**
-     * Getter to get all the subsystems of the project.
-     *
-     * @return An unmodifiable list of all the subsystems of the project. (recursively)
-     */
-	public List<SubSystem> getAllSubSystems()
-	{
-		List<SubSystem> list = new ArrayList<>();
-		for(SubSystem s : subSystems)
-		{
-			list.add(s);
-			list.addAll(s.getAllSubSystems());
-		}
-		return Collections.unmodifiableList(list);
-	}
-
-    /**
-     * Getter to request all the bugreports of the project.
-     *
-     * @return An unmodifiable list of all the bugreports of the project. (recursively)
-     */
-    public List<BugReport> getAllBugReports(){
-        List<BugReport> bugReports = new ArrayList<>();
-        for (SubSystem subsystem: this.getAllSubSystems()){
-            bugReports.addAll(subsystem.getBugReports());
-        }
-        return Collections.unmodifiableList(bugReports);
-    }
-    
-
 	/**
 	 * Method to fork a project.
 	 * 
@@ -429,32 +450,6 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 			forkedProject.devsRoles.add(role.copy());
 		
 		return forkedProject;
-	}
-
-	/**
-	 * Method that returns a list of all milestones added to the project and all
-	 * the subsystems that it (recursively) contains.
-	 *
-	 * @return an unmodifiable list of all the milestones
-     */
-	public List<Milestone> getAllMilestones(){
-
-		List<Milestone> milestones = new ArrayList<>();
-		milestones.add(this.getLatestAchievedMilestone());
-		for (SubSystem subsystem: this.getAllSubSystems()){
-            milestones.addAll(subsystem.getCurrentSubsystemMilestones());
-        }
-		return Collections.unmodifiableList(milestones);
-	}
-
-
-	/**
-	 * Method to set the latest achieved milestone
-	 *
-	 * @param latestAchievedMilestone the latest achieved milestone
-     */
-	private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
-		this.latestAchievedMilestone = latestAchievedMilestone;
 	}
 
 	/**

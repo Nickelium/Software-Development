@@ -152,7 +152,6 @@ public class UserService {
 
     //endregions
 
-
     /**
      * Getter to request the user with the given user name.
      *
