@@ -28,7 +28,7 @@ public class CreateProject extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(2).run();
     }
 
@@ -45,7 +45,7 @@ public class CreateProject extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(2).run();
     }
 
@@ -63,7 +63,7 @@ public class CreateProject extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(2).run();
 
     }
@@ -82,7 +82,7 @@ public class CreateProject extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(2).run();
     }
 

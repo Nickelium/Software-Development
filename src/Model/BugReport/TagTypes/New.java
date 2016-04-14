@@ -4,6 +4,7 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.Patch;
 import Model.BugReport.Tag;
+import Model.BugReport.Test;
 import Model.User.Developer;
 
 import java.util.Arrays;
@@ -45,6 +46,18 @@ public class New extends Tag {
     @Override
     protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
         throw new ReportErrorToUserException("No patches can be submitted because the bug report doesn't have the proper tag.");
+    }
+
+    /**
+     * Adding a patch to a bug report containing the 'New' tag, will result into an error.
+     *
+     * @param bugReport The bug report to assign the patch to.
+     * @param test      The patch to assign to a bug report.
+     * @throws ReportErrorToUserException because a patch cannot be added to a bug report with the 'New' tag.
+     */
+    @Override
+    protected void addTest(BugReport bugReport, Test test) throws ReportErrorToUserException {
+        throw new ReportErrorToUserException("No tests can be submitted because the bug report doesn't have the proper tag.");
     }
 
     @Override

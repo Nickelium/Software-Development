@@ -29,7 +29,7 @@ public class ForkProject  extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(3).run();
     }
 
@@ -46,7 +46,7 @@ public class ForkProject  extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(3).run();
 
     }
@@ -63,7 +63,7 @@ public class ForkProject  extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(3).run();
 
     }
@@ -81,7 +81,7 @@ public class ForkProject  extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(3).run();
 
     }
@@ -98,7 +98,7 @@ public class ForkProject  extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), loginController.getCurrentUser());
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(3).run();
 
     }

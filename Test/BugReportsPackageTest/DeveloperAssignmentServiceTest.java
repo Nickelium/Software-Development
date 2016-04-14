@@ -15,36 +15,35 @@ import static org.junit.Assert.assertTrue;
  * Created by Tom on 10/03/16.
  */
 public class DeveloperAssignmentServiceTest extends AssignmentTestsInitialization {
+
+    private Project extraProject1;
+    private SubSystem extraSubsystem1;
+    private BugReport extraBugReport1;
+
+    public void reinitializeExtra() throws ReportErrorToUserException {
+        extraProject1 = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
+        extraProject1.addRole(tester1);
+        extraProject1.addRole(programmer1);
+        extraProject1.addRole(programmer2);
+
+        extraSubsystem1 = projectService.createSubsystem("Subsys test", "des", extraProject1);
+        extraBugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
+    }
+
+
     @Test
     public void assignDeveloperToBugReportTest_ValidTester() throws ReportErrorToUserException {
-        Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
-        project.addRole(tester1);
-        project.addRole(programmer1);
-        project.addRole(programmer2);
-
-        SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
-
-
-        developerAssignmentService.assignDeveloperToBugReport(tester1.getDeveloper(), dev5, bugreport);
-        assertTrue(bugreport.getAssignees().contains(dev5));
+        this.reinitializeExtra();
+        developerAssignmentService.assignDeveloperToBugReport(tester1.getDeveloper(), dev5, extraBugReport1);
+        assertTrue(extraBugReport1.getAssignees().contains(dev5));
     }
 
     @Test
     public void assignDeveloperToBugReportTest_ValidLead() throws ReportErrorToUserException {
-        Project project = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
-        project.addRole(tester1);
-        project.addRole(programmer1);
-        project.addRole(programmer2);
-
-        SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
-        BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
-
-
-        developerAssignmentService.assignDeveloperToBugReport(lead1.getDeveloper(), dev5, bugreport);
-        assertTrue(bugreport.getAssignees().contains(dev5));
+        this.reinitializeExtra();
+        developerAssignmentService.assignDeveloperToBugReport(lead1.getDeveloper(), dev5, extraBugReport1);
+        assertTrue(extraBugReport1.getAssignees().contains(dev5));
     }
 
     @Test(expected = ReportErrorToUserException.class)

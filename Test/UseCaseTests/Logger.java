@@ -14,10 +14,10 @@ import java.util.Arrays;
  */
 public class Logger {
 
-    public static User adminLogger(UserService userService) throws ReportErrorToUserException {
+    public static User adminLogger(UserService userService, int chosenUser) throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "1",
-                "0"
+                String.valueOf(chosenUser)
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
@@ -26,10 +26,10 @@ public class Logger {
         return loginController.getCurrentUser();
     }
 
-    public static User issuerLogger(UserService userService) throws ReportErrorToUserException {
+    public static User issuerLogger(UserService userService, int chosenUser) throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "2",
-                "0"
+                String.valueOf(chosenUser)
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
@@ -38,10 +38,10 @@ public class Logger {
         return loginController.getCurrentUser();
     }
 
-    public static User developerLogger(UserService userService) throws ReportErrorToUserException {
+    public static User developerLogger(UserService userService, int chosenUser) throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "3",
-                "0"
+                String.valueOf(chosenUser)
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
