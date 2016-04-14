@@ -379,14 +379,9 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     }
 
     /**
-<<<<<<< HEAD
-     * //TODO
-     * @return
-=======
      * Method to create a memento of this object
      * 
      * @return The memento of this object
->>>>>>> e85abd6d5e1b0a0ed4bffe721deb690ee9fb4a7a
      */
 	@Override
 	public SubSystemMemento createMemento() 

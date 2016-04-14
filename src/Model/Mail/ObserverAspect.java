@@ -3,7 +3,7 @@ package Model.Mail;
 import Model.BugReport.BugReport;
 
 /**
- * Abstract class ObserverAspect that has one observed subject and can unbind to that subject.
+ * Abstract class ObserverAspect that has one observed subject structure and can unbind that subject.
  *
  */
 public abstract class ObserverAspect implements Observer<BugReport>
@@ -28,14 +28,15 @@ public abstract class ObserverAspect implements Observer<BugReport>
 	 /**
      * Method called to notify this observer
      *
-	  * @param structure The subject
-	  * @param aspect The aspect that has changed
+	 * @param structure The subject
+	 * @param bugReport The bug report that has change within
+	 * @param aspect The aspect that has changed
      */
 	@Override
 	public abstract void update(Subject structure, BugReport bugReport, Object aspect);
 
 	/**
-	 * Method to destroy this object and at the same time unbind it from his subject
+	 * Method to unbind this object from his subject
 	 * 
 	 */
 	public void unbind()

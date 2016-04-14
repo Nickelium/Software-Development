@@ -12,8 +12,9 @@ import java.util.List;
 
 /**
  * Class that represents a mailbox of a user.
- * A mailbox contains all notifications of which a user is registred to.
- * //TODO Documenteren van Mail package !!!
+ * A mailbox contains all notifications of which a user is registered to.
+ * A mailbox also contains all his registrations.
+ * 
  */
 public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 {
@@ -107,12 +108,22 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		registrations.remove(registration);
 	}
 	
+	/**
+	 * Method to create and return a new memento object
+	 *
+	 * @return the new memento object for this Mailbox
+     */
 	@Override
 	public MailboxMemento createMemento() 
 	{
 		return new MailboxMemento(this);
 	}
 
+	/**
+	 * Method to restore this object given the memento
+	 * 
+	 * @param memento The memento to restore to
+	 */
 	@Override
 	public void restoreMemento(MailboxMemento memento)
 	{
@@ -153,17 +164,26 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 
 	
+	//Innerclass observer bug report
 	/**
-	 * Inner class observer of a creation of a bug report
+	 * Inner class observer of a creation of a new bug report
 	 *
 	 */
 	private class ObserverBugReport extends ObserverAspect
 	{
+		/**
+		 * Constructor 
+		 * 
+		 * @param structure The subject to observe
+		 */
 		public ObserverBugReport(Subject structure)
 		{
 			super(structure);
 		}
 		
+		/**
+		 * Method to use when a change occurred in the subject structure.
+		 */
 		@Override
 		public void update(Subject structure, BugReport bugReport, Object aspect) {
 			if(super.structure == structure && aspect instanceof BugReport)
@@ -171,6 +191,11 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 			
 		}
 
+		/**
+		 * Method to get textual representation of this object
+		 * 
+		 * @return The String representation of this object
+		 */
 		@Override
 		public String toString() {
 			return "Registration for creation of new bug report in \n" + super.structure;
@@ -178,17 +203,27 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 	}
 	
+	//Innerclass observer bug report
 	/**
-	 * Inner class observer of a change of tag of a bug report
+	 * Inner class observer of a tag change of a bug report
 	 *
 	 */
 	private class ObserverTag extends ObserverAspect
 	{		
+		
+		/**
+		 * Constructor 
+		 * 
+		 * @param structure The subject to observe
+		 */
 		public ObserverTag(Subject structure)
 		{
 			super(structure);
 		}
 		
+		/**
+		 * Method to use when a change occurred in the subject structure.
+		 */
 		@Override
 		public void update(Subject structure, BugReport bugReport, Object aspect)
 		{
@@ -196,6 +231,11 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 				notifications.add(new Notification("Tag changed", bugReport, super.structure));
 		}
 		
+		/**
+		 * Method to get textual representation of this object
+		 * 
+		 * @return The String representation of this object
+		 */
 		@Override
 		public String toString() {
 			return "Registration for change of tag in \n" + super.structure;
@@ -204,20 +244,30 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 	}
 	
+	//Innerclass observer bug report
 	/**
-	 * Inner class observer of a change of tag to a specific tag of a bug report
+	 * Inner class observer of a specific tag change of a bug report
 	 *
 	 */
 	private class ObserverSpecificTag extends ObserverAspect
 	{
 		private Tag tag;
 		
+		/**
+		 * Constructor 
+		 * 
+		 * @param structure The subject to observe
+		 * @param tag The specific tag
+		 */
 		public ObserverSpecificTag(Subject structure, Tag tag)
 		{
 			super(structure);
 			this.tag = tag;
 		}
 		
+		/**
+		 * Method to use when a change occurred in the subject structure.
+		 */
 		@Override
 		public void update(Subject structure, BugReport bugReport, Object aspect)
 		{
@@ -226,6 +276,11 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 			
 		}
 		
+		/**
+		 * Method to get textual representation of this object
+		 * 
+		 * @return The String representation of this object
+		 */
 		@Override
 		public String toString() {
 			return "Registration for changed of tag to " + tag + " in \n" + super.structure;
@@ -233,18 +288,27 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 	}
 	
+	//Innerclass observer bug report
 	/**
-	 * Inner class observer of a creation of a comment in a bug report
+	 * Inner class observer of a new comment in a bug report
 	 *
 	 */
 	private class ObserverComment extends ObserverAspect
 	{
 		
+		/**
+		 * Constructor 
+		 * 
+		 * @param structure The subject to observe
+		 */
 		public ObserverComment(Subject structure)
 		{
 			super(structure);
 		}
 		
+		/**
+		 * Method to use when a change occurred in the subject structure.
+		 */
 		@Override
 		public void update(Subject structure, BugReport bugReport, Object aspect)
 		{
@@ -252,6 +316,11 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 				notifications.add(new Notification("New comment", bugReport, super.structure));
 		}
 		
+		/**
+		 * Method to get textual representation of this object
+		 * 
+		 * @return The String representation of this object
+		 */
 		@Override
 		public String toString() {
 			return "Registration for creation of new comment in \n" + super.structure;

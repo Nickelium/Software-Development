@@ -13,10 +13,11 @@ public class Notification
 	Subject structure;
 	
 	/**
-	 * TODO: this.setEmotion(emotions.SAD);
 	 * Constructor of this notification
 	 *
-	 * @param structure The content of this notification
+	 * @param changeDescription A description of this notification
+	 * @param bugReport The bug report that has changed
+	 * @param structure The subject structure where the change happened
 	 */
 	Notification(String changeDescription, BugReport bugReport, Subject structure)
 	{
@@ -26,20 +27,30 @@ public class Notification
 	}
 	
 	/**
-	 * Getter to get the content of this notification
+	 * Getter to get the description of this notification
 	 * 
-	 * @return The content
+	 * @return The description of this notification
 	 */
 	public String getChangeDescription()
 	{
 		return changeDescription;
 	}
 	
+	/**
+	 * Getter to get the bug report that has changed
+	 * 
+	 * @return The bug report that has changed
+	 */
 	public BugReport getBugReport()
 	{
 		return bugReport;
 	}
 	
+	/**
+	 * Getter to get the structure where the change occurred
+	 * 
+	 * @return The subject structure where the change occured
+	 */
 	public Subject getStructure()
 	{
 		return structure;
