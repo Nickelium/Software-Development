@@ -12,7 +12,7 @@ import java.util.Arrays;
 /**
  * Created by Tom on 10/03/16.
  */
-public class assignTobugReport extends DeveloperTestInitializer {
+public class AssignToBugReport extends DeveloperTestInitializer {
     @Test
     public void successfullyAssignedDeveloperToBugReport() throws Exception {
         String[] simulatedUserInput = {
