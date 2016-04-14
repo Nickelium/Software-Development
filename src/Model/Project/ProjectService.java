@@ -30,6 +30,8 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         this.projectList = new ListWrapper<>();
     }
 
+    //region Projects
+
     /**
      * Getter to request all the projects.
      *
@@ -76,45 +78,6 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     }
 
     /**
-     * Method to create a subsystem and insert it into an existing subsystem.
-     *
-     * @param name The name of the new subsystem.
-     * @param description The description of the new subsystem.
-     * @param subSystem The subsystem to insert the new one in.
-     *
-     * @return The newly created subsystem.
-     *
-     * @throws ReportErrorToUserException One of the string arguments are wrong.
-     */
-    public SubSystem createSubsystem(String name, String description, SubSystem subSystem) throws ReportErrorToUserException {
-        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
-        SubSystem newSubsystem = new SubSystem(name, description);
-        subSystem.addSubSystem(newSubsystem);
-
-        return newSubsystem;
-    }
-
-    /**
-     * Method to create a subsystem and insert it into an existing project.
-     *
-     * @param name The name of the new subsystem.
-     * @param description The description of the new subsystem.
-     * @param project The project to insert the new subsystem in.
-     *
-     * @return The newly created subsystem.
-     *
-     * @throws ReportErrorToUserException One of the string arguments are wrong.
-     */
-    public SubSystem createSubsystem(String name, String description, Project project) throws ReportErrorToUserException {
-        if (project == null) throw new IllegalArgumentException("Project is null");
-        SubSystem newSubsystem = new SubSystem(name, description);
-        project.addSubSystem(newSubsystem);
-
-        return newSubsystem;
-    }
-
-
-    /**
      * Method for removing a project from the list of projects.
      *
      * @param project The project to remove.
@@ -156,6 +119,49 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         throw new ReportErrorToUserException("There is no project containing the given bug report.");
     }
 
+    //endregion
+
+    //region Project Setters
+
+
+    //endregion
+
+    //region Subsystems
+
+    /**
+     * Method to create a subsystem and insert it into an existing subsystem.
+     *
+     * @param name        The name of the new subsystem.
+     * @param description The description of the new subsystem.
+     * @param subSystem   The subsystem to insert the new one in.
+     * @return The newly created subsystem.
+     * @throws ReportErrorToUserException One of the string arguments are wrong.
+     */
+    public SubSystem createSubsystem(String name, String description, SubSystem subSystem) throws ReportErrorToUserException {
+        if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+        SubSystem newSubsystem = new SubSystem(name, description);
+        subSystem.addSubSystem(newSubsystem);
+
+        return newSubsystem;
+    }
+
+    /**
+     * Method to create a subsystem and insert it into an existing project.
+     *
+     * @param name        The name of the new subsystem.
+     * @param description The description of the new subsystem.
+     * @param project     The project to insert the new subsystem in.
+     * @return The newly created subsystem.
+     * @throws ReportErrorToUserException One of the string arguments are wrong.
+     */
+    public SubSystem createSubsystem(String name, String description, Project project) throws ReportErrorToUserException {
+        if (project == null) throw new IllegalArgumentException("Project is null");
+        SubSystem newSubsystem = new SubSystem(name, description);
+        project.addSubSystem(newSubsystem);
+
+        return newSubsystem;
+    }
+
     /**
      * Method for requesting all the subsystems of all the projects.
      *
@@ -168,6 +174,10 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         }
         return subSystems;
     }
+
+    //endregion
+
+    //region Memento Functions
 
     /**
      * Method to create a memento of this object
@@ -195,8 +205,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	
     }
 
-	//Innerclass Memento
-	 /**
+    //endregion
+
+    //region Innerclass Memento
+
+    /**
      * This class provides utility for saving the state of the system at a certain point in time
      * during execution of the Bug Trap software.
      *
@@ -244,4 +257,5 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 		}
 	}
 
+    //endregion
 }
