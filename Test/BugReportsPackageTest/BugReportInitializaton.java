@@ -71,7 +71,7 @@ public class BugReportInitializaton {
         subSystem1A1 = projectService.createSubsystem("Sub1A1", "Des Sub1A1", subSystem1A);
         subSystem2 = projectService.createSubsystem("Sub2", "Des Sub2", project2);
 
-        bugReport1 = bugReportService.createBugReport("Bug1", "Des Bug1", issuer1, subSystem1B, BugReport.PUBLIC);
+        bugReport1 = bugReportService.createBugReport("Bug1", "Des Bug1", issuer1, subSystem1B, BugReport.PRIVATE);
 
         bugReport2 = bugReportService.createBugReport("Bug2", "Des Bug2", issuer2, subSystem1A1, BugReport.PUBLIC, TheDate.TheDateNow(),
                 Collections.singletonList(dev2));
