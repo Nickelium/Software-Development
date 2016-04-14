@@ -46,7 +46,7 @@ public class Assigned extends Tag {
     @Override
     protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
         if (!bugReport.getDependencies().isEmpty())
-            throw new ReportErrorToUserException("The bugreport has dependencies, until all are resolved, the tag cannot change.");
+            throw new ReportErrorToUserException("The bug report has dependencies, until all are resolved, the tag cannot change.");
         super.changeTag(bugReport, tag);
     }
 

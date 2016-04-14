@@ -50,13 +50,13 @@ public class CreateComment extends IssuerUseCase {
         // Step 3
         List<Comment> listComment = bugReport.getAllComments();
         if (listComment.size() > 0) {
-            getUi().display("List of all comments of this bugreport:");
+            getUi().display("List of all comments of this bug report:");
             String parsedListComment = Formatter.formatCommentList(listComment);
             getUi().display(parsedListComment);
         }
 
         // Step 4
-        getUi().display("Create a comment on the bugreport or on one of the comments (B/C) : ");
+        getUi().display("Create a comment on the bug report or on one of the comments (B/C) : ");
         String input = getUi().readString();
 
         if (input.equalsIgnoreCase("b")) {

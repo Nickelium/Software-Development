@@ -9,23 +9,23 @@ Wat veranderd van mijn gedeelte?
 			Met verschillende klassen dat ISearch implementeert (SearchOnTitle implements ISearch, SearchOnFiled implements ISearch, ...)
 		 Er wordt dus steeds de juiste strategie meegegeven aan bugreportservice en die geeft dan naargelang de strategie de lijst van bugreports
 		 Elke strategie wordt aangemaakt in de controller/usecases naargelang de keuze van de gebruiker. Deze aanpak zorgt niet voor meer koppeling omdat 
-		 er al koppeling is vanuit de controller/usecases met de juiste bugreport zoekmethodes. Een strategie kan anderszijds niet uitgevoerd worden zonder de tussenkomst
+		 er al koppeling is vanuit de controller/usecases met de juiste bug report zoekmethodes. Een strategie kan anderszijds niet uitgevoerd worden zonder de tussenkomst
 		 van bugreportservice, ze zijn protected. Dit verhindert dat de strategie wordt apllied vanuit controller/usecases omdat dit de taak is van bugreportservice 
 		 en dus om cohesie hoog te houden moet bugreportservice deze strategie dan ook effectief toepassen en niet vanuit controller/usecases.
 5) Mailbox/Notifications/Observer ::
-	Een mailbox behoort tot een issuer. Mailbox is een observer van een tag verandering in een specificieke bugreport, een comment verandering in een specificieke bugreport. 
+	Een mailbox behoort tot een issuer. Mailbox is een observer van een tag verandering in een specificieke bug report, een comment verandering in een specificieke bug report.
 	Dus moet mailbox zowel ObserverTag als ObserverComment implementeren die beiden erven van Observer interface. Maar Java laat dit niet toe, dus heb ik dit opgelost met innerclass.
 	ObserverTag, ObserverComment ... zijn de innerclasses van mailbox. Deze oplossing zorgt voor een nogal hoge koppeling tussen mailbox en de verschillende observers. 
 	Als er een nieuwe observer bijkomt, moet deze dan ook toegevoegd worden in de mailbox class. Is deze koppeling aanvaarbaar ? Indien niet, hoe kunnen we koppeling verlagen rekening houdend met Java Constraints ?
 	
-	Een bugreport bevat comments, elke comment kan eventueel ook nog comments bevatten. Bij een toevoeging van een comment c2 aan comment c1 die uiteindelijk behoort bij een bepaalde bugreport,
-	moet de corresponderende bugreport ook verwittigd worden. Dus lijkt mij voor de hand liggend dat comment zowel een observer is van zijn children comments als een subject voor zijn comment observer of bugreport observer. 
+	Een bug report bevat comments, elke comment kan eventueel ook nog comments bevatten. Bij een toevoeging van een comment c2 aan comment c1 die uiteindelijk behoort bij een bepaalde bug report,
+	moet de corresponderende bug report ook verwittigd worden. Dus lijkt mij voor de hand liggend dat comment zowel een observer is van zijn children comments als een subject voor zijn comment observer of bug report observer.
 	Hetzelfde idee wordt ook gebruikt voor subsystem en project :: ze zijn beide zowel subject als observer. Bij een verandering van comment/tag worden de bovenstaande observers verwittigd door de hele hiërarchie terug te doorlopen
 	Uiteindelijk wordt de notify ontvangen in observerTag/observerMail die dan respectievelijk een mail van de juiste type aanmaken in de mailbox.
 	Dit zorgt wel voor meer koppeling omdat comments al een verwijzing hebben naar hun children comments, maar nu moet de children comments ook een verwijzing hebben naar hun observers (omwille van notifyObservers).
-	Dit geldt ook voor subsystem/bugreport en zorgt uiteindelijk op meerdere plekken een bidirectionele binding ipv oorspronkelijk unidirectioneel. Is deze verhoogde koppeling aanvaarbaar  ? Indien niet, hoe kunnen we 
+	Dit geldt ook voor subsystem/bug report en zorgt uiteindelijk op meerdere plekken een bidirectionele binding ipv oorspronkelijk unidirectioneel. Is deze verhoogde koppeling aanvaarbaar  ? Indien niet, hoe kunnen we
 	de koppeling verlagen ? Is trouwens de Observer pattern hier de gepaste pattern omdat deze de koppeling nogal verhoogd ?
 	
-	Dit heeft wel het voordeel dat bij toevoeging van nieuwe type observers in de mailbox, de hiërarchie eronder (project/subsystem/bugreport/comment) ongewijzigd blijven.
+	Dit heeft wel het voordeel dat bij toevoeging van nieuwe type observers in de mailbox, de hiërarchie eronder (project/subsystem/bug report/comment) ongewijzigd blijven.
 	
 	(zie bijlage voor high level code, Class diagram en sequence diagram)

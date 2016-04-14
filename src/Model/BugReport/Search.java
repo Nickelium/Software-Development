@@ -18,7 +18,7 @@ public abstract class Search
 
 	/**
 	 * Method to execute the search for a bug report.
-	 * @param bugReportService the bugreport service, requesting the search
+	 * @param bugReportService the bug report service, requesting the search
 	 * @param user the user requesting the search
 	 * @return the list of bug reports that meet the search requirements
 	 * @throws ReportErrorToUserException in case that the search is invalid.
@@ -27,7 +27,7 @@ public abstract class Search
 
 	/**
 	 * Method that returns an IListWrapper object with all bugreports.
-	 * @param bugReportService the bugreport service, requesting the search
+	 * @param bugReportService the bug report service, requesting the search
 	 * @param user the user requesting the search
      * @return an ILIstWrapper object with all bugreports
      */

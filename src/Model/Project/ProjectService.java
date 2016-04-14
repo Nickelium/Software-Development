@@ -5,6 +5,7 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.Memento.Memento;
 import Model.Memento.Originator;
+import Model.Project.Project.ProjectMemento;
 import Model.Roles.Lead;
 import Model.User.Developer;
 import Model.Wrapper.IListWrapper;
@@ -16,9 +17,8 @@ import java.util.List;
 
 /**
  * This class is used as a service to operate on projects and subsystems.
- *
  */
-public class ProjectService implements Originator<ProjectServiceMemento, ProjectService>
+public class ProjectService implements Originator<ProjectService.ProjectServiceMemento, ProjectService>
 {
     private IListWrapper<Project> projectList;
 
@@ -138,13 +138,13 @@ public class ProjectService implements Originator<ProjectServiceMemento, Project
     }
 
     /**
-     * Method for requesting the project containing the bugreport.
+     * Method for requesting the project containing the bug report.
      *
      * @param bugReport Bugreport to get the project of.
      *
-     * @return The project containing the bugreport.
+     * @return The project containing the bug report.
      *
-     * @throws ReportErrorToUserException There is no project containing the given bugreport.
+     * @throws ReportErrorToUserException There is no project containing the given bug report.
      */
     public Project getProjectsContainingBugReport(BugReport bugReport) throws ReportErrorToUserException
     {
@@ -153,7 +153,7 @@ public class ProjectService implements Originator<ProjectServiceMemento, Project
                 return project;
             }
         }
-        throw new ReportErrorToUserException("There is no project containing the given bugreport.");
+        throw new ReportErrorToUserException("There is no project containing the given bug report.");
     }
 
     /**
@@ -168,13 +168,23 @@ public class ProjectService implements Originator<ProjectServiceMemento, Project
         }
         return subSystems;
     }
-        
+
+    /**
+     * Method to create a memento of this object
+     * 
+     * @return The memento of this object
+     */
 	@Override
 	public ProjectServiceMemento createMemento() 
 	{
 		return new ProjectServiceMemento(this);
 	}
 	
+	/**
+	 * Method to restore this object given the memento
+	 * 
+	 * @param memento The memento to restore to
+	 */
 	@Override
 	public void restoreMemento(ProjectServiceMemento memento)
     {
@@ -184,4 +194,54 @@ public class ProjectService implements Originator<ProjectServiceMemento, Project
     		projectMemento.getOriginator().restoreMemento(projectMemento);
     	
     }
+
+	//Innerclass Memento
+	 /**
+     * This class provides utility for saving the state of the system at a certain point in time
+     * during execution of the Bug Trap software.
+     *
+     * The projectService memento saves the state of the following attributes of the projectService:
+     * listProject.
+     *
+     * This class provides private methods to request the values of the saved fields.
+     * This wide interface (private getters + public constructor) is provided to the class ProjectService,
+     * while the narrow interface (public constructor) is provided to any class.
+     */
+	public class ProjectServiceMemento extends Memento<ProjectService>
+	{
+		private List<Project> listProject;
+		private List<ProjectMemento> projectMementos = new ArrayList<>();
+		
+		/**
+    	 * Constructor 
+    	 * 
+    	 * @param originator The originator to build a memento from
+    	 */
+		public ProjectServiceMemento(ProjectService originator)
+		{
+			super(originator);
+			listProject = new ArrayList<>(originator.getAllProjects());
+			for(Project p : listProject)
+				projectMementos.add(p.createMemento());
+		}
+		
+		/**
+    	 * Returns the list project of the projectService memento
+    	 * @return the list project of the projectService memento
+    	 */
+		private List<Project> getListProject()
+		{
+			return listProject;
+		}
+		
+		/**
+		 * Returns the list of project mementos.
+		 * @return the list of project mementos.
+		 */
+		private List<ProjectMemento> getProjectMementos()
+		{
+			return projectMementos;
+		}
+	}
+
 }

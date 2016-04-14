@@ -4,7 +4,7 @@ Voorbeelden:
 – Een nieuwe soort User is ook heel gemakkelijk geïmplementeerd: er moet een nieuwe klasse & een nieuwe controller worden toegevoegd 
 – nieuwe soort UI is gemakkelijk om te implementeren zonder de code te moeten aanpassen het moet maar IUI implementeren
 – het is gemakkelijk om een nieuwe Init state toe te voegen door gewoon de interface van initializer te implementeren
-– de domein laag is opgesplitst zodat veel functies aan de services worden gegeven, zo hebben de verschillende elementen een lagere koppeling met andere functies uit deze laag. Toevoegen van niewe elementen wordt daardoor gemakkelijk. Voorbeeld: een User weet niks over de andere users en ook niets over de services, een bugreport weet niks over een subsystem, een subsystem niks over een project. Het toevoegen van bv een nieuwe soort subsystem vormt dus geen problemen, omdat bv de bugreports er niks van weten. De domeinlaag heeft nooit een dubbele associatie, waardoor er nooit meer dan één extra klasse verandert bij een uitbreiding
+– de domein laag is opgesplitst zodat veel functies aan de services worden gegeven, zo hebben de verschillende elementen een lagere koppeling met andere functies uit deze laag. Toevoegen van niewe elementen wordt daardoor gemakkelijk. Voorbeeld: een User weet niks over de andere users en ook niets over de services, een bug report weet niks over een subsystem, een subsystem niks over een project. Het toevoegen van bv een nieuwe soort subsystem vormt dus geen problemen, omdat bv de bugreports er niks van weten. De domeinlaag heeft nooit een dubbele associatie, waardoor er nooit meer dan één extra klasse verandert bij een uitbreiding
 – nieuwe Tags kunnen vrij gemakkelijk worden toegevoegd: de mogelijke klassen worden dynamisch opgevangen
 – subsystems/bugreports kunnen van een andere soort klasse worden opgevangen, ze zijn bijna gewoon “value”klassen.
 
@@ -12,6 +12,6 @@ Voorbeelden:
 Mogelijke verbeteringen:
 – eigenlijk hadden we de klassen Admin, Issuer en Developer kunnen weglaten, al de informatie zit in de controllers
 – mogelijke verbetering: Tags van elkaar niet laten afweten, overgangen in een aparte klasse behandelen
-- Het opzoeken van een bepaalde bugreport gebeurt in dit design via bugreportservice, we zouden eigenlijk iets gelijkaardig als de strategy pattern kunnen gebruiken. 
+- Het opzoeken van een bepaalde bug report gebeurt in dit design via bugreportservice, we zouden eigenlijk iets gelijkaardig als de strategy pattern kunnen gebruiken.
 	=>bv. interface ISearch dan verschillende zoekmethodes die ISearch implementeren
 	=> lower couplingvoor bugreportservice :: enkel gekoppeld aan ISearch

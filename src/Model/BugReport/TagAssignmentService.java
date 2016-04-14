@@ -38,13 +38,13 @@ public class TagAssignmentService {
     }
 
     /**
-     * Method for changing the tag of the given bugreport
+     * Method for changing the tag of the given bug report
      *
      * @param user The user requesting the tag change.
-     * @param bugReport The bugreport to which to assign the tag.
-     * @param tag The tag to which to switch the bugreport.
+     * @param bugReport The bug report to which to assign the tag.
+     * @param tag The tag to which to switch the bug report.
      *
-     * @throws ReportErrorToUserException The user doesn't have the permission to assign the tag to the bugreport.
+     * @throws ReportErrorToUserException The user doesn't have the permission to assign the tag to the bug report.
      * @throws IllegalArgumentException One of the arguments is null.
      */
     public void assignTag(User user, BugReport bugReport, Tag tag) throws ReportErrorToUserException {
@@ -55,11 +55,11 @@ public class TagAssignmentService {
     }
 
     /**
-     * Checker to check if the user has the permission to assign the tag to the given bugreport
+     * Checker to check if the user has the permission to assign the tag to the given bug report
      *
      * @param user The user requesting the tag change.
-     * @param bugReport The bugreport to which to assign the tag.
-     * @param tag The tag to which to switch the bugreport.
+     * @param bugReport The bug report to which to assign the tag.
+     * @param tag The tag to which to switch the bug report.
      *
      * @return True if the user has the permission to assign the tag to the burgreport.
      *

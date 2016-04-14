@@ -153,14 +153,14 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../Model/BugReport/DeveloperAssignmentService.html#assignDeveloperToBugReport-Model.User.User-Model.User.Developer-Model.BugReport.BugReport-">assignDeveloperToBugReport</a></span>(<a href="../../Model/User/User.html" title="class in Model.User">User</a>&nbsp;user,
                           <a href="../../Model/User/Developer.html" title="class in Model.User">Developer</a>&nbsp;developer,
                           <a href="../../Model/BugReport/BugReport.html" title="class in Model.BugReport">BugReport</a>&nbsp;bugReport)</code>
-<div class="block">Assigns a developer to the given bugreport.</div>
+<div class="block">Assigns a developer to the given bug report.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../Model/BugReport/DeveloperAssignmentService.html#canUserAssignDevelopers-Model.User.User-Model.BugReport.BugReport-">canUserAssignDevelopers</a></span>(<a href="../../Model/User/User.html" title="class in Model.User">User</a>&nbsp;user,
                        <a href="../../Model/BugReport/BugReport.html" title="class in Model.BugReport">BugReport</a>&nbsp;bugReport)</code>
-<div class="block">Checker to check if the user has te permission to assign developers to the bugreport</div>
+<div class="block">Checker to check if the user has te permission to assign developers to the bug report</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -168,7 +168,7 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../Model/BugReport/DeveloperAssignmentService.html#canUserAssignDeveloperToBugReport-Model.User.User-Model.User.Developer-Model.BugReport.BugReport-">canUserAssignDeveloperToBugReport</a></span>(<a href="../../Model/User/User.html" title="class in Model.User">User</a>&nbsp;user,
                                  <a href="../../Model/User/Developer.html" title="class in Model.User">Developer</a>&nbsp;developer,
                                  <a href="../../Model/BugReport/BugReport.html" title="class in Model.BugReport">BugReport</a>&nbsp;bugReport)</code>
-<div class="block">Checker to check if the user has te permission to assign the developer to the bugreport</div>
+<div class="block">Checker to check if the user has te permission to assign the developer to the bug report</div>
 </td>
 </tr>
 </table>
@@ -227,12 +227,12 @@ extends java.lang.Object</pre>
                                        <a href="../../Model/User/Developer.html" title="class in Model.User">Developer</a>&nbsp;developer,
                                        <a href="../../Model/BugReport/BugReport.html" title="class in Model.BugReport">BugReport</a>&nbsp;bugReport)
                                 throws <a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></pre>
-<div class="block">Assigns a developer to the given bugreport.</div>
+<div class="block">Assigns a developer to the given bug report.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>user</code> - The user requesting the assignment</dd>
-<dd><code>developer</code> - The developer to be assigned to the bugreport</dd>
-<dd><code>bugReport</code> - The bugreport to which to assign the developer</dd>
+<dd><code>developer</code> - The developer to be assigned to the bug report</dd>
+<dd><code>bugReport</code> - The bug report to which to assign the developer</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></code> - The user doesn't have the permission to add the developer.</dd>
 <dd><code>java.lang.IllegalArgumentException</code> - One of the given arguments is null.</dd>
@@ -247,13 +247,13 @@ extends java.lang.Object</pre>
 <h4>canUserAssignDevelopers</h4>
 <pre>public&nbsp;boolean&nbsp;canUserAssignDevelopers(<a href="../../Model/User/User.html" title="class in Model.User">User</a>&nbsp;user,
                                        <a href="../../Model/BugReport/BugReport.html" title="class in Model.BugReport">BugReport</a>&nbsp;bugReport)</pre>
-<div class="block">Checker to check if the user has te permission to assign developers to the bugreport</div>
+<div class="block">Checker to check if the user has te permission to assign developers to the bug report</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>user</code> - The user requesting the assignment</dd>
-<dd><code>bugReport</code> - The bugreport to which the user wishes to assign developers.</dd>
+<dd><code>bugReport</code> - The bug report to which the user wishes to assign developers.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the user has the valid permissions to assign developers to the bugreport.</dd>
+<dd>True if the user has the valid permissions to assign developers to the bug report.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalArgumentException</code> - One of the given arguments is null.</dd>
 </dl>
@@ -269,17 +269,17 @@ extends java.lang.Object</pre>
                                                  <a href="../../Model/User/Developer.html" title="class in Model.User">Developer</a>&nbsp;developer,
                                                  <a href="../../Model/BugReport/BugReport.html" title="class in Model.BugReport">BugReport</a>&nbsp;bugReport)
                                           throws <a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></pre>
-<div class="block">Checker to check if the user has te permission to assign the developer to the bugreport</div>
+<div class="block">Checker to check if the user has te permission to assign the developer to the bug report</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>user</code> - The user requesting the assignment</dd>
-<dd><code>developer</code> - The developer to be assigned to the bugreport</dd>
-<dd><code>bugReport</code> - The bugreport to which to assign the developer</dd>
+<dd><code>developer</code> - The developer to be assigned to the bug report</dd>
+<dd><code>bugReport</code> - The bug report to which to assign the developer</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the user has the valid permissions to assign the developer to the bugreport.</dd>
+<dd>True if the user has the valid permissions to assign the developer to the bug report.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalArgumentException</code> - One of the given arguments is null.</dd>
-<dd><code><a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></code> - The specified bugreport doesn't have a project it is assigned to. (Normally never thrown because system prevents this)</dd>
+<dd><code><a href="../../CustomExceptions/ModelException.html" title="class in CustomExceptions">ModelException</a></code> - The specified bug report doesn't have a project it is assigned to. (Normally never thrown because system prevents this)</dd>
 </dl>
 </li>
 </ul>
