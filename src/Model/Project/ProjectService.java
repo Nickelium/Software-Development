@@ -296,7 +296,16 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 
     //region Functions
 
-    //TODO Documentation
+    /**
+     * Method to assign a role to a user for a specified project.
+     *
+     * @param project the project to which the role assignment is being made
+     * @param role the role that is being set to the specified user
+     * @param user the user to which the new role is being assigned
+     *
+     * @throws ReportErrorToUserException is thrown if the user cannot be assigned
+     *                                    to the role in the project.
+     */
     public void assignRole(Project project, Role role, User user) throws ReportErrorToUserException {
         if (project == null) throw new IllegalArgumentException("Project is null");
         if (role == null) throw new IllegalArgumentException("Role is null");
