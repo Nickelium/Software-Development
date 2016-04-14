@@ -22,21 +22,17 @@ public class LoginTest extends InitializerTest {
         assertTrue(currentUser instanceof Model.User.Admin);
     }
 
-
-
     @Test
     public void loginAsIssuer() throws ReportErrorToUserException {
         User currentUser = Logger.issuerLogger(userService);
         assertTrue(currentUser instanceof Model.User.Issuer);
     }
 
-
     @Test
     public void loginAsDeveloper() throws ReportErrorToUserException {
         User currentUser = Logger.developerLogger(userService);
         assertTrue(currentUser instanceof Model.User.Developer);
     }
-
 
     @Test(expected = ReportErrorToUserException.class)
     public void loginChoiceFails() throws ReportErrorToUserException {
@@ -49,7 +45,6 @@ public class LoginTest extends InitializerTest {
         LoginController loginController = new LoginController(ui, userService);
         loginController.login();
     }
-
 
     @Test(expected = ReportErrorToUserException.class)
     public void userChoiceFails() throws ReportErrorToUserException {
