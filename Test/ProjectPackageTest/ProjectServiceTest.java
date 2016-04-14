@@ -3,6 +3,7 @@ package ProjectPackageTest;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
+import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -146,5 +147,27 @@ public class ProjectServiceTest {
 		SubSystem ssss = projectService.createSubsystem("az", "des", pp);
 		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, ssss, BugReport.PUBLIC);
 		projectService.getProjectsContainingBugReport(bug1);
+	}
+	
+	@Test 
+	public void setSubsystemName_SUCCESS() throws ReportErrorToUserException
+	{
+		projectService.setSubSystemName(s, "Name");
+		assertEquals(s.getName(), "Name");
+	}
+	
+	@Test 
+	public void setSubsystemDescription_SUCCESS() throws ReportErrorToUserException
+	{
+		projectService.setSubSystemDescription(s, "des");
+		assertEquals(s.getDescription(), "des");
+	}
+	
+	@Test
+	public void setNewSubSystemMilestone_SUCCESS() throws ReportErrorToUserException
+	{
+		Milestone m = new Milestone();
+		projectService.setNewSubSystemMilestone(s, m);
+		assertEquals(s.getLatestAchievedMilestone(), m);
 	}
 }
