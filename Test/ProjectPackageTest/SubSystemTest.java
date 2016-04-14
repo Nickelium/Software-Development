@@ -136,10 +136,10 @@ public class SubSystemTest {
 	@Test
 	public void toString_SUCCES() throws Exception
 	{
-	
-		String str = "Subsystem name: " + "Test1" + "\nDescription: " + "Test1 description" 
-					+ "\nVersionID: " + s.getVersionID(); 
-		assertEquals(s.toString(), str);
+		String string = "Subsystem name: " + "Test1" + "\nDescription: " + "Test1 description"
+				+ "\nVersionID: " + s.getVersionID()
+				+ "\nMilestone: " + s.getLatestAchievedMilestone();
+		assertEquals(s.toString(), string);
 
 	}
 	

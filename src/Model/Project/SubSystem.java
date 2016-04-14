@@ -118,6 +118,44 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         return Collections.unmodifiableList(this.milestones);
     }
 
+    /**
+     * Getter to request the bugreports of the current subsystem.
+     *
+     * @return A list of the bugreports of the current subsystem.
+     */
+    List<BugReport> getBugReports() {
+        return this.bugReports;
+    }
+
+    /**
+     * Getter to request all subsystems of this subsystem.
+     *
+     * @return An unmodifiable list of the subsystems of this subsystem. (recursively)
+     */
+    public List<SubSystem> getAllSubSystems() {
+        List<SubSystem> list = new ArrayList<SubSystem>();
+        for (SubSystem s : subSystems) {
+            list.add(s);
+            list.addAll(s.getAllSubSystems());
+        }
+
+        return Collections.unmodifiableList(list);
+    }
+
+    /**
+     * Getter to request all the bugreports of the subsystem.
+     *
+     * @return An unmodifiable list of all the bugreports of the subsystem. (recursively)
+     */
+    public List<BugReport> getAllBugReports() {
+        List<BugReport> bugReports = new ArrayList<>();
+        bugReports.addAll(this.bugReports);
+        for (SubSystem subsystem : this.getAllSubSystems()) {
+            bugReports.addAll(subsystem.getAllBugReports());
+        }
+        return Collections.unmodifiableList(bugReports);
+    }
+
     //endregion
 
     //region Setters
@@ -282,44 +320,6 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 
         bugReport.addObserver(this);
         notifyObservers(bugReport, bugReport);
-    }
-
-    /**
-     * Getter to request all subsystems of this subsystem.
-     *
-     * @return An unmodifiable list of the subsystems of this subsystem. (recursively)
-     */
-    public List<SubSystem> getAllSubSystems() {
-        List<SubSystem> list = new ArrayList<SubSystem>();
-        for (SubSystem s : subSystems) {
-            list.add(s);
-            list.addAll(s.getAllSubSystems());
-        }
-
-        return Collections.unmodifiableList(list);
-    }
-
-    /**
-     * Getter to request all the bugreports of the subsystem.
-     *
-     * @return An unmodifiable list of all the bugreports of the subsystem. (recursively)
-     */
-    public List<BugReport> getAllBugReports() {
-        List<BugReport> bugReports = new ArrayList<>();
-        bugReports.addAll(this.bugReports);
-        for (SubSystem subsystem : this.getAllSubSystems()) {
-            bugReports.addAll(subsystem.getAllBugReports());
-        }
-        return Collections.unmodifiableList(bugReports);
-    }
-
-    /**
-     * Getter to request the bugreports of the current subsystem.
-     *
-     * @return A list of the bugreports of the current subsystem.
-     */
-    List<BugReport> getBugReports() {
-        return this.bugReports;
     }
 
     /**

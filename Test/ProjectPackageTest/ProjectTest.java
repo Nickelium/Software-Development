@@ -9,6 +9,7 @@ import Model.Project.SubSystem;
 import Model.Project.TheDate;
 import Model.Roles.Lead;
 import Model.Roles.Programmer;
+import Model.Roles.Role;
 import Model.User.Developer;
 import Model.User.UserService;
 import org.junit.Before;
@@ -221,14 +222,21 @@ public class ProjectTest {
 	
 	@Test
 	public void toString_SUCCES() throws Exception {
-		//TODO
 		p.addRole(programmer);
-		String str= "Project name: " + "Project" + "\nDescription: " + "Project description" 
-		+"\nCreation Date: " + p.getCreationDate() 
-		+ "\nStarting Date: " + this.startingDate + "\nBudget: " + p.getBudget()
-		+ "\nVersionID: " + p.getVersionID() + "\nLead developer: " 
-		+ dev +"\n" + programmer.toString()+"\n";
-		assertEquals(p.toString(), str);
+
+		String string = "Project name: " + "Project"
+				+ "\nDescription: " + "Project description"
+				+ "\nCreation Date: " + p.getCreationDate()
+				+ "\nStarting Date: " + p.getStartingDate() + "\nBudget: " + p.getBudget()
+				+ "\nVersionID: " + p.getVersionID()
+				+ "\nMilestone: " + p.getLatestAchievedMilestone()
+				+ "\nLead developer: " + p.getLeadRole().getDeveloper() + "\n";
+
+		for (Role role : p.getDevsRoles()) {
+			string += role.toString() + "\n";
+		}
+
+		assertEquals(p.toString(), string);
 
 	}
 	
