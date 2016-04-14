@@ -437,9 +437,14 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */
     public void setNewProjectMilestone(Milestone newProjectMilestone) throws ReportErrorToUserException {
-        SetMilestoneHelper.setNewProjectMilestone(this, newProjectMilestone);
+		if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newProjectMilestone))
+			throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
+		if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newProjectMilestone))
+			throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects target bug report!");
 
-    }
+		setLatestAchievedMilestone(newProjectMilestone);
+		addMilestoneToList(newProjectMilestone);
+	}
 
 
 	/**
@@ -447,8 +452,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 *
 	 * @param latestAchievedMilestone the latest achieved milestone
      */
-    public void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
-        this.latestAchievedMilestone = latestAchievedMilestone;
+	private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+		this.latestAchievedMilestone = latestAchievedMilestone;
 	}
 
 	/**
@@ -456,8 +461,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 *
 	 * @param milestone the milestone that needs to be added to the list
      */
-    public void addMilestoneToList(Milestone milestone) {
-        this.milestones.add(milestone);
+	private void addMilestoneToList(Milestone milestone) {
+		this.milestones.add(milestone);
         Collections.sort(milestones);
     }
     

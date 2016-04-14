@@ -112,7 +112,7 @@ public class Initializer implements IInitializer {
                     new TheDate(3, 1, 2016),
                     Collections.singletonList(maria)
             );
-            bugreport1.setTargetMilestone(new TargetMilestone("M1.1"));
+            bugReportService.setTargetMilestone(bugreport1, new TargetMilestone("M1.1"));
             bugReportService.createTest("bool test_inalid_args1(){...}", major, bugreport1);
             bugReportService.createPatch("e3109fcc9...", major, bugreport1);
             tagAssignmentService.assignTag(maria, bugreport1, new Resolved(0));
@@ -138,7 +138,7 @@ public class Initializer implements IInitializer {
                     new TheDate(4, 2, 2016),
                     new ArrayList<>()
             );
-            bugreport3.setTargetMilestone(new TargetMilestone("M3.2"));
+            bugReportService.setTargetMilestone(bugreport3, new TargetMilestone("M3.2"));
             bugreport3.setProcedureBug("Launch with command line invocation:...");
             bugreport3.setStackTrace("Exception in thread \"main\" java.lang...");
 

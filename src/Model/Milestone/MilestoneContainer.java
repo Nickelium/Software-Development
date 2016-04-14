@@ -9,11 +9,6 @@ import java.util.List;
  * Created by Tom on 14/04/16.
  */
 public interface MilestoneContainer {
-
-    void setLatestAchievedMilestone(Milestone latestAchievedMilestone);
-
-    void addMilestoneToList(Milestone milestone);
-
     List<SubSystem> getAllSubSystems();
 
     List<BugReport> getAllBugReports();
