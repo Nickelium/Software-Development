@@ -11,6 +11,7 @@ import Model.Milestone.MilestoneContainer;
 import Model.Milestone.SetMilestoneHelper;
 import Model.Roles.Lead;
 import Model.Roles.Role;
+import Model.User.Developer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -208,6 +209,19 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 			milestones.addAll(subsystem.getCurrentSubsystemMilestones());
 		}
 		return Collections.unmodifiableList(milestones);
+	}
+
+	//TODO Documentation
+	public List<Developer> getAllInvolvedDevelopers() {
+		List<Developer> developers = new ArrayList<>();
+		developers.add(this.getLeadRole().getDeveloper());
+		for (Role role : getDevsRoles()) {
+			if (!developers.contains(role.getDeveloper())) {
+				developers.add(role.getDeveloper());
+			}
+		}
+
+		return developers;
 	}
 
 	//endregion

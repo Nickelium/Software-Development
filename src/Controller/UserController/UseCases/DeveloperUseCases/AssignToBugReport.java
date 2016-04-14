@@ -7,6 +7,7 @@ import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
 import Model.BugReport.TagAssignmentService;
+import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.User.Developer;
 import Model.User.User;
@@ -46,13 +47,11 @@ public class AssignToBugReport extends DeveloperUseCase {
         // Step 2
         getUi().display("Please select the bug report that you want to assign a new developer to: ");
         BugReport bugReport = selectBugReport();
-        if (!getDeveloperAssignmentService().canUserAssignDevelopers(getCurrentUser(), bugReport)) {
-            throw new ReportErrorToUserException("You are not allowed to assign developers to this bug report.");
-        }
 
         // Step 3
         getUi().display("Please select the developer(s) that you want to assign to the chosen bug report. Type -1 to continue");
-        List<Developer> developerList = bugReport.getAssignees();
+        Project project = getProjectService().getProjectsContainingBugReport(bugReport);
+        List<Developer> developerList = project.getAllInvolvedDevelopers();
         String parsedList = Formatter.formatUserList(developerList);
         getUi().display(parsedList);
         // Step 4
