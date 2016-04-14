@@ -3,7 +3,9 @@ package Model.User;
 import CustomExceptions.ReportErrorToUserException;
 
 /**
- * Created by Karina on 19.02.2016.
+ * Class extending the User class, representing an Issuer user object.
+ *
+ * An issuer is a user that can publish new bug reports.
  */
 public class Issuer extends User {
 

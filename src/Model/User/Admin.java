@@ -3,7 +3,9 @@ package Model.User;
 import CustomExceptions.ReportErrorToUserException;
 
 /**
- * Created by Karina on 19.02.2016.
+ * Class extending the User class, representing an Administrator user object.
+ *
+ * An administrator is a user that can set up the configuration of BugTrap.
  */
 public class Admin extends User {
 

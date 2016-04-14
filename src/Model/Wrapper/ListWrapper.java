@@ -7,7 +7,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Created by Tom on 20/02/16.
+ * Class implementing the IListWrapper interface.
+ * //TODO: class documentation
  */
 public class ListWrapper<T> implements IListWrapper<T> {
 
