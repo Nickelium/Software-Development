@@ -22,9 +22,9 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
 
     public void reinitializeExtra() throws ReportErrorToUserException {
         extraProject1 = projectService.createProject("Test project", "des", TheDate.TheDateNow(), 0.0, lead1);
-        extraProject1.addRole(tester1);
-        extraProject1.addRole(programmer1);
-        extraProject1.addRole(programmer2);
+        projectService.assignRole(extraProject1, tester1, lead1.getDeveloper());
+        projectService.assignRole(extraProject1, programmer1, lead1.getDeveloper());
+        projectService.assignRole(extraProject1, programmer2, lead1.getDeveloper());
 
         extraSubsystem1 = projectService.createSubsystem("Subsys test", "des", extraProject1);
         extraBugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,

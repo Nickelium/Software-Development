@@ -95,7 +95,7 @@ public class AssignToProject extends DeveloperUseCase {
             // Step 8
             try {
                 Role role = selectedClass.getDeclaredConstructor(Developer.class).newInstance(developer);
-                project.addRole(role);
+                getProjectService().assignRole(project, role, getCurrentUser());
             } catch (NoSuchMethodException | InstantiationException |
                     IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();

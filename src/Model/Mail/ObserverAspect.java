@@ -18,11 +18,9 @@ public abstract class ObserverAspect implements Observer<BugReport>
 	 */
 	public ObserverAspect(Subject structure)
 	{
-		if(structure != null)
-		{
+		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
 			this.structure = structure;
 			structure.addObserver(this);
-		}
 	}
 	
 	 /**

@@ -179,14 +179,14 @@ public class ProjectTest {
 	@Test
 	public void addRole_SUCCES() throws Exception
 	{
-		project.addRole(programmer);
+		projectService.assignRole(project, programmer, lead.getDeveloper());
 		assertTrue(project.getDevsRoles().contains(programmer));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void addRole_FAIL() throws Exception
 	{
-		project.addRole(null);
+		projectService.assignRole(project, null, lead.getDeveloper());
 
 	}
 	
@@ -238,8 +238,8 @@ public class ProjectTest {
 	{
 		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
 		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC);
-		
-		project.addRole(programmer);
+
+		projectService.assignRole(project, programmer, lead.getDeveloper());
 
 		Project fork = projectService.forkProject(project);
 		
@@ -253,7 +253,7 @@ public class ProjectTest {
 	
 	@Test
 	public void toString_SUCCES() throws Exception {
-		project.addRole(programmer);
+		projectService.assignRole(project, programmer, lead.getDeveloper());
 
 		String string = "Project name: " + "Project"
 				+ "\nDescription: " + "Project description"
