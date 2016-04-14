@@ -123,6 +123,67 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 
     //region Project Setters
 
+    /**
+     * Setter to set the name of the project.
+     *
+     * @param name The name of the project
+     * @throws ReportErrorToUserException The given name is empty.
+     */
+    public void setProjectName(Project project, String name) throws ReportErrorToUserException {
+        project.setName(name);
+    }
+
+    /**
+     * Setter to set the description of the project
+     *
+     * @param description The description of the project
+     * @throws ReportErrorToUserException The given description is empty.
+     */
+    public void setProjectDescription(Project project, String description) throws ReportErrorToUserException {
+        project.setDescription(description);
+    }
+
+    /**
+     * Setter to set the starting date of the project.
+     *
+     * @param date The starting date of the project.
+     * @throws ReportErrorToUserException The given date is before the creation date.
+     * @throws IllegalArgumentException   The given date is null.
+     */
+    public void setProjectStartingDate(Project project, TheDate date) throws ReportErrorToUserException {
+        project.setStartingDate(date);
+    }
+
+    /**
+     * Setter to set the budget of the project.
+     *
+     * @param newBudget The budget of the project.
+     * @throws ReportErrorToUserException The budget is negative.
+     */
+    public void setProjectBudget(Project project, double newBudget) throws ReportErrorToUserException {
+        project.setBudget(newBudget);
+    }
+
+    /**
+     * Setter to set the versionId of the project.
+     *
+     * @param versionID The versionId to set the project to.
+     * @throws ReportErrorToUserException The given versionId is lower than or equal to the current one.
+     */
+    public void setProjectVersionID(Project project, double versionID) throws ReportErrorToUserException {
+        project.setVersionID(versionID);
+    }
+
+    /**
+     * Setter to set the lead of the project.
+     *
+     * @param leadRole The lead to assign to the project.
+     * @throws IllegalArgumentException The given role is null.
+     */
+    public void setProjectLeadRole(Project project, Lead leadRole) {
+        project.setLeadRole(leadRole);
+    }
+
 
     //endregion
 

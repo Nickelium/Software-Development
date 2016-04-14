@@ -79,41 +79,40 @@ public class ProjectTest {
 
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILNULL() throws ReportErrorToUserException {
-		p.setName(null);
+		projectService.setProjectName(p, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setName_FAILEMPTY() throws ReportErrorToUserException {
-		p.setName("");
+		projectService.setProjectName(p, "");
 	}
 
 	@Test
 	public void setName_SUCCES() throws ReportErrorToUserException {
-		p.setName(this.name);
-
+		projectService.setProjectName(p, this.name);
 		assertEquals(p.getName(), this.name);
 	}
 
 	@Test (expected = ReportErrorToUserException.class)
 	public void setDescription_FAILNULL() throws ReportErrorToUserException {
-		p.setDescription(null);
+		projectService.setProjectDescription(p, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setDescription_FAILEMPTY() throws ReportErrorToUserException {
-		p.setDescription("");
+		projectService.setProjectDescription(p, "");
 	}
 
 	@Test
 	public void setDescription_SUCCES() throws ReportErrorToUserException {
-		p.setDescription(this.description);
+		projectService.setProjectDescription(p, this.description);
 		assertEquals(p.getDescription(), this.description);
 	}
 
 	@Test
 	public void setStartingDate_SUCCES() throws ReportErrorToUserException
 	{
-		p.setStartingDate(new TheDate(this.day, this.month, this.year));
+		projectService.setProjectStartingDate(p, new TheDate(this.day, this.month, this.year));
 		assertEquals(p.getStartingDate().getDay(),this.day);
 		assertEquals(p.getStartingDate().getMonth(),this.month);
 		assertEquals(p.getStartingDate().getYear(),this.year);
@@ -122,45 +121,41 @@ public class ProjectTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void setStartingDate_FAILNULL() throws ReportErrorToUserException
 	{
-		p.setStartingDate(null);
-
+		projectService.setProjectStartingDate(p, null);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setStartingDate_FAILCONDITION() throws ReportErrorToUserException
 	{
-		p.setStartingDate(new TheDate("20/10/2010"));
-
+		projectService.setProjectStartingDate(p, new TheDate("20/10/2010"));
 	}
 
 
 	@Test
 	public void setBudget_SUCCES() throws ReportErrorToUserException {
-		p.setBudget(this.budget);
+		projectService.setProjectBudget(p, this.budget);
 		assertEquals(p.getBudget(),this.budget,0.0);
 	}
 	
 	@Test (expected = ReportErrorToUserException.class)
 	public void setBudget_FAIL() throws ReportErrorToUserException {
-		p.setBudget(-2.0);
-	
+		projectService.setProjectBudget(p, -2.0);
 	}
 	
 	@Test
 	public void setVersionID_SUCCES() throws ReportErrorToUserException {
-		p.setVersionID(this.versionID);
+		projectService.setProjectVersionID(p, this.versionID);
 		assertEquals(p.getVersionID(),this.versionID,0.0);
 	}
 
 	@Test (expected = ReportErrorToUserException.class)
 	public void setVersionID_FAIL() throws ReportErrorToUserException {
-		p.setVersionID(0.2);
+		projectService.setProjectVersionID(p, 0.2);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void setLeadRole_FAIL() throws ReportErrorToUserException {
-		p.setLeadRole(null);
-		
+		projectService.setProjectLeadRole(p, null);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)

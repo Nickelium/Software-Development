@@ -178,7 +178,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @throws ReportErrorToUserException The given name is empty.
 	 */
-	public void setName(String name) throws ReportErrorToUserException
+	void setName(String name) throws ReportErrorToUserException
 	{
 		if(!isValidName(name)) throw new ReportErrorToUserException("The given name is empty.");
 		
@@ -192,7 +192,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @throws ReportErrorToUserException The given description is empty.
 	 */
-	public void setDescription(String description) throws ReportErrorToUserException
+	void setDescription(String description) throws ReportErrorToUserException
 	{
 		if(!isValidDescription(description)) throw new ReportErrorToUserException("The given description is empty.");
 		
@@ -207,7 +207,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      * @throws ReportErrorToUserException The given date is before the creation date.
      * @throws IllegalArgumentException The given date is null.
 	 */
-	public void setStartingDate(TheDate date) throws ReportErrorToUserException
+	void setStartingDate(TheDate date) throws ReportErrorToUserException
 	{
 		if(date == null) throw new IllegalArgumentException("Date is null");
 		if (!isValidStartingDate(date)) throw new ReportErrorToUserException("The date is before the creation date.");
@@ -221,7 +221,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @throws ReportErrorToUserException The budget is negative.
 	 */
-	public void setBudget(double newBudget) throws ReportErrorToUserException
+	void setBudget(double newBudget) throws ReportErrorToUserException
 	{
 		if (!isValidBudget(newBudget)) throw new ReportErrorToUserException("The budget cannot be negative.");
 
@@ -235,7 +235,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @throws ReportErrorToUserException The given versionId is lower than or equal to the current one.
      */
-	public void setVersionID(double versionID) throws ReportErrorToUserException
+	void setVersionID(double versionID) throws ReportErrorToUserException
 	{
         if(!isValidVersionID(versionID)) throw new ReportErrorToUserException("The version cannot be lower than or equal to the previous one!");
 		this.versionID = versionID;
@@ -248,12 +248,16 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @throws IllegalArgumentException The given role is null.
      */
-	public void setLeadRole(Lead leadRole)
+	void setLeadRole(Lead leadRole)
 	{
 		if(leadRole == null) throw new IllegalArgumentException("Role is null");
 
 		this.leadRole = leadRole;
 	}
+
+	//endregion
+
+	//region Checkers
 
     /**
      * Checker to check if the given name is valid.
@@ -262,8 +266,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @return True if the give name is not null or empty.
      */
-    private boolean isValidName(String name){
-        if (name == null) return false;
+	public boolean isValidName(String name) {
+		if (name == null) return false;
         if (name.equals("")) return false;
         else return true;
     }
@@ -275,8 +279,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @return True if the description is null or empty.
      */
-    private boolean isValidDescription(String description){
-        if (description == null) return false;
+	public boolean isValidDescription(String description) {
+		if (description == null) return false;
         if (description.equals("")) return false;
         else return true;
     }
@@ -288,8 +292,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @return True if the startingdate is later than the creation date.
      */
-    private boolean isValidStartingDate(TheDate startingDate){
-        if (this.getCreationDate().isAfter(startingDate)) return false;
+	public boolean isValidStartingDate(TheDate startingDate) {
+		if (this.getCreationDate().isAfter(startingDate)) return false;
         else return true;
     }
 
@@ -300,8 +304,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @return True if the budget is bigger than or equal to 0.
      */
-    private boolean isValidBudget(double budget){
-        if (budget < 0) return false;
+	public boolean isValidBudget(double budget) {
+		if (budget < 0) return false;
         else return true;
     }
 
@@ -312,8 +316,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      *
      * @return True if the versionId is higher than the current one.
      */
-    private boolean isValidVersionID(double versionID){
-        if (versionID <= this.getVersionID()) return false;
+	public boolean isValidVersionID(double versionID) {
+		if (versionID <= this.getVersionID()) return false;
         else return true;
     }
 
