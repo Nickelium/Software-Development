@@ -7,6 +7,8 @@ import Model.Mail.Subject;
 import Model.Memento.Memento;
 import Model.Memento.Originator;
 import Model.Milestone.Milestone;
+import Model.Milestone.MilestoneContainer;
+import Model.Milestone.SetMilestoneHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +17,7 @@ import java.util.List;
 /**
  * This class represents a subsystem with all its related attributes.
  */
-public class SubSystem extends Subject implements Observer<BugReport>, Originator<SubSystem.SubSystemMemento,SubSystem> {
+public class SubSystem extends Subject implements Observer<BugReport>, Originator<SubSystem.SubSystemMemento, SubSystem>, MilestoneContainer {
 
     private String name;
     private String description;
@@ -291,9 +293,9 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     public List<Milestone> getAllMilestones() {
         List<Milestone> milestones = new ArrayList<>();
         milestones.add(this.getLatestAchievedMilestone());
-        milestones.addAll(this.getMilestones());
+        milestones.addAll(this.getCurrentSubsystemMilestones());
         for (SubSystem subsystem : this.getAllSubSystems()) {
-            milestones.addAll(subsystem.getMilestones());
+            milestones.addAll(subsystem.getCurrentSubsystemMilestones());
         }
         return Collections.unmodifiableList(milestones);
     }
@@ -304,7 +306,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      *
      * @return the list of milestones added to this subsystem, excluding the latest achieved milestone.
      */
-    List<Milestone> getMilestones() {
+    public List<Milestone> getCurrentSubsystemMilestones() {
         return Collections.unmodifiableList(this.milestones);
     }
 
@@ -320,71 +322,14 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */
     public void setNewSubSystemMilestone(Milestone newSubsystemMilestone) throws ReportErrorToUserException {
-        if (!milestoneDoesNotExceedSubsystems(newSubsystemMilestone))
-            throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
-        if (!milestoneDoesNotExceedBugReportMilestone(newSubsystemMilestone))
-            throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects bug report!");
-
-        this.setLatestAchievedMilestone(newSubsystemMilestone);
-        this.addMilestoneToList(newSubsystemMilestone);
-        Collections.sort(milestones);
-    }
-
-    /**
-     * Checks whether a given milestone exceeds any subsystem milestone.
-     *
-     * @param milestone the milestone that needs to be checked
-     * @return true if there are no milestones in any subsystem,
-     * 		   true if the ID value of the given milestone is lower
-     * 		        than or equal to the maximum ID value of any subsystem,
-     * 		   else false
-     */
-    private boolean milestoneDoesNotExceedSubsystems(Milestone milestone) {
-        double max = 0.0;
-        List<Milestone> milestones = new ArrayList<>();
-
-        for (SubSystem subSystem : getAllSubSystems()) {
-            milestones.addAll(subSystem.getMilestones());
-        }
-
-        if (milestones.isEmpty()) return true;
-
-        for (Milestone ms : milestones) {
-            if (ms.getIDvalue() > max) {
-                max = ms.getIDvalue();
-            }
-        }
-
-        return milestone.getIDvalue() <= max;
-    }
-
-    /**
-     * Checks whether a given milestone exceeds any target milestone of project-related bug reports.
-     *
-     * @param milestone the milestone that needs to be checked
-     * @return true if the ID value of the given milestone is lower than or equal to the
-     * 			    maximum ID value of any non-final bug report's target milestone.
-     * 		   else false
-     */
-    private boolean milestoneDoesNotExceedBugReportMilestone(Milestone milestone) {
-        double max = 0.0;
-        List<BugReport> bugReports = this.getAllBugReports();
-
-        if (bugReports.isEmpty()) return true;
-        for (BugReport br : bugReports) {
-            if (!br.getTag().isFinal() && br.getTargetMilestone() != null && br.getTargetMilestone().getIDvalue() > max) {
-                max = br.getTargetMilestone().getIDvalue();
-            }
-        }
-
-        return milestone.getIDvalue() <= max;
+        SetMilestoneHelper.setNewProjectMilestone(this, newSubsystemMilestone);
     }
 
     /**
      * Method to set the latest achieved milestone to a new value.
      * @param latestAchievedMilestone the new milestone to be set as the latest achieved milestone
      */
-    private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+    public void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
         this.latestAchievedMilestone = latestAchievedMilestone;
     }
 
@@ -392,8 +337,9 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      * Method to add an old milestone to the list of milestones.
      * @param milestone the old milestone to be add to the milestone list.
      */
-    private void addMilestoneToList(Milestone milestone) {
+    public void addMilestoneToList(Milestone milestone) {
         this.milestones.add(milestone);
+        Collections.sort(this.milestones);
     }
 
     /**
