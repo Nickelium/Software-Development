@@ -57,6 +57,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 */
 	public void registerBugReport(Subject structure)
 	{
+		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
 		ObserverBugReport ObBug = new ObserverBugReport(structure);
 		registrations.add(ObBug);
 	}
@@ -68,6 +69,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 */
 	public void registerComment(Subject structure)
 	{
+		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
 		ObserverComment ObComm = new ObserverComment(structure);
 		registrations.add(ObComm);
 	}
@@ -79,6 +81,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 */
 	public void registerTag(Subject structure)
 	{
+		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
 		ObserverTag ObTag = new ObserverTag(structure);
 		registrations.add(ObTag);
 	}
@@ -91,6 +94,8 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 */
 	public void registerSpecificTag(Subject structure, Tag tag)
 	{
+		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
+		if(tag == null) throw new IllegalArgumentException("Tag cannot be null");
 		ObserverSpecificTag ObSTag = new ObserverSpecificTag(structure, tag);
 		registrations.add(ObSTag);
 	}

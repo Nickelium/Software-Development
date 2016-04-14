@@ -40,25 +40,22 @@ public class MailboxService
 	 * 
 	 * @return The list of notifications
 	 * 
-	 * @throws ReportErrorToUserException when the given number is incorrect
+	 * @throws IndexOutOfBoundsException when the given number is incorrect
 	 */
-	public List<Notification> getNotifications(User user, int number) throws ReportErrorToUserException
+	public List<Notification> getNotifications(User user, int number) throws IndexOutOfBoundsException
 	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		
 		List<Notification> listOriginal = user.getMailbox().getNotifications();
 		List<Notification> listOrderRecent = reverse(listOriginal);
-		try
-		{
-			 List<Notification> listSubbed = listOrderRecent.subList(0, number);
-			 List<Notification> listFiltered = new ArrayList<>();
-			 for(Notification not : listSubbed)
-				 if(bugReportService.isVisibleByUser(user, not.getBugReport()))
-					 listFiltered.add(not);
-			 return listFiltered;
-		}
-		catch(IllegalArgumentException e)
-		{
-			throw new ReportErrorToUserException("Invalid index input");
-		}
+		List<Notification> listSubbed = listOrderRecent.subList(0, number);
+		
+		List<Notification> listFiltered = new ArrayList<>();
+		for(Notification not : listSubbed)
+			if(bugReportService.isVisibleByUser(user, not.getBugReport()))
+				listFiltered.add(not);
+		return Collections.unmodifiableList(listFiltered);
+
 	}
 	
 	/**
@@ -70,7 +67,8 @@ public class MailboxService
 	 */
 	public List<ObserverAspect> getRegistrations(User user)
 	{
-		return user.getMailbox().getRegistrations();
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		return Collections.unmodifiableList(user.getMailbox().getRegistrations());
 	}
 	
 	/**
@@ -81,6 +79,7 @@ public class MailboxService
 	 */
 	public void registerCreationBugReport(User user, Subject s)
 	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
 		user.getMailbox().registerBugReport(s);
 	}
 	
@@ -92,6 +91,7 @@ public class MailboxService
 	 */
 	public void registerTag(User user, Subject s)
 	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
 		user.getMailbox().registerTag(s);
 	}
 	
@@ -104,6 +104,7 @@ public class MailboxService
 	 */
 	public void registerSpecificTag(User user, Subject s, Tag tag)
 	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
 		user.getMailbox().registerSpecificTag(s,tag);
 	}
 	
@@ -116,6 +117,7 @@ public class MailboxService
 	 */
 	public void registerComment(User user, Subject s)
 	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
 		user.getMailbox().registerComment(s);
 	}
 	
@@ -128,6 +130,7 @@ public class MailboxService
 	 */
 	public void unregister(User user, ObserverAspect registration)
 	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
 		user.getMailbox().unregister(registration);
 	}
 	
@@ -150,7 +153,7 @@ public class MailboxService
 		List<Mailbox> mailboxes = new ArrayList<>();
 		for(User user : userService.getUserList())
 			mailboxes.add(user.getMailbox());
-		return mailboxes;
+		return Collections.unmodifiableList(mailboxes);
 	}
 	
 }
