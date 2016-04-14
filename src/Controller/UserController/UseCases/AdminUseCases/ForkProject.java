@@ -59,7 +59,7 @@ public class ForkProject extends UseCase {
 
         // Step 1a.3 + 1a.4
         getUi().display("Please enter new values.");
-        getUi().display("VersionID (current value: " + forkProject.getVersionID() + "): ");
+        getUi().display("VersionID (has to be larger than the current value: " + forkProject.getVersionID() + "): ");
         double versionID = getUi().readDouble();
 
         getUi().display("Starting date (current value: " + forkProject.getStartingDate() + "): ");

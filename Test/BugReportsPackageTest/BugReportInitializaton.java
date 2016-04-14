@@ -51,6 +51,7 @@ public class BugReportInitializaton {
         bugReportService = new BugReportService(projectService);
         userService = new UserService();
         this.tagAssignmentService = new TagAssignmentService(projectService);
+        developerAssignmentService = new DeveloperAssignmentService(projectService);
 
         dev1 = userService.createDeveloper("Dev1", "", "", "dev1");
         dev2 = userService.createDeveloper("Dev2", "", "", "dev2");

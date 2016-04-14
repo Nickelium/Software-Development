@@ -17,7 +17,12 @@ import java.util.List;
 public class SearchOnTitle extends Search
 {
 	private String title;
-	
+
+	/**
+	 * Constructor to create a new Search On Title object.
+	 *
+	 * @param title the title to search for
+	 */
 	public SearchOnTitle(String title)
 	{
 		this.title = title;

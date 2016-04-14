@@ -10,6 +10,11 @@ public class Patch {
 
     private String value;
 
+    /**
+     * Constructor to create a Patch object.
+     *
+     * @param value the content of the new patch
+     * */
     Patch(String value) {
         this.setValue(value);
     }

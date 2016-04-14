@@ -13,6 +13,11 @@ public class Test {
 
     private String value;
 
+    /**
+     * Constructor to create a Test object.
+     *
+     * @param value the content of the new test
+     */
     Test(String value) {
         this.setValue(value);
     }

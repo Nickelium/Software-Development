@@ -17,7 +17,12 @@ import java.util.List;
 public class SearchOnDescription extends Search
 {
 	private String description;
-	
+
+	/**
+	 * Constructor to create a new Search On Description object.
+	 *
+	 * @param description the description to search for
+	 */
 	public SearchOnDescription(String description)
 	{
 		this.description = description;

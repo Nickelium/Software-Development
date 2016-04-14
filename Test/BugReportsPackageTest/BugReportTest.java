@@ -99,16 +99,31 @@ public class BugReportTest extends BugReportInitializaton {
         assertEquals("This is a test procedure bug", this.extraBugReport1.getProcedureBug());
     }
 
+    @Test(expected = ReportErrorToUserException.class)
+    public void setProcedureBugTest_InValid() throws ReportErrorToUserException {
+        bugReportService.setProcedureBug(extraBugReport1, null);
+    }
+
     @Test
     public void getAndSetStackTraceTest() throws ReportErrorToUserException {
         bugReportService.setStackTrace(extraBugReport1, "This is a test stacktrace");
         assertEquals("This is a test stacktrace", this.extraBugReport1.getStackTrace());
     }
 
+    @Test(expected = ReportErrorToUserException.class)
+    public void setStackTrace_InValid() throws ReportErrorToUserException {
+        bugReportService.setStackTrace(extraBugReport1, null);
+    }
+
     @Test
     public void getAndSetErrorMessageTest() throws ReportErrorToUserException {
         this.bugReportService.setErrorMessage(extraBugReport1, "This is a test error message");
         assertEquals("This is a test error message", this.extraBugReport1.getErrorMessage());
+    }
+
+    @Test(expected = ReportErrorToUserException.class)
+    public void setErrorMessage_InValid() throws ReportErrorToUserException {
+        bugReportService.setErrorMessage(extraBugReport1, null);
     }
 
     @Test
@@ -169,8 +184,8 @@ public class BugReportTest extends BugReportInitializaton {
 
     @Test
     public void addDependencyTest() throws ReportErrorToUserException {
-        this.bugReportService.addDependency(bugReport3, bugReport2);
-        assertTrue(this.bugReport3.getDependencies().contains(this.bugReport2));
+        this.bugReportService.addDependency(bugReport1, bugReport2);
+        assertTrue(this.bugReport1.getDependencies().contains(this.bugReport2));
     }
 
     @Test

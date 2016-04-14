@@ -18,44 +18,19 @@ public class LoginTest extends InitializerTest {
 
     @Test
     public void loginAsAdmin() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "1",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-        LoginController loginController = new LoginController(ui, userService);
-        loginController.login();
-        User currentUser = loginController.getCurrentUser();
+        User currentUser = Logger.adminLogger(userService, 0);
         assertTrue(currentUser instanceof Model.User.Admin);
     }
 
-
     @Test
     public void loginAsIssuer() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "2",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-        LoginController loginController = new LoginController(ui, userService);
-        loginController.login();
-        User currentUser = loginController.getCurrentUser();
+        User currentUser = Logger.issuerLogger(userService, 0);
         assertTrue(currentUser instanceof Model.User.Issuer);
     }
 
     @Test
     public void loginAsDeveloper() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "3",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-        LoginController loginController = new LoginController(ui, userService);
-        loginController.login();
-        User currentUser = loginController.getCurrentUser();
+        User currentUser = Logger.developerLogger(userService, 0);
         assertTrue(currentUser instanceof Model.User.Developer);
     }
 
@@ -70,7 +45,6 @@ public class LoginTest extends InitializerTest {
         LoginController loginController = new LoginController(ui, userService);
         loginController.login();
     }
-
 
     @Test(expected = ReportErrorToUserException.class)
     public void userChoiceFails() throws ReportErrorToUserException {

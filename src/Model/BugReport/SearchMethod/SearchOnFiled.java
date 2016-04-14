@@ -16,7 +16,12 @@ import java.util.List;
 public class SearchOnFiled extends Search
 {
 	private User user;
-	
+
+	/**
+	 * Constructor to create a new Search On Filed object.
+	 *
+	 * @param user the user requesting the search
+	 */
 	public SearchOnFiled(User user)
 	{
 		this.user = user;

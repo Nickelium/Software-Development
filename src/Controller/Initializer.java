@@ -95,7 +95,6 @@ public class Initializer implements IInitializer {
             projectB.addRole(testerMajorB);
 
             SubSystem subSystemB1 = projectService.createSubsystem("SubSystemB1", "SubsystemB1 description", projectB);
-            projectService.setNewSubSystemMilestone(subSystemB1, new Milestone("M1.3"));
             SubSystem subSystemB2 = projectService.createSubsystem("SubSystemB2", "SubsystemB2 description", projectB);
             projectService.setNewSubSystemMilestone(subSystemB2, new Milestone("M1.2"));
             SubSystem subSystemB21 = projectService.createSubsystem("SubSystemB2.1", "SubsystemB2.1 description.", subSystemB2);
@@ -113,10 +112,12 @@ public class Initializer implements IInitializer {
                     Collections.singletonList(maria)
             );
             bugReportService.setTargetMilestone(bugreport1, new TargetMilestone("M1.1"));
-            bugReportService.createTest("bool test_inalid_args1(){...}", major, bugreport1);
+            bugReportService.createTest("bool test_invalid_args1(){...}", major, bugreport1);
             bugReportService.createPatch("e3109fcc9...", major, bugreport1);
             tagAssignmentService.assignTag(maria, bugreport1, new Resolved(0));
             tagAssignmentService.assignTag(doc, bugreport1, new Closed(1));
+
+            projectService.setNewSubSystemMilestone(subSystemB1, new Milestone("M1.3"));
 
             // Bug report 2
             BugReport bugreport2 = bugReportService.createBugReport("Crash while processing user input",
