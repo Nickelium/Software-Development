@@ -17,6 +17,11 @@ public class SearchOnAssigned extends Search
 {
 	private User user;
 
+	/**
+	 * Constructor to create a new Search On Assigned object.
+	 *
+	 * @param user the user executing the search
+     */
 	public SearchOnAssigned(User user)
 	{
 		this.user = user;

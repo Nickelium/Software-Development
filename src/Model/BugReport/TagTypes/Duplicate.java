@@ -15,6 +15,7 @@ import java.util.Arrays;
 public class Duplicate extends Tag {
 
     private BugReport duplicateBugReport;
+
     /**
      * Constructor for the default tag which saves the duplicate bug report
      * @param duplicateBugReport The other bug report not containing this tag.
