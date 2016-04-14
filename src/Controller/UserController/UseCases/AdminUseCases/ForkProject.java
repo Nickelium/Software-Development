@@ -69,9 +69,9 @@ public class ForkProject extends UseCase {
         getUi().display("Budget estimate (current value: " + project.getBudget() + "): ");
         double budget = getUi().readDouble();
 
-        forkProject.setVersionID(versionID);
-        forkProject.setStartingDate(startingDate);
-        forkProject.setBudget(budget);
+        getProjectService().setProjectVersionID(forkProject, versionID);
+        getProjectService().setProjectStartingDate(forkProject, startingDate);
+        getProjectService().setProjectBudget(forkProject, budget);
 
         // Step 1a.5
         List<User> possibleLeadDevelopers = getUserService().getDevelopers();
@@ -81,7 +81,8 @@ public class ForkProject extends UseCase {
         int index2 = getUi().readInt();
         Developer leadDev = (Developer) possibleLeadDevelopers.get(index2);
         Lead leadRole = new Lead(leadDev);
-        forkProject.setLeadRole(leadRole);
+
+        getProjectService().setProjectLeadRole(forkProject, leadRole);
 
         getUi().display("The project has been successfully forked.\n");
         getUi().display(forkProject.toString());

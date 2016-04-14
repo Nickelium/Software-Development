@@ -28,9 +28,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     private List<Milestone> milestones = new ArrayList<>();
     private Milestone latestAchievedMilestone = null;
 
-    /**
-     * Constructor
-     */
+    //region Constructor
 
     /**
      * Construct a new instance subsystem with given name and description
@@ -45,10 +43,9 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         this.latestAchievedMilestone = new Milestone();
     }
 
-    /**
-     * Getters
-     */
+    //endregion
 
+    //region Getters
 
     /**
      * Getter to request the latest achieved milestone of the subsystem.
@@ -96,8 +93,72 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     }
 
     /**
-     * Setters
+     * Method that returns a list of all milestones added to the subsystem and all
+     * the subsystems that it (recursively) contains.
+     *
+     * @return an unmodifiable list of all the milestones
      */
+    public List<Milestone> getAllMilestones() {
+        List<Milestone> milestones = new ArrayList<>();
+        milestones.add(this.getLatestAchievedMilestone());
+        milestones.addAll(this.getCurrentSubsystemMilestones());
+        for (SubSystem subsystem : this.getAllSubSystems()) {
+            milestones.addAll(subsystem.getCurrentSubsystemMilestones());
+        }
+        return Collections.unmodifiableList(milestones);
+    }
+
+    /**
+     * Method that returns a list of the milestones added to this subsystem,
+     * excluding the latest achieved milestone
+     *
+     * @return the list of milestones added to this subsystem, excluding the latest achieved milestone.
+     */
+    public List<Milestone> getCurrentSubsystemMilestones() {
+        return Collections.unmodifiableList(this.milestones);
+    }
+
+    /**
+     * Getter to request the bugreports of the current subsystem.
+     *
+     * @return A list of the bugreports of the current subsystem.
+     */
+    List<BugReport> getBugReports() {
+        return this.bugReports;
+    }
+
+    /**
+     * Getter to request all subsystems of this subsystem.
+     *
+     * @return An unmodifiable list of the subsystems of this subsystem. (recursively)
+     */
+    public List<SubSystem> getAllSubSystems() {
+        List<SubSystem> list = new ArrayList<SubSystem>();
+        for (SubSystem s : subSystems) {
+            list.add(s);
+            list.addAll(s.getAllSubSystems());
+        }
+
+        return Collections.unmodifiableList(list);
+    }
+
+    /**
+     * Getter to request all the bugreports of the subsystem.
+     *
+     * @return An unmodifiable list of all the bugreports of the subsystem. (recursively)
+     */
+    public List<BugReport> getAllBugReports() {
+        List<BugReport> bugReports = new ArrayList<>();
+        bugReports.addAll(this.bugReports);
+        for (SubSystem subsystem : this.getAllSubSystems()) {
+            bugReports.addAll(subsystem.getAllBugReports());
+        }
+        return Collections.unmodifiableList(bugReports);
+    }
+
+    //endregion
+
+    //region Setters
 
 //	/**
 //	 * Setter to set the versionId of the subsystem.
@@ -112,28 +173,6 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 //		this.versionID = versionID;
 //	}
 
-    /**
-     * Setter to set the name of the subsystem.
-     *
-     * @param name The name of the subsystem
-     * @throws ReportErrorToUserException The given name is empty.
-     */
-    public void setName(String name) throws ReportErrorToUserException {
-        if (!isValidName(name)) throw new ReportErrorToUserException("The give name is empty.");
-        this.name = name;
-    }
-
-    /**
-     * Setter to set the description of the subsystem.
-     *
-     * @param description The description of the subsystem.
-     * @throws ReportErrorToUserException The given description is empty.
-     */
-    public void setDescription(String description) throws ReportErrorToUserException {
-        if (!isValidDescription(description)) throw new ReportErrorToUserException("The given description is empty.");
-        this.description = description;
-    }
-
 //    /**
 //     * Checker to check if the versionID is valid.
 //     *
@@ -145,6 +184,62 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 //        if (this.versionID >= versionID) return false;
 //        else return true;
 //    }
+
+    /**
+     * Setter to set the name of the subsystem.
+     *
+     * @param name The name of the subsystem
+     * @throws ReportErrorToUserException The given name is empty.
+     */
+    void setName(String name) throws ReportErrorToUserException {
+        if (!isValidName(name)) throw new ReportErrorToUserException("The give name is empty.");
+        this.name = name;
+    }
+
+    /**
+     * Setter to set the description of the subsystem.
+     *
+     * @param description The description of the subsystem.
+     * @throws ReportErrorToUserException The given description is empty.
+     */
+    void setDescription(String description) throws ReportErrorToUserException {
+        if (!isValidDescription(description)) throw new ReportErrorToUserException("The given description is empty.");
+        this.description = description;
+    }
+
+    /**
+     * Method to set a new subsystem milestone.
+     * <p>
+     * There occurs consistency checking:
+     * first pass: subsystem milestone should not exceed any recursive subsystem's milestone
+     * second pass: subsystem milestone should not exceed the target milestone of
+     * any related bug report with a non-final tag.
+     *
+     * @param newSubsystemMilestone the new subsystem milestone that has to be set
+     * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
+     */
+    void setNewSubSystemMilestone(Milestone newSubsystemMilestone) throws ReportErrorToUserException {
+        if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newSubsystemMilestone))
+            throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
+        if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newSubsystemMilestone))
+            throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects target bug report!");
+
+        setLatestAchievedMilestone(newSubsystemMilestone);
+        addMilestoneToList(newSubsystemMilestone);
+    }
+
+    /**
+     * Method to set the latest achieved milestone to a new value.
+     *
+     * @param latestAchievedMilestone the new milestone to be set as the latest achieved milestone
+     */
+    private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+        this.latestAchievedMilestone = latestAchievedMilestone;
+    }
+
+    //endregion
+
+    //region Checkers
 
     /**
      * Checker to check if the name is valid.
@@ -193,9 +288,9 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         else return true;
     }
 
-    /**
-     * Operations
-     */
+    //endregion
+
+    // region Operations
 
     /**
      * Method for adding a subsystem to the list of subsystems.
@@ -228,51 +323,13 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     }
 
     /**
-     * Getter to request all subsystems of this subsystem.
-     *
-     * @return An unmodifiable list of the subsystems of this subsystem. (recursively)
-     */
-    public List<SubSystem> getAllSubSystems() {
-        List<SubSystem> list = new ArrayList<SubSystem>();
-        for (SubSystem s : subSystems) {
-            list.add(s);
-            list.addAll(s.getAllSubSystems());
-        }
-
-        return Collections.unmodifiableList(list);
-    }
-
-    /**
-     * Getter to request all the bugreports of the subsystem.
-     *
-     * @return An unmodifiable list of all the bugreports of the subsystem. (recursively)
-     */
-    public List<BugReport> getAllBugReports() {
-        List<BugReport> bugReports = new ArrayList<>();
-        bugReports.addAll(this.bugReports);
-        for (SubSystem subsystem : this.getAllSubSystems()) {
-            bugReports.addAll(subsystem.getAllBugReports());
-        }
-        return Collections.unmodifiableList(bugReports);
-    }
-
-    /**
-     * Getter to request the bugreports of the current subsystem.
-     *
-     * @return A list of the bugreports of the current subsystem.
-     */
-    List<BugReport> getBugReports() {
-        return this.bugReports;
-    }
-
-    /**
      * Method to fork a subsystem.
      *
      * @return The forked subsystem.
      * @throws ReportErrorToUserException One of the attributes of the subsystem could not be forked.
      */
     //fork != clone
-    public SubSystem fork() throws ReportErrorToUserException {
+    SubSystem fork() throws ReportErrorToUserException {
         SubSystem forkedSubSystem = new SubSystem(name, description);
         forkedSubSystem.versionID = versionID;
 
@@ -282,61 +339,6 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         //no bugreports
 
         return forkedSubSystem;
-    }
-
-    /**
-     * Method that returns a list of all milestones added to the subsystem and all
-     * the subsystems that it (recursively) contains.
-     *
-     * @return an unmodifiable list of all the milestones
-     */
-    public List<Milestone> getAllMilestones() {
-        List<Milestone> milestones = new ArrayList<>();
-        milestones.add(this.getLatestAchievedMilestone());
-        milestones.addAll(this.getCurrentSubsystemMilestones());
-        for (SubSystem subsystem : this.getAllSubSystems()) {
-            milestones.addAll(subsystem.getCurrentSubsystemMilestones());
-        }
-        return Collections.unmodifiableList(milestones);
-    }
-
-    /**
-     * Method that returns a list of the milestones added to this subsystem,
-     * excluding the latest achieved milestone
-     *
-     * @return the list of milestones added to this subsystem, excluding the latest achieved milestone.
-     */
-    public List<Milestone> getCurrentSubsystemMilestones() {
-        return Collections.unmodifiableList(this.milestones);
-    }
-
-    /**
-     * Method to set a new subsystem milestone.
-     *
-     * There occurs consistency checking:
-     *		first pass: subsystem milestone should not exceed any recursive subsystem's milestone
-     *		second pass: subsystem milestone should not exceed the target milestone of
-     *					 any related bug report with a non-final tag.
-     *
-     * @param newSubsystemMilestone the new subsystem milestone that has to be set
-     * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
-     */
-    public void setNewSubSystemMilestone(Milestone newSubsystemMilestone) throws ReportErrorToUserException {
-        if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newSubsystemMilestone))
-            throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
-        if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newSubsystemMilestone))
-            throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects target bug report!");
-
-        setLatestAchievedMilestone(newSubsystemMilestone);
-        addMilestoneToList(newSubsystemMilestone);
-    }
-
-    /**
-     * Method to set the latest achieved milestone to a new value.
-     * @param latestAchievedMilestone the new milestone to be set as the latest achieved milestone
-     */
-    private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
-        this.latestAchievedMilestone = latestAchievedMilestone;
     }
 
     /**
@@ -360,6 +362,10 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
                 + "\nMilestone: " + this.getLatestAchievedMilestone();
     }
 
+    //endregion
+
+    //region Memento functions
+
     /**
      * Method called to notify this observer
      *
@@ -373,21 +379,15 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     }
 
     /**
-<<<<<<< HEAD
-     * //TODO
-     * @return
-=======
      * Method to create a memento of this object
      * 
      * @return The memento of this object
->>>>>>> e85abd6d5e1b0a0ed4bffe721deb690ee9fb4a7a
      */
 	@Override
 	public SubSystemMemento createMemento() 
 	{
 		return new SubSystemMemento(this);
 	}
-
 
 	/**
 	 * Method to restore this object given the memento
@@ -409,10 +409,13 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 		
 		this.latestAchievedMilestone = memento.getLatestAchievedMilestone();
 		this.milestones = memento.getMilestones();
-		
-	}
 
-	//Innerclass Memento
+    }
+
+    //endregion
+
+    //region Innerclass Memento
+
 	 /**
     * This class provides utility for saving the state of the system at a certain point in time
     * during execution of the Bug Trap software.
@@ -486,5 +489,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 			return new ArrayList<>(milestones);
 		}
 
-	}
+    }
+
+    //endregion
 }

@@ -8,14 +8,16 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * Created by Tom on 19/02/16.
+ * Class extending the Role class, representing a Tester role object.
+ *
+ * A tester reviews the code of the projects he is assigned to.
  */
 public class Tester extends Role {
 
     /**
      * Constructor for the tester role.
      *
-     * @param developer The developer assigned the tester role.
+     * @param developer The developer assigned to the tester role.
      */
     public Tester(Developer developer){
         super(developer);

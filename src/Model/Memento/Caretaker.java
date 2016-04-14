@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * //TODO Documenteren van Mail package !!!
+ * This class will save the system multiple times and keep these saves.
+ * This class provides a mechanism to restore the system to one of the saves.
+ * 
  */
 public class Caretaker 
 {
@@ -17,20 +19,36 @@ public class Caretaker
 	private ProjectService projectService;
 	private MailboxService mailboxService;
 	
+	/**
+	 * Constructor 
+	 * 
+	 * @param projectService
+	 * @param mailboxService
+	 */
 	public Caretaker(ProjectService projectService, MailboxService mailboxService)
 	{
 		this.projectService = projectService;
 		this.mailboxService = mailboxService;
 	}
 	
+	/**
+	 * Method to save the system
+	 * 
+	 * @param usecase The usecase that lead to a save of the system
+	 */
 	public void saveState(UseCase usecase)
 	{
 		snapshots.add(new Snapshot(usecase, projectService, mailboxService));
 	}
 	
-	public void restoreState(int stateNumber)
+	/**
+	 * Method to restore the system to the given snapshot
+	 * 
+	 * @param snapshot The snapshot to restore to
+	 */
+	public void restoreState(Snapshot snapshot)
 	{
-		snapshots.get(stateNumber).restore();
+		snapshot.restore();
 	}
 	
 	public List<Snapshot> getSnapshots(int number)

@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Tom on 19/02/16.
+ * Abstract class representing a Role object.
+ * This class has to be implemented by each specific role.
+ *
+ * A role can be assigned to developers only.
+ * A developer that participates in a project always has at least 1 role.
  */
 public abstract class Role {
     private Developer developer;
@@ -32,6 +36,11 @@ public abstract class Role {
      */
     public abstract String toString();
 
+    /**
+     * Getter to request the developer object to which the role is assigned.
+     *
+     * @return the developer object to which the role is assigned
+     */
     public Developer getDeveloper(){
         return this.developer;
     }
@@ -67,6 +76,13 @@ public abstract class Role {
     }
 
 
+    /**
+     * Method to check whether a specific role has the permission to assign a developer to a bug report.
+     *
+     * @param permission the permission that a role needs to have
+     * @return true if the role has permission to do the operation
+     *         false if not
+     */
     public boolean hasValidAssignmentPermission(Permission permission){
         return assignmentPermission.contains(permission);
     }

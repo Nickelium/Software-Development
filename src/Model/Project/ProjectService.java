@@ -5,6 +5,7 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.Memento.Memento;
 import Model.Memento.Originator;
+import Model.Milestone.Milestone;
 import Model.Project.Project.ProjectMemento;
 import Model.Roles.Lead;
 import Model.User.Developer;
@@ -123,6 +124,83 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 
     //region Project Setters
 
+    /**
+     * Setter to set the name of the project.
+     *
+     * @param name The name of the project
+     * @throws ReportErrorToUserException The given name is empty.
+     */
+    public void setProjectName(Project project, String name) throws ReportErrorToUserException {
+        project.setName(name);
+    }
+
+    /**
+     * Setter to set the description of the project
+     *
+     * @param description The description of the project
+     * @throws ReportErrorToUserException The given description is empty.
+     */
+    public void setProjectDescription(Project project, String description) throws ReportErrorToUserException {
+        project.setDescription(description);
+    }
+
+    /**
+     * Setter to set the starting date of the project.
+     *
+     * @param date The starting date of the project.
+     * @throws ReportErrorToUserException The given date is before the creation date.
+     * @throws IllegalArgumentException   The given date is null.
+     */
+    public void setProjectStartingDate(Project project, TheDate date) throws ReportErrorToUserException {
+        project.setStartingDate(date);
+    }
+
+    /**
+     * Setter to set the budget of the project.
+     *
+     * @param newBudget The budget of the project.
+     * @throws ReportErrorToUserException The budget is negative.
+     */
+    public void setProjectBudget(Project project, double newBudget) throws ReportErrorToUserException {
+        project.setBudget(newBudget);
+    }
+
+    /**
+     * Setter to set the versionId of the project.
+     *
+     * @param versionID The versionId to set the project to.
+     * @throws ReportErrorToUserException The given versionId is lower than or equal to the current one.
+     */
+    public void setProjectVersionID(Project project, double versionID) throws ReportErrorToUserException {
+        project.setVersionID(versionID);
+    }
+
+    /**
+     * Setter to set the lead of the project.
+     *
+     * @param leadRole The lead to assign to the project.
+     * @throws IllegalArgumentException The given role is null.
+     */
+    public void setProjectLeadRole(Project project, Lead leadRole) {
+        project.setLeadRole(leadRole);
+    }
+
+
+    /**
+     * Method to set a new project milestone.
+     * <p>
+     * There occurs consistency checking:
+     * first pass: project milestone should not exceed any subsystem milestone
+     * second pass: project milestone should not exceed the target milestone of
+     * any related bug report with a non-final tag.
+     *
+     * @param newProjectMilestone the new project milestone that has to be set
+     * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
+     */
+    public void setNewProjectMilestone(Project project, Milestone newProjectMilestone) throws ReportErrorToUserException {
+        project.setNewProjectMilestone(newProjectMilestone);
+    }
+
 
     //endregion
 
@@ -173,6 +251,45 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
            subSystems.addAll(project.getAllSubSystems());
         }
         return subSystems;
+    }
+
+    //endregion
+
+    //region Subsystem setters
+
+    /**
+     * Setter to set the name of the subsystem.
+     *
+     * @param name The name of the subsystem
+     * @throws ReportErrorToUserException The given name is empty.
+     */
+    public void setSubSystemName(SubSystem subSystem, String name) throws ReportErrorToUserException {
+        subSystem.setName(name);
+    }
+
+    /**
+     * Setter to set the description of the subsystem.
+     *
+     * @param description The description of the subsystem.
+     * @throws ReportErrorToUserException The given description is empty.
+     */
+    public void setSubSystemDescription(SubSystem subSystem, String description) throws ReportErrorToUserException {
+        subSystem.setDescription(description);
+    }
+
+    /**
+     * Method to set a new subsystem milestone.
+     * <p>
+     * There occurs consistency checking:
+     * first pass: subsystem milestone should not exceed any recursive subsystem's milestone
+     * second pass: subsystem milestone should not exceed the target milestone of
+     * any related bug report with a non-final tag.
+     *
+     * @param newSubsystemMilestone the new subsystem milestone that has to be set
+     * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
+     */
+    public void setNewSubSystemMilestone(SubSystem subSystem, Milestone newSubsystemMilestone) throws ReportErrorToUserException {
+        subSystem.setNewSubSystemMilestone(newSubsystemMilestone);
     }
 
     //endregion

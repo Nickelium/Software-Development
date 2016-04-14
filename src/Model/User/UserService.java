@@ -7,7 +7,16 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Karina on 19.02.2016.
+ * Class containing services for users.
+ *
+ * Contains methods to create users of any kind.
+ * Also contains methods to return lists of all users of a specific kind,
+ * a method to get a user object by its user name,
+ * as well as a method to get all users of any kind.
+ *
+ * This class also deals with the constraint that every user has to be unique:
+ * isValidUserName has the responsibility to check whether a specific username
+ * is already in use.
  */
 public class UserService {
 
@@ -21,7 +30,7 @@ public class UserService {
     }
     
     /**
-     * Getter to request all the users.
+     * Getter to request all users of any kind.
      *
      * @return An list with all users.
      */
@@ -68,11 +77,11 @@ public class UserService {
      * @param firstName The first name of the user.
      * @param middleName The middle name of the user.
      * @param lastName The last name of the user.
-     * @param userName The unique username of the user.
+     * @param userName The unique user name of the user.
      *
      * @return The newly created admin.
      *
-     * @throws ReportErrorToUserException The username is not unique or empty.
+     * @throws ReportErrorToUserException is thrown when the user name is not unique or empty.
      */
     public Admin createAdmin(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
         if (!isValidUserName(userName)) throw new ReportErrorToUserException("The username already exists.");
@@ -89,11 +98,11 @@ public class UserService {
      * @param firstName The first name of the user.
      * @param middleName The middle name of the user. (null if user doesn't have one)
      * @param lastName The last name of the user.
-     * @param userName The unique username of the user.
+     * @param userName The unique user name of the user.
      *
      * @return The newly created issuer.
      *
-     * @throws ReportErrorToUserException The username is not unique or empty.
+     * @throws ReportErrorToUserException is thrown when the user name is not unique or empty.
      */
     public Issuer createIssuer(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
         if (!isValidUserName(userName)) throw new ReportErrorToUserException("The username already exists.");
@@ -110,14 +119,14 @@ public class UserService {
      * @param firstName The first name of the user.
      * @param middleName The middle name of the user. (null if user doesn't have one)
      * @param lastName The last name of the user.
-     * @param userName The unique username of the user.
+     * @param userName The unique user name of the user.
      *
      * @return The newly created developer.
      *
-     * @throws ReportErrorToUserException The username is not unique or empty.
+     * @throws ReportErrorToUserException is thrown when the user name is not unique or empty.
      */
     public Developer createDeveloper(String firstName, String middleName, String lastName, String userName) throws ReportErrorToUserException {
-        if (!isValidUserName(userName)) throw new ReportErrorToUserException("The username already exists.");
+        if (!isValidUserName(userName)) throw new ReportErrorToUserException("The user name already exists.");
 
         User user = new Developer(firstName, middleName, lastName, userName);
 
@@ -126,14 +135,15 @@ public class UserService {
     }
 
     /**
-     * Checker to check if the given username is unique.
+     * Checker to check if the given user name is unique.
      *
-     * @param username The username to check.
+     * @param userName The username to check.
      *
-     * @return True if the username doesn't exist in the list of users.
+     * @return True if the username doesn't already exist in the list of users.
+     *         False if otherwise.
      */
-    public boolean isValidUserName(String username){
-        if (this.userList.getOne(x -> x.getUserName().equals(username)) == null){
+    public boolean isValidUserName(String userName){
+        if (this.userList.getOne(x -> x.getUserName().equals(userName)) == null){
             return true;
         } else {
             return false;
@@ -142,15 +152,12 @@ public class UserService {
 
     //endregions
 
-
     /**
-     * Getter to request the user with the given username.
+     * Getter to request the user with the given user name.
      *
-     * @param userName The username of the user to find.
-     *
-     * @return The user with the given username or null if the user does not exist.
-     *
-     * @throws ReportErrorToUserException There is no user with the given username.
+     * @param userName The user name of the user to find.
+     * @return The user with the given user name.
+     * @throws ReportErrorToUserException is thrown when there is no user with the given user name.
      */
     public User getUser(String userName) throws ReportErrorToUserException {
         User user = this.userList.getOne((s)->s.getUserName().equals(userName));

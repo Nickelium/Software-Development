@@ -3,7 +3,10 @@ package Model.User;
 import CustomExceptions.ReportErrorToUserException;
 
 /**
- * Created by Karina on 19.02.2016.
+ * Class extending the Issuer class, representing a Developer user object.
+ *
+ * Developers are issuers that are employed by the client for which
+ * BugTrap is being developed.
  */
 public class Developer extends Issuer {
 

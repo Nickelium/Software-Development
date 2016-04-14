@@ -44,6 +44,11 @@ public abstract class Subject
 		}
 	}
 	
+	/**
+	 * Getter to get all observer of this object
+	 * 
+	 * @return The list of observer
+	 */
 	public List<Observer> getObservers()
 	{
 		return observers;
