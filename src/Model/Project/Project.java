@@ -11,9 +11,11 @@ import Model.Milestone.MilestoneContainer;
 import Model.Milestone.SetMilestoneHelper;
 import Model.Roles.Lead;
 import Model.Roles.Role;
+import Model.User.Developer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -201,13 +203,29 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * @return an unmodifiable list of all the milestones
 	 */
 	public List<Milestone> getAllMilestones() {
-
 		List<Milestone> milestones = new ArrayList<>();
-		milestones.add(this.getLatestAchievedMilestone());
+		milestones.addAll(this.milestones);
 		for (SubSystem subsystem : this.getAllSubSystems()) {
 			milestones.addAll(subsystem.getCurrentSubsystemMilestones());
 		}
-		return Collections.unmodifiableList(milestones);
+		return new ArrayList<>(new LinkedHashSet<>(milestones));
+	}
+
+	/**
+	 * Method to get all the developers involved in this project.
+	 *
+	 * @return List of all the developers involved in this project.
+	 */
+	public List<Developer> getAllInvolvedDevelopers() {
+		List<Developer> developers = new ArrayList<>();
+		developers.add(this.getLeadRole().getDeveloper());
+		for (Role role : getDevsRoles()) {
+			if (!developers.contains(role.getDeveloper())) {
+				developers.add(role.getDeveloper());
+			}
+		}
+
+		return developers;
 	}
 
 	//endregion
@@ -310,6 +328,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
 	 */
 	void setNewProjectMilestone(Milestone newProjectMilestone) throws ReportErrorToUserException {
+		if (!SetMilestoneHelper.mileStoneIsBiggerThanCurrent(this, newProjectMilestone))
+			throw new ReportErrorToUserException("The new milestone is smaller than the current one");
 		if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newProjectMilestone))
 			throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
 		if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newProjectMilestone))
@@ -424,7 +444,7 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	void addRole(Role role)
 	{
 		if(role == null) throw new IllegalArgumentException("Role is null");
-		devsRoles.add(role.copy());
+		devsRoles.add(role);
 	}
 
 	/**

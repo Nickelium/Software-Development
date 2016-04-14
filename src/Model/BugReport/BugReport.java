@@ -42,7 +42,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     private Issuer creator;
     private List<Comment> comments;
     private List<BugReport> dependencies;
-    private boolean pblc;
+
 
     // default access right attributes
     int solutionScore;
@@ -51,6 +51,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     Patch selectedPatch;
     Tag tag;
     List<Developer> assignees;
+    boolean pblc;
 
     //optional attributes
     private TargetMilestone targetMilestone;

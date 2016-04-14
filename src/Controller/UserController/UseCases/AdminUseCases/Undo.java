@@ -54,9 +54,9 @@ public class Undo extends UseCase
     	getUi().display(stringSnapshots);
     	
     	// Step 3
-    	getUi().display("Please indicate how many use cases you want to revert.");
-    	
-    	int number = getUi().readInt();
+		getUi().display("Please indicate to which state you want to revert:");
+
+		int number = getUi().readInt();
     	caretaker.restoreState(snapshots.get(number));
     	
     	getUi().display("System restore completed !");

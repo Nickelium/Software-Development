@@ -17,7 +17,7 @@ public class AssignToProject extends DeveloperControllerInit {
     public void successfullyAssignedDeveloperToProject() throws Exception {
         String[] simulatedUserInput = {
                 "0",
-                "1",
+                "2",
                 "0",
                 "1"
         };

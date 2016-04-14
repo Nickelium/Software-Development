@@ -22,7 +22,11 @@ public class MainController {
     public MainController() {
         ui = new UI();
         initializer = new Initializer();
+    }
 
+    public MainController(IUI ui, IInitializer initializer) {
+        this.ui = ui;
+        this.initializer = initializer;
     }
 
     public void run() throws Exception {

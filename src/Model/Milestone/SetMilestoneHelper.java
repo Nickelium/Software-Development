@@ -67,6 +67,17 @@ public class SetMilestoneHelper {
     }
 
     /**
+     * Check that the given milestone is bigger than the latest milestone.
+     *
+     * @param cont The class containing the milestone.
+     * @param ms   The milestone to assign to the class.
+     * @return True if the given milestone is bigger than the current milestone.
+     */
+    public static boolean mileStoneIsBiggerThanCurrent(MilestoneContainer cont, Milestone ms) {
+        return ms.compareTo(cont.getLatestAchievedMilestone()) > 0;
+    }
+
+    /**
      * Check that the given milestone does not exceed the milestones of the bugreports.
      *
      * @param cont The class containing the milestones.

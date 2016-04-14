@@ -32,6 +32,7 @@ public class Assigned extends Tag {
         if (bugReport.getTests().isEmpty())
             throw new ReportErrorToUserException("No tests are submitted yet, so no patches can be added.");
         super.addPatch(bugReport, patch);
+        super.makeBugReportPublic(bugReport);
         this.changeTag(bugReport, new UnderReview());
     }
 

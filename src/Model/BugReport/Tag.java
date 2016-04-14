@@ -124,6 +124,15 @@ public abstract class Tag{
         bugReport.solutionScore = score;
     }
 
+    /**
+     * Method to make the given bugreport public.
+     *
+     * @param bugReport The bugreport to make public.
+     */
+    protected final void makeBugReportPublic(BugReport bugReport) {
+        bugReport.pblc = true;
+    }
+
     //endregion
 
     //region Getters
