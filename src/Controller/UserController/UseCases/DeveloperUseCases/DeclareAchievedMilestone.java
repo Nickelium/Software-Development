@@ -103,9 +103,9 @@ public class DeclareAchievedMilestone extends DeveloperUseCase {
         // Step 8a is handled in the Subsystem & Project class, throws a
         // ReportErrorToUserException when the milestone cannot be assigned.
         if(subSystem != null )
-            subSystem.setNewSubSystemMilestone(newMilestoneObject);
+            getProjectService().setNewSubSystemMilestone(subSystem, newMilestoneObject);
         else
-            project.setNewProjectMilestone(newMilestoneObject);
+            getProjectService().setNewProjectMilestone(project, newMilestoneObject);
     }
     
     @Override

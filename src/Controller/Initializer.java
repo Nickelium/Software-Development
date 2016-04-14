@@ -70,17 +70,17 @@ public class Initializer implements IInitializer {
             projectA.addRole(testerMaria);
 
             SubSystem subSystemA1 = projectService.createSubsystem("SubSystemA1", "SubsystemA1 description", projectA);
-            subSystemA1.setNewSubSystemMilestone(new Milestone("M2.5.1"));
+            projectService.setNewSubSystemMilestone(subSystemA1, new Milestone("M2.5.1"));
             SubSystem subSystemA2 = projectService.createSubsystem("SubSystemA2", "SubsystemA2 description", projectA);
-            subSystemA2.setNewSubSystemMilestone(new Milestone("M2.5"));
+            projectService.setNewSubSystemMilestone(subSystemA2, new Milestone("M2.5"));
             SubSystem subSystemA3 = projectService.createSubsystem("SubSystemA3", "SubsystemA3 description", projectA);
-            subSystemA3.setNewSubSystemMilestone(new Milestone("M2.8.5"));
+            projectService.setNewSubSystemMilestone(subSystemA3, new Milestone("M2.8.5"));
             SubSystem subSystemA31 = projectService.createSubsystem("SubSystemA3.1", "SubsystemA3.1 description", subSystemA3);
-            subSystemA31.setNewSubSystemMilestone(new Milestone("M2.8.5.3"));
+            projectService.setNewSubSystemMilestone(subSystemA31, new Milestone("M2.8.5.3"));
             SubSystem subSystemA32 = projectService.createSubsystem("SubSystemA3.2", "SubsystemA3.2 description", subSystemA3);
-            subSystemA32.setNewSubSystemMilestone(new Milestone("M2.9"));
+            projectService.setNewSubSystemMilestone(subSystemA32, new Milestone("M2.9"));
 
-            projectA.setNewProjectMilestone(new Milestone("M2.5"));
+            projectService.setNewProjectMilestone(projectA, new Milestone("M2.5"));
 
             // project B
             Lead leadMaria = new Lead(maria);
@@ -95,13 +95,13 @@ public class Initializer implements IInitializer {
             projectB.addRole(testerMajorB);
 
             SubSystem subSystemB1 = projectService.createSubsystem("SubSystemB1", "SubsystemB1 description", projectB);
-            subSystemB1.setNewSubSystemMilestone(new Milestone("M1.3"));
+            projectService.setNewSubSystemMilestone(subSystemB1, new Milestone("M1.3"));
             SubSystem subSystemB2 = projectService.createSubsystem("SubSystemB2", "SubsystemB2 description", projectB);
-            subSystemB2.setNewSubSystemMilestone(new Milestone("M1.2"));
+            projectService.setNewSubSystemMilestone(subSystemB2, new Milestone("M1.2"));
             SubSystem subSystemB21 = projectService.createSubsystem("SubSystemB2.1", "SubsystemB2.1 description.", subSystemB2);
-            subSystemB21.setNewSubSystemMilestone(new Milestone("M1.2"));
+            projectService.setNewSubSystemMilestone(subSystemB21, new Milestone("M1.2"));
 
-            projectB.setNewProjectMilestone(new Milestone("M1.2"));
+            projectService.setNewProjectMilestone(projectB, new Milestone("M1.2"));
 
             // Bug report 1
             BugReport bugreport1 = bugReportService.createBugReport("The function parse_ewd returns unexpected results",

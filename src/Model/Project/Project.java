@@ -255,6 +255,27 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		this.leadRole = leadRole;
 	}
 
+	/**
+	 * Method to set a new project milestone.
+	 * <p>
+	 * There occurs consistency checking:
+	 * first pass: project milestone should not exceed any subsystem milestone
+	 * second pass: project milestone should not exceed the target milestone of
+	 * any related bug report with a non-final tag.
+	 *
+	 * @param newProjectMilestone the new project milestone that has to be set
+	 * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
+	 */
+	void setNewProjectMilestone(Milestone newProjectMilestone) throws ReportErrorToUserException {
+		if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newProjectMilestone))
+			throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
+		if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newProjectMilestone))
+			throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects target bug report!");
+
+		setLatestAchievedMilestone(newProjectMilestone);
+		addMilestoneToList(newProjectMilestone);
+	}
+
 	//endregion
 
 	//region Checkers
@@ -392,8 +413,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * 
 	 * @throws ReportErrorToUserException is thrown if one of attributes of the project could not be forked.
 	 */
-    //fork != clone
-	public Project fork () throws ReportErrorToUserException
+	//fork != clone
+	Project fork() throws ReportErrorToUserException
 	{
 		Project forkedProject = new Project(name,description,startingDate.copy(),budget, (Lead)leadRole.copy());
 		
@@ -424,27 +445,6 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
             milestones.addAll(subsystem.getCurrentSubsystemMilestones());
         }
 		return Collections.unmodifiableList(milestones);
-	}
-
-	/**
-	 * Method to set a new project milestone.
-	 *
-	 * There occurs consistency checking:
-	 *		first pass: project milestone should not exceed any subsystem milestone
-	 *		second pass: project milestone should not exceed the target milestone of
-	 *					 any related bug report with a non-final tag.
-	 *
-	 * @param newProjectMilestone the new project milestone that has to be set
-	 * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
-     */
-    public void setNewProjectMilestone(Milestone newProjectMilestone) throws ReportErrorToUserException {
-		if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newProjectMilestone))
-			throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
-		if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newProjectMilestone))
-			throw new ReportErrorToUserException("The new milestone exceeds the milestone of the projects target bug report!");
-
-		setLatestAchievedMilestone(newProjectMilestone);
-		addMilestoneToList(newProjectMilestone);
 	}
 
 
