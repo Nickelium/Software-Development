@@ -36,7 +36,12 @@ public class Formatter
 		
 	}
 
-	//TODO
+	/**
+	 * Format the given list of milestones into a textual representation
+	 *
+	 * @param listMilestone The list of milestones
+	 * @return The textual representation
+     */
 	public static String formatMilestoneList(List<Milestone> listMilestone)
 	{
 		String parsed ="";

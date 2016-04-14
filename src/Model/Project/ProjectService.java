@@ -264,8 +264,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @throws ReportErrorToUserException The given name is empty.
      */
     public void setSubSystemName(SubSystem subSystem, String name) throws ReportErrorToUserException {
-        subSystem.setName(name);
-    }
+        subSystem.setName(name);}
 
     /**
      * Setter to set the description of the subsystem.
@@ -274,8 +273,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @throws ReportErrorToUserException The given description is empty.
      */
     public void setSubSystemDescription(SubSystem subSystem, String description) throws ReportErrorToUserException {
-        subSystem.setDescription(description);
-    }
+        subSystem.setDescription(description);}
 
     /**
      * Method to set a new subsystem milestone.
@@ -309,8 +307,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
                 return subSystem;
             }
         }
-        throw new ReportErrorToUserException("Ther is no subsystem that contains the given bug report.");
-    }
+        throw new ReportErrorToUserException("Ther is no subsystem that contains the given bug report.");}
 
     /**
      * Method to create a memento of this object

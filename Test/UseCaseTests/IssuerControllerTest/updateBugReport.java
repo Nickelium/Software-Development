@@ -1,4 +1,4 @@
-package UseCaseTests.DeveloperControllerTest;
+package UseCaseTests.IssuerControllerTest;
 
 import Controller.IUI;
 import Controller.UserController.DeveloperController;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 /**
  * Created by Tom on 11/03/16.
  */
-public class updateBugReport extends DeveloperTestInitializer {
+public class UpdateBugReport extends IssuerControllerInit {
     @Test
     public void successfullyUpdatedBugReport() throws Exception {
         String[] simulatedUserInput = {
@@ -26,7 +26,7 @@ public class updateBugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(7).run();
+        developerController.getUseCase(5).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -42,7 +42,7 @@ public class updateBugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(7).run();
+        developerController.getUseCase(5).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -58,6 +58,6 @@ public class updateBugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(7).run();
+        developerController.getUseCase(5).run();
     }
 }

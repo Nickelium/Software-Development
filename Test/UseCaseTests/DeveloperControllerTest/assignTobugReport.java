@@ -12,7 +12,7 @@ import java.util.Arrays;
 /**
  * Created by Tom on 10/03/16.
  */
-public class assignTobugReport extends DeveloperTestInitializer {
+public class AssignToBugReport extends DeveloperControllerInit {
     @Test
     public void successfullyAssignedDeveloperToBugReport() throws Exception {
         String[] simulatedUserInput = {
@@ -26,7 +26,7 @@ public class assignTobugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(6).run();
+        developerController.getUseCase(10).run();
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -41,7 +41,7 @@ public class assignTobugReport extends DeveloperTestInitializer {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(6).run();
+        developerController.getUseCase(10).run();
     }
 
 }
