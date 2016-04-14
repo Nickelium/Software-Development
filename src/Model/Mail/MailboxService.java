@@ -21,6 +21,12 @@ public class MailboxService
 	private BugReportService bugReportService;
 	private UserService userService;
 	
+	/**
+	 * Constructor 
+	 * 
+	 * @param bugReportService
+	 * @param userService
+	 */
 	public MailboxService(BugReportService bugReportService, UserService userService)
 	{
 		this.bugReportService = bugReportService;
@@ -134,6 +140,11 @@ public class MailboxService
 	    return nList;
 	}
 	
+	/**
+	 * Method to get all mailboxes of the system
+	 * 
+	 * @return The list of mailboxes
+	 */
 	public List<Mailbox> getAllMailboxes()
 	{
 		List<Mailbox> mailboxes = new ArrayList<>();

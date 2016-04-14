@@ -10,6 +10,11 @@ import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.User.UserService;
 
+/**
+ * Class that represent a snapshot moment of the system.
+ * This class saves the projectservice and all mailboxes and can restore the system.
+ *
+ */
 public class Snapshot
 {
 	private UseCase usecase;
@@ -17,7 +22,14 @@ public class Snapshot
 	private ProjectService.ProjectServiceMemento projectServiceMemento;
 	private List<Mailbox.MailboxMemento> mailboxMementos = new ArrayList<>();
 	
-	public Snapshot(UseCase usecase, ProjectService projectService, MailboxService mailboxService)
+	/**
+	 * Constructor 
+	 * 
+	 * @param usecase The usecase that lead to snapshot save of the system
+	 * @param projectService
+	 * @param mailboxService
+	 */
+	Snapshot(UseCase usecase, ProjectService projectService, MailboxService mailboxService)
 	{
 		projectServiceMemento = projectService.createMemento();
 		for(Mailbox mailbox : mailboxService.getAllMailboxes())
@@ -25,7 +37,11 @@ public class Snapshot
 		this.usecase = usecase;
 	}
 	
-	public void restore()
+	/**
+	 * Method to restore the system
+	 * 
+	 */
+	void restore()
 	{
 		projectServiceMemento.getOriginator().restoreMemento(projectServiceMemento);
 		
@@ -33,6 +49,11 @@ public class Snapshot
 			memento.getOriginator().restoreMemento(memento);
 	}
 	
+	/**
+	 * Method to represent a snapshot as a string.
+	 * 
+	 * @return The snapshot as a string.
+	 */
 	@Override
 	public String toString()
 	{
