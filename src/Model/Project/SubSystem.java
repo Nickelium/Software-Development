@@ -160,6 +160,10 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 
     //region Setters
 
+
+
+    // The code below has been refactored, but will be saved for future reference.
+
 //	/**
 //	 * Setter to set the versionId of the subsystem.
 //     *
