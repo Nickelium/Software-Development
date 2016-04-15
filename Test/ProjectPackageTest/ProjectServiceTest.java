@@ -166,7 +166,7 @@ public class ProjectServiceTest {
 	@Test
 	public void setNewSubSystemMilestone_SUCCESS() throws ReportErrorToUserException
 	{
-		Milestone m = new Milestone();
+		Milestone m = new Milestone("M1");
 		projectService.setNewSubSystemMilestone(s, m);
 		assertEquals(s.getLatestAchievedMilestone(), m);
 	}

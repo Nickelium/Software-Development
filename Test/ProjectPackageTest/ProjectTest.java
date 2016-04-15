@@ -180,7 +180,7 @@ public class ProjectTest {
 	public void addRole_SUCCES() throws Exception
 	{
 		projectService.assignRole(project, programmer, lead.getDeveloper());
-		assertTrue(project.getDevsRoles().contains(programmer));
+		assert (project.getDevsRoles().contains(programmer));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
