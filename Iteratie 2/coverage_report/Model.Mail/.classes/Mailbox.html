@@ -1,0 +1,519 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Mailbox</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Mail</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Mailbox (Model.Mail)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Mailbox</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (31/ 31)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Mailbox$MailboxMemento</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverBugReport</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverComment</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (6/ 7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverSpecificTag</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,5%
+  </span>
+  <span class="absValue">
+    (7/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverTag</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (24/ 26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97%
+  </span>
+  <span class="absValue">
+    (64/ 66)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Mail;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Model.BugReport.BugReport;
+<i>4</i>&nbsp;import Model.BugReport.Comment;
+<i>5</i>&nbsp;import Model.BugReport.Tag;
+<i>6</i>&nbsp;import Model.Memento.Memento;
+<i>7</i>&nbsp;import Model.Memento.Originator;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.ArrayList;
+<i>10</i>&nbsp;import java.util.Collections;
+<i>11</i>&nbsp;import java.util.List;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;/**
+<i>14</i>&nbsp; * Class that represents a mailbox of a user.
+<i>15</i>&nbsp; * A mailbox contains all notifications of which a user is registered to.
+<i>16</i>&nbsp; * A mailbox also contains all his registrations.
+<i>17</i>&nbsp; * 
+<i>18</i>&nbsp; */
+<b class="fc"><i>19</i>&nbsp;public class Mailbox implements Originator&lt;Mailbox.MailboxMemento, Mailbox&gt;</b>
+<i>20</i>&nbsp;{
+<i>21</i>&nbsp;	private List&lt;Notification&gt; notifications;
+<i>22</i>&nbsp;	private List&lt;ObserverAspect&gt; registrations;
+<i>23</i>&nbsp;	
+<i>24</i>&nbsp;	/**
+<i>25</i>&nbsp;	 * Constructor of this mailbox object
+<i>26</i>&nbsp;	 * 
+<i>27</i>&nbsp;	 */
+<b class="fc"><i>28</i>&nbsp;	public Mailbox() {</b>
+<b class="fc"><i>29</i>&nbsp;		this.notifications = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>30</i>&nbsp;		this.registrations = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>31</i>&nbsp;	}</b>
+<i>32</i>&nbsp;	
+<i>33</i>&nbsp;	/**
+<i>34</i>&nbsp;	 * Method to get all notifications of this mailbox.
+<i>35</i>&nbsp;	 * 
+<i>36</i>&nbsp;	 * @return An unmodifiable list of notifications of this mailbox
+<i>37</i>&nbsp;	 */
+<i>38</i>&nbsp;	public List&lt;Notification&gt; getNotifications()
+<i>39</i>&nbsp;	{
+<b class="fc"><i>40</i>&nbsp;		return Collections.unmodifiableList(this.notifications);</b>
+<i>41</i>&nbsp;	}
+<i>42</i>&nbsp;	
+<i>43</i>&nbsp;	/**
+<i>44</i>&nbsp;	 * Method to get all registrations of this mailbox.
+<i>45</i>&nbsp;	 * 
+<i>46</i>&nbsp;	 * @return An unmodifiable list of ObserverAspect of this mailbox
+<i>47</i>&nbsp;	 */
+<i>48</i>&nbsp;	public List&lt;ObserverAspect&gt; getRegistrations()
+<i>49</i>&nbsp;	{
+<b class="fc"><i>50</i>&nbsp;		return Collections.unmodifiableList(this.registrations);</b>
+<i>51</i>&nbsp;	}
+<i>52</i>&nbsp;	
+<i>53</i>&nbsp;	/**
+<i>54</i>&nbsp;	 * Method to register for a creation of a new bug report in the given subject
+<i>55</i>&nbsp;	 *
+<i>56</i>&nbsp;	 * @param structure The subject to observe
+<i>57</i>&nbsp;	 */
+<i>58</i>&nbsp;	public void registerBugReport(Subject structure)
+<i>59</i>&nbsp;	{
+<b class="fc"><i>60</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>61</i>&nbsp;		ObserverBugReport ObBug = new ObserverBugReport(structure);</b>
+<b class="fc"><i>62</i>&nbsp;		registrations.add(ObBug);</b>
+<b class="fc"><i>63</i>&nbsp;	}</b>
+<i>64</i>&nbsp;	
+<i>65</i>&nbsp;	/**
+<i>66</i>&nbsp;	 * Method to register for a creation of a new comment in the given subject
+<i>67</i>&nbsp;	 *
+<i>68</i>&nbsp;	 * @param structure The subject to observe
+<i>69</i>&nbsp;	 */
+<i>70</i>&nbsp;	public void registerComment(Subject structure)
+<i>71</i>&nbsp;	{
+<b class="fc"><i>72</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>73</i>&nbsp;		ObserverComment ObComm = new ObserverComment(structure);</b>
+<b class="fc"><i>74</i>&nbsp;		registrations.add(ObComm);</b>
+<b class="fc"><i>75</i>&nbsp;	}</b>
+<i>76</i>&nbsp;	
+<i>77</i>&nbsp;	/**
+<i>78</i>&nbsp;	 * Method to register for a change of a tag of a bug report in the given subject
+<i>79</i>&nbsp;	 *
+<i>80</i>&nbsp;	 * @param structure The subject to observe
+<i>81</i>&nbsp;	 */
+<i>82</i>&nbsp;	public void registerTag(Subject structure)
+<i>83</i>&nbsp;	{
+<b class="fc"><i>84</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>85</i>&nbsp;		ObserverTag ObTag = new ObserverTag(structure);</b>
+<b class="fc"><i>86</i>&nbsp;		registrations.add(ObTag);</b>
+<b class="fc"><i>87</i>&nbsp;	}</b>
+<i>88</i>&nbsp;	
+<i>89</i>&nbsp;	/**
+<i>90</i>&nbsp;	 * Method to register for a change of a tag to a specific tag of a bug report in the given subject
+<i>91</i>&nbsp;	 *
+<i>92</i>&nbsp;	 * @param structure The subject to observe
+<i>93</i>&nbsp;	 * @param tag The specific tag 
+<i>94</i>&nbsp;	 */
+<i>95</i>&nbsp;	public void registerSpecificTag(Subject structure, Tag tag)
+<i>96</i>&nbsp;	{
+<b class="fc"><i>97</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>98</i>&nbsp;		if(tag == null) throw new IllegalArgumentException(&quot;Tag cannot be null&quot;);</b>
+<b class="fc"><i>99</i>&nbsp;		ObserverSpecificTag ObSTag = new ObserverSpecificTag(structure, tag);</b>
+<b class="fc"><i>100</i>&nbsp;		registrations.add(ObSTag);</b>
+<b class="fc"><i>101</i>&nbsp;	}</b>
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;	/**
+<i>104</i>&nbsp;	 * Method to unregister from a registration
+<i>105</i>&nbsp;	 * 
+<i>106</i>&nbsp;	 * @param registration The observeraspect to unregister
+<i>107</i>&nbsp;	 */
+<i>108</i>&nbsp;	public void unregister(ObserverAspect registration)
+<i>109</i>&nbsp;	{
+<b class="fc"><i>110</i>&nbsp;		if(registrations.contains(registration))</b>
+<b class="fc"><i>111</i>&nbsp;			registration.unbind();</b>
+<i>112</i>&nbsp;		
+<b class="fc"><i>113</i>&nbsp;		registrations.remove(registration);</b>
+<b class="fc"><i>114</i>&nbsp;	}</b>
+<i>115</i>&nbsp;	
+<i>116</i>&nbsp;	/**
+<i>117</i>&nbsp;	 * Method to create and return a new memento object
+<i>118</i>&nbsp;	 *
+<i>119</i>&nbsp;	 * @return the new memento object for this Mailbox
+<i>120</i>&nbsp;     */
+<i>121</i>&nbsp;	@Override
+<i>122</i>&nbsp;	public MailboxMemento createMemento() 
+<i>123</i>&nbsp;	{
+<b class="fc"><i>124</i>&nbsp;		return new MailboxMemento(this);</b>
+<i>125</i>&nbsp;	}
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;	/**
+<i>128</i>&nbsp;	 * Method to restore this object given the memento
+<i>129</i>&nbsp;	 * 
+<i>130</i>&nbsp;	 * @param memento The memento to restore to
+<i>131</i>&nbsp;	 */
+<i>132</i>&nbsp;	@Override
+<i>133</i>&nbsp;	public void restoreMemento(MailboxMemento memento)
+<i>134</i>&nbsp;	{
+<b class="fc"><i>135</i>&nbsp;		this.registrations	= new ArrayList&lt;&gt;(memento.getRegistrations());	</b>
+<b class="fc"><i>136</i>&nbsp;	}</b>
+<i>137</i>&nbsp;	
+<i>138</i>&nbsp;    //Innerclass Memento
+<i>139</i>&nbsp;    /**
+<i>140</i>&nbsp;     * This class provides utility for saving the state of the system at a certain point in time
+<i>141</i>&nbsp;     * during execution of the Bug Trap software.
+<i>142</i>&nbsp;     *
+<i>143</i>&nbsp;     * The mailbox memento saves the state of the following attributes of the mailbox:
+<i>144</i>&nbsp;     * registrations.
+<i>145</i>&nbsp;     *
+<i>146</i>&nbsp;     * This class provides private methods to request the values of the saved fields.
+<i>147</i>&nbsp;     * This wide interface (private getters) is provided to the class Bugreport,
+<i>148</i>&nbsp;     * while the narrow interface (public constructor) is provided to any class.
+<i>149</i>&nbsp;     */
+<b class="fc"><i>150</i>&nbsp;	public class MailboxMemento extends Memento&lt;Mailbox&gt;</b>
+<i>151</i>&nbsp;	{
+<i>152</i>&nbsp;		private List&lt;ObserverAspect&gt; registrations;
+<i>153</i>&nbsp;		
+<i>154</i>&nbsp;		/**
+<i>155</i>&nbsp;    	 * Constructor 
+<i>156</i>&nbsp;    	 * 
+<i>157</i>&nbsp;    	 * @param originator The originator to build a memento from
+<i>158</i>&nbsp;    	 */
+<i>159</i>&nbsp;		public MailboxMemento(Mailbox originator) 
+<b class="fc"><i>160</i>&nbsp;		{</b>
+<b class="fc"><i>161</i>&nbsp;			super(originator);</b>
+<b class="fc"><i>162</i>&nbsp;			registrations = originator.getRegistrations();</b>
+<b class="fc"><i>163</i>&nbsp;		}</b>
+<i>164</i>&nbsp;		
+<i>165</i>&nbsp;		private List&lt;ObserverAspect&gt; getRegistrations()
+<i>166</i>&nbsp;		{
+<b class="fc"><i>167</i>&nbsp;			return new ArrayList&lt;&gt;(registrations);</b>
+<i>168</i>&nbsp;		}
+<i>169</i>&nbsp;	}
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;	
+<i>172</i>&nbsp;	//Innerclass observer bug report
+<i>173</i>&nbsp;	/**
+<i>174</i>&nbsp;	 * Inner class observer of a creation of a new bug report
+<i>175</i>&nbsp;	 *
+<i>176</i>&nbsp;	 */
+<i>177</i>&nbsp;	private class ObserverBugReport extends ObserverAspect
+<i>178</i>&nbsp;	{
+<i>179</i>&nbsp;		/**
+<i>180</i>&nbsp;		 * Constructor 
+<i>181</i>&nbsp;		 * 
+<i>182</i>&nbsp;		 * @param structure The subject to observe
+<i>183</i>&nbsp;		 */
+<i>184</i>&nbsp;		public ObserverBugReport(Subject structure)
+<b class="fc"><i>185</i>&nbsp;		{</b>
+<b class="fc"><i>186</i>&nbsp;			super(structure);</b>
+<b class="fc"><i>187</i>&nbsp;		}</b>
+<i>188</i>&nbsp;		
+<i>189</i>&nbsp;		/**
+<i>190</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>191</i>&nbsp;		 */
+<i>192</i>&nbsp;		@Override
+<i>193</i>&nbsp;		public void update(Subject structure, BugReport bugReport, Object aspect) {
+<b class="fc"><i>194</i>&nbsp;			if(super.structure == structure &amp;&amp; aspect instanceof BugReport)</b>
+<b class="fc"><i>195</i>&nbsp;				notifications.add(new Notification(&quot;New bug report&quot;,bugReport, super.structure));</b>
+<i>196</i>&nbsp;			
+<b class="fc"><i>197</i>&nbsp;		}</b>
+<i>198</i>&nbsp;
+<i>199</i>&nbsp;		/**
+<i>200</i>&nbsp;		 * Method to get textual representation of this object
+<i>201</i>&nbsp;		 * 
+<i>202</i>&nbsp;		 * @return The String representation of this object
+<i>203</i>&nbsp;		 */
+<i>204</i>&nbsp;		@Override
+<i>205</i>&nbsp;		public String toString() {
+<b class="fc"><i>206</i>&nbsp;			return &quot;Registration for creation of new bug report in \n&quot; + super.structure;</b>
+<i>207</i>&nbsp;		}
+<i>208</i>&nbsp;		
+<i>209</i>&nbsp;	}
+<i>210</i>&nbsp;	
+<i>211</i>&nbsp;	//Innerclass observer bug report
+<i>212</i>&nbsp;	/**
+<i>213</i>&nbsp;	 * Inner class observer of a tag change of a bug report
+<i>214</i>&nbsp;	 *
+<i>215</i>&nbsp;	 */
+<i>216</i>&nbsp;	private class ObserverTag extends ObserverAspect
+<i>217</i>&nbsp;	{		
+<i>218</i>&nbsp;		
+<i>219</i>&nbsp;		/**
+<i>220</i>&nbsp;		 * Constructor 
+<i>221</i>&nbsp;		 * 
+<i>222</i>&nbsp;		 * @param structure The subject to observe
+<i>223</i>&nbsp;		 */
+<i>224</i>&nbsp;		public ObserverTag(Subject structure)
+<b class="fc"><i>225</i>&nbsp;		{</b>
+<b class="fc"><i>226</i>&nbsp;			super(structure);</b>
+<b class="fc"><i>227</i>&nbsp;		}</b>
+<i>228</i>&nbsp;		
+<i>229</i>&nbsp;		/**
+<i>230</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>231</i>&nbsp;		 */
+<i>232</i>&nbsp;		@Override
+<i>233</i>&nbsp;		public void update(Subject structure, BugReport bugReport, Object aspect)
+<i>234</i>&nbsp;		{
+<b class="fc"><i>235</i>&nbsp;			if(super.structure == structure &amp;&amp; aspect instanceof Tag)</b>
+<b class="fc"><i>236</i>&nbsp;				notifications.add(new Notification(&quot;Tag changed&quot;, bugReport, super.structure));</b>
+<b class="fc"><i>237</i>&nbsp;		}</b>
+<i>238</i>&nbsp;		
+<i>239</i>&nbsp;		/**
+<i>240</i>&nbsp;		 * Method to get textual representation of this object
+<i>241</i>&nbsp;		 * 
+<i>242</i>&nbsp;		 * @return The String representation of this object
+<i>243</i>&nbsp;		 */
+<i>244</i>&nbsp;		@Override
+<i>245</i>&nbsp;		public String toString() {
+<b class="fc"><i>246</i>&nbsp;			return &quot;Registration for change of tag in \n&quot; + super.structure;</b>
+<i>247</i>&nbsp;		}
+<i>248</i>&nbsp;		
+<i>249</i>&nbsp;		
+<i>250</i>&nbsp;	}
+<i>251</i>&nbsp;	
+<i>252</i>&nbsp;	//Innerclass observer bug report
+<i>253</i>&nbsp;	/**
+<i>254</i>&nbsp;	 * Inner class observer of a specific tag change of a bug report
+<i>255</i>&nbsp;	 *
+<i>256</i>&nbsp;	 */
+<i>257</i>&nbsp;	private class ObserverSpecificTag extends ObserverAspect
+<i>258</i>&nbsp;	{
+<i>259</i>&nbsp;		private Tag tag;
+<i>260</i>&nbsp;		
+<i>261</i>&nbsp;		/**
+<i>262</i>&nbsp;		 * Constructor 
+<i>263</i>&nbsp;		 * 
+<i>264</i>&nbsp;		 * @param structure The subject to observe
+<i>265</i>&nbsp;		 * @param tag The specific tag
+<i>266</i>&nbsp;		 */
+<i>267</i>&nbsp;		public ObserverSpecificTag(Subject structure, Tag tag)
+<b class="fc"><i>268</i>&nbsp;		{</b>
+<b class="fc"><i>269</i>&nbsp;			super(structure);</b>
+<b class="fc"><i>270</i>&nbsp;			this.tag = tag;</b>
+<b class="fc"><i>271</i>&nbsp;		}</b>
+<i>272</i>&nbsp;		
+<i>273</i>&nbsp;		/**
+<i>274</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>275</i>&nbsp;		 */
+<i>276</i>&nbsp;		@Override
+<i>277</i>&nbsp;		public void update(Subject structure, BugReport bugReport, Object aspect)
+<i>278</i>&nbsp;		{
+<b class="fc"><i>279</i>&nbsp;			if(super.structure == structure &amp;&amp; tag.getClass().isInstance(aspect))</b>
+<b class="fc"><i>280</i>&nbsp;				notifications.add(new Notification(&quot;Tag changed to &quot; + tag, bugReport, super.structure));</b>
+<i>281</i>&nbsp;			
+<b class="fc"><i>282</i>&nbsp;		}</b>
+<i>283</i>&nbsp;		
+<i>284</i>&nbsp;		/**
+<i>285</i>&nbsp;		 * Method to get textual representation of this object
+<i>286</i>&nbsp;		 * 
+<i>287</i>&nbsp;		 * @return The String representation of this object
+<i>288</i>&nbsp;		 */
+<i>289</i>&nbsp;		@Override
+<i>290</i>&nbsp;		public String toString() {
+<b class="nc"><i>291</i>&nbsp;			return &quot;Registration for changed of tag to &quot; + tag + &quot; in \n&quot; + super.structure;</b>
+<i>292</i>&nbsp;		}
+<i>293</i>&nbsp;		
+<i>294</i>&nbsp;	}
+<i>295</i>&nbsp;	
+<i>296</i>&nbsp;	//Innerclass observer bug report
+<i>297</i>&nbsp;	/**
+<i>298</i>&nbsp;	 * Inner class observer of a new comment in a bug report
+<i>299</i>&nbsp;	 *
+<i>300</i>&nbsp;	 */
+<i>301</i>&nbsp;	private class ObserverComment extends ObserverAspect
+<i>302</i>&nbsp;	{
+<i>303</i>&nbsp;		
+<i>304</i>&nbsp;		/**
+<i>305</i>&nbsp;		 * Constructor 
+<i>306</i>&nbsp;		 * 
+<i>307</i>&nbsp;		 * @param structure The subject to observe
+<i>308</i>&nbsp;		 */
+<i>309</i>&nbsp;		public ObserverComment(Subject structure)
+<b class="fc"><i>310</i>&nbsp;		{</b>
+<b class="fc"><i>311</i>&nbsp;			super(structure);</b>
+<b class="fc"><i>312</i>&nbsp;		}</b>
+<i>313</i>&nbsp;		
+<i>314</i>&nbsp;		/**
+<i>315</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>316</i>&nbsp;		 */
+<i>317</i>&nbsp;		@Override
+<i>318</i>&nbsp;		public void update(Subject structure, BugReport bugReport, Object aspect)
+<i>319</i>&nbsp;		{
+<b class="fc"><i>320</i>&nbsp;			if(super.structure == structure &amp;&amp; aspect instanceof Comment)</b>
+<b class="fc"><i>321</i>&nbsp;				notifications.add(new Notification(&quot;New comment&quot;, bugReport, super.structure));</b>
+<b class="fc"><i>322</i>&nbsp;		}</b>
+<i>323</i>&nbsp;		
+<i>324</i>&nbsp;		/**
+<i>325</i>&nbsp;		 * Method to get textual representation of this object
+<i>326</i>&nbsp;		 * 
+<i>327</i>&nbsp;		 * @return The String representation of this object
+<i>328</i>&nbsp;		 */
+<i>329</i>&nbsp;		@Override
+<i>330</i>&nbsp;		public String toString() {
+<b class="nc"><i>331</i>&nbsp;			return &quot;Registration for creation of new comment in \n&quot; + super.structure;</b>
+<i>332</i>&nbsp;		}
+<i>333</i>&nbsp;	}
+<i>334</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-04-15 12:30</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ForkProject</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Controller.UserController.UseCases.AdminUseCases</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ForkProject (Controller.UserController.UseCases.AdminUseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ForkProject</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (33/ 33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Controller.UserController.UseCases.AdminUseCases;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.Formatter;
+<i>4</i>&nbsp;import Controller.IUI;
+<i>5</i>&nbsp;import Controller.UserController.UseCases.UseCase;
+<i>6</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>7</i>&nbsp;import Model.BugReport.BugReportService;
+<i>8</i>&nbsp;import Model.Project.Project;
+<i>9</i>&nbsp;import Model.Project.ProjectService;
+<i>10</i>&nbsp;import Model.Project.TheDate;
+<i>11</i>&nbsp;import Model.Roles.Lead;
+<i>12</i>&nbsp;import Model.User.Developer;
+<i>13</i>&nbsp;import Model.User.User;
+<i>14</i>&nbsp;import Model.User.UserService;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import java.util.List;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;/**
+<i>19</i>&nbsp; * Created by Karina on 24.03.2016.
+<i>20</i>&nbsp; */
+<i>21</i>&nbsp;public class ForkProject extends UseCase {
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public ForkProject(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
+<b class="fc"><i>24</i>&nbsp;        super(ui, userService, projectService, bugReportService, currentUser);</b>
+<b class="fc"><i>25</i>&nbsp;        changeSystem = true;</b>
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     *
+<i>30</i>&nbsp;     * Method that lets an administrator create a next version of an
+<i>31</i>&nbsp;     * existing project. Forked projects are independent and start without
+<i>32</i>&nbsp;     * any bug reports.
+<i>33</i>&nbsp;     *
+<i>34</i>&nbsp;     * 2. The administrator selects an existing project.
+<i>35</i>&nbsp;     * 3. The system shows a form to enter the missing project details:
+<i>36</i>&nbsp;     * version number, starting date and budget estimate.
+<i>37</i>&nbsp;     * 4. The administrator enters all the missing project details.
+<i>38</i>&nbsp;     * 5. The use case returns to step 4 of the normal flow
+<i>39</i>&nbsp;     *
+<i>40</i>&nbsp;     * @throws ReportErrorToUserException
+<i>41</i>&nbsp;     *          in case that the method encounters invalid input
+<i>42</i>&nbsp;     * @throws IndexOutOfBoundsException
+<i>43</i>&nbsp;     * 			thrown when a user puts an incorrect option index.
+<i>44</i>&nbsp;     *
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    @Override
+<i>47</i>&nbsp;    public void run() throws ReportErrorToUserException,IndexOutOfBoundsException {
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;        // Step 1a.1
+<b class="fc"><i>50</i>&nbsp;        getUi().display(&quot;Select a project you want to fork: &quot;);</b>
+<b class="fc"><i>51</i>&nbsp;        List&lt;Project&gt; projectList = getProjectService().getAllProjects();</b>
+<b class="fc"><i>52</i>&nbsp;        String parsedProjectList = Formatter.formatProjectList(projectList);</b>
+<b class="fc"><i>53</i>&nbsp;        getUi().display(parsedProjectList);</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;        // Step 1a.2
+<b class="fc"><i>56</i>&nbsp;        int index = getUi().readInt();</b>
+<b class="fc"><i>57</i>&nbsp;        Project project = projectList.get(index);</b>
+<b class="fc"><i>58</i>&nbsp;        Project forkProject = getProjectService().forkProject(project);</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;        // Step 1a.3 + 1a.4
+<b class="fc"><i>61</i>&nbsp;        getUi().display(&quot;Please enter new values.&quot;);</b>
+<b class="fc"><i>62</i>&nbsp;        getUi().display(&quot;VersionID (has to be larger than the current value: &quot; + forkProject.getVersionID() + &quot;): &quot;);</b>
+<b class="fc"><i>63</i>&nbsp;        double versionID = getUi().readDouble();</b>
+<i>64</i>&nbsp;
+<b class="fc"><i>65</i>&nbsp;        getUi().display(&quot;Starting date (current value: &quot; + forkProject.getStartingDate() + &quot;): &quot;);</b>
+<b class="fc"><i>66</i>&nbsp;        String stringStartingDate = getUi().readString();</b>
+<b class="fc"><i>67</i>&nbsp;        TheDate startingDate = new TheDate(stringStartingDate);</b>
+<i>68</i>&nbsp;
+<b class="fc"><i>69</i>&nbsp;        getUi().display(&quot;Budget estimate (current value: &quot; + project.getBudget() + &quot;): &quot;);</b>
+<b class="fc"><i>70</i>&nbsp;        double budget = getUi().readDouble();</b>
+<i>71</i>&nbsp;
+<b class="fc"><i>72</i>&nbsp;        getProjectService().setProjectVersionID(forkProject, versionID);</b>
+<b class="fc"><i>73</i>&nbsp;        getProjectService().setProjectStartingDate(forkProject, startingDate);</b>
+<b class="fc"><i>74</i>&nbsp;        getProjectService().setProjectBudget(forkProject, budget);</b>
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;        // Step 1a.5
+<b class="fc"><i>77</i>&nbsp;        List&lt;User&gt; possibleLeadDevelopers = getUserService().getDevelopers();</b>
+<b class="fc"><i>78</i>&nbsp;        String parsedPossibleLeadDevelopers = Formatter.formatUserList(possibleLeadDevelopers);</b>
+<b class="fc"><i>79</i>&nbsp;        getUi().display(&quot;Choose a lead developer for this forked project: &quot;);</b>
+<b class="fc"><i>80</i>&nbsp;        getUi().display(parsedPossibleLeadDevelopers);</b>
+<b class="fc"><i>81</i>&nbsp;        int index2 = getUi().readInt();</b>
+<b class="fc"><i>82</i>&nbsp;        Developer leadDev = (Developer) possibleLeadDevelopers.get(index2);</b>
+<b class="fc"><i>83</i>&nbsp;        Lead leadRole = new Lead(leadDev);</b>
+<i>84</i>&nbsp;
+<b class="fc"><i>85</i>&nbsp;        getProjectService().setProjectLeadRole(forkProject, leadRole);</b>
+<i>86</i>&nbsp;
+<b class="fc"><i>87</i>&nbsp;        getUi().display(&quot;The project has been successfully forked.\n&quot;);</b>
+<b class="fc"><i>88</i>&nbsp;        getUi().display(forkProject.toString());</b>
+<b class="fc"><i>89</i>&nbsp;    }</b>
+<i>90</i>&nbsp;    
+<i>91</i>&nbsp;    @Override
+<i>92</i>&nbsp;	public String toString()
+<i>93</i>&nbsp;	{
+<b class="fc"><i>94</i>&nbsp;		return &quot;Fork Project&quot;;</b>
+<i>95</i>&nbsp;	}
+<i>96</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-04-15 12:30</div>
+</div>
+</body>
+</html>
