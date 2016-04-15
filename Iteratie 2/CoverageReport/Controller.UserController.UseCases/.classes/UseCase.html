@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UseCase</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Controller.UserController.UseCases</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UseCase (Controller.UserController.UseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UseCase</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/ 23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Controller.UserController.UseCases;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.IUI;
+<i>4</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>5</i>&nbsp;import Model.BugReport.BugReportService;
+<i>6</i>&nbsp;import Model.Project.ProjectService;
+<i>7</i>&nbsp;import Model.User.User;
+<i>8</i>&nbsp;import Model.User.UserService;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * Created by Karina on 24.03.2016.
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;public abstract class UseCase {
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    private IUI ui;
+<i>16</i>&nbsp;    private UserService userService;
+<i>17</i>&nbsp;    private ProjectService projectService;
+<i>18</i>&nbsp;    private BugReportService bugReportService;
+<i>19</i>&nbsp;    private User currentUser;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    protected boolean changeSystem;
+<i>22</i>&nbsp;    
+<b class="fc"><i>23</i>&nbsp;    public UseCase(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){</b>
+<b class="fc"><i>24</i>&nbsp;        setUi(ui);</b>
+<b class="fc"><i>25</i>&nbsp;        setUserService(userService);</b>
+<b class="fc"><i>26</i>&nbsp;        setProjectService(projectService);</b>
+<b class="fc"><i>27</i>&nbsp;        setBugReportService(bugReportService);</b>
+<b class="fc"><i>28</i>&nbsp;        setCurrentUser(currentUser);</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    //region Getters &amp; setters
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    private void setUi(IUI ui) {
+<b class="fc"><i>34</i>&nbsp;        this.ui = ui;</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    private void setUserService(UserService userService) {
+<b class="fc"><i>38</i>&nbsp;        this.userService = userService;</b>
+<b class="fc"><i>39</i>&nbsp;    }</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    private void setProjectService(ProjectService projectService) {
+<b class="fc"><i>42</i>&nbsp;        this.projectService = projectService;</b>
+<b class="fc"><i>43</i>&nbsp;    }</b>
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    private void setBugReportService(BugReportService bugReportService) {
+<b class="fc"><i>46</i>&nbsp;        this.bugReportService = bugReportService;</b>
+<b class="fc"><i>47</i>&nbsp;    }</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    private void setCurrentUser(User currentUser){
+<b class="fc"><i>50</i>&nbsp;        this.currentUser = currentUser;</b>
+<b class="fc"><i>51</i>&nbsp;    }</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public IUI getUi() {
+<b class="fc"><i>54</i>&nbsp;        return ui;</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    public UserService getUserService() {
+<b class="fc"><i>58</i>&nbsp;        return userService;</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    public ProjectService getProjectService() {
+<b class="fc"><i>62</i>&nbsp;        return projectService;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    public BugReportService getBugReportService() {
+<b class="fc"><i>66</i>&nbsp;        return bugReportService;</b>
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    public User getCurrentUser(){
+<b class="fc"><i>70</i>&nbsp;        return currentUser;</b>
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;    
+<i>73</i>&nbsp;    public boolean changeSystem()
+<i>74</i>&nbsp;    {
+<b class="fc"><i>75</i>&nbsp;    	return changeSystem;</b>
+<i>76</i>&nbsp;    }
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    //endregion
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    public abstract void run() throws ReportErrorToUserException,IndexOutOfBoundsException;
+<i>81</i>&nbsp;    
+<i>82</i>&nbsp;    @Override
+<i>83</i>&nbsp;    public abstract String toString();
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-04-15 12:30</div>
+</div>
+</body>
+</html>

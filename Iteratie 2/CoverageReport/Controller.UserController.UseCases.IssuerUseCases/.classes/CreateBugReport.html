@@ -1,0 +1,227 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CreateBugReport</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Controller.UserController.UseCases.IssuerUseCases</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CreateBugReport (Controller.UserController.UseCases.IssuerUseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CreateBugReport</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98,2%
+  </span>
+  <span class="absValue">
+    (55/ 56)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Controller.UserController.UseCases.IssuerUseCases;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.Formatter;
+<i>4</i>&nbsp;import Controller.IUI;
+<i>5</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>6</i>&nbsp;import Model.BugReport.BugReport;
+<i>7</i>&nbsp;import Model.BugReport.BugReportService;
+<i>8</i>&nbsp;import Model.Project.Project;
+<i>9</i>&nbsp;import Model.Project.ProjectService;
+<i>10</i>&nbsp;import Model.Project.SubSystem;
+<i>11</i>&nbsp;import Model.User.Issuer;
+<i>12</i>&nbsp;import Model.User.User;
+<i>13</i>&nbsp;import Model.User.UserService;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import java.util.List;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;/**
+<i>18</i>&nbsp; * Created by Karina on 24.03.2016.
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;public class CreateBugReport extends IssuerUseCase{
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    public CreateBugReport(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
+<b class="fc"><i>23</i>&nbsp;        super(ui, userService, projectService, bugReportService,null, currentUser);</b>
+<b class="fc"><i>24</i>&nbsp;        changeSystem = true;</b>
+<b class="fc"><i>25</i>&nbsp;    }</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     *
+<i>29</i>&nbsp;     * Lets an Issuer create a bug report.
+<i>30</i>&nbsp;     *
+<i>31</i>&nbsp;     * 2. The system shows a list of projects.
+<i>32</i>&nbsp;     * 3. The issuer selects a project.
+<i>33</i>&nbsp;     * 4. The system shows a list of subsystems of the selected project.
+<i>34</i>&nbsp;     * 5. The issuer selects a subsystem.
+<i>35</i>&nbsp;     * 6. The system shows the bug report creation form.
+<i>36</i>&nbsp;     * 7. The issuer enters the bug report details: title and description.
+<i>37</i>&nbsp;     * 8. The system asks which of the optional attributes of a bug report the
+<i>38</i>&nbsp;     * issuer wants to add: how to reproduce the bug, a stack trace or an
+<i>39</i>&nbsp;     * error message.
+<i>40</i>&nbsp;     * 9. The issuer enters the selected optional attributes as text.
+<i>41</i>&nbsp;     * 10. The system asks if the bug report is private.
+<i>42</i>&nbsp;     * 11. The issuer indicates if the bug report is private or not.
+<i>43</i>&nbsp;     * 12. The system shows a list of possible dependencies of this bug report.
+<i>44</i>&nbsp;     * These are the bug reports of the same project.
+<i>45</i>&nbsp;     * 13. The issuer selects the dependencies.
+<i>46</i>&nbsp;     * 14. The system creates the bug report.
+<i>47</i>&nbsp;     *
+<i>48</i>&nbsp;     * @throws ReportErrorToUserException
+<i>49</i>&nbsp;     *          in case that the method encounters invalid input
+<i>50</i>&nbsp;     * @throws IndexOutOfBoundsException
+<i>51</i>&nbsp;     *		   thrown when a user puts an incorrect option index.
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    @Override
+<i>54</i>&nbsp;    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;        // Step 2
+<b class="fc"><i>57</i>&nbsp;        getUi().display(&quot;Select a project:&quot;);</b>
+<b class="fc"><i>58</i>&nbsp;        List&lt;Project&gt; projectList = getProjectService().getAllProjects();</b>
+<b class="fc"><i>59</i>&nbsp;        String parsedProjectList = Formatter.formatProjectList(projectList);</b>
+<b class="fc"><i>60</i>&nbsp;        getUi().display(parsedProjectList);</b>
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;        // Step 3
+<b class="fc"><i>63</i>&nbsp;        int indexP = getUi().readInt();</b>
+<b class="fc"><i>64</i>&nbsp;        Project project = projectList.get(indexP);</b>
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;        // Step 4
+<b class="fc"><i>67</i>&nbsp;        getUi().display(&quot;Select a subsystem:&quot;);</b>
+<b class="fc"><i>68</i>&nbsp;        List&lt;SubSystem&gt; subSystemList = project.getAllSubSystems();</b>
+<b class="fc"><i>69</i>&nbsp;        String subSystemsOfProject = Formatter.formatSubSystemList(subSystemList);</b>
+<b class="fc"><i>70</i>&nbsp;        getUi().display(subSystemsOfProject);</b>
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;        // Step 5
+<b class="fc"><i>73</i>&nbsp;        int indexS = getUi().readInt();</b>
+<b class="fc"><i>74</i>&nbsp;        SubSystem subSystem = subSystemList.get(indexS);</b>
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;        // Step 6 + 7
+<b class="fc"><i>77</i>&nbsp;        getUi().display(&quot;\n&quot;);</b>
+<b class="fc"><i>78</i>&nbsp;        getUi().display(&quot;Please enter the bug report information.&quot;);</b>
+<b class="fc"><i>79</i>&nbsp;        getUi().display(&quot;Title:&quot;);</b>
+<b class="fc"><i>80</i>&nbsp;        String title = getUi().readString();</b>
+<b class="fc"><i>81</i>&nbsp;        getUi().display(&quot;Description:&quot;);</b>
+<b class="fc"><i>82</i>&nbsp;        String description = getUi().readString();</b>
+<i>83</i>&nbsp;
+<b class="fc"><i>84</i>&nbsp;        Issuer issuer = (Issuer) getCurrentUser();</b>
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;        // Step 8 + 9
+<b class="fc"><i>87</i>&nbsp;        getUi().display(&quot;Please enter the optional information. (Terminate without any value if you don&#39;t want to give this information.)&quot;);</b>
+<i>88</i>&nbsp;
+<b class="fc"><i>89</i>&nbsp;        getUi().display(&quot;How to reproduce the bug: (Terminate with a . on a new line)&quot;);</b>
+<b class="fc"><i>90</i>&nbsp;        String procedure = getUi().readMultiline();</b>
+<i>91</i>&nbsp;
+<b class="fc"><i>92</i>&nbsp;        getUi().display(&quot;Stack trace: (Terminate with a . on a new line)&quot;);</b>
+<b class="fc"><i>93</i>&nbsp;        String stackTrace = getUi().readMultiline();</b>
+<i>94</i>&nbsp;
+<b class="fc"><i>95</i>&nbsp;        getUi().display(&quot;Error message: (Terminate with a . on a new line)&quot;);</b>
+<b class="fc"><i>96</i>&nbsp;        String errorMessage = getUi().readMultiline();</b>
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;        // Step 10+11
+<b class="fc"><i>99</i>&nbsp;        getUi().display(&quot;Public? true (1) or false (0):&quot;);</b>
+<b class="fc"><i>100</i>&nbsp;        int value = getUi().readInt();</b>
+<i>101</i>&nbsp;        boolean pblc;
+<b class="fc"><i>102</i>&nbsp;        if (value == 0) {</b>
+<b class="fc"><i>103</i>&nbsp;            pblc = false;</b>
+<b class="fc"><i>104</i>&nbsp;        } else if (value == 1) {</b>
+<b class="fc"><i>105</i>&nbsp;            pblc = true;</b>
+<i>106</i>&nbsp;        } else {
+<b class="nc"><i>107</i>&nbsp;            throw new ReportErrorToUserException(&quot;Invalid answer!&quot;);</b>
+<i>108</i>&nbsp;        }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;        // Step 14
+<b class="fc"><i>111</i>&nbsp;        BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem, pblc);</b>
+<b class="fc"><i>112</i>&nbsp;        if (!procedure.equals(&quot;&quot;)) getBugReportService().setProcedureBug(bugReport, procedure);</b>
+<b class="fc"><i>113</i>&nbsp;        if (!stackTrace.equals(&quot;&quot;)) getBugReportService().setStackTrace(bugReport, stackTrace);</b>
+<b class="fc"><i>114</i>&nbsp;        if (!errorMessage.equals(&quot;&quot;)) getBugReportService().setErrorMessage(bugReport, errorMessage);</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;        // Step 12
+<b class="fc"><i>117</i>&nbsp;        List&lt;BugReport&gt; possibleDependencies = getBugReportService().getBugReportsForProject(project);</b>
+<b class="fc"><i>118</i>&nbsp;        String possibleDependenciesStr = Formatter.formatBugReportList(possibleDependencies);</b>
+<i>119</i>&nbsp;        while (true) {
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;            // Step 13
+<b class="fc"><i>122</i>&nbsp;            getUi().display(&quot;\n&quot;);</b>
+<b class="fc"><i>123</i>&nbsp;            getUi().display(&quot;Select a possible dependency (enter -1 to exit): &quot;);</b>
+<b class="fc"><i>124</i>&nbsp;            getUi().display(possibleDependenciesStr);</b>
+<b class="fc"><i>125</i>&nbsp;            int indexDep = getUi().readInt();</b>
+<b class="fc"><i>126</i>&nbsp;            if (indexDep == -1) break;</b>
+<i>127</i>&nbsp;
+<b class="fc"><i>128</i>&nbsp;            BugReport newDependency = possibleDependencies.get(indexDep);</b>
+<b class="fc"><i>129</i>&nbsp;            getBugReportService().addDependency(bugReport, newDependency);</b>
+<b class="fc"><i>130</i>&nbsp;            getUi().display(&quot;Dependency is successfully added!&quot;);</b>
+<b class="fc"><i>131</i>&nbsp;            getUi().display(newDependency.toString());</b>
+<b class="fc"><i>132</i>&nbsp;        }</b>
+<i>133</i>&nbsp;
+<b class="fc"><i>134</i>&nbsp;        getUi().display(Formatter.formatDetailedBugReport(bugReport));</b>
+<b class="fc"><i>135</i>&nbsp;        getUi().display(&quot;The bug report has successfully been added.\n&quot;);</b>
+<i>136</i>&nbsp;
+<b class="fc"><i>137</i>&nbsp;    }</b>
+<i>138</i>&nbsp;    
+<i>139</i>&nbsp;    @Override
+<i>140</i>&nbsp;	public String toString()
+<i>141</i>&nbsp;	{
+<b class="fc"><i>142</i>&nbsp;		return &quot;Create Bugreport&quot;;</b>
+<i>143</i>&nbsp;	}
+<i>144</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-04-15 12:30</div>
+</div>
+</body>
+</html>
