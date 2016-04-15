@@ -1,0 +1,7 @@
+Testing approach
+
+- Twee mogelijkheden ofwel een test schrijven voor elke klasse in zelfde package OF via een hogere level de lagere level testen :: omwille van package/protected visibility constraint
+	=> 2de optie is moeilijker omdat we een hele hiërarchie moeten doorlopen om een specifieke code gedeelte te testen
+	=> uiteindelijk tweede optie gekozen :: we proberen zoveel mogelijk  via de publieke API de andere klassen te testen 
+	=> dit zorgt uiteindelijk ook voor structuur :: alle testen samen ipv bij elke klasse
+- Use case test :: TestUI implementeert IUI en dat vaste waarden inleest waarop elke use case wordt opgeroepen en getest

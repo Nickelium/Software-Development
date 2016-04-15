@@ -1,0 +1,147 @@
+Memento/Undo
+- Undo operatie is om usecases te reverten dat het systeem op één ander manier verandert heeft, dus zou het niet mogen dat een caretaker het hhuidig systeem steeds opslaagt als een memento
+	voor elke usecase (Showproject wijzigt bugtrap systeem niet). Dus moet er selectief opgeslagen worden en dat komt overeen om IN elke usecase een caretaker mee te geven om eventueel op te slagen.
+	Dit zorgt ervoor dat de usecases gekoppelt worden met de caretaker en dus weten de usecases dat hun status opgeslagen worden. Terwijl als we bij ALLE usecases het systeem opgslagen
+	kan men de caretaker oproepen buiten de usecases => geen koppeling tussen caretaker en usecase + hoge cohesie (usecases trekken zich niks aan van de caretaker).
+	code :: 
+		SpecificUseCaseA class
+		{
+			private CareTaker caretaker;
+			
+			SpecificUseCase(CareTaker caretaker) { ...}
+			void run()
+			{
+				caretaker.saveSystem();
+				//do usecase
+			}
+		
+		}
+		
+		SpecificUseCaseB class
+		{
+			private CareTaker caretaker;
+			
+			SpecificUseCase(CareTaker caretaker) { ...}
+			void run()
+			{
+				//do usecase, geen saveSystem
+			}
+		
+		}
+		 
+		ipv
+		
+		class MainController
+		{
+			while(true)
+			{
+				caretaker.saveSystem();
+				callUseCase(int readIndex).run();
+			}
+		}
+		
+	Is deze koppeling aanvaarbaar ? Indien niet, kunnen we deze koppeling verlagen ? Alternatieven ? 
+	
+- De objecten dat moet worden opgeslagen is List<Project> in projectService (bevat recursief de andere objecten zoals subsystem/bug report ...) en mailboxen die gebonden zijn aan elke user (of zijn er nog andere objecten dan moet opgeslagen worden?).
+	Een eerste manier om het systeem op te slagen is door een deepcopy te voeren op listProject en users. Bij het undoën vervangen we de referentie van listProject in projectService door 
+	de deepcopy ervan, hetzelfde voor users. Het probleem is dat elke mailbox van elke user een lijst van registrations heeft (observers) die verwijzen naar subjects (project/subsystem/bug report) en de subjects hebben
+	hebben een verwijzing naar hun observers, maar deze bindingen worden niet consistent gekopieerd met deepcopy. Er ontstaat dus een kopie van projecten en nog andere losse kopiën van projecten
+	bij het kopiëren van de mailboxen. Is dit ten eerste oké qua design al is dit geen memento ? Hoe kunnen het probleem oplossen ? Serialization/Deserialization lost dit op of niet ? Mag dit gebruikt worden ?
+
+- Methode met memento kan gebeuren met een shallowcopy (of kan het ook met deepcopy/recursief ?). MementoListProject houdt een shallowcopy van listProject bij (Projects referenties verwijzen wel naar de originele projecten),
+	dan is er nog MementoProject/MementoSubsystem/MementoBugReport, elk kan het corresponderende object reverten door te verwijzen naar de shallowcopy attribuut dat bijgehouden wordt.
+	De caretaker houdt een lijst van Snapshots, elke snapshot bevat een MementoListProject, een lijst van MementoProject, een lijst van MementoSubsystem etc ... Bij het reverten zet caretaker
+	de projectList in projectService naar de juiste referentie (shallowcopy uit MementoListProject). Omdat de projecten zelf mogelijk gewijzigd werden, gaan we deze ook reverten met de lijst van MementoProject
+	die dan elke project zijn attributen revert en verwijst naar de shallowcopy subsystem. Hetzelfde idee wordt ook toegepast op subsystem/bug report etc ...
+	Elke memento implementeert dan wel een interface memento, waardoor het zoiets zou moeten geven
+	code ::
+	class Snapshot
+	{
+		private List<Memento> mementos;
+		void addMemento(Memento);
+		
+	}
+	
+	interface Memento
+	{
+		private Obect Originator; 
+		Object getOriginator();
+		//Bij het implementeren bevat het dan de attributen van de originator dat moet worden opgeslagen
+	
+	}
+	
+	ProjectMemento implementeert Memento
+	{
+		List<Subsystem> listsubsystem;
+		String name; 
+		...
+		ProjectMemento(..., List<Subsystem> list)
+		{
+			..
+			listsubsystem = new ArrayList<Subsystem>(list);
+		}
+		
+	}
+	Project //Originator
+	{
+		List<Subsystem> listsubsystem;
+		ProjectMemento createMemento() 
+		{
+			return new ProjectMemento(...,listsubsystem);
+		}
+		
+		restore(Memento memento)
+		{
+			this.x = memento.x;
+			...
+			this.listsubsystem = memento.listsubsystem;
+		}
+		
+	}
+	
+	class caretaker
+	{
+		List<Snapshot> snapshots;
+		public void restoreSystem(Snapshot)
+		{
+			for(Memento memento : Snapshot.getMementos()
+				memento.getObject().restore(memento);
+		}
+		
+		Snapshot getSnapshot(index number);
+		
+		void saveSystem()
+		{
+			Snapshot snapshot = new Snapshot();
+			snapshot.addMemento(projectService.createMemento());
+			foreach (Project : projectService.getAllProjects())
+				snapshot.addMemento(project.createMemento());
+			foreach (Subsystem : projectService.getAllSubSystem())
+				snapshot.addMemento(subsystem.createMemento());
+			...
+			
+			snapshots.add(Snapshot);
+		}
+	
+	
+	}
+	
+	Met deze methode houdt de caretaker een lijst van snapshots dat meerdere lijsten van MementoObjecten bijhoudt, terwijl met de deepcopy methode bevat een snapshot enkel een lijst van projecten
+	(+ user lijst maar dat moet ook bij memento methode).
+	Is de bovenstaande methode effectief een Memento pattern ? Waarom is de memento pattern nodig als men een simpele deepcopy kan uit voeren ? Welke design is te verkiezen ?
+	Ik weet dan zelf niet of het probleem dat voorkomt bij deepcopy ook aanwezig is in de memento methode.
+	
+	In de bovenstaande code wordt er geprobeerd om te gaan met polymorphisme van memento's maar dit zal niet lukken omdat de inhoud van elke memento sterk. Waardoor <<Interface>> Memento
+	geen interface aanbiedt dat breedt genoeg is. Een slordige oplossing zou kunnen zijn om bij restore(Memento) in project, de Memento te casten naar ProjectMemento. Is deze cast dan oké ?
+	Zijn er nog alternatieven ?
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
