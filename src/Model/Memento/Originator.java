@@ -4,8 +4,8 @@ package Model.Memento;
  * Interface of an originator.
  * The originator will work together with a memento to build a memento and restore from that memento.
  *
- * @param <T>
- * @param <R>
+ * @param <T> The memento of the subject
+ * @param <R> The subject
  */
 public interface Originator<T extends Memento<R>, R> 
 {

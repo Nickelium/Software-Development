@@ -33,7 +33,8 @@ public abstract class Subject
 	
 	/**
 	 * Method to notify all observer of this subject
-	 * 
+	 *
+	 * @param s The subject that sends the notification.
 	 * @param aspect The aspect that has changed
 	 */
 	public void notifyObservers(Subject s, Object aspect)

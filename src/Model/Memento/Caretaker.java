@@ -22,8 +22,8 @@ public class Caretaker
 	/**
 	 * Constructor 
 	 * 
-	 * @param projectService
-	 * @param mailboxService
+	 * @param projectService The project service to use.
+	 * @param mailboxService The mailbox service to use.
 	 */
 	public Caretaker(ProjectService projectService, MailboxService mailboxService)
 	{

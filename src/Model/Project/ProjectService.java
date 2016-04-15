@@ -129,6 +129,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Setter to set the name of the project.
      *
+     * @param project The project to set the name of.
      * @param name The name of the project
      * @throws ReportErrorToUserException The given name is empty.
      */
@@ -139,6 +140,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Setter to set the description of the project
      *
+     * @param project The project to set the description of.
      * @param description The description of the project
      * @throws ReportErrorToUserException The given description is empty.
      */
@@ -149,9 +151,9 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Setter to set the starting date of the project.
      *
+     * @param project The project to set the date of.
      * @param date The starting date of the project.
      * @throws ReportErrorToUserException The given date is before the creation date.
-     * @throws IllegalArgumentException   The given date is null.
      */
     public void setProjectStartingDate(Project project, TheDate date) throws ReportErrorToUserException {
         project.setStartingDate(date);
@@ -160,6 +162,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Setter to set the budget of the project.
      *
+     * @param project The project to set the budget of.
      * @param newBudget The budget of the project.
      * @throws ReportErrorToUserException The budget is negative.
      */
@@ -170,6 +173,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Setter to set the versionId of the project.
      *
+     * @param project The project to set the version id of.
      * @param versionID The versionId to set the project to.
      * @throws ReportErrorToUserException The given versionId is lower than or equal to the current one.
      */
@@ -178,8 +182,9 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     }
 
     /**
-     * Setter to set the lead of the project.
+     * Setter to set the lead of the project
      *
+     * @param project The project to assign the lead to.
      * @param leadRole The lead to assign to the project.
      * @throws IllegalArgumentException The given role is null.
      */
@@ -196,6 +201,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * second pass: project milestone should not exceed the target milestone of
      * any related bug report with a non-final tag.
      *
+     * @param project The project to assign the new milestone to.
      * @param newProjectMilestone the new project milestone that has to be set
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */
@@ -262,6 +268,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Setter to set the name of the subsystem.
      *
+     * @param subSystem The subsystem to set the name of.
      * @param name The name of the subsystem
      * @throws ReportErrorToUserException The given name is empty.
      */
@@ -271,6 +278,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Setter to set the description of the subsystem.
      *
+     * @param subSystem The subsystem to set the description of.
      * @param description The description of the subsystem.
      * @throws ReportErrorToUserException The given description is empty.
      */
@@ -285,6 +293,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * second pass: subsystem milestone should not exceed the target milestone of
      * any related bug report with a non-final tag.
      *
+     * @param subSystem The subsystem to set the new milestone of.
      * @param newSubsystemMilestone the new subsystem milestone that has to be set
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */

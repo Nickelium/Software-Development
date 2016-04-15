@@ -4,7 +4,7 @@ package Model.Memento;
  * Interface of a memento.
  * 
  *
- * @param <T>
+ * @param <T> The type of the memento.
  */
 public abstract class Memento<T>
 {

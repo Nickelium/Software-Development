@@ -24,8 +24,8 @@ public class MailboxService
 	/**
 	 * Constructor 
 	 * 
-	 * @param bugReportService
-	 * @param userService
+	 * @param bugReportService The bugreport service to use.
+	 * @param userService The user service to use.
 	 */
 	public MailboxService(BugReportService bugReportService, UserService userService)
 	{

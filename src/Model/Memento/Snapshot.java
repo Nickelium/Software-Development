@@ -26,8 +26,8 @@ public class Snapshot
 	 * Constructor 
 	 * 
 	 * @param usecase The usecase that lead to snapshot save of the system
-	 * @param projectService
-	 * @param mailboxService
+	 * @param projectService The project service in use.
+	 * @param mailboxService The mailbox service in use.
 	 */
 	Snapshot(UseCase usecase, ProjectService projectService, MailboxService mailboxService)
 	{

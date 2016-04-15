@@ -21,7 +21,7 @@ import java.util.List;
  * A bug report signals that something is wrong with a specific
  * subsystem.
  *
- * This class provides getters & setters for most attributes.
+ * This class provides getters and setters for most attributes.
  * This class provides a method to create new bug reports.
  * This class provides public checkers when setting new values to certain attributes.
  *
@@ -88,6 +88,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @param creationDate The creation date of this bug report.
      * @param initialAssignies The list of assignees for this bug report.
      * @param targetMilestone The target milestone of a bug report.
+     * @param pblc The access right to this bugreport.
      *
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
@@ -424,8 +425,9 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * Method to set a new target milestone of a bug report.
      *
      * @param targetMilestone the new target milestone of a bug report.
+     *
      */
-    void setTargetMilestone(TargetMilestone targetMilestone) throws ReportErrorToUserException {
+    void setTargetMilestone(TargetMilestone targetMilestone){
 
         this.targetMilestone = targetMilestone;
     }
@@ -673,7 +675,7 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * during execution of the Bug Trap software.
      *
      * The bug report memento saves the state of the following attributes of the bug report:
-     * tag, assignees, comments, targetMilestone, tests & patches.
+     * tag, assignees, comments, targetMilestone, tests and patches.
      *
      * This class provides private methods to request the values of the saved fields.
      * This wide interface (private getters) is provided to the class Bugreport,
