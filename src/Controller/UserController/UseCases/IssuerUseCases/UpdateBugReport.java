@@ -29,10 +29,8 @@ public class UpdateBugReport extends IssuerUseCase {
      * 3. The developer suggests a new tag for the bug report.
      * 4. The system gives the selected bug report the new tag.
      *
-     * @throws Exception
-     *          if something goes wrong during execution, give user the
-     *          chance of retrying.
-     *
+     * @throws ReportErrorToUserException Something went wrong and has to be reported to the user.
+     * @throws IndexOutOfBoundsException Wrong index was given.
      */
     @Override
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {

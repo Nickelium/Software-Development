@@ -47,8 +47,8 @@ public class DeclareAchievedMilestone extends DeveloperUseCase {
      * 1. The system is restored and the use case has no eect.
      * 2. The use case ends here.
      *
-     * @throws ReportErrorToUserException
-     * @throws IndexOutOfBoundsException
+     * @throws ReportErrorToUserException Something went wrong and has to be reported to user.
+     * @throws IndexOutOfBoundsException Non valid index for selecting entered.
      */
     @Override
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {

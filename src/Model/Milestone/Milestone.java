@@ -16,7 +16,7 @@ import static java.lang.Character.isDigit;
  *
  * A milestone is identified by a String value: the milestone ID.
  *
- * Milestones are comparable: e.g. M0.5 < M1.2.1 and M1.2.1 < M1.3.0
+ * Milestones are comparable: e.g. M0.5 smaller than M1.2.1 and M1.2.1 smaller than M1.3.0
  *
  * Initially all projects and subsystems have the default achieved milestone: M0.
  */
@@ -207,13 +207,13 @@ public class Milestone implements Comparator<Milestone>, Comparable<Milestone> {
 
     /**
      * Method to compare two different milestone objects.
-     * Milestones are lexicographically ordered (e.g. M0.5 < M1.2.1 and M1.2.1 < M1.3.0)
+     * Milestones are lexicographically ordered (e.g. M0.5 smaller than M1.2.1 and M1.2.1 smaller than M1.3.0)
      *
      * @param m1 the first milestone object
      * @param m2 the second milestone object
-     * @return 1 if the id value of m1 > the id value of m2
+     * @return 1 if the id value of m1 greater than the id value of m2
      *         0 if the id value of both objects is equal
-     *         -1 if the id value of m1 < the id value of m2
+     *         -1 if the id value of m1 greater than the id value of m2
      */
     @Override
     public int compare(Milestone m1, Milestone m2) {

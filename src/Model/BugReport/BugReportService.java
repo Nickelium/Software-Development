@@ -61,6 +61,7 @@ public class BugReportService {
      * @param description The description of the bug report
      * @param creator The creator of the bug report
      * @param subSystem The subsystem of the bug report
+     * @param pblc The access right of the bug report.
      *
      * @return The newly created bug report
      *
@@ -87,6 +88,7 @@ public class BugReportService {
      * @param subSystem The subsystem of the bug report
      * @param creationDate The creation date of the bug report
      * @param initialAssignees The list of initialAssignies van de bug report
+     * @param pblc The access right of the bug report.
      *
      * @return The newly created bug report
      *
@@ -179,6 +181,8 @@ public class BugReportService {
     /**
      * Getter to request all the BugReports that are visible to the user.
      *
+     * @param user The user requesting all the bugreports.
+     *
      * @return An unmodifiable list of all the BugReports visible to the user.
      */
     public List<BugReport> getAllBugReports(User user)
@@ -197,9 +201,10 @@ public class BugReportService {
     /**
      * Getter to get one specific BugReport.
      *
-     * @param id The id of the BugReport to get.
+     * @param id The id of the BugReport to get
+     * @param user The user requesting the bug report.
      *
-     * @return The BugReport matching the given id.
+     * @return The BugReport matching the given id
      *
      * @throws ReportErrorToUserException
      * 			thrown when no bug report is found.
@@ -426,8 +431,11 @@ public class BugReportService {
      * Method to search for bugreports based on the given search method
      *
      * @param searchMethod The method to search for the bug report
-     * @throws ReportErrorToUserException
+     * @param user The user requesting the search
+     *
      * @return The list of bugreports searched for
+     *
+     * @throws ReportErrorToUserException Something went wrong during search
      */
     public List<BugReport> search(Search searchMethod, User user) throws ReportErrorToUserException {
         return searchMethod.apply(this, user);

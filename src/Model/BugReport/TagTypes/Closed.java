@@ -17,6 +17,7 @@ public class Closed extends Tag {
 
     /**
      * Default constructor for the closed tag.
+     * @param score The score given to the solution of the bugreport the close tag will be assigned to.
      */
     public Closed(int score) {
         setManuallyAcceptedTags(Arrays.asList());

@@ -18,6 +18,7 @@ public class Resolved extends Tag {
 
     /**
      * Default constructor for the Resolved tag.
+     * @param selectedPatchIndex The patch selected as best solution in the bugreport this tag is assigned to.
      */
     public Resolved(int selectedPatchIndex) {
         setManuallyAcceptedTags(Arrays.asList(NotABug.class, Closed.class, Duplicate.class));

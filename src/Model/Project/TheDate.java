@@ -167,8 +167,7 @@ public class TheDate
 	 * Method to copy a thedate object
 	 * 
 	 * @return The copied date
-	 * 
-	 * @throws ReportErrorToUserException The attributes of thedate object are not valid.
+	 *
 	 */
 	public TheDate copy() 
 	{

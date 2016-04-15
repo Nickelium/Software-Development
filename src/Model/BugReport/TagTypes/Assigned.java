@@ -56,10 +56,9 @@ public class Assigned extends Tag {
      * In the case of the Assign tag, all patches and tests are removed.
      *
      * @param bugReport The bug report of which to update the fields.
-     * @throws ReportErrorToUserException
      */
     @Override
-    protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
+    protected void updateTagSpecificFields(BugReport bugReport){
         this.removeAllPatches(bugReport);
         this.removeAllTest(bugReport);
     }
