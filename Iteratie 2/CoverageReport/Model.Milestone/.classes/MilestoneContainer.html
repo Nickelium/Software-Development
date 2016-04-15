@@ -1,0 +1,67 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MilestoneContainer</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Milestone</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MilestoneContainer (Model.Milestone)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">MilestoneContainer</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Milestone;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Model.BugReport.BugReport;
+<i>4</i>&nbsp;import Model.Project.SubSystem;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * Created by Tom on 14/04/16.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public interface MilestoneContainer {
+<i>12</i>&nbsp;    List&lt;SubSystem&gt; getAllSubSystems();
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    List&lt;Milestone&gt; getAllMilestones();
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    List&lt;BugReport&gt; getAllBugReports();
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    Milestone getLatestAchievedMilestone();
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-04-15 12:30</div>
+</div>
+</body>
+</html>

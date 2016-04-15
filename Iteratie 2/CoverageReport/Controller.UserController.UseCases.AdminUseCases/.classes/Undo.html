@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Undo</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Controller.UserController.UseCases.AdminUseCases</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Undo (Controller.UserController.UseCases.AdminUseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Undo</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/ 15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Controller.UserController.UseCases.AdminUseCases;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.Formatter;
+<i>4</i>&nbsp;import Controller.IUI;
+<i>5</i>&nbsp;import Controller.UserController.UseCases.UseCase;
+<i>6</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>7</i>&nbsp;import Model.BugReport.BugReportService;
+<i>8</i>&nbsp;import Model.Memento.Caretaker;
+<i>9</i>&nbsp;import Model.Memento.Snapshot;
+<i>10</i>&nbsp;import Model.Project.ProjectService;
+<i>11</i>&nbsp;import Model.User.User;
+<i>12</i>&nbsp;import Model.User.UserService;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import java.util.List;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;public class Undo extends UseCase 
+<i>18</i>&nbsp;{
+<i>19</i>&nbsp;	private Caretaker caretaker;
+<i>20</i>&nbsp;	
+<i>21</i>&nbsp;    public Undo(IUI ui, UserService userService, ProjectService projectService, 
+<i>22</i>&nbsp;    				BugReportService bugReportService, User currentUser, Caretaker caretaker) {
+<b class="fc"><i>23</i>&nbsp;        super(ui, userService, projectService, bugReportService, currentUser);</b>
+<b class="fc"><i>24</i>&nbsp;        changeSystem = true;</b>
+<b class="fc"><i>25</i>&nbsp;        this.caretaker = caretaker;</b>
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     *
+<i>30</i>&nbsp;     * Lets an administrator revert one or more use cases.
+<i>31</i>&nbsp;     *
+<i>32</i>&nbsp;     * 2. The system shows a list of the last 10 completed use case instances
+<i>33</i>&nbsp;	 * that modified the state of BugTrap.
+<i>34</i>&nbsp;	 * 3. The administrator indicates how many use cases he wants to revert
+<i>35</i>&nbsp;	 * starting with the last.
+<i>36</i>&nbsp;	 * 4. The system reverts the selected use cases starting with the last completed one and,
+<i>37</i>&nbsp;	 * if necessary, sends the required notifications if some
+<i>38</i>&nbsp;	 * object of interest is modified by the undoing of a use case.
+<i>39</i>&nbsp;     *
+<i>40</i>&nbsp;     * @throws ReportErrorToUserException
+<i>41</i>&nbsp;     *          in case that the method encounters invalid input.
+<i>42</i>&nbsp;     * @throws IndexOutOfBoundsException
+<i>43</i>&nbsp;     * 			thrown when a user puts an incorrect option index.
+<i>44</i>&nbsp;     *
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    @Override
+<i>47</i>&nbsp;    public void run() throws ReportErrorToUserException,IndexOutOfBoundsException 
+<i>48</i>&nbsp;    {
+<i>49</i>&nbsp;    	// Step 2
+<b class="fc"><i>50</i>&nbsp;    	int numberOfUseCase = 10;</b>
+<b class="fc"><i>51</i>&nbsp;    	getUi().display(&quot;The list of the last &quot; + numberOfUseCase + &quot; use cases that modified the state of Bug trap\n&quot; );</b>
+<b class="fc"><i>52</i>&nbsp;    	List&lt;Snapshot&gt; snapshots = caretaker.getSnapshots(numberOfUseCase);</b>
+<b class="fc"><i>53</i>&nbsp;    	String stringSnapshots = Formatter.formatSnapshots(snapshots);</b>
+<b class="fc"><i>54</i>&nbsp;    	getUi().display(stringSnapshots);</b>
+<i>55</i>&nbsp;    	
+<i>56</i>&nbsp;    	// Step 3
+<b class="fc"><i>57</i>&nbsp;		getUi().display(&quot;Please indicate to which state you want to revert:&quot;);</b>
+<i>58</i>&nbsp;
+<b class="fc"><i>59</i>&nbsp;		int number = getUi().readInt();</b>
+<b class="fc"><i>60</i>&nbsp;    	caretaker.restoreState(snapshots.get(number));</b>
+<i>61</i>&nbsp;    	
+<b class="fc"><i>62</i>&nbsp;    	getUi().display(&quot;System restore completed !&quot;);</b>
+<i>63</i>&nbsp;    	
+<b class="fc"><i>64</i>&nbsp;    }</b>
+<i>65</i>&nbsp;    
+<i>66</i>&nbsp;    @Override
+<i>67</i>&nbsp;	public String toString()
+<i>68</i>&nbsp;	{
+<b class="fc"><i>69</i>&nbsp;		return &quot;Undo&quot;;</b>
+<i>70</i>&nbsp;	}
+<i>71</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-04-15 12:30</div>
+</div>
+</body>
+</html>

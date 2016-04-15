@@ -1,0 +1,148 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SearchOnDescription</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport.SearchMethod</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SearchOnDescription (Model.BugReport.SearchMethod)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SearchOnDescription</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport.SearchMethod;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>4</i>&nbsp;import Model.BugReport.BugReport;
+<i>5</i>&nbsp;import Model.BugReport.BugReportService;
+<i>6</i>&nbsp;import Model.BugReport.Search;
+<i>7</i>&nbsp;import Model.User.User;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.Collections;
+<i>10</i>&nbsp;import java.util.List;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Class extending the search class, providing functionality for searching bug reports
+<i>14</i>&nbsp; * by a specific string in the description. The description string is passed on to
+<i>15</i>&nbsp; * the class through the constructor.
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class SearchOnDescription extends Search
+<i>18</i>&nbsp;{
+<i>19</i>&nbsp;	private String description;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;	/**
+<i>22</i>&nbsp;	 * Constructor to create a new Search On Description object.
+<i>23</i>&nbsp;	 *
+<i>24</i>&nbsp;	 * @param description the description to search for
+<i>25</i>&nbsp;	 */
+<i>26</i>&nbsp;	public SearchOnDescription(String description)
+<b class="fc"><i>27</i>&nbsp;	{</b>
+<b class="fc"><i>28</i>&nbsp;		this.description = description;</b>
+<b class="fc"><i>29</i>&nbsp;	}</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;	/**
+<i>32</i>&nbsp;	 * Method to execute the search command. Method returns a list of all bug reports
+<i>33</i>&nbsp;	 * that meet the search requirements.
+<i>34</i>&nbsp;	 *
+<i>35</i>&nbsp;	 * @param bugReportService the bug report service, requesting the search
+<i>36</i>&nbsp;	 * @param user the user requesting the search
+<i>37</i>&nbsp;	 * @return an unmodifiable list of all bug reports that meet the search requirements.
+<i>38</i>&nbsp;	 */
+<i>39</i>&nbsp;	@Override
+<i>40</i>&nbsp;	protected List&lt;BugReport&gt; apply(BugReportService bugReportService, User user) throws ReportErrorToUserException
+<i>41</i>&nbsp;	{
+<b class="fc"><i>42</i>&nbsp;		if (!isValidDescriptionString(description)) throw new ReportErrorToUserException(&quot;Invalid description&quot;);</b>
+<b class="fc"><i>43</i>&nbsp;		List&lt;BugReport&gt; bugReports = getAllBugReportsWrapped(bugReportService, user).getAllMatching(x -&gt; x.getDescription().contains(description));</b>
+<b class="fc"><i>44</i>&nbsp;		return Collections.unmodifiableList(bugReports);</b>
+<i>45</i>&nbsp;	}
+<i>46</i>&nbsp;	
+<i>47</i>&nbsp;    /**
+<i>48</i>&nbsp;     * Checker to check if the string for filtering is a valid string.
+<i>49</i>&nbsp;     *
+<i>50</i>&nbsp;	 * @param description The string part to check.
+<i>51</i>&nbsp;	 *
+<i>52</i>&nbsp;     * @return True if the title is not null, empty or whitespace.
+<i>53</i>&nbsp;     */
+<i>54</i>&nbsp;    private boolean isValidDescriptionString(String description) {
+<b class="fc"><i>55</i>&nbsp;        if (description == null) return false;</b>
+<b class="fc"><i>56</i>&nbsp;        if (description.equals(&quot;&quot;)) return false;</b>
+<b class="fc"><i>57</i>&nbsp;        if (description.equals(&quot; &quot;)) return false;</b>
+<b class="fc"><i>58</i>&nbsp;        return true;</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-04-15 12:30</div>
+</div>
+</body>
+</html>
