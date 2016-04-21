@@ -1,0 +1,18 @@
+Feedback:
++ Design zag er goed uit
+- system.jar zoals ingediend is van iteratie 1 denk ik
+- Milestone: het milestone nummer bijhouden als een String geeft geen
+     propere code. vb: MileStone.compare() callt een ugly methode die
+     de string omzet in een vergelijkbare double...
+- Niet checken op nullpointers op veel plaatsen
+   - BugReportService.getBugReportsForProject, getBugReportsForProject,
+       setProcedureBug, etc.
+   - Mailbox.ObserverComment.update
+   - enz
+- Een object in een SD heeft normaal een ":" voor de klassenaam
+   (zoals ik gezegd heb in mail 2016-03-29).
+- De SD doet alsof de klasse "Issuer", "Admin" etc allerlei method calls
+   doet maar dat is niet het geval (vb in SWOP2 Use Case 14.png).
+   Ook "Ask for possible actions" is niet echt een method call (verwacht
+   je eerder op een SSD).
+- Scenario tests controleren correct gedrag van de software niet.

@@ -78,11 +78,11 @@ public class SetMilestoneHelper {
     }
 
     /**
-     * Check that the given milestone does not exceed the milestones of the bugreports.
+     * Check that the given milestone does not exceed the milestones of the bug reports.
      *
      * @param cont The class containing the milestones.
      * @param ms   The new milestone.
-     * @return True if the given milestone does not exced the milestones of the bugreports.
+     * @return True if the given milestone does not exceed the milestones of the bug reports.
      */
     public static boolean milestoneDoesNotExceedBugReportMilestone(MilestoneContainer cont, Milestone ms) {
         double max = 0.0;
