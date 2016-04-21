@@ -26,15 +26,20 @@ public class DeleteProject extends AdminControllerInit{
         adminController.getUseCase(5).run();
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfullDeleteProject() throws Exception{
-        String[] simulatedUserInput = {
-                "6"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "6"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(5).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(5).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Index: 6, Size: 2");
+        }
     }
+
 }

@@ -15,7 +15,6 @@ import java.util.Arrays;
  */
 public class ForkProject  extends AdminControllerInit {
 
-
     @Test
     public void successfulForkedProject() throws Exception{
         String[] simulatedUserInput = {
@@ -33,73 +32,87 @@ public class ForkProject  extends AdminControllerInit {
         adminController.getUseCase(3).run();
     }
 
-
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyForkProject_invalidVersionID() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "0.3",
-                "11/11/2016",
-                "200.0",
-                "1"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "0.3",
+                    "11/11/2016",
+                    "200.0",
+                    "1"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(3).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(3).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The version cannot be lower than or equal to the previous one!");
+        }
 
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyForkProject_invalidStartingDate() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "1.1",
-                "11/11/2014",
-                "200.0",
-                "1"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "1.1",
+                    "11/11/2014",
+                    "200.0",
+                    "1"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(3).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(3).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The date is before the creation date.");
+        }
 
     }
 
-
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyForkProject_invalidBudget() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "1.1",
-                "11/11/2016",
-                "-200.0",
-                "1"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "1.1",
+                    "11/11/2016",
+                    "-200.0",
+                    "1"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(3).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(3).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The budget cannot be negative.");
+        }
 
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfullyForkProject_invalidLead() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "1.1",
-                "11/11/2016",
-                "200.0",
-                "5"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "1.1",
+                    "11/11/2016",
+                    "200.0",
+                    "5"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(3).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(3).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Index: 5, Size: 2");
+        }
 
     }
 
