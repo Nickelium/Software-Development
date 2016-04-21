@@ -1,5 +1,6 @@
 package Model.Milestone;
 
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.Project.SubSystem;
 
@@ -24,9 +25,11 @@ public class SetMilestoneHelper {
      * @param cont The class containing the milestones.
      * @param ms   The new milestone.
      * @return True if the given milestone does not exceed the milestones of the subsystems.
+     *
+     * @throws ReportErrorToUserException TODO
      */
-    public static boolean milestoneDoesNotExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) {
-        double max = 0.0;
+    public static boolean milestoneDoesNotExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+        Milestone minimalSubsystemMS = new Milestone("M" + Integer.MAX_VALUE);
         List<Milestone> milestones = new ArrayList<>();
 
         for (SubSystem subSystem : cont.getAllSubSystems()) {
@@ -36,34 +39,43 @@ public class SetMilestoneHelper {
         if (milestones.isEmpty()) return true;
 
         for (Milestone milestone : milestones) {
-            if (ms.getIDvalue() > max) {
-                max = milestone.getIDvalue();
+            if (milestone.compareTo(minimalSubsystemMS) < 0) {
+                minimalSubsystemMS = milestone;
             }
         }
 
-        return ms.getIDvalue() <= max;
+        if(ms.compareTo(minimalSubsystemMS) > 0)
+            return false;
+        else
+            return true; // new ms is <= the highest allowed milestone
     }
 
     /**
-     * Check that the give milestone does exceed the milestones of the subsystems.
+     * Check that the given milestone does exceed the milestones of the subsystems.
      *
      * @param cont The class containing the milestones.
      * @param ms   The new milestone.
      * @return True if the given milestone does exceed the milestones of the subsystems.
+     *
+     * //TODO wat is hier het nut van? is dit niet gewoon !milestoneDoesNotExceedSubsystemMilestone?
      */
-    public static boolean milestoneDoesExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) {
-        double max = 0.0;
+    public static boolean milestoneDoesExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+        Milestone minimalSubsystemMS = new Milestone("M" + Integer.MAX_VALUE);
         List<Milestone> milestones = cont.getAllMilestones();
 
         if (milestones.isEmpty()) return true;
 
         for (Milestone milestone : milestones) {
-            if (ms.getIDvalue() > max) {
-                max = milestone.getIDvalue();
+            if (milestone.compareTo(minimalSubsystemMS) < 0) {
+                // milestone is smaller than the smallest subsystem milestone up to now
+                minimalSubsystemMS = milestone;
             }
         }
 
-        return ms.getIDvalue() > max;
+        if(ms.compareTo(minimalSubsystemMS) > 0)
+            return true;
+        else
+            return false; // new ms is >= the highest milestone of any subsystem
     }
 
     /**
@@ -84,17 +96,20 @@ public class SetMilestoneHelper {
      * @param ms   The new milestone.
      * @return True if the given milestone does not exceed the milestones of the bug reports.
      */
-    public static boolean milestoneDoesNotExceedBugReportMilestone(MilestoneContainer cont, Milestone ms) {
-        double max = 0.0;
+    public static boolean milestoneDoesNotExceedBugReportMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+        Milestone minimalTargetMS = new Milestone("M" + Integer.MAX_VALUE);
         List<BugReport> bugReports = cont.getAllBugReports().stream().filter(x -> !x.getTag().isFinal() && x.getTargetMilestone() != null).collect(Collectors.toList());
 
         if (bugReports.isEmpty()) return true;
         for (BugReport br : bugReports) {
-            if (br.getTargetMilestone().getIDvalue() > max) {
-                max = br.getTargetMilestone().getIDvalue();
+            if (br.getTargetMilestone().compareTo(minimalTargetMS) < 0) {
+                minimalTargetMS = br.getTargetMilestone();
             }
         }
 
-        return ms.getIDvalue() <= max;
+        if(ms.compareTo(minimalTargetMS) > 0)
+            return false;
+        else
+            return true; // new ms is <= the highest allowed milestone
     }
 }
