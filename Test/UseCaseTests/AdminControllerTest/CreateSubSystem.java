@@ -31,17 +31,21 @@ public class CreateSubSystem extends AdminControllerInit {
         adminController.getUseCase(6).run();
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfulCreateSubSystem_forProject_wrongSelection() throws Exception{
-        String[] simulatedUserInput = {
-                "P",
-                "10"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "P",
+                    "10"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(6).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(6).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Index: 10, Size: 2");
+        }
     }
 
     @Test
@@ -59,29 +63,37 @@ public class CreateSubSystem extends AdminControllerInit {
         adminController.getUseCase(6).run();
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfulCreateSubSystem_forSubSystem_wrongSelection() throws Exception{
-        String[] simulatedUserInput = {
-                "S",
-                "10"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "S",
+                    "10"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(6).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(6).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Index: 10, Size: 8");
+        }
 
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfulCreateSubSystem_wrongSelection() throws Exception{
-        String[] simulatedUserInput = {
-                "X"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "X"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(6).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(6).run();
+        } catch (ReportErrorToUserException e) {
+            e.getMessage().equals("This is an invalid input");
+        }
     }
 }

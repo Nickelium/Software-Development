@@ -12,10 +12,10 @@ import java.util.Arrays;
 /**
  * Created by Karina on 11.03.2016.
  */
-public class InspectBugReport extends IssuerControllerInit{
+public class InspectBugReport extends IssuerControllerInit {
 
     @Test
-    public void successfullyInspectedByString() throws Exception{
+    public void successfullyInspectedByString() throws Exception {
         String[] simulatedUserInput = {
                 "0",
                 "Crash",
@@ -30,7 +30,7 @@ public class InspectBugReport extends IssuerControllerInit{
     }
 
     @Test
-    public void successfullyInspectedByFiledUser() throws Exception{
+    public void successfullyInspectedByFiledUser() throws Exception {
         String[] simulatedUserInput = {
                 "1",
                 "doc",
@@ -44,7 +44,7 @@ public class InspectBugReport extends IssuerControllerInit{
     }
 
     @Test
-    public void successfullyInspectedByAssignedUser() throws Exception{
+    public void successfullyInspectedByAssignedUser() throws Exception {
         String[] simulatedUserInput = {
                 "2",
                 "major",
@@ -57,60 +57,74 @@ public class InspectBugReport extends IssuerControllerInit{
         issuerController.getUseCase(3).run();
     }
 
+    @Test
+    public void unsuccessfulInspectionByString() throws Exception {
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Test test",
+                    "0"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-    @Test(expected = ReportErrorToUserException.class)
-    public void unsuccessfulInspectionByString() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "Test test",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(3).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(3).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("No bug reports found.");
+        }
     }
 
-    @Test(expected = ReportErrorToUserException.class)
-    public void unsuccessfulInspectionByFiledUser() throws Exception{
-        String[] simulatedUserInput = {
-                "1",
-                "major",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+    @Test
+    public void unsuccessfulInspectionByFiledUser() throws Exception {
+        try {
+            String[] simulatedUserInput = {
+                    "1",
+                    "major",
+                    "0"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(3).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(3).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("No bug reports found.");
+        }
     }
 
-    @Test(expected = ReportErrorToUserException.class)
-    public void unsuccessfulInspectionByAssignedUser() throws Exception{
-        String[] simulatedUserInput = {
-                "2",
-                "doc",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+    @Test
+    public void unsuccessfulInspectionByAssignedUser() throws Exception {
+        try {
+            String[] simulatedUserInput = {
+                    "2",
+                    "doc",
+                    "0"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(3).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(3).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("No bug reports found.");
+        }
     }
 
+    @Test
+    public void unsuccessfulInspection_invalidInput() throws Exception {
+        try {
+            String[] simulatedUserInput = {
+                    "3"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-    @Test(expected = ReportErrorToUserException.class)
-    public void unsuccessfulInspection_invalidInput() throws Exception{
-        String[] simulatedUserInput = {
-                "3"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(3).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(3).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("Enter a valid number.");
+        }
     }
 
 }

@@ -28,35 +28,42 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
         developerController.getUseCase(11).run();
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void subsystem_Invalid_ToSmall() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "1",
-                "0",
-                "M1.0"
-        };
+        try {
+            String[] simulatedUserInput = {
+                    "1",
+                    "0",
+                    "M1.0"
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(11).run();
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(11).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The new milestone is smaller than the current one");
+        }
     }
 
-
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void subsystem_Invalid_BiggerThanSubsystem() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "1",
-                "1",
-                "M1.3"
-        };
+        try {
+            String[] simulatedUserInput = {
+                    "1",
+                    "1",
+                    "M1.3"
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(11).run();
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(11).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The new milestone exceeds milestone of subsystem!");
+        }
     }
 
     @Test

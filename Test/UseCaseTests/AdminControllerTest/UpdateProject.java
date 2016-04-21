@@ -31,38 +31,45 @@ public class UpdateProject extends AdminControllerInit{
         adminController.getUseCase(4).run();
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfulUpdatedProject_invalidDate() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "Project Test Name",
-                "Project Test Description",
-                "11/12/2014",
-                "200.0",
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Project Test Name",
+                    "Project Test Description",
+                    "11/12/2014",
+                    "200.0",
+                    "0"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(4).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(4).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The date is before the creation date.");
+        }
 
     }
 
-
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfulUpdatedProject_invalidBudget() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "Project Test Name",
-                "Project Test Description",
-                "11/12/2016",
-                "-200.0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Project Test Name",
+                    "Project Test Description",
+                    "11/12/2016",
+                    "-200.0"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(4).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(4).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The budget cannot be negative.");
+        }
     }
 }
