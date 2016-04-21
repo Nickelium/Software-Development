@@ -44,21 +44,24 @@ public class AssignToBugReport extends DeveloperControllerInit {
         developerController.getUseCase(10).run();
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyAssignedDeveloperToBugReport() throws Exception {
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "0",
-                "0"
-        };
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "0",
+                    "0"
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(10).run();
-
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(10).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("Cannot assign developer to bug report!");
+        }
     }
 
 }

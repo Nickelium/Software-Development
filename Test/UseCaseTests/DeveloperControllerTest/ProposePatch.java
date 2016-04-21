@@ -37,56 +37,67 @@ public class ProposePatch extends DeveloperControllerInit {
         developerController.getUseCase(12).run();
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyProposedPatch_UserNotAllowed() throws Exception {
-        addTests();
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "0",
-                "Patch test",
-                "."
-        };
+        try {
+            addTests();
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "0",
+                    "Patch test",
+                    "."
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(12).run();
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(12).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("You are not allowed to add a patch.");
+        }
 
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyProposedPatch_NoTestsYet() throws Exception {
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "0",
-                "Patch test",
-                "."
-        };
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("maria"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(12).run();
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "0",
+                    "Patch test",
+                    "."
+            };
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("maria"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(12).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("No tests are submitted yet, so no patches can be added.");
+        }
     }
 
-
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyProposedPatch_TagError() throws Exception {
-        String[] simulatedUserInput = {
-                "0",
-                "parse_ewd",
-                "0",
-                "Patch test",
-                "."
-        };
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "parse_ewd",
+                    "0",
+                    "Patch test",
+                    "."
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(12).run();
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(12).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("No patches can be submitted because the bug report doesn't have the proper tag.");
+        }
     }
 
 }

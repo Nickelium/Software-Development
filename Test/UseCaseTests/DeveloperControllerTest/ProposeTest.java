@@ -29,39 +29,47 @@ public class ProposeTest extends DeveloperControllerInit {
         developerController.getUseCase(13).run();
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyProposedTest_UserNotAllowed() throws Exception {
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "0",
-                "Test test",
-                "."
-        };
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "0",
+                    "Test test",
+                    "."
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(13).run();
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(13).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("You are not allowed to add a test.");
+        }
 
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyProposedTest_TagError() throws Exception {
-        String[] simulatedUserInput = {
-                "0",
-                "parse_ewd",
-                "0",
-                "Test test",
-                "."
-        };
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "parse_ewd",
+                    "0",
+                    "Test test",
+                    "."
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(13).run();
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(13).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The Bug Report doesn't has the tag Assigned, so no test can be added!");
+        }
     }
 
 }
