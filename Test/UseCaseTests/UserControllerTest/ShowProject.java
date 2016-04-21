@@ -27,16 +27,20 @@ public class ShowProject extends AdminControllerInit{
         adminController.getUseCase(0).run();
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfulShowProject_invalidInput() throws Exception{
-        String[] simulatedUserInput = {
-                "5"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "5"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(0).run();
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            adminController.getUseCase(0).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Index: 5, Size: 2");
+        }
     }
 
 }

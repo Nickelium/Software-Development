@@ -38,15 +38,20 @@ public class UnregisterFromNotification extends IssuerControllerInit {
         issuerController.getUseCase(8).run();
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfullyUnregistered_NoRegistrations() throws Exception {
-        String[] simulatedUserInput = {
-                "0"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "0"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(8).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(8).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Index: 0, Size: 0");
+        }
     }
+
 }

@@ -75,33 +75,41 @@ public class RegisterForNotification extends IssuerControllerInit {
         issuerController.getUseCase(7).run();
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyRegisteredForProject_UnvalidSpecificTag() throws Exception {
-        String[] simulatedUserInput = {
-                "1",
-                "0",
-                "3",
-                "Test"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "1",
+                    "0",
+                    "3",
+                    "Test"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(7).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(7).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The tag you entered does not exist.");
+        }
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfullyRegisteredForProject_UnvalidChoice() throws Exception {
-        String[] simulatedUserInput = {
-                "1",
-                "0",
-                "5"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "1",
+                    "0",
+                    "5"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(7).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(7).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Invalid index input");
+        }
     }
 
     //endregion
@@ -171,35 +179,43 @@ public class RegisterForNotification extends IssuerControllerInit {
         issuerController.getUseCase(7).run();
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyRegisteredForSubSystem_UnvalidSpecificTag() throws Exception {
-        String[] simulatedUserInput = {
-                "2",
-                "0",
-                "0",
-                "3",
-                "Test"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "2",
+                    "0",
+                    "0",
+                    "3",
+                    "Test"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(7).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(7).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The tag you entered does not exist.");
+        }
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfullyRegisteredForSubSystem_UnvalidChoice() throws Exception {
-        String[] simulatedUserInput = {
-                "2",
-                "0",
-                "0",
-                "5"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "2",
+                    "0",
+                    "0",
+                    "5"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(7).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(7).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Invalid index input");
+        }
     }
 
     //endregion
@@ -256,37 +272,45 @@ public class RegisterForNotification extends IssuerControllerInit {
         issuerController.getUseCase(7).run();
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unsuccessfullyRegisteredForBugReport_UnvalidSpecificTag() throws Exception {
-        String[] simulatedUserInput = {
-                "3",
-                "0",
-                "Crash",
-                "0",
-                "2",
-                "Test"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "3",
+                    "0",
+                    "Crash",
+                    "0",
+                    "2",
+                    "Test"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(7).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(7).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("The tag you entered does not exist.");
+        }
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void unsuccessfullyRegisteredForBugReport_UnvalidChoice() throws Exception {
-        String[] simulatedUserInput = {
-                "3",
-                "0",
-                "Crash",
-                "0",
-                "5"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+        try {
+            String[] simulatedUserInput = {
+                    "3",
+                    "0",
+                    "Crash",
+                    "0",
+                    "5"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(7).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(7).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Invalid index input");
+        }
     }
 
     //endregion

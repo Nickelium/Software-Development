@@ -40,37 +40,44 @@ public class UpdateBugReport extends IssuerControllerInit {
         developerController.getUseCase(5).run();
     }
 
-
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unSuccessfullyUpdatedBugReport_IllegalUser() throws Exception {
-        setTagToUnderReview();
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "0",
-                "Assigned"
-        };
+        try {
+            setTagToUnderReview();
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "0",
+                    "Assigned"
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("maria"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(5).run();
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("maria"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(5).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("Cannot preform tag change! No valid permission.");
+        }
     }
 
-    @Test(expected = ReportErrorToUserException.class)
+    @Test
     public void unSuccessfullyUpdatedBugReport_IllegalTagSwitch() throws Exception {
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "0",
-                "UnderReview"
-        };
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "0",
+                    "UnderReview"
+            };
 
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
+            ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
+            IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(5).run();
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            developerController.getUseCase(5).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("Cannot preform tag change! No valid permission.");
+        }
     }
 }

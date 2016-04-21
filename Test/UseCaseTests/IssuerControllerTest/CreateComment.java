@@ -12,10 +12,10 @@ import java.util.Arrays;
 /**
  * Created by Karina on 11.03.2016.
  */
-public class CreateComment extends IssuerControllerInit{
+public class CreateComment extends IssuerControllerInit {
 
     @Test
-    public void successfullyCreatedComment_forBugReport() throws Exception{
+    public void successfullyCreatedComment_forBugReport() throws Exception {
         String[] simulatedUserInput = {
                 "0",
                 "Crash",
@@ -36,7 +36,7 @@ public class CreateComment extends IssuerControllerInit{
     }
 
     @Test
-    public void successfullyCreatedComment_forComment() throws Exception{
+    public void successfullyCreatedComment_forComment() throws Exception {
         successfullyCreatedComment_forBugReport();
         String[] simulatedUserInput = {
                 "0",
@@ -58,53 +58,62 @@ public class CreateComment extends IssuerControllerInit{
         issuerController.getUseCase(4).run();
     }
 
+    @Test
+    public void unsuccessfulCreatedComment_forBugReport_invalidChoice() throws Exception {
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "1"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void unsuccessfulCreatedComment_forBugReport_invalidChoice() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "1"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(4).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(4).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Index: 1, Size: 1");
+        }
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void unsuccessfulCreatedComment_forComment_invalidChoice() throws Exception{
-        successfullyCreatedComment_forBugReport();
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "0",
-                "c",
-                "2"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
+    @Test
+    public void unsuccessfulCreatedComment_forComment_invalidChoice() throws Exception {
+        try {
+            successfullyCreatedComment_forBugReport();
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "0",
+                    "c",
+                    "2"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(4).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(4).run();
+        } catch (IndexOutOfBoundsException e) {
+            assert e.getMessage().equals("Index: 2, Size: 1");
+        }
     }
 
+    @Test
+    public void unsuccessfulCreatedComment_invalidChoice() throws Exception {
+        try {
+            String[] simulatedUserInput = {
+                    "0",
+                    "Crash",
+                    "0",
+                    "x"
+            };
+            ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
+            TestUI ui = new TestUI(input);
 
-    @Test(expected = ReportErrorToUserException.class)
-    public void unsuccessfulCreatedComment_invalidChoice() throws Exception{
-        String[] simulatedUserInput = {
-                "0",
-                "Crash",
-                "0",
-                "x"
-        };
-        ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
-        TestUI ui = new TestUI(input);
-
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(4).run();
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            issuerController.getUseCase(4).run();
+        } catch (ReportErrorToUserException e) {
+            assert e.getMessage().equals("This is an invalid input");
+        }
     }
-
 
 }
