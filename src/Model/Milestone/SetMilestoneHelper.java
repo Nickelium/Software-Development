@@ -11,13 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Helper class for setting the milestones in project and subsystem. To avoid duplicate code.
  */
-public class SetMilestoneHelper {
-
-    /**
-     * No instances of this class can be created.
-     */
-    private SetMilestoneHelper() {
-    }
+public abstract class SetMilestoneHelper {
 
     /**
      * Check that the give milestone does not exceed the milestones of the subsystems.

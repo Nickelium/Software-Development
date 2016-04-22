@@ -149,7 +149,7 @@ public class Milestone implements Comparable<Milestone> {
         return true;
     }
 
-    private int compareMilestones(Milestone m1, Milestone m2) throws ReportErrorToUserException {
+    private int compareMilestones(Milestone m1, Milestone m2){
         int[] layeredMilestone1 = m1.getLayeredMilestone();
         int[] layeredMilestone2 = m2.getLayeredMilestone();
         int lengthL1 = layeredMilestone1.length;
@@ -176,7 +176,9 @@ public class Milestone implements Comparable<Milestone> {
             index++;
         }
 
-        throw new ReportErrorToUserException("Something went wrong while comparing the milestones");
+        // Program should never be able to reach this; consistency checks while creating
+        // Milestone object (setMilestoneID) prevents this.
+        return 0;
     }
 
     @Override
@@ -188,26 +190,6 @@ public class Milestone implements Comparable<Milestone> {
         return milestone.substring(0,1) + milestone.substring(2);
     }
 
-//    /**
-//     * Method to compare two different milestone objects.
-//     * Milestones are lexicographically ordered (e.g. M0.5 smaller than M1.2.1 and M1.2.1 smaller than M1.3.0)
-//     *
-//     * @param o1 the first milestone object
-//     * @param o2 the second milestone object
-//     * @return 1 if the id value of m1 greater than the id value of m2
-//     *         0 if the id value of both objects is equal
-//     *         -1 if the id value of m1 greater than the id value of m2
-//     */
-//    @Override
-//    public int compare(Milestone o1, Milestone o2) {
-//        try {
-//            return compareMilestones(o1, o2);
-//        } catch (ReportErrorToUserException e) {
-//            e.printStackTrace();
-//        }
-//        return 0;
-//    }
-
     /**
      * The value 0 if the argument is a Milestone lexicographically equal to this Milestone;
      * a value of 1 if the argument is a Milestone lexicographically less than this Milestone.
@@ -218,11 +200,6 @@ public class Milestone implements Comparable<Milestone> {
      */
     @Override
     public int compareTo(Milestone o) {
-        try {
-            return compareMilestones(this, o);
-        } catch (ReportErrorToUserException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return compareMilestones(this, o);
     }
 }

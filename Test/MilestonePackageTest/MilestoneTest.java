@@ -63,6 +63,11 @@ public class MilestoneTest {
         assertTrue(milestoneValidID.getMilestoneID().equals("M0.500.1"));
     }
 
+    @Test (expected = ReportErrorToUserException.class)
+    public void isValidIDTest8() throws ReportErrorToUserException{
+        Milestone milestoneInvalidID = new Milestone("M0..1");
+    }
+
     @Test
     public void getMilestoneIDTest_VALID() throws ReportErrorToUserException {
         Milestone milestone = new Milestone("M0.8.9");
