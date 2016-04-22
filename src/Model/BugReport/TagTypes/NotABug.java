@@ -6,7 +6,7 @@ import Model.BugReport.Patch;
 import Model.BugReport.Tag;
 import Model.BugReport.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * Class inheriting from the Tag Class.
@@ -18,7 +18,7 @@ public class NotABug extends Tag {
      * Default constructor for the notABug tag
      */
     public NotABug(){
-        setManuallyAcceptedTags(Arrays.asList());
+        setManuallyAcceptedTags(new ArrayList<>());
     }
 
     /**
@@ -49,12 +49,6 @@ public class NotABug extends Tag {
     @Override
     public String toString() {
         return "NotABug";
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof NotABug) return true;
-        else return false;
     }
 
     @Override
