@@ -536,10 +536,14 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * Method to restore this object given the memento
 	 * 
 	 * @param memento The memento to restore to
+	 * 
+	 * @throws IllegalArgumentException the memento is null
 	 */
 	@Override
 	public void restoreMemento(ProjectMemento memento)
 	{
+		if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
+		
 		this.name = memento.getName();
 		this.description = memento.getDescription();
 		this.startingDate = memento.getStartingDate();
@@ -599,6 +603,8 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
     	 * Constructor 
     	 * 
     	 * @param originator The originator to build a memento from
+    	 * 
+    	 * @throws IllegalArgumentException the originator is null
     	 */
 		public ProjectMemento(Project originator)
 		{

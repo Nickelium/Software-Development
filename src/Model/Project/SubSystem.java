@@ -399,10 +399,14 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 	 * Method to restore this object given the memento
 	 * 
 	 * @param memento The memento to restore to
+	 * 
+	 * @throws IllegalArgumentException the memento is null
 	 */
 	@Override
 	public void restoreMemento(SubSystemMemento memento) 
 	{
+		if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
+		
 		this.subSystems = memento.getSubSystems();
 		
 		for(SubSystemMemento subsystemMemento : memento.getSubSystemMementos())
@@ -448,6 +452,8 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     	 * Constructor 
     	 * 
     	 * @param originator The originator to build a memento from
+    	 * 
+    	 * @throws IllegalArgumentException the originator is null
     	 */
 		public SubSystemMemento(SubSystem originator)
 		{

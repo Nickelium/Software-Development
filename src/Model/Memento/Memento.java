@@ -14,9 +14,12 @@ public abstract class Memento<T>
 	 * Constructor of this memento
 	 * 
 	 * @param originator The originator to build a memento from
+	 * 
+	 * @throws IllegalArgumentException the originator is null
 	 */
 	public Memento(T originator)
 	{
+		if(originator == null) throw new IllegalArgumentException("The originator cannot be null");
 		this.originator = originator;
 	}
 	

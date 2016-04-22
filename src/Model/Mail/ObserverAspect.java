@@ -15,12 +15,14 @@ public abstract class ObserverAspect implements Observer<BugReport>
 	 * Constructor of this ObserverAspect
 	 *
 	 * @param structure Subject to observe
+	 * 
+	 * @throws IllegalArgumentException the structure is null
 	 */
 	public ObserverAspect(Subject structure)
 	{
 		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
-			this.structure = structure;
-			structure.addObserver(this);
+		this.structure = structure;
+		structure.addObserver(this);
 	}
 	
 	 /**
@@ -29,6 +31,8 @@ public abstract class ObserverAspect implements Observer<BugReport>
 	 * @param structure The subject
 	 * @param bugReport The bug report that has change within
 	 * @param aspect The aspect that has changed
+	 * 
+	 * @throws IllegalArgumentException the structure, bug report or aspect is null
      */
 	@Override
 	public abstract void update(Subject structure, BugReport bugReport, Object aspect);

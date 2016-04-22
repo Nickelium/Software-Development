@@ -654,9 +654,14 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * to the values as recorded in the memento object.
      *
      * @param memento the memento object that contains the old values
+     * 
+     * @throws IllegalArgumentException the memento is null
      */
     @Override
-    public void restoreMemento(BugReportMemento memento) {
+    public void restoreMemento(BugReportMemento memento) 
+    {
+    	if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
+    	
         this.tag = memento.getTag();
         this.assignees = memento.getAssignees();
         this.comments = memento.getComments();
@@ -697,6 +702,8 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     	 * Constructor 
     	 * 
     	 * @param originator The originator to build a memento from
+    	 * 
+    	 * @throws IllegalArgumentException the originator is null
     	 */
     	public BugReportMemento(BugReport originator)
     	{

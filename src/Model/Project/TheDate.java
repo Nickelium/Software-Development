@@ -2,8 +2,10 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * This class represents a date class, which use the following date format dd/MM/yyyy.
@@ -32,7 +34,14 @@ public class TheDate
 	
 	private String[] retrieveParts(String stringDate)
 	{
-		return stringDate.split("/");
+		try
+		{
+			return stringDate.split("/");
+		}
+		catch(PatternSyntaxException e)
+		{
+			throw new IllegalArgumentException("The stringdate is incorrect");
+		}
 	}
 
 	/**
@@ -50,7 +59,7 @@ public class TheDate
 		{
 			this.date = LocalDate.of(year,month,day);
 		}
-		catch(Exception e)
+		catch(DateTimeException e)
 		{
 			throw new ReportErrorToUserException("Incorrect date format!");
 		}

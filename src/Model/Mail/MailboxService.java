@@ -26,9 +26,14 @@ public class MailboxService
 	 * 
 	 * @param bugReportService The bugreport service to use.
 	 * @param userService The user service to use.
+	 * 
+	 * @throws IllegalArgumentException the bugreportservice or userservice is null
 	 */
 	public MailboxService(BugReportService bugReportService, UserService userService)
 	{
+		if(bugReportService == null) throw new IllegalArgumentException("The bugreportservice cannot be null");
+		if(userService == null) throw new IllegalArgumentException("The userservice cannot be null");
+
 		this.bugReportService = bugReportService;
 		this.userService = userService;
 	}
@@ -40,11 +45,14 @@ public class MailboxService
 	 * 
 	 * @return The list of notifications
 	 * 
+	 * @throws IllegalArgumentException the user is null or negative number
+	 * 
 	 * @throws IndexOutOfBoundsException when the given number is incorrect
 	 */
 	public List<Notification> getNotifications(User user, int number) throws IndexOutOfBoundsException
 	{
 		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(number < 0) throw new IllegalArgumentException("The number cannot be negative");
 		
 		List<Notification> listOriginal = user.getMailbox().getNotifications();
 		List<Notification> listOrderRecent = reverse(listOriginal);
@@ -64,6 +72,8 @@ public class MailboxService
 	 * @param user The user to retrieve it's registrations 
 	 * 
 	 * @return The list of registrations
+	 * 
+	 * @throws IllegalArgumentException the user is null
 	 */
 	public List<ObserverAspect> getRegistrations(User user)
 	{
@@ -76,10 +86,13 @@ public class MailboxService
 	 * 
 	 * @param user The user that wants to register
 	 * @param s The subject to observe
+	 * 
+	 * @throws IllegalArgumentException the user or subject is null
 	 */
 	public void registerCreationBugReport(User user, Subject s)
 	{
 		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(s == null) throw new IllegalArgumentException("Subject cannot be null");
 		user.getMailbox().registerBugReport(s);
 	}
 	
@@ -88,10 +101,13 @@ public class MailboxService
 	 * 
 	 * @param user The user that wants to register
 	 * @param s The subject to observe
+	 * 
+	 * @throws IllegalArgumentException the user or subject is null
 	 */
 	public void registerTag(User user, Subject s)
 	{
 		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(s == null) throw new IllegalArgumentException("Subject cannot be null");
 		user.getMailbox().registerTag(s);
 	}
 	
@@ -101,10 +117,14 @@ public class MailboxService
 	 * @param user The user that wants to register
 	 * @param s The subject to observe
 	 * @param tag The tag change to be notified
+	 * 
+	 * @throws IllegalArgumentException the user or subject or tag is null
 	 */
 	public void registerSpecificTag(User user, Subject s, Tag tag)
 	{
 		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(s == null) throw new IllegalArgumentException("Subject cannot be null");
+		if(tag == null) throw new IllegalArgumentException("Tag cannot be null");
 		user.getMailbox().registerSpecificTag(s,tag);
 	}
 	
@@ -112,12 +132,14 @@ public class MailboxService
 	 * Method to register for a comment creation in the given subject
 	 * 
 	 * @param user The user that wants to register
-	 * 
 	 * @param s The subject to observe
+	 * 
+	 * @throws IllegalArgumentException the user or subject is null
 	 */
 	public void registerComment(User user, Subject s)
 	{
 		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(s == null) throw new IllegalArgumentException("Subject cannot be null");
 		user.getMailbox().registerComment(s);
 	}
 	
@@ -125,17 +147,21 @@ public class MailboxService
 	 * Method to unregister for a given registration
 	 * 
 	 * @param user The user that wants to register
-	 * 
 	 * @param registration The registration to unregister
+	 * 
+	 * @throws IllegalArgumentException the user or registration is null
 	 */
 	public void unregister(User user, ObserverAspect registration)
 	{
 		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(registration == null) throw new IllegalArgumentException("The registration cannot be null");
 		user.getMailbox().unregister(registration);
 	}
 	
 	private List<Notification> reverse(List<Notification> list)
 	{
+		if(list == null) throw new IllegalArgumentException("List cannot be null");
+		
 	    List<Notification> nList = new ArrayList<>();
 	    for(int index = list.size() - 1; index >= 0; index--)
 	    	nList.add(list.get(index));

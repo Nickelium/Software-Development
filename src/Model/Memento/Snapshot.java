@@ -28,9 +28,15 @@ public class Snapshot
 	 * @param usecase The usecase that lead to snapshot save of the system
 	 * @param projectService The project service in use.
 	 * @param mailboxService The mailbox service in use.
+	 * 
+	 * @throws IllegalArgumentException the user, projectservice or mailboxservice is null
 	 */
 	Snapshot(UseCase usecase, ProjectService projectService, MailboxService mailboxService)
 	{
+		if(usecase == null) throw new IllegalArgumentException("The usecase cannot be null");
+		if(projectService == null) throw new IllegalArgumentException("The projectService cannot be null");
+		if(mailboxService == null) throw new IllegalArgumentException("The mailboxService cannot be null");
+
 		projectServiceMemento = projectService.createMemento();
 		for(Mailbox mailbox : mailboxService.getAllMailboxes())
 			mailboxMementos.add(mailbox.createMemento());

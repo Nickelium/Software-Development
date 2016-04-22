@@ -18,9 +18,15 @@ public class Notification
 	 * @param changeDescription A description of this notification
 	 * @param bugReport The bug report that has changed
 	 * @param structure The subject structure where the change happened
+	 * 
+	 * @throws IllegalArgumentException the description, bureport or structure is null
 	 */
 	Notification(String changeDescription, BugReport bugReport, Subject structure)
 	{
+		if(changeDescription == null) throw new IllegalArgumentException("The description cannot be null");
+		if(bugReport == null) throw new IllegalArgumentException("The bugreport cannot be null");
+		if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+		
 		this.changeDescription = changeDescription;
 		this.bugReport = bugReport;
 		this.structure = structure;
@@ -65,8 +71,6 @@ public class Notification
 	@Override
 	public String toString()
 	{
-		if(changeDescription != null & bugReport != null & structure != null)
-			return  changeDescription + "\n"  + bugReport  + "\n in \n" + structure +"\n";
-		return "";
+		return  changeDescription + "\n"  + bugReport  + "\n in \n" + structure +"\n";
 	}
 }

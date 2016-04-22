@@ -12,6 +12,8 @@ public interface Observer<T> {
 	 * @param structure The subject structure where the changed occured
 	 * @param s The object where the change occurred
      * @param aspect The aspect that has changed
+     * 
+     * @throws IllegalArgumentException the structure, s or aspect is null
      */
 	public void update(Subject structure, T s, Object aspect);
 

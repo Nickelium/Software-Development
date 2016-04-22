@@ -376,10 +376,14 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 	 * Method to restore this object given the memento
 	 * 
 	 * @param memento The memento to restore to
+	 * 
+	 * @throws IllegalArgumentException the memento is null
 	 */
 	@Override
 	public void restoreMemento(ProjectServiceMemento memento)
     {
+		if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
+		
     	this.projectList = new ListWrapper<>(memento.getListProject());
     	
     	for(ProjectMemento projectMemento :	memento.getProjectMementos())
@@ -411,6 +415,8 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	 * Constructor 
     	 * 
     	 * @param originator The originator to build a memento from
+    	 * 
+    	 * @throws IllegalArgumentException the originator is null
     	 */
 		public ProjectServiceMemento(ProjectService originator)
 		{

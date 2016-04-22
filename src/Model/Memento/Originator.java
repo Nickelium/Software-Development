@@ -20,6 +20,8 @@ public interface Originator<T extends Memento<R>, R>
 	 * Method to restore the originator given the memento
 	 * 
 	 * @param memento The memento to restore from
+	 * 
+	 * @throws IllegalArgumentException the memento is null
 	 */
 	public void restoreMemento(T memento);
 }
