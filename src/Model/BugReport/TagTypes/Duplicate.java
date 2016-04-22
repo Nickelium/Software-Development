@@ -6,7 +6,7 @@ import Model.BugReport.Patch;
 import Model.BugReport.Tag;
 import Model.BugReport.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * Class inheriting from the Tag Class.
@@ -19,9 +19,11 @@ public class Duplicate extends Tag {
     /**
      * Constructor for the default tag which saves the duplicate bug report
      * @param duplicateBugReport The other bug report not containing this tag.
+     * @throws IllegalArgumentException Duplicate bug report is null.
      */
     public Duplicate(BugReport duplicateBugReport){
-        setManuallyAcceptedTags(Arrays.asList());
+        if (duplicateBugReport == null) throw new IllegalArgumentException("Duplicate bug report is null");
+        setManuallyAcceptedTags(new ArrayList<>());
         this.duplicateBugReport = duplicateBugReport;
     }
 
@@ -53,12 +55,6 @@ public class Duplicate extends Tag {
     @Override
     public String toString() {
         return "Duplicate";
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Duplicate)return true;
-        else return false;
     }
 
     @Override

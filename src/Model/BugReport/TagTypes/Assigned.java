@@ -26,9 +26,12 @@ public class Assigned extends Tag {
      * @param bugReport The bug report to assign the patch to.
      * @param patch     The patch to assign to the bug report.
      * @throws ReportErrorToUserException is thrown if the specified bug report doesn't have any tests.
+     * @throws IllegalArgumentException Bugreport or patch is null.
      */
     @Override
     protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (patch == null) throw new IllegalArgumentException("Patch is null");
         if (bugReport.getTests().isEmpty())
             throw new ReportErrorToUserException("No tests are submitted yet, so no patches can be added.");
         super.addPatch(bugReport, patch);
@@ -43,9 +46,12 @@ public class Assigned extends Tag {
      * @param tag the new tag for the specified bug report
      * @throws ReportErrorToUserException is thrown if the bug report has dependencies.
      *         The Assigned tag cannot be changed until all dependencies are resolved.
+     * @throws IllegalArgumentException Bugreport or tag is null.
      */
     @Override
     protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (tag == null) throw new IllegalArgumentException("Tag is null");
         if (!bugReport.getDependencies().isEmpty())
             throw new ReportErrorToUserException("The bug report has dependencies, until all are resolved, the tag cannot change.");
         super.changeTag(bugReport, tag);
@@ -56,9 +62,11 @@ public class Assigned extends Tag {
      * In the case of the Assign tag, all patches and tests are removed.
      *
      * @param bugReport The bug report of which to update the fields.
+     * @throws IllegalArgumentException Bugreport is null.
      */
     @Override
     protected void updateTagSpecificFields(BugReport bugReport){
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         this.removeAllPatches(bugReport);
         this.removeAllTest(bugReport);
     }
@@ -66,12 +74,6 @@ public class Assigned extends Tag {
     @Override
     public String toString() {
         return "Assigned";
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof  Assigned) return true;
-        else return false;
     }
 
     @Override
