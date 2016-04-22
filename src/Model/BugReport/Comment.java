@@ -149,7 +149,7 @@ public class Comment extends Subject implements Observer<Comment>{
 
         this.comments.add(comment);
         comment.addObserver(this);
-        notifyObservers(null, comment);
+        notifyObservers(this, comment);
     }
 
     //endregion
