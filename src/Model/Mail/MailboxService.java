@@ -120,7 +120,7 @@ public class MailboxService
 	 * 
 	 * @throws IllegalArgumentException the user or subject or tag is null
 	 */
-	public void registerSpecificTag(User user, Subject s, Tag tag)
+	public void registerSpecificTag(User user, Subject s, Class tag)
 	{
 		if(user == null) throw new IllegalArgumentException("User cannot be null");
 		if(s == null) throw new IllegalArgumentException("Subject cannot be null");

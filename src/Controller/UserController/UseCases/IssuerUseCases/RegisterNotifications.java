@@ -105,27 +105,27 @@ public class RegisterNotifications extends IssuerUseCase{
 	         		case 3:
 	         			getUi().display("Please specify the tag to be notified: ");
 	         			String tagString = getUi().readString();
-	         			Tag tag;
+	         			Class tag;
 	         			//Step 4
 	         	        switch (tagString) 
 	         	        {
 	         	            case "Assigned":
-	         	                tag = new Assigned();
+	         	                tag = Assigned.class;
 	         	                break;
 	         	            case "Closed":
-	         	            	tag = new Closed(0);
+	         	            	tag = Closed.class;
 	         	            	 break;
 	         	            case "Duplicate":
-	         	            	tag = new Duplicate(null);
+	         	            	tag = Duplicate.class;
 	         	            	 break;
 	         	            case "NotABug":
-	         	            	tag = new NotABug();
+	         	            	tag = NotABug.class;
 	         	            	 break;
 	         	            case "Resolved":
-	         	            	tag = new Resolved(0);
+	         	            	tag = Resolved.class;
 	         	            	 break;
 	         	            case "UnderReview":
-	         	            	tag = new UnderReview();
+	         	            	tag = UnderReview.class;
 	         	            	 break;
 	         	            default:
 	         	                throw new ReportErrorToUserException("The tag you entered does not exist.");
@@ -181,27 +181,27 @@ public class RegisterNotifications extends IssuerUseCase{
 	         		case 3:
 	         			getUi().display("Please specify the tag to be notified: ");
 	         			String tagString = getUi().readString();
-	         			Tag tag;
+	         			Class tag;
 	         			//Step 4
 	         	        switch (tagString) 
 	         	        {
 	         	            case "Assigned":
-	         	                tag = new Assigned();
+	         	                tag = Assigned.class;
 	         	                break;
 	         	            case "Closed":
-	         	            	tag = new Closed(0);
+	         	            	tag = Closed.class;
 	         	            	 break;
 	         	            case "Duplicate":
-	         	            	tag = new Duplicate(null);
+	         	            	tag = Duplicate.class;
 	         	            	 break;
 	         	            case "NotABug":
-	         	            	tag = new NotABug();
+	         	            	tag = NotABug.class;
 	         	            	 break;
 	         	            case "Resolved":
-	         	            	tag = new Resolved(0);
+	         	            	tag = Resolved.class;
 	         	            	 break;
 	         	            case "UnderReview":
-	         	            	tag = new UnderReview();
+	         	            	tag = UnderReview.class;
 	         	            	 break;
 	         	            default:
 	         	                throw new ReportErrorToUserException("The tag you entered does not exist.");
@@ -239,27 +239,27 @@ public class RegisterNotifications extends IssuerUseCase{
          		case 2:
          			getUi().display("Please specify the tag to be notified: ");
          			String tagString = getUi().readString();
-         			Tag tag;
+         			Class tag;
          			//Step 4
          	        switch (tagString) 
          	        {
          	            case "Assigned":
-         	                tag = new Assigned();
+         	                tag = Assigned.class;
          	                break;
          	            case "Closed":
-         	            	tag = new Closed(0);
+         	            	tag = Closed.class;
          	            	 break;
          	            case "Duplicate":
-         	            	tag = new Duplicate(null);
+         	            	tag = Duplicate.class;
          	            	 break;
          	            case "NotABug":
-         	            	tag = new NotABug();
+         	            	tag = NotABug.class;
          	            	 break;
          	            case "Resolved":
-         	            	tag = new Resolved(0);
+         	            	tag = Resolved.class;
          	            	 break;
          	            case "UnderReview":
-         	            	tag = new UnderReview();
+         	            	tag = UnderReview.class;
          	            	 break;
          	            default:
          	                throw new ReportErrorToUserException("The tag you entered does not exist.");

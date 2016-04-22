@@ -213,7 +213,7 @@ public class MailboxServiceTest {
 	@Test 
 	public void registerSpecificTag_SUCCESS() throws ReportErrorToUserException, IndexOutOfBoundsException
 	{	
-		mailboxService.registerSpecificTag(dev, p, new NotABug());
+		mailboxService.registerSpecificTag(dev, p, NotABug.class);
 		tagAssignmentService.assignTag(dev, bugReport, new NotABug());
 		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
 		assertEquals(registrations.size(), 1);
@@ -225,7 +225,7 @@ public class MailboxServiceTest {
 	@Test (expected = IndexOutOfBoundsException.class)
 	public void registerSpecificTag_OTHERBRANCH() throws ReportErrorToUserException, IndexOutOfBoundsException
 	{	
-		mailboxService.registerSpecificTag(dev, p, new NotABug());
+		mailboxService.registerSpecificTag(dev, p, NotABug.class);
 		BugReport bugReportNew = bugReportService.createBugReport("T", "D", user, s2, BugReport.PUBLIC);		
 		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
 		assertEquals(registrations.size(), 1);
@@ -237,13 +237,13 @@ public class MailboxServiceTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void registerSpecificTag_FAILUSER() throws ReportErrorToUserException, IndexOutOfBoundsException
 	{	
-		mailboxService.registerSpecificTag(null, p, new NotABug());
+		mailboxService.registerSpecificTag(null, p, NotABug.class);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void registerSpecificTag_FAILSUBJECT() throws ReportErrorToUserException, IndexOutOfBoundsException
 	{	
-		mailboxService.registerSpecificTag(dev, null, new NotABug());
+		mailboxService.registerSpecificTag(dev, null, NotABug.class);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -255,7 +255,7 @@ public class MailboxServiceTest {
 	@Test (expected = IndexOutOfBoundsException.class) 
 	public void registerSpecificTag_NOUPDATE() throws ReportErrorToUserException, IndexOutOfBoundsException
 	{	
-		mailboxService.registerSpecificTag(dev, s2, new NotABug());
+		mailboxService.registerSpecificTag(dev, s2, NotABug.class);
 		tagAssignmentService.assignTag(dev, bugReport, new NotABug());
 		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
 		assertEquals(registrations.size(), 1);
@@ -267,7 +267,7 @@ public class MailboxServiceTest {
 	@Test
 	public void unregister_SUCCESS() throws ReportErrorToUserException, IndexOutOfBoundsException
 	{	
-		mailboxService.registerSpecificTag(dev, s2, new NotABug());
+		mailboxService.registerSpecificTag(dev, s2, NotABug.class);
 		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
 		assertEquals(registrations.size(), 1);
 		
@@ -281,7 +281,7 @@ public class MailboxServiceTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void unregister_FAIL() throws ReportErrorToUserException, IndexOutOfBoundsException
 	{	
-		mailboxService.registerSpecificTag(dev, s2, new NotABug());
+		mailboxService.registerSpecificTag(dev, s2, NotABug.class);
 		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
 		assertEquals(registrations.size(), 1);
 		

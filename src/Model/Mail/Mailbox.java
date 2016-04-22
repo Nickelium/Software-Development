@@ -100,7 +100,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * 
 	 * @throws IllegalArgumentException the structure or tag is null
 	 */
-	public void registerSpecificTag(Subject structure, Tag tag)
+	public void registerSpecificTag(Subject structure, Class tag)
 	{
 		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
 		if(tag == null) throw new IllegalArgumentException("Tag cannot be null");
@@ -291,17 +291,21 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 */
 	private class ObserverSpecificTag extends ObserverAspect
 	{
-		private Tag tag;
+		private Class tag;
 		
 		/**
 		 * Constructor 
 		 * 
 		 * @param structure The subject to observe
 		 * @param tag The specific tag
+		 * 
+		 * @throws IllegalArgumentException the tag class is null
 		 */
-		public ObserverSpecificTag(Subject structure, Tag tag)
+		public ObserverSpecificTag(Subject structure, Class tag)
 		{
 			super(structure);
+			
+			if(tag == null) throw new IllegalArgumentException("The tag class cannot be null");
 			this.tag = tag;
 		}
 		
@@ -320,7 +324,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 			if(bugReport == null) throw new IllegalArgumentException("The bugreport cannot be null");
 			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 			
-			if(super.structure == structure && tag.getClass().isInstance(aspect))
+			if(super.structure == structure && tag.isInstance(aspect))
 				notifications.add(new Notification("Tag changed to " + tag, bugReport, super.structure));
 			
 		}
