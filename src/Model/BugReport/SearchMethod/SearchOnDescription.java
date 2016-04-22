@@ -37,6 +37,7 @@ public class SearchOnDescription extends Search
 	 *
 	 * @param bugReportService the bug report service, requesting the search
 	 * @param user the user requesting the search
+	 * 
 	 * @return an unmodifiable list of all bug reports that meet the search requirements.
 	 *
 	 * @throws IllegalArgumentException The user or bugreportservice is null.

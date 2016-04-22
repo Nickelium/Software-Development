@@ -172,10 +172,15 @@ public class Comment extends Subject implements Observer<Comment>{
      * 
      * @param s The subject
      * @param aspect The aspect that has changed
+     * 
+     * @throws IllegalArgumentException The structure, comment or aspect is null.
      */
 	@Override
 	public void update(Subject structure, Comment s, Object aspect)
 	{
+		if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+		if(s == null) throw new IllegalArgumentException("The comment cannot be null");
+		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 		notifyObservers(this, aspect);
 	}
 

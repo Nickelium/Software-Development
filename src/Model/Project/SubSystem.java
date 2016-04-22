@@ -238,8 +238,11 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      * Method to set the latest achieved milestone to a new value.
      *
      * @param latestAchievedMilestone the new milestone to be set as the latest achieved milestone
+     * 
+     * @throws IllegalArgumentException latestAchievedMilestone is null
      */
     private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+    	if(latestAchievedMilestone == null) throw new IllegalArgumentException("The mileston cannot be negative");
         this.latestAchievedMilestone = latestAchievedMilestone;
     }
 
@@ -290,6 +293,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      * @return True if the bug report is not already a bug report of this subsystem or recursively.
      */
     private boolean isValidBugReport(BugReport bugReport) {
+    	if(bugReport == null) return false;
         if (this.getAllBugReports().contains(bugReport)) return false;
         else return true;
     }
@@ -350,8 +354,12 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     /**
      * Method to add an old milestone to the list of milestones.
      * @param milestone the old milestone to be add to the milestone list.
+     * 
+     * @throws IllegalArgumentException milestone is null
      */
     private void addMilestoneToList(Milestone milestone) {
+    	if(milestone == null) throw new IllegalArgumentException("The milestone cannot be null");
+    	
         this.milestones.add(milestone);
         Collections.sort(this.milestones);
     }
@@ -377,9 +385,14 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      *
      * @param s      The subject
      * @param aspect The aspect that has changed
+     * 
+     * @throws IllegalArgumentException The subject, bug report or aspect is null.
      */
     @Override
     public void update(Subject s, BugReport bugReport, Object aspect) {
+    	if(s == null) throw new IllegalArgumentException("The subject cannot be null");
+		if(bugReport == null) throw new IllegalArgumentException("The bug report cannot be null");
+		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
         notifyObservers(bugReport, aspect);
 
     }

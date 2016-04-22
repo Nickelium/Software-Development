@@ -21,7 +21,9 @@ public abstract class Search
 	 * @param bugReportService the bug report service, requesting the search
 	 * @param user the user requesting the search
 	 * @return the list of bug reports that meet the search requirements
+	 * 
 	 * @throws ReportErrorToUserException in case that the search is invalid.
+	 * @throws IllegalArgumentException The given bugreportService or user is null.
      */
 	protected abstract List<BugReport> apply(BugReportService bugReportService, User user) throws ReportErrorToUserException;
 
@@ -29,13 +31,19 @@ public abstract class Search
 	 * Method that returns an IListWrapper object with all bugreports.
 	 * @param bugReportService the bug report service, requesting the search
 	 * @param user the user requesting the search
+	 * 
      * @return an ILIstWrapper object with all bugreports
+     * 
+     * @throws IllegalArgumentException The given bugreportService or user is null.
      */
 	protected IListWrapper<BugReport> getAllBugReportsWrapped(BugReportService bugReportService, User user)
-	 {
+	{
+		if(bugReportService == null) throw new IllegalArgumentException("The bug report service cannot be null");
+		if(user == null) throw new IllegalArgumentException("The user cannot be null");
+
 		 List<BugReport> bugReports = new ArrayList<>();
 		 bugReports.addAll(bugReportService.getAllBugReports(user));
 		 return new ListWrapper<>(bugReports);
-	 }
+	}
 
 }

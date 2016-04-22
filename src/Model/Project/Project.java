@@ -476,8 +476,11 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 * Method to add an older achieved milestone to the milestone list
 	 *
 	 * @param milestone the milestone that needs to be added to the list
+	 * 
+	 * throws IllegalArgumentException The given milestone is null.
      */
 	private void addMilestoneToList(Milestone milestone) {
+		if(milestone == null) throw new IllegalArgumentException("The milestone cannot be null");
 		this.milestones.add(milestone);
         Collections.sort(milestones);
     }
@@ -514,11 +517,16 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
      * 
      * @param s The subject
      * @param aspect The aspect that has changed
+     * 
+     * @throws IllegalArgumentException The subject, bug report or aspect is null.
      */
 	@Override
-	public void update(Subject s, BugReport bugReport, Object aspect) {
+	public void update(Subject s, BugReport bugReport, Object aspect) 
+	{
+		if(s == null) throw new IllegalArgumentException("The subject cannot be null");
+		if(bugReport == null) throw new IllegalArgumentException("The bug report cannot be null");
+		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 		notifyObservers(bugReport, aspect);
-		
 	}
 
 	/**

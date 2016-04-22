@@ -425,18 +425,20 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * Method to set a new target milestone of a bug report.
      *
      * @param targetMilestone the new target milestone of a bug report.
-     *
+     * 
+     * @throws IllegalArgumentException the targetmilestone is null.
      */
     void setTargetMilestone(TargetMilestone targetMilestone){
-
+    	if(targetMilestone == null) throw new IllegalArgumentException("The target milestone is null");
         this.targetMilestone = targetMilestone;
     }
 
     /**
      * Method to set a new procedure bug.
-     *
      * Method requires the input string to be a valid procedure bug.
+     * 
      * @param procedureBug the procedure bug to be set.
+     * 
      * @throws ReportErrorToUserException is thrown if the procedure bug is invalid.
      */
     void setProcedureBug(String procedureBug) throws ReportErrorToUserException
@@ -632,9 +634,15 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      *
      * @param s      The subject
      * @param aspect The aspect that has changed
+     * 
+     * @throws IllegalArgumentException The structure, comment or aspect is null.
      */
     @Override
-    public void update(Subject structure, Comment s, Object aspect) {
+    public void update(Subject structure, Comment s, Object aspect)
+    {
+    	if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+		if(s == null) throw new IllegalArgumentException("The comment cannot be null");
+		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
         notifyObservers(this, aspect);
     }
 
@@ -644,7 +652,8 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
      * @return a memento object for the bug report.
      */
     @Override
-    public BugReportMemento createMemento() {
+    public BugReportMemento createMemento()
+    {
         return new BugReportMemento(this);
     }
 
