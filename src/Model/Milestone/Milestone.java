@@ -86,7 +86,8 @@ public class Milestone implements Comparable<Milestone> {
 
     private int[] milestoneStringToArray(String milestoneID){
 
-        String[] stringArray = milestoneID.substring(1).split(".");
+        String milestoneNumbers = milestoneID.substring(1);
+        String[] stringArray = milestoneNumbers.split("\\.");
         int[] intArray = new int[stringArray.length];
 
         for(int i = 0; i < stringArray.length; i++){
@@ -184,7 +185,7 @@ public class Milestone implements Comparable<Milestone> {
         for(int layer : this.getLayeredMilestone()){
             milestone = milestone + "." + layer;
         }
-        return milestone;
+        return milestone.substring(0,1) + milestone.substring(2);
     }
 
 //    /**

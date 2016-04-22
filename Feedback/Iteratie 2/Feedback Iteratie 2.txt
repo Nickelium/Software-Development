@@ -3,7 +3,7 @@ Feedback:
 - system.jar zoals ingediend is van iteratie 1 denk ik
 - Milestone: het milestone nummer bijhouden als een String geeft geen
      propere code. vb: MileStone.compare() callt een ugly methode die
-     de string omzet in een vergelijkbare double...
+     de string omzet in een vergelijkbare double... DONE
 - Niet checken op nullpointers op veel plaatsen
    - BugReportService.getBugReportsForProject, getBugReportsForProject,
        setProcedureBug, etc.

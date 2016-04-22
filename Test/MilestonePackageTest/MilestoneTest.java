@@ -95,7 +95,6 @@ public class MilestoneTest {
     public void testMilestoneComparison1() throws ReportErrorToUserException{
         Milestone milestone1 = new Milestone("M1.5.8");
         Milestone milestone2 = new Milestone("M2.0.0");
-        assertEquals(milestone1.getLayeredMilestone().length, "tits");
         assertEquals(milestone1.compareTo(milestone2), -1);
         assertEquals(milestone2.compareTo(milestone1), 1);
     }
