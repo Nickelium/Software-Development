@@ -28,12 +28,6 @@ public class Milestone implements Comparable<Milestone> {
     private int[] layeredMilestone;
 
     /**
-    * The milestone ID takes the form of dot-separated numbers
-    * prefixed with the letter M (e.g. M0.5 or M1.2.1).
-    */
-    private String milestoneID;
-
-    /**
      * Constructor to create a milestone object with a given milestone ID.
      *
      * @param milestoneID the given milestone ID
@@ -56,7 +50,7 @@ public class Milestone implements Comparable<Milestone> {
      * @return
      */
     public String getMilestoneID() {
-        return milestoneID;
+        return this.toString();
     }
 
     /**
@@ -77,7 +71,6 @@ public class Milestone implements Comparable<Milestone> {
     public void setMilestoneID(String milestoneID) throws ReportErrorToUserException {
         if(isValidMilestoneID(milestoneID)) {
             this.layeredMilestone = milestoneStringToArray(milestoneID);
-            this.milestoneID = milestoneID;
         }
         else {
             throw new ReportErrorToUserException("Invalid milestoneID has been supplied");
