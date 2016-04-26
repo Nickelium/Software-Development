@@ -206,19 +206,19 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		 * Method to use when a change occurred in the subject structure.
 		 * 
 		 * @param structure The subject
-		 * @param bugReport The bug report that has change within
+		 * @param subject The subject that has change within
 		 * @param aspect The aspect that has changed
 		 * 
 		 * @throws IllegalArgumentException the structure, bug report or aspect is null
 		 */
 		@Override
-		public void update(Subject structure, BugReport bugReport, Object aspect) {
+		public void update(Subject structure, Subject subject, Object aspect) {
 			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
-			if(bugReport == null) throw new IllegalArgumentException("The bugreport cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 			
-			if(super.structure == structure && aspect instanceof BugReport)
-				notifications.add(new Notification("New bug report", bugReport, super.structure));
+			if(super.structure == structure && subject instanceof BugReport && aspect instanceof BugReport)
+				notifications.add(new Notification("New bug report", subject, super.structure));
 			
 		}
 
@@ -254,21 +254,22 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 		/**
 		 * Method to use when a change occurred in the subject structure.
+		 * 
 		 * @param structure The subject
-		 * @param bugReport The bug report that has change within
+		 * @param subject The subject that has change within
 		 * @param aspect The aspect that has changed
 		 * 
 		 * @throws IllegalArgumentException the structure, bug report or aspect is null
 		 */
 		@Override
-		public void update(Subject structure, BugReport bugReport, Object aspect)
-		{
+		public void update(Subject structure, Subject subject, Object aspect) {
 			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
-			if(bugReport == null) throw new IllegalArgumentException("The bugreport cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 			
-			if(super.structure == structure && aspect instanceof Tag)
-				notifications.add(new Notification("Tag changed", bugReport, super.structure));
+			if(super.structure == structure && subject instanceof BugReport && aspect instanceof Tag)
+				notifications.add(new Notification("Tag change", subject, super.structure));
+			
 		}
 		
 		/**
@@ -311,21 +312,22 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 		/**
 		 * Method to use when a change occurred in the subject structure.
+		 * 
 		 * @param structure The subject
-		 * @param bugReport The bug report that has change within
+		 * @param subject The subject that has change within
 		 * @param aspect The aspect that has changed
 		 * 
 		 * @throws IllegalArgumentException the structure, bug report or aspect is null
 		 */
 		@Override
-		public void update(Subject structure, BugReport bugReport, Object aspect)
-		{
+		public void update(Subject structure, Subject subject, Object aspect) {
 			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
-			if(bugReport == null) throw new IllegalArgumentException("The bugreport cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 			
-			if(super.structure == structure && tag.isInstance(aspect))
-				notifications.add(new Notification("Tag changed to " + tag, bugReport, super.structure));
+			if(super.structure == structure && subject instanceof BugReport 
+					&& tag.isInstance(aspect))
+				notifications.add(new Notification("Tag change to " + tag, subject, super.structure));
 			
 		}
 		
@@ -361,21 +363,22 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 		/**
 		 * Method to use when a change occurred in the subject structure.
+		 * 
 		 * @param structure The subject
-		 * @param bugReport The bug report that has change within
+		 * @param subject The subject that has change within
 		 * @param aspect The aspect that has changed
 		 * 
 		 * @throws IllegalArgumentException the structure, bug report or aspect is null
 		 */
 		@Override
-		public void update(Subject structure, BugReport bugReport, Object aspect)
-		{
+		public void update(Subject structure, Subject subject, Object aspect) {
 			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
-			if(bugReport == null) throw new IllegalArgumentException("The bugreport cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 			
-			if(super.structure == structure && aspect instanceof Comment)
-				notifications.add(new Notification("New comment", bugReport, super.structure));
+			if(super.structure == structure && subject instanceof BugReport && aspect instanceof Comment)
+				notifications.add(new Notification("New comment", subject, super.structure));
+			
 		}
 		
 		/**
@@ -387,5 +390,55 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		public String toString() {
 			return "Registration for creation of new comment in \n" + super.structure;
 		}
+	}
+	
+	
+	//Innerclass observer bug report
+	/**
+	 * Inner class observer of a creation of a new bug report
+	 *
+	 */
+	private class ObserverVersion extends ObserverAspect
+	{
+		/**
+		 * Constructor 
+		 * 
+		 * @param structure The subject to observe
+		 */
+		public ObserverVersion(Subject structure)
+		{
+			super(structure);
+		}
+		
+		/**
+		 * Method to use when a change occurred in the subject structure.
+		 * 
+		 * @param structure The subject
+		 * @param subject The subject that has change within
+		 * @param aspect The aspect that has changed
+		 * 
+		 * @throws IllegalArgumentException the structure, subject or aspect is null
+		 */
+		@Override
+		public void update(Subject structure, Subject subject, Object aspect) {
+			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+			
+			if(super.structure == structure && aspect instanceof Double)
+				notifications.add(new Notification("VersionID change", subject, super.structure));
+			
+		}
+
+		/**
+		 * Method to get textual representation of this object
+		 * 
+		 * @return The String representation of this object
+		 */
+		@Override
+		public String toString() {
+			return "Registration for creation of new bug report in \n" + super.structure;
+		}
+		
 	}
 }

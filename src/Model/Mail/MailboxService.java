@@ -60,8 +60,9 @@ public class MailboxService
 		
 		List<Notification> listFiltered = new ArrayList<>();
 		for(Notification not : listSubbed)
-			if(bugReportService.isVisibleByUser(user, not.getBugReport()))
-				listFiltered.add(not);
+			if(not.getSubject() instanceof BugReport)
+				if(bugReportService.isVisibleByUser(user, (BugReport)not.getSubject()))
+					listFiltered.add(not);
 		return Collections.unmodifiableList(listFiltered);
 
 	}

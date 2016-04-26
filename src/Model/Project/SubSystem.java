@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * This class represents a subsystem with all its related attributes.
  */
-public class SubSystem extends Subject implements Observer<BugReport>, Originator<SubSystem.SubSystemMemento, SubSystem>, MilestoneContainer {
+public class SubSystem extends Subject implements Observer, Originator<SubSystem.SubSystemMemento, SubSystem>, MilestoneContainer {
 
     private String name;
     private String description;
@@ -123,7 +123,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      *
      * @return A list of the bugreports of the current subsystem.
      */
-    List<BugReport> getBugReports() {
+    public List<BugReport> getBugReports() {
         return this.bugReports;
     }
 
@@ -315,6 +315,22 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         subSystems.add(subSystem);
         subSystem.addObserver(this);
     }
+    
+    /**
+	 * Method to add a subsystem to the list of subsystems.
+     *
+	 * @param subSystem The subsystem to add.
+     *
+     * @throws IllegalArgumentException The given subsystem is null.
+	 */
+	public void removeSubSystem(SubSystem subSystem)
+	{
+		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+		if(!subSystems.contains(subSystem)) throw new IllegalArgumentException("Subsystem does not belong to the subsystems");
+		
+		subSystems.remove(subSystem);
+		//TODO unbind observer
+	}
 
     /**
      * Method for adding a bug report to the list of bugreports.
@@ -383,18 +399,19 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     /**
      * Method called to notify this observer
      *
-     * @param s      The subject
+     * @param structure The structure 
+     * @param subject      The subject
      * @param aspect The aspect that has changed
      * 
-     * @throws IllegalArgumentException The subject, bug report or aspect is null.
+     * @throws IllegalArgumentException The subject, structure or aspect is null.
      */
     @Override
-    public void update(Subject s, BugReport bugReport, Object aspect) {
-    	if(s == null) throw new IllegalArgumentException("The subject cannot be null");
-		if(bugReport == null) throw new IllegalArgumentException("The bug report cannot be null");
+    public void update(Subject structure, Subject subject, Object aspect)
+    {
+    	if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+		if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
-        notifyObservers(bugReport, aspect);
-
+        notifyObservers(subject, aspect);
     }
 
     /**

@@ -94,6 +94,22 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	if(project == null) throw new IllegalArgumentException("The project cannot be null");
         projectList.delete(project);
     }
+    
+    /**
+     * Method for removing a project from the list of projects.
+     *
+     * @param project The project to remove.
+     * 
+     * @throws IllegalArgumentException the project is null
+     */
+    public void deleteSubSystem(Project project, SubSystem subSystem)
+    {
+    	if(project == null) throw new IllegalArgumentException("The project cannot be null");
+    	if(subSystem == null) throw new IllegalArgumentException("The subsystem cannot be null");
+    	
+    	if(!project.getSubSystems().contains(subSystem)) throw new IllegalArgumentException("The subsystem does not belong to the project");
+        project.removeSubSystem(subSystem);
+    }
 
     /**
      * Method for requesting all the projects with the given developer as lead.

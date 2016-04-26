@@ -224,12 +224,14 @@ public class BugReportService {
      *
      * @param project The project for which to find the bugReports.
      *
-     * @return An unmodifyable list of all the bugreports about the given project.
+     * @return An unmodifiable list of all the bug reports about the given project.
+     * @throw IllegalArgumentException project is null
      */
-    public List<BugReport> getBugReportsForProject(Project project){
+    public List<BugReport> getBugReportsForProject(Project project)
+    {
+    	if(project == null) throw new IllegalArgumentException("Subsystem cannot be null");
         return project.getAllBugReports();
     }
-
 
     /**
      * Method to return the project service object.

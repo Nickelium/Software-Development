@@ -6,7 +6,7 @@ import Model.BugReport.BugReport;
  * Abstract class ObserverAspect that has one observed subject structure and can unbind that subject.
  *
  */
-public abstract class ObserverAspect implements Observer<BugReport>
+public abstract class ObserverAspect implements Observer
 {
 
 	protected Subject structure;
@@ -35,7 +35,7 @@ public abstract class ObserverAspect implements Observer<BugReport>
 	 * @throws IllegalArgumentException the structure, bug report or aspect is null
      */
 	@Override
-	public abstract void update(Subject structure, BugReport bugReport, Object aspect);
+	public abstract void update(Subject structure, Subject subject, Object aspect);
 
 	/**
 	 * Method to unbind this object from his subject

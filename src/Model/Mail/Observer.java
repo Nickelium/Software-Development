@@ -4,7 +4,8 @@ package Model.Mail;
  * Interface of an observer
  *
  */
-public interface Observer<T> {
+public interface Observer 
+{
 	
 	 /**
      * Method called to notify this observer
@@ -15,6 +16,6 @@ public interface Observer<T> {
      * 
      * @throws IllegalArgumentException the structure, s or aspect is null
      */
-	public void update(Subject structure, T s, Object aspect);
+	public void update(Subject structure, Subject subject, Object aspect);
 
 }

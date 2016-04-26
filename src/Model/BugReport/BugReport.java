@@ -26,7 +26,7 @@ import java.util.List;
  * This class provides public checkers when setting new values to certain attributes.
  *
  */
-public class BugReport extends Subject implements Observer<Comment>, Originator<BugReport.BugReportMemento,BugReport>{
+public class BugReport extends Subject implements Observer, Originator<BugReport.BugReportMemento,BugReport>{
 
     //region Static Attributes
     public static final boolean PUBLIC = true;
@@ -632,17 +632,17 @@ public class BugReport extends Subject implements Observer<Comment>, Originator<
     /**
      * Method called to notify this observer
      *
-     * @param structure     The subject structure
-     * @param comm The comment
+     * @param structure     The structure
+     * @param subject The subject
      * @param aspect The aspect that has changed
      * 
      * @throws IllegalArgumentException The structure, comment or aspect is null.
      */
     @Override
-    public void update(Subject structure, Comment comm, Object aspect)
+    public void update(Subject structure, Subject subject, Object aspect)
     {
     	if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
-		if(comm == null) throw new IllegalArgumentException("The comment cannot be null");
+		if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
         notifyObservers(this, aspect);
     }

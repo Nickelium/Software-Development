@@ -24,7 +24,7 @@ import java.util.List;
  *  This class provides getters and setters for most attributes.
  *	Consistency is provided thanks to the checker methods.
  */
-public class Project extends Subject implements Observer<BugReport>, Originator<Project.ProjectMemento, Project>, MilestoneContainer
+public class Project extends Subject implements Observer, Originator<Project.ProjectMemento, Project>, MilestoneContainer
 {
 
 	private String name;
@@ -433,6 +433,22 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 		subSystems.add(subSystem);
 		subSystem.addObserver(this);
 	}
+	
+	/**
+	 * Method to add a subsystem to the list of subsystems.
+     *
+	 * @param subSystem The subsystem to add.
+     *
+     * @throws IllegalArgumentException The given subsystem is null.
+	 */
+	public void removeSubSystem(SubSystem subSystem)
+	{
+		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+		if(!subSystems.contains(subSystem)) throw new IllegalArgumentException("Subsystem does not belong to the subsystems");
+		
+		subSystems.remove(subSystem);
+		//TODO unbind observer
+	}
 
     /**
      * Method to add a role to the list of roles.
@@ -515,18 +531,19 @@ public class Project extends Subject implements Observer<BugReport>, Originator<
 	 /**
      * Method called to notify any observers
      * 
-     * @param s The subject
+     * @param structure The structure 
+     * @param subject      The subject
      * @param aspect The aspect that has changed
      * 
-     * @throws IllegalArgumentException The subject, bug report or aspect is null.
+     * @throws IllegalArgumentException The subject, structure or aspect is null.
      */
 	@Override
-	public void update(Subject s, BugReport bugReport, Object aspect) 
+	public void update(Subject structure, Subject subject, Object aspect) 
 	{
-		if(s == null) throw new IllegalArgumentException("The subject cannot be null");
-		if(bugReport == null) throw new IllegalArgumentException("The bug report cannot be null");
+		if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+		if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
-		notifyObservers(bugReport, aspect);
+		notifyObservers(subject, aspect);
 	}
 
 	/**

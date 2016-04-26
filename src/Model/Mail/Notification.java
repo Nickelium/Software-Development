@@ -9,7 +9,7 @@ import Model.BugReport.BugReport;
 public class Notification 
 {
 	String changeDescription;
-	BugReport bugReport;
+	Subject subject;
 	Subject structure;
 	
 	/**
@@ -21,14 +21,14 @@ public class Notification
 	 * 
 	 * @throws IllegalArgumentException the description, bureport or structure is null
 	 */
-	Notification(String changeDescription, BugReport bugReport, Subject structure)
+	Notification(String changeDescription, Subject subject, Subject structure)
 	{
 		if(changeDescription == null) throw new IllegalArgumentException("The description cannot be null");
-		if(bugReport == null) throw new IllegalArgumentException("The bugreport cannot be null");
+		if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 		if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
 		
 		this.changeDescription = changeDescription;
-		this.bugReport = bugReport;
+		this.subject = subject;
 		this.structure = structure;
 	}
 	
@@ -47,9 +47,9 @@ public class Notification
 	 * 
 	 * @return The bug report that has changed
 	 */
-	public BugReport getBugReport()
+	public Subject getSubject()
 	{
-		return bugReport;
+		return subject;
 	}
 	
 	/**
@@ -71,6 +71,6 @@ public class Notification
 	@Override
 	public String toString()
 	{
-		return  changeDescription + "\n"  + bugReport  + "\n in \n" + structure +"\n";
+		return  changeDescription + "\n"  + subject  + "\n in \n" + structure +"\n";
 	}
 }
