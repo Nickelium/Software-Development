@@ -4,11 +4,13 @@ import Controller.UserController.AdminController;
 import Controller.UserController.UserController;
 import CustomExceptions.ReportErrorToUserException;
 import Model.Memento.Caretaker;
+import Model.Project.TheDate;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Created by Karina on 10.03.2016.
@@ -29,6 +31,10 @@ public class UpdateProject extends AdminControllerInit{
 
         UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(4).run();
+
+        TheDate newDate = new TheDate(11, 12, 2016);
+        assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
+                && x.getStartingDate().equals(newDate) && x.getBudget() == 200.0).collect(Collectors.toList()).size() == 1;
     }
 
     @Test
@@ -49,6 +55,8 @@ public class UpdateProject extends AdminControllerInit{
             adminController.getUseCase(4).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The date is before the creation date.");
+            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
+            ).collect(Collectors.toList()).size() == 0;
         }
 
     }
@@ -70,6 +78,12 @@ public class UpdateProject extends AdminControllerInit{
             adminController.getUseCase(4).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The budget cannot be negative.");
+
+            TheDate newDate = new TheDate(11, 12, 2016);
+            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
+                    && x.getStartingDate().equals(newDate)).collect(Collectors.toList()).size() == 0;
         }
+
+
     }
 }
