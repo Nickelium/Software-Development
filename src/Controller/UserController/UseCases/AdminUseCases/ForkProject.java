@@ -55,20 +55,23 @@ public class ForkProject extends UseCase {
         // Step 1a.2
         int index = getUi().readInt();
         Project project = projectList.get(index);
-        Project forkProject = getProjectService().forkProject(project);
-
+ 
         // Step 1a.3 + 1a.4
         getUi().display("Please enter new values.");
-        getUi().display("VersionID (has to be larger than the current value: " + forkProject.getVersionID() + "): ");
+        getUi().display("VersionID (has to be larger than the current value: " + project.getVersionID() + "): ");
         double versionID = getUi().readDouble();
-
-        getUi().display("Starting date (current value: " + forkProject.getStartingDate() + "): ");
+        if(!project.isValidVersionID(versionID)) throw new ReportErrorToUserException("The version cannot be lower than or equal to the previous one!");
+        
+        getUi().display("Starting date (current value: " + project.getStartingDate() + "): ");
         String stringStartingDate = getUi().readString();
         TheDate startingDate = new TheDate(stringStartingDate);
-
+        if (!project.isValidStartingDate(startingDate)) throw new ReportErrorToUserException("The date is before the creation date.");
+        
         getUi().display("Budget estimate (current value: " + project.getBudget() + "): ");
         double budget = getUi().readDouble();
+        if (!project.isValidBudget(budget)) throw new ReportErrorToUserException("The budget cannot be negative.");
 
+        Project forkProject = getProjectService().forkProject(project);
         getProjectService().setProjectVersionID(forkProject, versionID);
         getProjectService().setProjectStartingDate(forkProject, startingDate);
         getProjectService().setProjectBudget(forkProject, budget);

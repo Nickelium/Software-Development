@@ -270,7 +270,6 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 	 */
 	void setStartingDate(TheDate date) throws ReportErrorToUserException
 	{
-		if(date == null) throw new IllegalArgumentException("Date is null");
 		if (!isValidStartingDate(date)) throw new ReportErrorToUserException("The date is before the creation date.");
         this.startingDate = date;
     }
@@ -386,6 +385,7 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
      * @return True if the startingdate is later than the creation date.
      */
 	public boolean isValidStartingDate(TheDate startingDate) {
+		if(startingDate == null) return false;
 		if (this.getCreationDate().isAfter(startingDate)) return false;
         else return true;
     }

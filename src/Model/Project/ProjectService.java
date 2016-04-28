@@ -78,6 +78,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     {
     	if(project == null) throw new IllegalArgumentException("The project cannot be null");
     	Project forkedProject = project.fork();
+    	
     	projectList.insert(forkedProject);
 		return forkedProject;	
     }
