@@ -284,6 +284,22 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 
         return newSubsystem;
     }
+    
+    /**
+     * Remove a subsystem from a project recursively
+     * 
+     * @param project The project to remove a subsystem from
+     * @param subSystem The subsystem to remove
+     * 
+     * @throws IllegalArgumentException project or subsystem is null
+     */
+    public void removeSubSystem(Project project, SubSystem subSystem)
+    {
+    	if(project == null) throw new IllegalArgumentException("Project is null");
+    	if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+    	project.removeSubSystem(subSystem);
+    }
+ 
 
     /**
      * Method for requesting all the subsystems of all the projects.
@@ -347,6 +363,24 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	subSystem.setNewSubSystemMilestone(newSubsystemMilestone);
     }
 
+    /**
+     * Method to set milestones to a subsystem
+     * 
+     * @param subSystem The subsystem to set its milestone
+     * @param milestoneList The list of milestones 
+     * 
+     * @throws IllegalArgumentException subsystem or milestoneList is null
+     * @throws ReportErrorToUserException is thrown in case that a constraint is broken
+     */
+    public void setNewSubSystemMilestone(SubSystem subSystem, List<Milestone> milestoneList) throws ReportErrorToUserException
+    {
+    	if(subSystem == null) throw new IllegalArgumentException("The subsystem cannot be null");
+    	if(milestoneList == null) throw new IllegalArgumentException("The milestone list cannot be null");
+    	
+    	for(Milestone milestone : milestoneList)
+    		subSystem.setNewSubSystemMilestone(milestone);
+    }
+    
     //endregion
 
     //region Functions

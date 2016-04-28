@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Created by Karina on 10.03.2016.
@@ -30,6 +31,8 @@ public class CreateProject extends AdminControllerInit {
 
         UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(2).run();
+
+        assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test")).collect(Collectors.toList()).size() == 1;
     }
 
     @Test
@@ -50,9 +53,9 @@ public class CreateProject extends AdminControllerInit {
             adminController.getUseCase(2).run();
         } catch (ReportErrorToUserException e) {
             assert (e.getMessage().equals("The date is before the creation date."));
+            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test")).collect(Collectors.toList()).size() == 0;
         }
     }
-
 
     @Test
     public void unsuccessfulCreateProject_invalidBudget() throws Exception {
@@ -72,10 +75,10 @@ public class CreateProject extends AdminControllerInit {
             adminController.getUseCase(2).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The budget cannot be negative.");
+            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test")).collect(Collectors.toList()).size() == 0;
         }
 
     }
-
 
     @Test
     public void unsuccessfulCreateProject_invalidLead() throws Exception {
@@ -95,6 +98,7 @@ public class CreateProject extends AdminControllerInit {
             adminController.getUseCase(2).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 5, Size: 2");
+            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test")).collect(Collectors.toList()).size() == 0;
         }
     }
 
