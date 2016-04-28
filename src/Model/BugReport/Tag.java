@@ -21,9 +21,13 @@ public abstract class Tag{
      *
      * @param bugReport The bug report to assign the patch to.
      * @param patch     The patch to assign.
+     *
      * @throws ReportErrorToUserException Assigning the patch is not possible.
+     * @throws IllegalArgumentException Bugreport or patch is null.
      */
     protected void addPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (patch == null) throw new IllegalArgumentException("Patch is null");
         bugReport.patches.add(patch);
     }
 
@@ -33,8 +37,11 @@ public abstract class Tag{
      * @param bugReport The bug report to assign the test to.
      * @param test      The test to assign.
      * @throws ReportErrorToUserException Assigning the test is not possible.
+     * @throws IllegalArgumentException Bugreport or test is null.
      */
     protected void addTest(BugReport bugReport, Test test) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (test == null) throw new IllegalArgumentException("Test is null");
         bugReport.tests.add(test);
     }
 
@@ -44,8 +51,11 @@ public abstract class Tag{
      * @param bugReport The bug report to assign the developer to.
      * @param developer The developer to assign
      * @throws ReportErrorToUserException Assigning a developer is not possible.
+     * @throws IllegalArgumentException Developer or bugreport is null.
      */
     protected void assignDeveloper(BugReport bugReport, Developer developer) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (developer == null) throw new IllegalArgumentException("Developer is null");
         bugReport.assignees.add(developer);
     }
 
@@ -55,8 +65,11 @@ public abstract class Tag{
      * @param bugReport the bug report of which the tag has to be changed
      * @param tag the new tag for the specified bug report
      * @throws ReportErrorToUserException if the operation is not allowed to be executed due to system restrictions.
+     * @throws IllegalArgumentException BugReport or tag is null.
      */
     protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (tag == null) throw new IllegalArgumentException("Tag is null");
         bugReport.tag = tag;
         tag.updateTagSpecificFields(bugReport);
     }
@@ -106,8 +119,10 @@ public abstract class Tag{
      * @param bugReport The bug report of which to set the selected patch.
      * @param indexPath The index of the selected patch in the list of all the patches of that bug report.
      * @throws ReportErrorToUserException Something went wrong while selecting the patch with the given index.
+     * @throws IllegalArgumentException BugReport is null.
      */
     protected final void setSelectedPatch(BugReport bugReport, int indexPath) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         if (indexPath >= bugReport.getPatches().size())
             throw new ReportErrorToUserException("Selected patch does not exist in selected bug report!");
         bugReport.selectedPatch = bugReport.getPatches().get(indexPath);
@@ -118,8 +133,10 @@ public abstract class Tag{
      * @param bugReport The bug report of which to set the selected patch.
      * @param score The score to which to set the selected bug report.
      * @throws ReportErrorToUserException The score given is not a valid score.
+     * @throws IllegalArgumentException BugReport is null.
      */
     protected final void setSolutionScore(BugReport bugReport, int score) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         if (score <= 0 || score > 5) throw new ReportErrorToUserException("The given score is not valid");
         bugReport.solutionScore = score;
     }
@@ -128,8 +145,10 @@ public abstract class Tag{
      * Method to make the given bugreport public.
      *
      * @param bugReport The bugreport to make public.
+     * @throws IllegalArgumentException BugReport is null.
      */
     protected final void makeBugReportPublic(BugReport bugReport) {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         bugReport.pblc = true;
     }
 
@@ -146,6 +165,7 @@ public abstract class Tag{
     //region Setters
 
     protected void setManuallyAcceptedTags(List<Class<? extends Tag>> manuallyAcceptedTags) {
+        if (manuallyAcceptedTags == null) throw new IllegalArgumentException("Accepted tags is null");
         this.manuallyAcceptedTags = manuallyAcceptedTags;
     }
 
@@ -154,8 +174,6 @@ public abstract class Tag{
     //region Functions
 
     public abstract boolean isFinal();
-
-    public abstract boolean equals(Object obj);
 
     public abstract String toString();
 

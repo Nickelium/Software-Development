@@ -25,7 +25,8 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * Constructor of this mailbox object
 	 * 
 	 */
-	public Mailbox() {
+	public Mailbox() 
+	{
 		this.notifications = new ArrayList<>();
 		this.registrations = new ArrayList<>();
 	}
@@ -54,6 +55,8 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * Method to register for a creation of a new bug report in the given subject
 	 *
 	 * @param structure The subject to observe
+	 * 
+	 * @throws IllegalArgumentException the structure is null
 	 */
 	public void registerBugReport(Subject structure)
 	{
@@ -66,6 +69,8 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * Method to register for a creation of a new comment in the given subject
 	 *
 	 * @param structure The subject to observe
+	 * 
+	 * @throws IllegalArgumentException the structure is null
 	 */
 	public void registerComment(Subject structure)
 	{
@@ -78,6 +83,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * Method to register for a change of a tag of a bug report in the given subject
 	 *
 	 * @param structure The subject to observe
+	 * @throws IllegalArgumentException the structure is null
 	 */
 	public void registerTag(Subject structure)
 	{
@@ -91,8 +97,10 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 *
 	 * @param structure The subject to observe
 	 * @param tag The specific tag 
+	 * 
+	 * @throws IllegalArgumentException the structure or tag is null
 	 */
-	public void registerSpecificTag(Subject structure, Tag tag)
+	public void registerSpecificTag(Subject structure, Class tag)
 	{
 		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
 		if(tag == null) throw new IllegalArgumentException("Tag cannot be null");
@@ -104,9 +112,12 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * Method to unregister from a registration
 	 * 
 	 * @param registration The observeraspect to unregister
+	 * 
+	 * @throws IllegalArgumentException the registration is null
 	 */
 	public void unregister(ObserverAspect registration)
 	{
+		if(registration == null) throw new IllegalArgumentException("The registration cannot be null");
 		if(registrations.contains(registration))
 			registration.unbind();
 		
@@ -128,10 +139,13 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * Method to restore this object given the memento
 	 * 
 	 * @param memento The memento to restore to
+	 * 
+	 * @throws IllegalArgumentException the memento is null
 	 */
 	@Override
 	public void restoreMemento(MailboxMemento memento)
 	{
+		if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
 		this.registrations	= new ArrayList<>(memento.getRegistrations());	
 	}
 	
@@ -155,6 +169,8 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
     	 * Constructor 
     	 * 
     	 * @param originator The originator to build a memento from
+    	 * 
+    	 * @throws IllegalArgumentException the originator is null
     	 */
 		public MailboxMemento(Mailbox originator) 
 		{
@@ -188,11 +204,21 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 		/**
 		 * Method to use when a change occurred in the subject structure.
+		 * 
+		 * @param structure The subject
+		 * @param subject The subject that has change within
+		 * @param aspect The aspect that has changed
+		 * 
+		 * @throws IllegalArgumentException the structure, bug report or aspect is null
 		 */
 		@Override
-		public void update(Subject structure, BugReport bugReport, Object aspect) {
-			if(super.structure == structure && aspect instanceof BugReport)
-				notifications.add(new Notification("New bug report",bugReport, super.structure));
+		public void update(Subject structure, Subject subject, Object aspect) {
+			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+			
+			if(super.structure == structure && subject instanceof BugReport && aspect instanceof BugReport)
+				notifications.add(new Notification("New bug report", subject, super.structure));
 			
 		}
 
@@ -228,12 +254,22 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 		/**
 		 * Method to use when a change occurred in the subject structure.
+		 * 
+		 * @param structure The subject
+		 * @param subject The subject that has change within
+		 * @param aspect The aspect that has changed
+		 * 
+		 * @throws IllegalArgumentException the structure, bug report or aspect is null
 		 */
 		@Override
-		public void update(Subject structure, BugReport bugReport, Object aspect)
-		{
-			if(super.structure == structure && aspect instanceof Tag)
-				notifications.add(new Notification("Tag changed", bugReport, super.structure));
+		public void update(Subject structure, Subject subject, Object aspect) {
+			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+			
+			if(super.structure == structure && subject instanceof BugReport && aspect instanceof Tag)
+				notifications.add(new Notification("Tag change", subject, super.structure));
+			
 		}
 		
 		/**
@@ -256,28 +292,42 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 */
 	private class ObserverSpecificTag extends ObserverAspect
 	{
-		private Tag tag;
+		private Class tag;
 		
 		/**
 		 * Constructor 
 		 * 
 		 * @param structure The subject to observe
 		 * @param tag The specific tag
+		 * 
+		 * @throws IllegalArgumentException the tag class is null
 		 */
-		public ObserverSpecificTag(Subject structure, Tag tag)
+		public ObserverSpecificTag(Subject structure, Class tag)
 		{
 			super(structure);
+			
+			if(tag == null) throw new IllegalArgumentException("The tag class cannot be null");
 			this.tag = tag;
 		}
 		
 		/**
 		 * Method to use when a change occurred in the subject structure.
+		 * 
+		 * @param structure The subject
+		 * @param subject The subject that has change within
+		 * @param aspect The aspect that has changed
+		 * 
+		 * @throws IllegalArgumentException the structure, bug report or aspect is null
 		 */
 		@Override
-		public void update(Subject structure, BugReport bugReport, Object aspect)
-		{
-			if(super.structure == structure && tag.getClass().isInstance(aspect))
-				notifications.add(new Notification("Tag changed to " + tag, bugReport, super.structure));
+		public void update(Subject structure, Subject subject, Object aspect) {
+			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+			
+			if(super.structure == structure && subject instanceof BugReport 
+					&& tag.isInstance(aspect))
+				notifications.add(new Notification("Tag change to " + tag, subject, super.structure));
 			
 		}
 		
@@ -313,12 +363,22 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 		/**
 		 * Method to use when a change occurred in the subject structure.
+		 * 
+		 * @param structure The subject
+		 * @param subject The subject that has change within
+		 * @param aspect The aspect that has changed
+		 * 
+		 * @throws IllegalArgumentException the structure, bug report or aspect is null
 		 */
 		@Override
-		public void update(Subject structure, BugReport bugReport, Object aspect)
-		{
-			if(super.structure == structure && aspect instanceof Comment)
-				notifications.add(new Notification("New comment", bugReport, super.structure));
+		public void update(Subject structure, Subject subject, Object aspect) {
+			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+			
+			if(super.structure == structure && subject instanceof BugReport && aspect instanceof Comment)
+				notifications.add(new Notification("New comment", subject, super.structure));
+			
 		}
 		
 		/**
@@ -330,5 +390,55 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		public String toString() {
 			return "Registration for creation of new comment in \n" + super.structure;
 		}
+	}
+	
+	
+	//Innerclass observer bug report
+	/**
+	 * Inner class observer of a creation of a new bug report
+	 *
+	 */
+	private class ObserverVersion extends ObserverAspect
+	{
+		/**
+		 * Constructor 
+		 * 
+		 * @param structure The subject to observe
+		 */
+		public ObserverVersion(Subject structure)
+		{
+			super(structure);
+		}
+		
+		/**
+		 * Method to use when a change occurred in the subject structure.
+		 * 
+		 * @param structure The subject
+		 * @param subject The subject that has change within
+		 * @param aspect The aspect that has changed
+		 * 
+		 * @throws IllegalArgumentException the structure, subject or aspect is null
+		 */
+		@Override
+		public void update(Subject structure, Subject subject, Object aspect) {
+			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+			
+			if(super.structure == structure && aspect instanceof Double)
+				notifications.add(new Notification("VersionID change", subject, super.structure));
+			
+		}
+
+		/**
+		 * Method to get textual representation of this object
+		 * 
+		 * @return The String representation of this object
+		 */
+		@Override
+		public String toString() {
+			return "Registration for creation of new bug report in \n" + super.structure;
+		}
+		
 	}
 }

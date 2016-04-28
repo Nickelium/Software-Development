@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * This class represents a subsystem with all its related attributes.
  */
-public class SubSystem extends Subject implements Observer<BugReport>, Originator<SubSystem.SubSystemMemento, SubSystem>, MilestoneContainer {
+public class SubSystem extends Subject implements Observer, Originator<SubSystem.SubSystemMemento, SubSystem>, MilestoneContainer {
 
     private String name;
     private String description;
@@ -123,7 +123,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      *
      * @return A list of the bugreports of the current subsystem.
      */
-    List<BugReport> getBugReports() {
+    public List<BugReport> getBugReports() {
         return this.bugReports;
     }
 
@@ -238,8 +238,11 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      * Method to set the latest achieved milestone to a new value.
      *
      * @param latestAchievedMilestone the new milestone to be set as the latest achieved milestone
+     * 
+     * @throws IllegalArgumentException latestAchievedMilestone is null
      */
     private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+    	if(latestAchievedMilestone == null) throw new IllegalArgumentException("The mileston cannot be negative");
         this.latestAchievedMilestone = latestAchievedMilestone;
     }
 
@@ -290,6 +293,7 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
      * @return True if the bug report is not already a bug report of this subsystem or recursively.
      */
     private boolean isValidBugReport(BugReport bugReport) {
+    	if(bugReport == null) return false;
         if (this.getAllBugReports().contains(bugReport)) return false;
         else return true;
     }
@@ -311,6 +315,22 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
         subSystems.add(subSystem);
         subSystem.addObserver(this);
     }
+    
+    /**
+	 * Method to add a subsystem to the list of subsystems.
+     *
+	 * @param subSystem The subsystem to add.
+     *
+     * @throws IllegalArgumentException The given subsystem is null.
+	 */
+	public void removeSubSystem(SubSystem subSystem)
+	{
+		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+		if(!subSystems.contains(subSystem)) throw new IllegalArgumentException("Subsystem does not belong to the subsystems");
+		
+		subSystems.remove(subSystem);
+		//TODO unbind observer
+	}
 
     /**
      * Method for adding a bug report to the list of bugreports.
@@ -350,8 +370,12 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     /**
      * Method to add an old milestone to the list of milestones.
      * @param milestone the old milestone to be add to the milestone list.
+     * 
+     * @throws IllegalArgumentException milestone is null
      */
     private void addMilestoneToList(Milestone milestone) {
+    	if(milestone == null) throw new IllegalArgumentException("The milestone cannot be null");
+    	
         this.milestones.add(milestone);
         Collections.sort(this.milestones);
     }
@@ -375,13 +399,19 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     /**
      * Method called to notify this observer
      *
-     * @param s      The subject
+     * @param structure The structure 
+     * @param subject      The subject
      * @param aspect The aspect that has changed
+     * 
+     * @throws IllegalArgumentException The subject, structure or aspect is null.
      */
     @Override
-    public void update(Subject s, BugReport bugReport, Object aspect) {
-        notifyObservers(bugReport, aspect);
-
+    public void update(Subject structure, Subject subject, Object aspect)
+    {
+    	if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+		if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+        notifyObservers(subject, aspect);
     }
 
     /**
@@ -399,10 +429,14 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
 	 * Method to restore this object given the memento
 	 * 
 	 * @param memento The memento to restore to
+	 * 
+	 * @throws IllegalArgumentException the memento is null
 	 */
 	@Override
 	public void restoreMemento(SubSystemMemento memento) 
 	{
+		if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
+		
 		this.subSystems = memento.getSubSystems();
 		
 		for(SubSystemMemento subsystemMemento : memento.getSubSystemMementos())
@@ -448,6 +482,8 @@ public class SubSystem extends Subject implements Observer<BugReport>, Originato
     	 * Constructor 
     	 * 
     	 * @param originator The originator to build a memento from
+    	 * 
+    	 * @throws IllegalArgumentException the originator is null
     	 */
 		public SubSystemMemento(SubSystem originator)
 		{

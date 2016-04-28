@@ -29,7 +29,7 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
     }
 
     @Test
-    public void subsystem_Invalid_ToSmall() throws ReportErrorToUserException {
+    public void subsystem_Invalid_TooSmall() throws ReportErrorToUserException {
         try {
             String[] simulatedUserInput = {
                     "1",
@@ -67,11 +67,12 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
     }
 
     @Test
+    // TODO: this test can only be valid if the milestone of the subsystems is increased first.
     public void entireProject_valid() throws ReportErrorToUserException {
         String[] simulatedUserInput = {
                 "1",
                 "3",
-                "M1.3"
+                "M1.2"
         };
 
         ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));

@@ -2,7 +2,6 @@ package Model.Milestone;
 
 import CustomExceptions.ReportErrorToUserException;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 import static java.lang.Character.isDigit;
@@ -20,16 +19,13 @@ import static java.lang.Character.isDigit;
  *
  * Initially all projects and subsystems have the default achieved milestone: M0.
  */
-public class Milestone implements Comparator<Milestone>, Comparable<Milestone> {
+public class Milestone implements Comparable<Milestone> {
 
     /**
-     * The milestone ID takes the form of dot-separated numbers
-     * prefixed with the letter M (e.g. M0.5 or M1.2.1).
-     *
      * The milestone ID has no limits in terms of layering (number of dot separated numbers),
-     * but the numbers between the dots have to be in the range [0,99].
+     * but numbers it contains must be in the range of the int data structure.
      */
-    private String milestoneID;
+    private int[] layeredMilestone;
 
     /**
      * Constructor to create a milestone object with a given milestone ID.
@@ -43,195 +39,166 @@ public class Milestone implements Comparator<Milestone>, Comparable<Milestone> {
 
     /**
      * Constructor to create a milestone object with the default milestone ID (M0).
+     *
+     * @throws ReportErrorToUserException //TODO
      */
-    public Milestone(){
-        this.milestoneID = "M0";
+    public Milestone() throws ReportErrorToUserException {
+        this.setMilestoneID("M0");
     }
 
     /**
-     * Returns the milestone ID of the milestone object.
+     * // TODO
      *
-     * @return the milestone ID of the milestone object.
+     * @return
      */
     public String getMilestoneID() {
-        return milestoneID;
+        return this.toString();
     }
 
     /**
-     * Method to set the milestone ID of the milestone object.
+     * TODO
+     *
+     * @return
+     */
+    public int[] getLayeredMilestone() {
+        return this.layeredMilestone;
+    }
+
+    /**
+     * Method to set the layered milestone of the milestone object.
+     * Also saves a string representation of the object.
      *
      * @param milestoneID the milestone ID that needs to be set.
      * @throws ReportErrorToUserException is thrown if the given milestone ID is not valid.
      */
     public void setMilestoneID(String milestoneID) throws ReportErrorToUserException {
-        if(isValidMilestoneID(milestoneID))
-            this.milestoneID = milestoneID;
-        else
+        if (isValidMilestoneID(milestoneID)) {
+            this.layeredMilestone = milestoneStringToArray(milestoneID);
+        } else {
             throw new ReportErrorToUserException("Invalid milestoneID has been supplied");
+        }
+    }
+
+    private int[] milestoneStringToArray(String milestoneID) {
+        if (milestoneID == null) throw new IllegalArgumentException("milestoneId is null");
+        String milestoneNumbers = milestoneID.substring(1);
+        String[] stringArray = milestoneNumbers.split("\\.");
+        int[] intArray = new int[stringArray.length];
+
+        for (int i = 0; i < stringArray.length; i++) {
+            intArray[i] = Integer.parseInt(stringArray[i]);
+        }
+
+        return intArray;
     }
 
     /**
      * Method to determine whether a given milestone ID is a valid milestone ID.
-     *
+     * <p>
      * Requirements for a valid milestone ID:
-     *      the milestone ID has to start with a capital letter M.
-     *      all non-numerical characters have to be dots.
-     *      between each couple of dots there has to be at least one digit.
-     *      the last character of the milestone ID has to be a digit.
-     *      every part of the version number has to be a number in range [0,99].
+     * the milestone ID has to start with a capital letter M.
+     * all non-numerical characters have to be dots.
+     * between each couple of dots there has to be at least one digit.
+     * the last character of the milestone ID has to be a digit.
      *
      * @param milestoneID the milestone ID that has to be checked.
      * @return true if the milestone ID is valid, false if not.
      */
-    public boolean isValidMilestoneID(String milestoneID){
-        if(!(Objects.equals(milestoneID.substring(0, 1), "M")))
+    public boolean isValidMilestoneID(String milestoneID) {
+        if (milestoneID == null) return false;
+        // the milestone ID has to start with a capital letter M.
+        if (!(Objects.equals(milestoneID.substring(0, 1), "M")))
             return false;
-        char[] chars = new char[milestoneID.length()-1];
-        milestoneID.getChars(1,milestoneID.length(),chars, 0);
-        for(char c : chars){
-            if(!(isDigit(c) || c == '.'))
+
+        // all non-numerical characters have to be dots.
+        char[] chars = new char[milestoneID.length() - 1];
+        milestoneID.getChars(1, milestoneID.length(), chars, 0);
+        for (char c : chars) {
+            if (!(isDigit(c) || c == '.'))
                 return false;
         }
 
-        // Er moeten tussen twee punten minstens één digit staan
-        if(!hasDigitBetweenEveryCoupleDots(chars))
+        // between each couple of dots there has to be at least one digit.
+        if (!hasDigitBetweenEveryCoupleDots(chars))
             return false;
 
-        // Einde string moet een digit zijn
-        if(chars[chars.length-1] == '.')
+        // the last character of the milestone ID has to be a digit.
+        if (chars[chars.length - 1] == '.')
             return false;
 
-        // Check if max versionnumber < 100
-        if(!isLimitedTo100(chars))
-            return false;
-
-        // Alle testen doorstaan --> valid ID
-        return true;
-    }
-
-    /**
-     * Method to check whether every part of the version number is in range of [0,99]
-     * @param chars a list of characters representing the milestone ID
-     * @return true if every part is in range of [0,99], false if not.
-     */
-    private boolean isLimitedTo100(char[] chars){
-        for(int i=0; i<=chars.length-3; i++){
-            if(isDigit(chars[i]) && isDigit(chars[i+1]) && isDigit(chars[i + 2])){
-                return false;
-            }
-        }
+        // All tests passed: string is valid.
         return true;
     }
 
     /**
      * Method to check if there is a digit between every couple of dots
+     *
      * @param chars a list of characters representing the milestone ID
      * @return true if there is a digit between every couple of dots, false if not
      */
-    private boolean hasDigitBetweenEveryCoupleDots(char[] chars){
-        for(int i=0; i<=chars.length-2; i++){
-            if(chars[i] == '.' && chars[i+1] == '.'){
+    private boolean hasDigitBetweenEveryCoupleDots(char[] chars) {
+        if (chars == null) return false;
+        for (int i = 0; i <= chars.length - 2; i++) {
+            if (chars[i] == '.' && chars[i + 1] == '.') {
                 return false;
             }
         }
         return true;
     }
 
-    /**
-     * Method that converts a String value of milestoneID to a double value,
-     * representing a numerical value.
-     *
-     * Layers in the milestone hierarchy are represented by negative powers of base 10,
-     * starting at power zero. After every layer, the power count goes down by 2.
-     * e.g: M1.0.5 = 1,0005. or M2.6.3 = 2,0603 or M16.43.1 = 16,4301.
-     *
-     * @return the double value of the milestone ID, based upon the string value.
-     */
-    public double getIDvalue(){
-        char[] chars = new char[milestoneID.length()-1];
-        milestoneID.getChars(1,milestoneID.length(),chars, 0);
+    private int compareMilestones(Milestone m1, Milestone m2) {
+        if (m1 == null) throw new IllegalArgumentException("Milestone 1 is null");
+        if (m2 == null) throw new IllegalArgumentException("Milestone 2 is null");
+        int[] layeredMilestone1 = m1.getLayeredMilestone();
+        int[] layeredMilestone2 = m2.getLayeredMilestone();
+        int lengthL1 = layeredMilestone1.length;
+        int lengthL2 = layeredMilestone2.length;
+        int index = 0;
 
-        double idValue = 0.0;
-        String stringValue = "";
+        while (index < lengthL1 && index < lengthL2) {
+            if (layeredMilestone1[index] > layeredMilestone2[index])
+                return 1;
+            else if (layeredMilestone1[index] < layeredMilestone2[index])
+                return -1;
 
-        int i = 0;
+            // if both layers are equal, do nothing
 
-        // First Iteration
-        if(isDigit(chars[i]) && chars.length == 1) {
-            stringValue = stringValue + chars[i]  + ".0";
-            i++;
+            // Checks needed for milestones with different number of layers
+            if (index == lengthL1 - 1 && index < lengthL2 - 1)
+                return -1; // milestone2 has more layers, is therefor bigger than milestone1
+            else if (index < lengthL1 - 1 && index == lengthL2 - 1)
+                return 1; // milestone1 has more layers, is therefor bigger than milestone2
+            else if (index == lengthL1 - 1 && index == lengthL2 - 1)
+                return 0;
+
+            // No changes in current layer, continue with next layer
+            index++;
         }
 
-        else if(isDigit(chars[i]) && isDigit(chars[i+1]) && chars.length == 2) {
-            stringValue = stringValue + chars[i] + chars[i + 1] + ".0";
-            i = i+2;
-        }
-
-        else if(isDigit(chars[i]) && isDigit(chars[i+1])) {
-            stringValue = stringValue + chars[i] + chars[i + 1] + ".";
-            i = i+2;
-        }
-
-        else{
-            stringValue = stringValue + chars[i] + ".";
-            i++;
-        }
-
-        // Loop for other part of string
-        while(i<=chars.length-1){
-
-            if(chars[i] == '.') {
-                i = i+1;
-            }
-
-            else if(isDigit((chars[i])) && i == chars.length-1){
-                stringValue = stringValue + "0" + chars[i];
-                i = i+1;
-            }
-
-            else if(isDigit((chars[i])) && chars[i+1] == '.'){
-                stringValue = stringValue + "0" + chars[i];
-                i = i+2;
-            }
-
-            // isDigit(chars[i]) && isDigit(chars[i+1]
-            else {
-                stringValue = stringValue + chars[i] + chars[i+1];
-                i = i+2;
-            }
-        }
-
-        idValue = Double.parseDouble(stringValue);
-        return idValue;
-    }
-
-    /**
-     * Method to compare two different milestone objects.
-     * Milestones are lexicographically ordered (e.g. M0.5 smaller than M1.2.1 and M1.2.1 smaller than M1.3.0)
-     *
-     * @param m1 the first milestone object
-     * @param m2 the second milestone object
-     * @return 1 if the id value of m1 greater than the id value of m2
-     *         0 if the id value of both objects is equal
-     *         -1 if the id value of m1 greater than the id value of m2
-     */
-    @Override
-    public int compare(Milestone m1, Milestone m2) {
-        if(m1.getIDvalue() > m2.getIDvalue())
-            return 1;
-        else if(m1.getIDvalue() == m2.getIDvalue())
-            return 0;
-        else
-            return -1;
+        // Program should never be able to reach this; consistency checks while creating
+        // Milestone object (setMilestoneID) prevents this.
+        return 0;
     }
 
     @Override
-    public String toString(){
-        return this.getMilestoneID();
+    public String toString() {
+        String milestone = "M";
+        for (int layer : this.getLayeredMilestone()) {
+            milestone = milestone + "." + layer;
+        }
+        return milestone.substring(0, 1) + milestone.substring(2);
     }
 
+    /**
+     * The value 0 if the argument is a Milestone lexicographically equal to this Milestone;
+     * a value of 1 if the argument is a Milestone lexicographically less than this Milestone.
+     * a value of -1 if the argument is a Milestone lexicographically greater than this Milestone;
+     *
+     * @param o the other milestone to compare this milestone to
+     * @return 1 if this milestone > the value of o, 0 if this milestone = the value of o, -1 if this milestone < the value of o.
+     */
     @Override
     public int compareTo(Milestone o) {
-        return this.compare(this, o);
+        return compareMilestones(this, o);
     }
 }

@@ -22,9 +22,12 @@ public class SearchOnDescription extends Search
 	 * Constructor to create a new Search On Description object.
 	 *
 	 * @param description the description to search for
+	 *
+	 * @throws ReportErrorToUserException The given description is invalid.
 	 */
-	public SearchOnDescription(String description)
+	public SearchOnDescription(String description) throws ReportErrorToUserException
 	{
+		if (!isValidDescriptionString(description)) throw new ReportErrorToUserException("Invalid description");
 		this.description = description;
 	}
 
@@ -34,12 +37,16 @@ public class SearchOnDescription extends Search
 	 *
 	 * @param bugReportService the bug report service, requesting the search
 	 * @param user the user requesting the search
+	 * 
 	 * @return an unmodifiable list of all bug reports that meet the search requirements.
+	 *
+	 * @throws IllegalArgumentException The user or bugreportservice is null.
 	 */
 	@Override
 	protected List<BugReport> apply(BugReportService bugReportService, User user) throws ReportErrorToUserException
 	{
-		if (!isValidDescriptionString(description)) throw new ReportErrorToUserException("Invalid description");
+		if (bugReportService == null) throw new IllegalArgumentException("bugreportservice is null");
+		if (user == null) throw new IllegalArgumentException("User is null");
 		List<BugReport> bugReports = getAllBugReportsWrapped(bugReportService, user).getAllMatching(x -> x.getDescription().contains(description));
 		return Collections.unmodifiableList(bugReports);
 	}

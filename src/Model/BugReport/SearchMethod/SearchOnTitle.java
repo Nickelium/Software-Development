@@ -22,9 +22,12 @@ public class SearchOnTitle extends Search
 	 * Constructor to create a new Search On Title object.
 	 *
 	 * @param title the title to search for
+	 *
+	 * @throws ReportErrorToUserException The given title is invalid.
 	 */
-	public SearchOnTitle(String title)
+	public SearchOnTitle(String title) throws ReportErrorToUserException
 	{
+		if (!isValidTitleString(title)) throw new ReportErrorToUserException("Invalid title");
 		this.title = title;
 	}
 
@@ -34,12 +37,16 @@ public class SearchOnTitle extends Search
 	 *
 	 * @param bugReportService the bug report service, requesting the search
 	 * @param user the user requesting the search
+	 * 
 	 * @return an unmodifiable list of all bug reports that meet the search requirements.
+	 *
+	 * @throws IllegalArgumentException Bugreportservice or user is null.
 	 */
 	@Override
-	protected List<BugReport> apply(BugReportService bugReportService, User user) throws ReportErrorToUserException
+	protected List<BugReport> apply(BugReportService bugReportService, User user)
 	{
-		if (!isValidTitleString(title)) throw new ReportErrorToUserException("Invalid title");
+		if (bugReportService == null) throw new IllegalArgumentException("Bugreportservice is null");
+		if (user == null) throw new IllegalArgumentException("User is null");
 		List<BugReport> bugreports = getAllBugReportsWrapped(bugReportService, user).getAllMatching(x -> x.getTitle().contains(title));
 		return Collections.unmodifiableList(bugreports);
 		

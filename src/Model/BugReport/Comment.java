@@ -17,7 +17,8 @@ import java.util.List;
  * Also provides methods to get comments of the comment object itself.
  *
  */
-public class Comment extends Subject implements Observer<Comment>{
+public class Comment extends Subject implements Observer
+{
 
     //region Attributes
 
@@ -143,13 +144,14 @@ public class Comment extends Subject implements Observer<Comment>{
      * Method for adding a comment to the list of comments.
      *
      * @param comment Comments to add to the list of comments.
+     * @throws IllegalArgumentException Comment is null.
      */
     void addComment(Comment comment) {
         if (comment == null) throw new IllegalArgumentException("Comment is null");
 
         this.comments.add(comment);
         comment.addObserver(this);
-        notifyObservers(null, comment);
+        notifyObservers(this, comment);
     }
 
     //endregion
@@ -169,13 +171,19 @@ public class Comment extends Subject implements Observer<Comment>{
 
     /**
      * Method called to notify this observer
-     * 
-     * @param s The subject
+     *
+     * @param structure The subject structure
+     * @param subject The subject
      * @param aspect The aspect that has changed
+     * 
+     * @throws IllegalArgumentException The structure, comment or aspect is null.
      */
 	@Override
-	public void update(Subject structure, Comment s, Object aspect)
+	public void update(Subject structure, Subject subject, Object aspect)
 	{
+		if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+		if(subject == null) throw new IllegalArgumentException("The comment cannot be null");
+		if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 		notifyObservers(this, aspect);
 	}
 

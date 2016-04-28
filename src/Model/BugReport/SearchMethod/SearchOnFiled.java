@@ -21,9 +21,12 @@ public class SearchOnFiled extends Search
 	 * Constructor to create a new Search On Filed object.
 	 *
 	 * @param user the user requesting the search
+	 *
+	 * @throws IllegalArgumentException User is null.
 	 */
 	public SearchOnFiled(User user)
 	{
+		if (user == null) throw new IllegalArgumentException("User is null");
 		this.user = user;
 	}
 
@@ -33,11 +36,16 @@ public class SearchOnFiled extends Search
 	 *
 	 * @param bugReportService the bug report service, requesting the search
 	 * @param user the user requesting the search
+	 * 
 	 * @return an unmodifiable list of all bug reports that meet the search requirements.
+	 *
+	 * @throws IllegalArgumentException Bugreportservice or user is null.
 	 */
 	@Override
 	protected List<BugReport> apply(BugReportService bugReportService, User user)
 	{
+		if (bugReportService == null) throw new IllegalArgumentException("Bugreportservice is null");
+		if (user == null) throw new IllegalArgumentException("User is null");
 		IListWrapper<BugReport> bugReportList = getAllBugReportsWrapped(bugReportService, user);
 
 		List<BugReport> bugReports = bugReportList.getAllMatching(x -> x.getCreator().equals(this.user));

@@ -29,9 +29,12 @@ public class New extends Tag {
      * @param bugReport The bug report to assign the developer to.
      * @param developer The developer to assign
      * @throws ReportErrorToUserException is thrown when some of the arguments are invalid.
+     * @throws IllegalArgumentException Bugreport or developer is null.
      */
     @Override
     protected void assignDeveloper(BugReport bugReport, Developer developer) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (developer == null) throw new IllegalArgumentException("Developer is null");
         super.assignDeveloper(bugReport, developer);
         this.changeTag(bugReport, new Assigned());
     }
@@ -63,12 +66,6 @@ public class New extends Tag {
     @Override
     public String toString() {
         return "New";
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof New) return true;
-        else return false;
     }
 
     @Override

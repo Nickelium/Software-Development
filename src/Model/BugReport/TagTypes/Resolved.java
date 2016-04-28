@@ -61,16 +61,13 @@ public class Resolved extends Tag {
      *
      * @param bugReport The bug report of which to update the fields.
      * @throws ReportErrorToUserException is thrown if the new selected patch index is invalid.
+     *
+     * @throws IllegalArgumentException Bugreport is null.
      */
     @Override
     protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         this.setSelectedPatch(bugReport, getSelectedPatchIndex());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Resolved) return true;
-        else return false;
     }
 
     @Override

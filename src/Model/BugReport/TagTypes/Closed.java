@@ -6,7 +6,7 @@ import Model.BugReport.Patch;
 import Model.BugReport.Tag;
 import Model.BugReport.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * Class inheriting from the Tag Class.
@@ -20,7 +20,7 @@ public class Closed extends Tag {
      * @param score The score given to the solution of the bugreport the close tag will be assigned to.
      */
     public Closed(int score) {
-        setManuallyAcceptedTags(Arrays.asList());
+        setManuallyAcceptedTags(new ArrayList<>());
         this.score = score;
     }
 
@@ -56,9 +56,12 @@ public class Closed extends Tag {
      *
      * @param bugReport The bug report of which to update the fields.
      * @throws ReportErrorToUserException is thrown if the specified score is not a valid score.
+     * @throws IllegalArgumentException Bugreport is null.
+     *
      */
     @Override
     protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         this.setSolutionScore(bugReport, this.score);
     }
 
@@ -67,11 +70,6 @@ public class Closed extends Tag {
         return "Closed";
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Closed) return true;
-        else return false;
-    }
 
     @Override
     public boolean isFinal() {

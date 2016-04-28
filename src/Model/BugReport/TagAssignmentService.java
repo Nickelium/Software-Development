@@ -47,6 +47,9 @@ public class TagAssignmentService {
      * @throws IllegalArgumentException One of the arguments is null.
      */
     public void assignTag(User user, BugReport bugReport, Tag tag) throws ReportErrorToUserException {
+        if (user == null) throw new IllegalArgumentException("User is null");
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (tag == null) throw new IllegalArgumentException("Tag is null");
         if (!canAssignTag(user, bugReport, tag.getClass()))
             throw new ReportErrorToUserException("Not allowed to perform tag change!");
 
@@ -95,6 +98,7 @@ public class TagAssignmentService {
     }
 
     private boolean validTagChangePolicy(BugReport bugReport, Class<? extends Tag> tag) {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         return bugReport.getTag().canChangeToTag(tag);
     }
 
@@ -103,6 +107,7 @@ public class TagAssignmentService {
     }
 
     private Role getUserRoleWithinProject(User user, Project project){
+        if (project == null) throw new IllegalArgumentException("Project is null");
         if (project.getLeadRole().getDeveloper().equals(user)) {
             return project.getLeadRole();
         }

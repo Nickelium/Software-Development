@@ -72,9 +72,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @return The forked project
      * 
      * @throws ReportErrorToUserException One of attributes of the project could not be forked.
+     * @throws IllegalArgumentException the project is null
      */
     public Project forkProject(Project project) throws ReportErrorToUserException
     {
+    	if(project == null) throw new IllegalArgumentException("The project cannot be null");
     	Project forkedProject = project.fork();
     	projectList.insert(forkedProject);
 		return forkedProject;	
@@ -84,10 +86,29 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * Method for removing a project from the list of projects.
      *
      * @param project The project to remove.
+     * 
+     * @throws IllegalArgumentException the project is null
      */
     public void deleteProject(Project project)
     {
+    	if(project == null) throw new IllegalArgumentException("The project cannot be null");
         projectList.delete(project);
+    }
+    
+    /**
+     * Method for removing a project from the list of projects.
+     *
+     * @param project The project to remove.
+     * 
+     * @throws IllegalArgumentException the project is null
+     */
+    public void deleteSubSystem(Project project, SubSystem subSystem)
+    {
+    	if(project == null) throw new IllegalArgumentException("The project cannot be null");
+    	if(subSystem == null) throw new IllegalArgumentException("The subsystem cannot be null");
+    	
+    	if(!project.getSubSystems().contains(subSystem)) throw new IllegalArgumentException("The subsystem does not belong to the project");
+        project.removeSubSystem(subSystem);
     }
 
     /**
@@ -96,9 +117,12 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param developer The developer of which to get de project he/she leads.
      *
      * @return An unmodifiable list of all the projects the given developer leads.
+     * 
+     * @throws IllegalArgumentException the developer is null
      */
     public List<Project> getProjectsOfLeadRole(Developer developer)
     {
+    	if(developer == null) throw new IllegalArgumentException("The developer cannot be null");
         List<Project> prjList = projectList.getAllMatching(x -> x.getLeadRole().getDeveloper().equals(developer));
         return Collections.unmodifiableList(prjList);
     }
@@ -131,6 +155,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param project The project to set the name of.
      * @param name The name of the project
+     * 
      * @throws ReportErrorToUserException The given name is empty.
      */
     public void setProjectName(Project project, String name) throws ReportErrorToUserException {
@@ -142,6 +167,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param project The project to set the description of.
      * @param description The description of the project
+     * 
      * @throws ReportErrorToUserException The given description is empty.
      */
     public void setProjectDescription(Project project, String description) throws ReportErrorToUserException {
@@ -153,6 +179,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param project The project to set the date of.
      * @param date The starting date of the project.
+     * 
      * @throws ReportErrorToUserException The given date is before the creation date.
      */
     public void setProjectStartingDate(Project project, TheDate date) throws ReportErrorToUserException {
@@ -164,6 +191,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param project The project to set the budget of.
      * @param newBudget The budget of the project.
+     * 
      * @throws ReportErrorToUserException The budget is negative.
      */
     public void setProjectBudget(Project project, double newBudget) throws ReportErrorToUserException {
@@ -175,6 +203,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param project The project to set the version id of.
      * @param versionID The versionId to set the project to.
+     * 
      * @throws ReportErrorToUserException The given versionId is lower than or equal to the current one.
      */
     public void setProjectVersionID(Project project, double versionID) throws ReportErrorToUserException {
@@ -186,6 +215,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param project The project to assign the lead to.
      * @param leadRole The lead to assign to the project.
+     * 
      * @throws IllegalArgumentException The given role is null.
      */
     public void setProjectLeadRole(Project project, Lead leadRole) {
@@ -195,7 +225,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 
     /**
      * Method to set a new project milestone.
-     * <p>
+     * 
      * There occurs consistency checking:
      * first pass: project milestone should not exceed any subsystem milestone
      * second pass: project milestone should not exceed the target milestone of
@@ -203,6 +233,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param project The project to assign the new milestone to.
      * @param newProjectMilestone the new project milestone that has to be set
+     * 
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */
     public void setNewProjectMilestone(Project project, Milestone newProjectMilestone) throws ReportErrorToUserException {
@@ -219,9 +250,12 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param name        The name of the new subsystem.
      * @param description The description of the new subsystem.
+     * 
      * @param subSystem   The subsystem to insert the new one in.
      * @return The newly created subsystem.
+     * 
      * @throws ReportErrorToUserException One of the string arguments are wrong.
+     * @throws IllegalArgumentException the subsystem is null
      */
     public SubSystem createSubsystem(String name, String description, SubSystem subSystem) throws ReportErrorToUserException {
         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
@@ -237,8 +271,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param name        The name of the new subsystem.
      * @param description The description of the new subsystem.
      * @param project     The project to insert the new subsystem in.
+     * 
      * @return The newly created subsystem.
+     * 
      * @throws ReportErrorToUserException One of the string arguments are wrong.
+     * @throws IllegalArgumentException the project is null
      */
     public SubSystem createSubsystem(String name, String description, Project project) throws ReportErrorToUserException {
         if (project == null) throw new IllegalArgumentException("Project is null");
@@ -270,24 +307,30 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param subSystem The subsystem to set the name of.
      * @param name The name of the subsystem
+     * 
      * @throws ReportErrorToUserException The given name is empty.
+     * throws IllegalArgumentException The subsystem is null.
      */
     public void setSubSystemName(SubSystem subSystem, String name) throws ReportErrorToUserException {
-        subSystem.setName(name);}
+        if(subSystem == null) throw new IllegalArgumentException("The subsystem cannot be null");
+    	subSystem.setName(name);}
 
     /**
      * Setter to set the description of the subsystem.
      *
      * @param subSystem The subsystem to set the description of.
      * @param description The description of the subsystem.
+     * 
      * @throws ReportErrorToUserException The given description is empty.
+     * throws IllegalArgumentException The subsystem is null.
      */
     public void setSubSystemDescription(SubSystem subSystem, String description) throws ReportErrorToUserException {
-        subSystem.setDescription(description);}
+    	if(subSystem == null) throw new IllegalArgumentException("The subsystem cannot be null");
+    	subSystem.setDescription(description);}
 
     /**
      * Method to set a new subsystem milestone.
-     * <p>
+     * 
      * There occurs consistency checking:
      * first pass: subsystem milestone should not exceed any recursive subsystem's milestone
      * second pass: subsystem milestone should not exceed the target milestone of
@@ -295,10 +338,13 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param subSystem The subsystem to set the new milestone of.
      * @param newSubsystemMilestone the new subsystem milestone that has to be set
+     * 
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
+     * throws IllegalArgumentException The subsystem is null.
      */
     public void setNewSubSystemMilestone(SubSystem subSystem, Milestone newSubsystemMilestone) throws ReportErrorToUserException {
-        subSystem.setNewSubSystemMilestone(newSubsystemMilestone);
+    	if(subSystem == null) throw new IllegalArgumentException("The subsystem cannot be null");
+    	subSystem.setNewSubSystemMilestone(newSubsystemMilestone);
     }
 
     //endregion
@@ -314,6 +360,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @throws ReportErrorToUserException is thrown if the user cannot be assigned
      *                                    to the role in the project.
+     * @throws IllegalArgumentException The project, role or user is null.
      */
     public void assignRole(Project project, Role role, User user) throws ReportErrorToUserException {
         if (project == null) throw new IllegalArgumentException("Project is null");
@@ -328,7 +375,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 
     //region Checker
 
-    public boolean canAssignRole(Project project, Role role, User user) {
+    private boolean canAssignRole(Project project, Role role, User user) {
+    	if(project == null) return false;
+    	if(role == null) return false;
+    	if(user == null) return false;
+    	
         if (!project.getLeadRole().getDeveloper().equals(user)) {
             return false;
         } else if (isRoleAlreadyInProject(project, role)) {
@@ -338,6 +389,9 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     }
 
     private boolean isRoleAlreadyInProject(Project project, Role role) {
+    	if(project == null) throw new IllegalArgumentException("The project is null");
+    	if(role == null) throw new IllegalArgumentException("The role is null");
+    	
         return project.getDevsRoles().stream().anyMatch(x -> x.getDeveloper().equals(role.getDeveloper())
                 && x.getClass().equals(role.getClass()));
     }
@@ -351,10 +405,14 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @param bugReport Bugreport to get the subsystem of.
      * @return The subsystem containing the bug report.
+     * 
      * @throws ReportErrorToUserException There is no subsystem containing the given bug report.
+     * @throws IllegalArgumentException The bug report is null.
      */
     public SubSystem getSubsystemWhichContainsBugReport(BugReport bugReport) throws ReportErrorToUserException {
-        for (SubSystem subSystem : this.getAllSubSystems()) {
+        if(bugReport == null) throw new IllegalArgumentException("The bug report cannot be null");
+        
+    	for (SubSystem subSystem : this.getAllSubSystems()) {
             if (subSystem.getBugReports().contains(bugReport)) {
                 return subSystem;
             }
@@ -376,10 +434,14 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 	 * Method to restore this object given the memento
 	 * 
 	 * @param memento The memento to restore to
+	 * 
+	 * @throws IllegalArgumentException the memento is null
 	 */
 	@Override
 	public void restoreMemento(ProjectServiceMemento memento)
     {
+		if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
+		
     	this.projectList = new ListWrapper<>(memento.getListProject());
     	
     	for(ProjectMemento projectMemento :	memento.getProjectMementos())
@@ -411,6 +473,8 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	 * Constructor 
     	 * 
     	 * @param originator The originator to build a memento from
+    	 * 
+    	 * @throws IllegalArgumentException the originator is null
     	 */
 		public ProjectServiceMemento(ProjectService originator)
 		{
