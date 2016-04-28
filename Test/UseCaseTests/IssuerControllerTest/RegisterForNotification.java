@@ -9,6 +9,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by Karina on 14.04.2016.
  */
@@ -24,11 +26,15 @@ public class RegisterForNotification extends IssuerControllerInit {
                 "1"
 
         };
+
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
+
+
+        assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for creation of new bug report in"));
     }
 
     @Test
@@ -44,6 +50,9 @@ public class RegisterForNotification extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
+
+        assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for change of tag in"));
+
     }
 
     @Test
@@ -59,6 +68,9 @@ public class RegisterForNotification extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
+
+        assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for changed of tag to"));
+
     }
 
     @Test
@@ -73,6 +85,9 @@ public class RegisterForNotification extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
+
+        assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for creation of new comment in"));
+
     }
 
     @Test
@@ -130,6 +145,9 @@ public class RegisterForNotification extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
+
+        assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for creation of new bug report in"));
+
     }
 
     @Test
@@ -146,6 +164,9 @@ public class RegisterForNotification extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
+
+        assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for change of tag in"));
+
     }
 
     @Test
@@ -162,6 +183,9 @@ public class RegisterForNotification extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
+
+        assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for changed of tag to"));
+
     }
 
     @Test
@@ -177,6 +201,9 @@ public class RegisterForNotification extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
+
+        assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for creation of new comment in"));
+
     }
 
     @Test
