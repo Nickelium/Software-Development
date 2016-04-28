@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Created by Karina on 11.03.2016.
@@ -16,6 +17,10 @@ public class CreateComment extends IssuerControllerInit {
 
     @Test
     public void successfullyCreatedComment_forBugReport() throws Exception {
+
+        assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().contains("Crash")
+                && x.getAllComments().stream().anyMatch(y -> y.getText().contains("This is a test")));
+
         String[] simulatedUserInput = {
                 "0",
                 "Crash",
@@ -33,11 +38,15 @@ public class CreateComment extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(4).run();
+
+        assert bugReportService.getAllBugReports(currentUser).stream().filter(x -> x.getTitle().contains("Crash")
+                && x.getAllComments().stream().anyMatch(y -> y.getText().contains("This is a test"))).collect(Collectors.toList()).size() == 1;
     }
 
     @Test
     public void successfullyCreatedComment_forComment() throws Exception {
         successfullyCreatedComment_forBugReport();
+
         String[] simulatedUserInput = {
                 "0",
                 "Crash",
@@ -56,6 +65,9 @@ public class CreateComment extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(4).run();
+
+        assert bugReportService.getAllBugReports(currentUser).stream().filter(x -> x.getTitle().contains("Crash")
+                && (x.getAllComments().stream().filter(y -> y.getText().contains("This is a test")).collect(Collectors.toList()).size()) == 2).collect(Collectors.toList()).size() == 1;
     }
 
     @Test

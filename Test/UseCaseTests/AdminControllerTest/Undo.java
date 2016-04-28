@@ -49,4 +49,5 @@ public class Undo extends AdminControllerInit {
         List<BugReport> bugReportList = initializer.getBugReportService().getAllBugReports(initializer.getUserService().getUser("major"));
         assert (!initializer.getBugReportService().getAllBugReports(initializer.getUserService().getUser("major")).stream().anyMatch(x -> x.getTitle().equals("Test")));
     }
+
 }

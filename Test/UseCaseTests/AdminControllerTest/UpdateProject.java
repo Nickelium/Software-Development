@@ -19,6 +19,9 @@ public class UpdateProject extends AdminControllerInit{
 
     @Test
     public void successfullyUpdatedProject() throws Exception{
+
+        assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Project Test Name"));
+
         String[] simulatedUserInput = {
                 "0",
                 "Project Test Name",
@@ -35,6 +38,7 @@ public class UpdateProject extends AdminControllerInit{
         TheDate newDate = new TheDate(11, 12, 2016);
         assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
                 && x.getStartingDate().equals(newDate) && x.getBudget() == 200.0).collect(Collectors.toList()).size() == 1;
+
     }
 
     @Test
@@ -55,8 +59,7 @@ public class UpdateProject extends AdminControllerInit{
             adminController.getUseCase(4).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The date is before the creation date.");
-            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
-            ).collect(Collectors.toList()).size() == 0;
+            assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description"));
         }
 
     }
@@ -80,8 +83,8 @@ public class UpdateProject extends AdminControllerInit{
             assert e.getMessage().equals("The budget cannot be negative.");
 
             TheDate newDate = new TheDate(11, 12, 2016);
-            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
-                    && x.getStartingDate().equals(newDate)).collect(Collectors.toList()).size() == 0;
+            assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
+                    && x.getStartingDate().equals(newDate));
         }
 
 
