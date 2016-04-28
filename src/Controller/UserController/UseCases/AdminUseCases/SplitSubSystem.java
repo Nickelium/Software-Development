@@ -77,12 +77,12 @@ public class SplitSubSystem extends UseCase {
         getUi().display("Description:");
         String description2 = getUi().readString();
         
-        SubSystem subsystem2 = getProjectService().createSubsystem(name1, description1, project);
+        SubSystem subsystem2 = getProjectService().createSubsystem(name2, description2, project);
 
         // Step 8 + 9
         for(SubSystem sub : subSystem.getSubSystems())
         {
-        	getUi().display("Please indicate to which subsystem this belongs to :");
+        	getUi().display("Please indicate to which subsystem this belongs to (1/2):");
         	getUi().display(sub.toString());
         	int index = getUi().readInt();
         	
@@ -101,7 +101,7 @@ public class SplitSubSystem extends UseCase {
         
         for(BugReport bug : subSystem.getBugReports())
         {
-        	getUi().display("Please indicate to which subsystem this belongs to :");
+        	getUi().display("Please indicate to which subsystem this belongs to (1/2):");
         	getUi().display(bug.toString());
         	int index = getUi().readInt();
         	
@@ -118,7 +118,10 @@ public class SplitSubSystem extends UseCase {
         }
         
         // Step 10
-        //Todo remove subsystem
+        getProjectService().setNewSubSystemMilestone(subsystem1, subSystem.getCurrentSubsystemMilestones());
+        getProjectService().setNewSubSystemMilestone(subsystem2, subSystem.getCurrentSubsystemMilestones());
+        
+        getProjectService().removeSubSystem(project, subSystem);
      
 
         getUi().display("The subsystem has been successfully splitted.\n");
@@ -127,6 +130,6 @@ public class SplitSubSystem extends UseCase {
     @Override
 	public String toString()
 	{
-		return "Create Subsystem";
+		return "Split Subsystem";
 	}
 }

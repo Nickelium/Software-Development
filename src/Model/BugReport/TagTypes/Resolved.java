@@ -14,15 +14,15 @@ import java.util.Arrays;
  */
 public class Resolved extends Tag {
 
-    private int selectedPatchIndex;
+    private Patch selectedPatch;
 
     /**
      * Default constructor for the Resolved tag.
-     * @param selectedPatchIndex The patch selected as best solution in the bugreport this tag is assigned to.
+     * @param patch The patch selected as best solution in the bugreport this tag is assigned to.
      */
-    public Resolved(int selectedPatchIndex) {
+    public Resolved(Patch patch) {
         setManuallyAcceptedTags(Arrays.asList(NotABug.class, Closed.class, Duplicate.class));
-        this.selectedPatchIndex = selectedPatchIndex;
+        setSelectedPatch(patch);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Resolved extends Tag {
     @Override
     protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
-        this.setSelectedPatch(bugReport, getSelectedPatchIndex());
+        this.setSelectedPatch(bugReport, getSelectedPatch());
     }
 
     @Override
@@ -75,8 +75,13 @@ public class Resolved extends Tag {
         return false;
     }
 
-    private int getSelectedPatchIndex() {
-        return selectedPatchIndex;
+    private Patch getSelectedPatch() {
+        return selectedPatch;
+    }
+
+    private void setSelectedPatch(Patch patch) {
+        if (patch == null) throw new IllegalArgumentException("Patch is null");
+        this.selectedPatch = patch;
     }
 }
 

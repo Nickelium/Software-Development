@@ -117,15 +117,15 @@ public abstract class Tag{
     /**
      * Method to let the subclasses have access to set the selected patch of the specified bug report.
      * @param bugReport The bug report of which to set the selected patch.
-     * @param indexPath The index of the selected patch in the list of all the patches of that bug report.
+     * @param patch The selected patch in the list of all the patches of that bug report.
      * @throws ReportErrorToUserException Something went wrong while selecting the patch with the given index.
      * @throws IllegalArgumentException BugReport is null.
      */
-    protected final void setSelectedPatch(BugReport bugReport, int indexPath) throws ReportErrorToUserException {
+    protected final void setSelectedPatch(BugReport bugReport, Patch patch) throws ReportErrorToUserException {
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
-        if (indexPath >= bugReport.getPatches().size())
-            throw new ReportErrorToUserException("Selected patch does not exist in selected bug report!");
-        bugReport.selectedPatch = bugReport.getPatches().get(indexPath);
+        if (!bugReport.getPatches().contains(patch))
+            throw new ReportErrorToUserException("Bugreport doesn't contain patch");
+        bugReport.selectedPatch = patch;
     }
 
     /**
