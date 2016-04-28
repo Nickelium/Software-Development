@@ -18,6 +18,9 @@ public class ForkProject  extends AdminControllerInit {
 
     @Test
     public void successfulForkedProject() throws Exception{
+
+        assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("ProjectA")).collect(Collectors.toList()).size() == 1;
+
         String[] simulatedUserInput = {
                 "0",
                 "1.1",
