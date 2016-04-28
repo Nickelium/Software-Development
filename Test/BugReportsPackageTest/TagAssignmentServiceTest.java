@@ -2,6 +2,7 @@ package BugReportsPackageTest;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.BugReport.Patch;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.Resolved;
@@ -66,8 +67,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
                 TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
 
         bugReportService.createTest("Test", dev3, bugreport);
-        bugReportService.createPatch("Patch", dev6, bugreport);
-        tagAssignmentService.assignTag(issuer1, bugreport, new Resolved(0));
+        Patch patch = bugReportService.createPatch("Patch", dev6, bugreport);
+        tagAssignmentService.assignTag(issuer1, bugreport, new Resolved(patch));
     }
 
     @Test(expected = ReportErrorToUserException.class)
@@ -97,8 +98,8 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
                 TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
 
         bugReportService.createTest("Test", dev3, bugreport);
-        bugReportService.createPatch("Patch", dev5, bugreport);
-        tagAssignmentService.assignTag(dev1, bugreport, new Resolved(0));
+        Patch patch = bugReportService.createPatch("Patch", dev5, bugreport);
+        tagAssignmentService.assignTag(dev1, bugreport, new Resolved(patch));
 
         tagAssignmentService.assignTag(dev1, bugreport, new Closed(1));
         assertEquals(Closed.class, bugreport.getTag().getClass());

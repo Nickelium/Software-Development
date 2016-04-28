@@ -77,8 +77,8 @@ public class BugReportInitializaton {
         bugReport2 = bugReportService.createBugReport("Bug2", "Des Bug2", issuer2, subSystem1A1, BugReport.PUBLIC, TheDate.TheDateNow(),
                 Collections.singletonList(dev2));
         bugReportService.createTest("Test", dev3, bugReport2);
-        bugReportService.createPatch("Patch", dev4, bugReport2);
-        tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(0));
+        Patch patch = bugReportService.createPatch("Patch", dev4, bugReport2);
+        tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(patch));
         tagAssignmentService.assignTag(issuer2, bugReport2, new Closed(1));
 
         bugReport3 = bugReportService.createBugReport("Bug3", "Des Bug3", issuer1, subSystem2, BugReport.PUBLIC, TheDate.TheDateNow(), Arrays.asList(dev1, dev2));

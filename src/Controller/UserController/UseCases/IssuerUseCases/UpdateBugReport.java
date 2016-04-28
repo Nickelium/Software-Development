@@ -3,10 +3,7 @@ package Controller.UserController.UseCases.IssuerUseCases;
 import Controller.Formatter;
 import Controller.IUI;
 import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.BugReport;
-import Model.BugReport.BugReportService;
-import Model.BugReport.Tag;
-import Model.BugReport.TagAssignmentService;
+import Model.BugReport.*;
 import Model.BugReport.TagTypes.*;
 import Model.Project.ProjectService;
 import Model.User.User;
@@ -105,7 +102,8 @@ public class UpdateBugReport extends IssuerUseCase {
         getUi().display("Please select a patch that satisfies you:");
         Formatter.formatPatches(bugReport);
         int index = getUi().readInt();
-        return new Resolved(index);
+        Patch patch = bugReport.getPatches().get(index);
+        return new Resolved(patch);
     }
 
     private UnderReview requestUnderReviewTagInfo(BugReport bugReport) throws ReportErrorToUserException {

@@ -1,10 +1,7 @@
 package Controller;
 
 import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.BugReport;
-import Model.BugReport.BugReportService;
-import Model.BugReport.DeveloperAssignmentService;
-import Model.BugReport.TagAssignmentService;
+import Model.BugReport.*;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.Resolved;
 import Model.Mail.MailboxService;
@@ -113,8 +110,8 @@ public class Initializer implements IInitializer {
             );
             bugReportService.setTargetMilestone(bugreport1, new TargetMilestone("M1.1"));
             bugReportService.createTest("bool test_invalid_args1(){...}", major, bugreport1);
-            bugReportService.createPatch("e3109fcc9...", major, bugreport1);
-            tagAssignmentService.assignTag(maria, bugreport1, new Resolved(0));
+            Patch patch = bugReportService.createPatch("e3109fcc9...", major, bugreport1);
+            tagAssignmentService.assignTag(maria, bugreport1, new Resolved(patch));
             tagAssignmentService.assignTag(doc, bugreport1, new Closed(1));
 
             projectService.setNewSubSystemMilestone(subSystemB1, new Milestone("M1.3"));
