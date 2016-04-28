@@ -144,6 +144,7 @@ public class Comment extends Subject implements Observer
      * Method for adding a comment to the list of comments.
      *
      * @param comment Comments to add to the list of comments.
+     * @throws IllegalArgumentException Comment is null.
      */
     void addComment(Comment comment) {
         if (comment == null) throw new IllegalArgumentException("Comment is null");
@@ -170,8 +171,9 @@ public class Comment extends Subject implements Observer
 
     /**
      * Method called to notify this observer
-     * 
-     * @param s The subject
+     *
+     * @param structure The subject structure
+     * @param subject The subject
      * @param aspect The aspect that has changed
      * 
      * @throws IllegalArgumentException The structure, comment or aspect is null.
