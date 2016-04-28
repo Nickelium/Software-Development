@@ -256,7 +256,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @param name the name to check.
      * @return True if the name is not empty.
      */
-    private boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         if (name == null) return false;
         if (name.equals("")) return false;
         else return true;
@@ -268,7 +268,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @param description The description is valid.
      * @return True if the description is not empty.
      */
-    private boolean isValidDescription(String description) {
+    public boolean isValidDescription(String description) {
         if (description == null) return false;
         if (description.equals("")) return false;
         else return true;
@@ -280,7 +280,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @param subSystem The subsystem to check.
      * @return True if the subsystem is not already a subsystem of this subsystem.
      */
-    private boolean isValidSubsystem(SubSystem subSystem) {
+    public boolean isValidSubsystem(SubSystem subSystem) {
         if (this == subSystem) return false;
         if (this.getAllSubSystems().contains(subSystem)) return false;
         else return true;
@@ -292,7 +292,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @param bugReport The bug report to check.
      * @return True if the bug report is not already a bug report of this subsystem or recursively.
      */
-    private boolean isValidBugReport(BugReport bugReport) {
+    public boolean isValidBugReport(BugReport bugReport) {
     	if(bugReport == null) return false;
         if (this.getAllBugReports().contains(bugReport)) return false;
         else return true;

@@ -73,9 +73,9 @@ public class NotificationTest
 	}
 	
 	@Test
-	public void getBugReport()
+	public void getSubject()
 	{
-		assertEquals(notif.getBugReport(),bugReportNew);
+		assertEquals(notif.getSubject(),bugReportNew);
 	}
 	
 	@Test

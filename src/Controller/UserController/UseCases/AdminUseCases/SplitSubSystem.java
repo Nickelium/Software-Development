@@ -66,16 +66,25 @@ public class SplitSubSystem extends UseCase {
         getUi().display("Please enter the subsystem 1 information.");
         getUi().display("Name:");
         String name1 = getUi().readString();
+        if(!subSystem.isValidName(name1)) throw new ReportErrorToUserException("The given name is invalid.");
+        
         getUi().display("Description:");
         String description1 = getUi().readString();
+        if(!subSystem.isValidDescription(description1)) throw new ReportErrorToUserException("The description is invalid.");
+
         
         SubSystem subsystem1 = getProjectService().createSubsystem(name1, description1, project);
         
         getUi().display("Please enter the subsystem 2 information.");
         getUi().display("Name:");
         String name2 = getUi().readString();
+        if(!subSystem.isValidName(name2)) throw new ReportErrorToUserException("The given name is invalid.");
+
+        
         getUi().display("Description:");
         String description2 = getUi().readString();
+        if(!subSystem.isValidDescription(description2)) throw new ReportErrorToUserException("The description is invalid.");
+
         
         SubSystem subsystem2 = getProjectService().createSubsystem(name2, description2, project);
 
