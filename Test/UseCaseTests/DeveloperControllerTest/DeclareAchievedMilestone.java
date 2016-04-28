@@ -9,6 +9,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by Karina on 14.04.2016.
  */
@@ -20,12 +23,13 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
                 "0",
                 "M1.4"
         };
-
         ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
         developerController.getUseCase(11).run();
+
+        assertTrue(projectService.getAllSubSystems().stream().anyMatch(x -> x.getName().equals("SubSystemB1") && x.getLatestAchievedMilestone().getMilestoneID().equals("M1.4")));
     }
 
     @Test
@@ -45,6 +49,8 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The new milestone is smaller than the current one");
         }
+
+        assertFalse(projectService.getAllSubSystems().stream().anyMatch(x -> x.getName().equals("SubSystemB1") && x.getLatestAchievedMilestone().getMilestoneID().equals("M1.0")));
     }
 
     @Test
@@ -64,21 +70,7 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The new milestone exceeds milestone of subsystem!");
         }
-    }
 
-    @Test
-    // TODO: this test can only be valid if the milestone of the subsystems is increased first.
-    public void entireProject_valid() throws ReportErrorToUserException {
-        String[] simulatedUserInput = {
-                "1",
-                "3",
-                "M1.2"
-        };
-
-        ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
-        IUI ui = new TestUI(input);
-
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(11).run();
+        assertFalse(projectService.getAllSubSystems().stream().anyMatch(x -> x.getName().equals("SubSystemB2") && x.getLatestAchievedMilestone().getMilestoneID().equals("M1.3")));
     }
 }
