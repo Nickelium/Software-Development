@@ -18,6 +18,9 @@ public class CreateSubSystem extends AdminControllerInit {
 
     @Test
     public void successfullyCreatedSubSystem_forProject() throws Exception{
+
+        assert projectService.getAllSubSystems().stream().noneMatch(x -> x.getName().equals("Sub System Name Test"));
+
         String[] simulatedUserInput = {
                 "P",
                 "0",
@@ -52,6 +55,9 @@ public class CreateSubSystem extends AdminControllerInit {
 
     @Test
     public void successfullyCreatedSubSystem_forSubSystem() throws Exception{
+
+        assert projectService.getAllSubSystems().stream().noneMatch(x -> x.getName().equals("Sub System Name Test"));
+
         String[] simulatedUserInput = {
                 "S",
                 "0",
@@ -63,6 +69,7 @@ public class CreateSubSystem extends AdminControllerInit {
 
         UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(6).run();
+
         assert projectService.getAllSubSystems().stream().filter(x -> x.getName().equals("Sub System Name Test")).collect(Collectors.toList()).size() == 1;
     }
 

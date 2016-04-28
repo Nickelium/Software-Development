@@ -18,6 +18,9 @@ public class CreateProject extends AdminControllerInit {
 
     @Test
     public void successfullyCreatedProject() throws Exception {
+
+        assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Project Test"));
+
         String[] simulatedUserInput = {
                 "Project Test",
                 "Project Test Discription",
@@ -53,7 +56,7 @@ public class CreateProject extends AdminControllerInit {
             adminController.getUseCase(2).run();
         } catch (ReportErrorToUserException e) {
             assert (e.getMessage().equals("The date is before the creation date."));
-            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test")).collect(Collectors.toList()).size() == 0;
+            assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Project Test"));
         }
     }
 
@@ -75,7 +78,7 @@ public class CreateProject extends AdminControllerInit {
             adminController.getUseCase(2).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The budget cannot be negative.");
-            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test")).collect(Collectors.toList()).size() == 0;
+            assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Project Test"));
         }
 
     }
@@ -98,7 +101,7 @@ public class CreateProject extends AdminControllerInit {
             adminController.getUseCase(2).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 5, Size: 2");
-            assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test")).collect(Collectors.toList()).size() == 0;
+            assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Project Test"));
         }
     }
 
