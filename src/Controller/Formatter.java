@@ -208,6 +208,14 @@ public class Formatter
             parsed += i + ": \n" + registrations.get(i).toString() + "\n";
         return parsed;
 	}
+
+	public static String formatPatches(BugReport bugReport) {
+		String parsed = "";
+		for (int i = 0; i < bugReport.getPatches().size(); i++) {
+			parsed += i + ": " + bugReport.getPatches().get(i) + "\n";
+		}
+		return parsed;
+	}
 	
 	private static String addTabulation(String str)
 	{

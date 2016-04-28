@@ -67,6 +67,15 @@ public class UpdateProject extends UseCase {
         getUi().display("Budget estimate (current value: " + project.getBudget() + "): ");
         double budget = getUi().readDouble();
 
+
+        // check dat alle waarden kloppen voordat je die set (dubble check, maar beter voor de ui)
+        if (!project.isValidName(name)) throw new ReportErrorToUserException("The given name is empty.");
+        if (!project.isValidDescription(description))
+            throw new ReportErrorToUserException("The given description is empty.");
+        if (!project.isValidStartingDate(startingDate))
+            throw new ReportErrorToUserException("The date is before the creation date.");
+        if (!project.isValidBudget(budget)) throw new ReportErrorToUserException("The budget cannot be negative.");
+
         // Step 6
         getProjectService().setProjectName(project, name);
         getProjectService().setProjectDescription(project, description);

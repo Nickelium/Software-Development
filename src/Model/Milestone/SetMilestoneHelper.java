@@ -21,8 +21,11 @@ public abstract class SetMilestoneHelper {
      * @return True if the given milestone does not exceed the milestones of the subsystems.
      *
      * @throws ReportErrorToUserException TODO
+     * @throws IllegalArgumentException Milestonecontainer or milestone is null.
      */
     public static boolean milestoneDoesNotExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+        if (cont == null) throw new IllegalArgumentException("MilestoneContainer is null");
+        if (ms == null) throw new IllegalArgumentException("Milestone is null");
         Milestone minimalSubsystemMS = new Milestone("M" + Integer.MAX_VALUE);
         List<Milestone> milestones = new ArrayList<>();
 
@@ -52,8 +55,12 @@ public abstract class SetMilestoneHelper {
      * @return True if the given milestone does exceed the milestones of the subsystems.
      *
      * //TODO wat is hier het nut van? is dit niet gewoon !milestoneDoesNotExceedSubsystemMilestone?
+     * @throws IllegalArgumentException MilestoneContainer or milestone is null.
      */
     public static boolean milestoneDoesExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+        if (cont == null) throw new IllegalArgumentException("MilestoneContainer is null");
+        if (ms == null) throw new IllegalArgumentException("Milestone is null");
+
         Milestone minimalSubsystemMS = new Milestone("M" + Integer.MAX_VALUE);
         List<Milestone> milestones = cont.getAllMilestones();
 
@@ -89,8 +96,13 @@ public abstract class SetMilestoneHelper {
      * @param cont The class containing the milestones.
      * @param ms   The new milestone.
      * @return True if the given milestone does not exceed the milestones of the bug reports.
+     *
+     * @throws IllegalArgumentException Milestonecontainer or milestone is null.
      */
     public static boolean milestoneDoesNotExceedBugReportMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+        if (cont == null) throw new IllegalArgumentException("MilestoneContainer is null");
+        if (ms == null) throw new IllegalArgumentException("Milestone is null");
+
         Milestone minimalTargetMS = new Milestone("M" + Integer.MAX_VALUE);
         List<BugReport> bugReports = cont.getAllBugReports().stream().filter(x -> !x.getTag().isFinal() && x.getTargetMilestone() != null).collect(Collectors.toList());
 

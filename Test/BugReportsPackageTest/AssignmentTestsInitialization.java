@@ -1,10 +1,7 @@
 package BugReportsPackageTest;
 
 import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.BugReport;
-import Model.BugReport.BugReportService;
-import Model.BugReport.DeveloperAssignmentService;
-import Model.BugReport.TagAssignmentService;
+import Model.BugReport.*;
 import Model.BugReport.TagTypes.Resolved;
 import Model.Project.Project;
 import Model.Project.ProjectService;
@@ -98,8 +95,8 @@ public class AssignmentTestsInitialization {
                 TheDate.TheDateNow(), Arrays.asList(dev4, dev5));
 
         bugReportService.createTest("Test", dev3, bugReport2);
-        bugReportService.createPatch("Patch", dev5, bugReport2);
-        tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(0));
+        Patch patch = bugReportService.createPatch("Patch", dev5, bugReport2);
+        tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(patch));
 
         bugReport3 = bugReportService.createBugReport("Bugreport3", "Des bugreport3", issuer1, subSystem4, BugReport.PUBLIC,
                 TheDate.TheDateNow(), Arrays.asList(dev4, dev6));

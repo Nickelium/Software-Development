@@ -112,8 +112,10 @@ public class BugReportService {
      * @param bugReport The bug report on which the issuer commented.
      * @return The newly created comment.
      * @throws ReportErrorToUserException One of the given arguments are illegal. See constructor of comment for rules.
+     * @throws IllegalArgumentException BugReport is null.
      */
     public Comment createComment(String text, Issuer issuer, BugReport bugReport) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         Comment comment = new Comment(text, issuer);
         bugReport.addComment(comment);
         return comment;
@@ -129,8 +131,10 @@ public class BugReportService {
      * @return The newly created comment.
      *
      * @throws ReportErrorToUserException One of the given arguments are illegal. See constructor of comment for rules.
+     * @throws IllegalArgumentException Comment is null.
      */
     public Comment createComment(String text, Issuer issuer, Comment comment) throws ReportErrorToUserException {
+        if (comment == null) throw new IllegalArgumentException("Comment is null");
         Comment newComment = new Comment(text, issuer);
         comment.addComment(newComment);
         return newComment;
@@ -147,8 +151,10 @@ public class BugReportService {
      *
      * @throws ReportErrorToUserException is thrown if the user has not the rights to add a new test
      *         to the bug report.
+     * @throws IllegalArgumentException BugReport is null.
      */
     public Test createTest(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("BugReport is null");
         if (!canAddTest(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a test");
         Test test = new Test(text);
         bugReport.addTest(test);
@@ -166,8 +172,10 @@ public class BugReportService {
      *
      * @throws ReportErrorToUserException is thrown if the user has not the rights to add a new patch
      *         to the bug report.
+     * @throws IllegalArgumentException BugReport is null.
      */
     public Patch createPatch(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         if (!canAddPatch(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a patch");
         Patch patch = new Patch(text);
         bugReport.addPatch(patch);
@@ -184,9 +192,11 @@ public class BugReportService {
      * @param user The user requesting all the bugreports.
      *
      * @return An unmodifiable list of all the BugReports visible to the user.
+     * @throws IllegalArgumentException User is null.
      */
     public List<BugReport> getAllBugReports(User user)
     {
+        if (user == null) throw new IllegalArgumentException("User is null");
         List<BugReport> bugReports = new ArrayList<>();
         for (Project project : getProjectService().getAllProjects()) {
             for (BugReport bugReport : project.getAllBugReports()) {
@@ -209,9 +219,12 @@ public class BugReportService {
      * @throws ReportErrorToUserException
      * 			thrown when no bug report is found.
      * 		    or bug report cannot be seen by user.
+     * @throws IllegalArgumentException User or bugreportId is null.
      */
     public BugReport getOneBugReport(BugReportID id, User user) throws ReportErrorToUserException
     {
+        if (id == null) throw new IllegalArgumentException("BugreportId is null");
+        if (user == null) throw new IllegalArgumentException("User is null");
         BugReport bugReport = getAllBugReportsWrapped().getOne(x -> x.getId().equals(id));
         if (!this.isVisibleByUser(user, bugReport))
             throw new ReportErrorToUserException("You are not allowed to see this bug report.");
@@ -225,7 +238,7 @@ public class BugReportService {
      * @param project The project for which to find the bugReports.
      *
      * @return An unmodifiable list of all the bug reports about the given project.
-     * @throw IllegalArgumentException project is null
+     * @throws IllegalArgumentException project is null
      */
     public List<BugReport> getBugReportsForProject(Project project)
     {
@@ -264,8 +277,11 @@ public class BugReportService {
      * @param milestone The milestone to set to the bug report.
      * @throws ReportErrorToUserException is thrown when the new target milestone
      *                                    is not greater than all the subsystems' milestones.
+     * @throws IllegalArgumentException Bugreport or milestone is null.
      */
     public void setTargetMilestone(BugReport bugReport, TargetMilestone milestone) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        if (milestone == null) throw new IllegalArgumentException("Milestone is null");
         if (!canUpdateTargetMilestone(bugReport, milestone))
             throw new ReportErrorToUserException("The milestone is not greater than all the subsystems milestones.");
         bugReport.setTargetMilestone(milestone);
@@ -277,8 +293,10 @@ public class BugReportService {
      * @param bugReport The bug report to set the procedure bug of
      * @param procedureBug The procedure bug that has to be set
      * @throws ReportErrorToUserException is thrown when the new procedure bug is invalid.
+     * @throws IllegalArgumentException BugReport is null.
      */
     public void setProcedureBug(BugReport bugReport, String procedureBug) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         bugReport.setProcedureBug(procedureBug);
     }
 
@@ -288,8 +306,10 @@ public class BugReportService {
      * @param bugReport The bug report to set the stack trace of
      * @param stackTrace The stack trace that has to be set
      * @throws ReportErrorToUserException is thrown when the new stack trace is invalid.
+     * @throws IllegalArgumentException BugReport is null.
      */
     public void setStackTrace(BugReport bugReport, String stackTrace) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         bugReport.setStackTrace(stackTrace);
     }
 
@@ -299,8 +319,10 @@ public class BugReportService {
      * @param bugReport The bug report to set the error message of
      * @param errorMessage The error message that has to be set
      * @throws ReportErrorToUserException is thrown when the new error message is invalid.
+     * @throws IllegalArgumentException BugReport is null.
      */
     public void setErrorMessage(BugReport bugReport, String errorMessage) throws ReportErrorToUserException {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         bugReport.setErrorMessage(errorMessage);
     }
 

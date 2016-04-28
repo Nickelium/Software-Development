@@ -25,7 +25,7 @@ public abstract class Role {
      * @param developer The developer assigned the role.
      */
     public Role(Developer developer){
-        this.developer = developer;
+        setDeveloper(developer);
         this.assignmentPermission = new ArrayList<>();
     }
 
@@ -45,6 +45,11 @@ public abstract class Role {
         return this.developer;
     }
 
+
+    private void setDeveloper(Developer developer) {
+        if (developer == null) throw new IllegalArgumentException("Developer is null");
+        this.developer = developer;
+    }
     /**
      * Getter to request the participation of the role.
      *

@@ -52,7 +52,7 @@ public class Assigned extends Tag {
     protected void changeTag(BugReport bugReport, Tag tag) throws ReportErrorToUserException {
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         if (tag == null) throw new IllegalArgumentException("Tag is null");
-        if (!bugReport.getDependencies().isEmpty())
+        if (bugReport.getDependencies().stream().anyMatch(x -> !x.getTag().getClass().equals(Resolved.class) || !x.getTag().getClass().equals(Closed.class)))
             throw new ReportErrorToUserException("The bug report has dependencies, until all are resolved, the tag cannot change.");
         super.changeTag(bugReport, tag);
     }
