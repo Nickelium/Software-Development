@@ -25,8 +25,10 @@ public class Test {
     /**
      * Method to set a new value for a specific test.
      * @param value the new value to be set
+     * @throws IllegalArgumentException Value is null.
      */
     private void setValue(String value) {
+        if (value == null) throw new IllegalArgumentException("Value is null");
         this.value = value;
     }
 
