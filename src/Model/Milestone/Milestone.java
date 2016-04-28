@@ -78,7 +78,7 @@ public class Milestone implements Comparable<Milestone> {
     }
 
     private int[] milestoneStringToArray(String milestoneID){
-
+        if (milestoneID == null) throw new IllegalArgumentException("milestoneId is null");
         String milestoneNumbers = milestoneID.substring(1);
         String[] stringArray = milestoneNumbers.split("\\.");
         int[] intArray = new int[stringArray.length];
@@ -103,7 +103,7 @@ public class Milestone implements Comparable<Milestone> {
      * @return true if the milestone ID is valid, false if not.
      */
     public boolean isValidMilestoneID(String milestoneID){
-
+        if (milestoneID == null) return false;
         // the milestone ID has to start with a capital letter M.
         if(!(Objects.equals(milestoneID.substring(0, 1), "M")))
             return false;
@@ -134,6 +134,7 @@ public class Milestone implements Comparable<Milestone> {
      * @return true if there is a digit between every couple of dots, false if not
      */
     private boolean hasDigitBetweenEveryCoupleDots(char[] chars){
+        if (chars == null) return false;
         for(int i=0; i<=chars.length-2; i++){
             if(chars[i] == '.' && chars[i+1] == '.'){
                 return false;
@@ -143,6 +144,8 @@ public class Milestone implements Comparable<Milestone> {
     }
 
     private int compareMilestones(Milestone m1, Milestone m2){
+        if (m1 == null) throw new IllegalArgumentException("Milestone 1 is null");
+        if (m2 == null) throw new IllegalArgumentException("Milestone 2 is null");
         int[] layeredMilestone1 = m1.getLayeredMilestone();
         int[] layeredMilestone2 = m2.getLayeredMilestone();
         int lengthL1 = layeredMilestone1.length;
