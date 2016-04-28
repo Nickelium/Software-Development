@@ -4,12 +4,16 @@ import Controller.IUI;
 import Controller.UserController.DeveloperController;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.SearchMethod.SearchOnTitle;
+import Model.BugReport.TagTypes.Assigned;
+import Model.BugReport.TagTypes.Resolved;
+import Model.BugReport.TagTypes.UnderReview;
 import Model.User.User;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Created by Tom on 11/03/16.
@@ -25,6 +29,9 @@ public class UpdateBugReport extends IssuerControllerInit {
     @Test
     public void successfullyUpdatedBugReport() throws Exception {
         setTagToUnderReview();
+
+        assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().contains("Crash") && x.getTag().equals(new Resolved(x.getPatches().get(0))));
+
         String[] simulatedUserInput = {
                 "0",
                 "Crash",
@@ -38,6 +45,8 @@ public class UpdateBugReport extends IssuerControllerInit {
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
         developerController.getUseCase(5).run();
+
+        assert bugReportService.getAllBugReports(currentUser).stream().filter(x -> x.getTitle().contains("Crash") && x.getTag() instanceof Resolved).collect(Collectors.toList()).size() == 1;
     }
 
     @Test
@@ -58,6 +67,7 @@ public class UpdateBugReport extends IssuerControllerInit {
             developerController.getUseCase(5).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("Cannot preform tag change! No valid permission.");
+            assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().contains("Crash") && x.getTag() instanceof Assigned);
         }
     }
 
@@ -78,6 +88,8 @@ public class UpdateBugReport extends IssuerControllerInit {
             developerController.getUseCase(5).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("Cannot preform tag change! No valid permission.");
+            assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().contains("Crash") && x.getTag() instanceof UnderReview);
         }
     }
+
 }

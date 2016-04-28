@@ -15,6 +15,9 @@ public class CreateBugReport extends IssuerControllerInit {
 
     @Test
     public void successfullyCreatedPublicBugReport() throws Exception {
+
+        assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().equals("Bug Report Test Title"));
+
         String[] simulatedUserInput = {
                 "0",
                 "0",
@@ -35,11 +38,16 @@ public class CreateBugReport extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(2).run();
+
+        assert bugReportService.getAllBugReports(currentUser).stream().anyMatch(x -> x.getTitle().equals("Bug Report Test Title"));
 
     }
 
     @Test
     public void successfullyCreatedPrivateBugReport() throws Exception {
+
+        assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().equals("Bug Report Test Title"));
+
         String[] simulatedUserInput = {
                 "0",
                 "0",
@@ -59,10 +67,14 @@ public class CreateBugReport extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(2).run();
+
+        assert bugReportService.getAllBugReports(currentUser).stream().anyMatch(x -> x.getTitle().equals("Bug Report Test Title"));
     }
 
     @Test
     public void successfullyCreatedPrivateBugReport_NoOptionalValues() throws Exception {
+        assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().equals("Bug Report Test Title"));
+
         String[] simulatedUserInput = {
                 "0",
                 "0",
@@ -80,6 +92,8 @@ public class CreateBugReport extends IssuerControllerInit {
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(2).run();
+
+        assert bugReportService.getAllBugReports(currentUser).stream().anyMatch(x -> x.getTitle().equals("Bug Report Test Title"));
     }
 
     @Test
