@@ -384,6 +384,7 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
     /**
      * Method to set the creation date of a bug report.
      * @param creationDate the new creation date that needs to be set
+     * @throws IllegalArgumentException Creation date is null.
      */
     private void setCreationDate(TheDate creationDate) {
         if (creationDate == null) throw new IllegalArgumentException("CreationDate is null");
@@ -393,6 +394,7 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
     /**
      * Method to set the creator of a bug report.
      * @param creator the new creator that needs to be set
+     * @throws IllegalArgumentException Issuer is null.
      */
     private void setCreator(Issuer creator) {
         if (creator == null) throw new IllegalArgumentException("The issuer is null");
@@ -402,6 +404,7 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
     /**
      * Method to set the assignees of a bug report.
      * @param initialAssignees the list of assignees that needs to be set
+     * @throws IllegalArgumentException Initial Assignees is null.
      */
     private void setAssignees(List<Developer> initialAssignees) {
         if (initialAssignees == null) throw new IllegalArgumentException("List cannot be null");
@@ -414,6 +417,7 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
      * @param tag The tag to which to set the bug report.
      *
      * @throws ReportErrorToUserException is thrown if the tag cannot be changed to the new tag.
+     * @throws IllegalArgumentException Tag is null.
      */
     void setTag(Tag tag) throws ReportErrorToUserException {
         if (tag == null) throw new IllegalArgumentException("Tag is null");
@@ -425,7 +429,7 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
      * Method to set a new target milestone of a bug report.
      *
      * @param targetMilestone the new target milestone of a bug report.
-     * 
+     *
      * @throws IllegalArgumentException the targetmilestone is null.
      */
     void setTargetMilestone(TargetMilestone targetMilestone){
@@ -436,9 +440,9 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
     /**
      * Method to set a new procedure bug.
      * Method requires the input string to be a valid procedure bug.
-     * 
+     *
      * @param procedureBug the procedure bug to be set.
-     * 
+     *
      * @throws ReportErrorToUserException is thrown if the procedure bug is invalid.
      */
     void setProcedureBug(String procedureBug) throws ReportErrorToUserException
@@ -635,7 +639,7 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
      * @param structure     The structure
      * @param subject The subject
      * @param aspect The aspect that has changed
-     * 
+     *
      * @throws IllegalArgumentException The structure, comment or aspect is null.
      */
     @Override
@@ -664,14 +668,14 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
      * to the values as recorded in the memento object.
      *
      * @param memento the memento object that contains the old values
-     * 
+     *
      * @throws IllegalArgumentException the memento is null
      */
     @Override
-    public void restoreMemento(BugReportMemento memento) 
+    public void restoreMemento(BugReportMemento memento)
     {
     	if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
-    	
+
         this.tag = memento.getTag();
         this.assignees = memento.getAssignees();
         this.comments = memento.getComments();
@@ -712,8 +716,8 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
     	 * Constructor 
     	 * 
     	 * @param originator The originator to build a memento from
-    	 * 
-    	 * @throws IllegalArgumentException the originator is null
+         *
+         * @throws IllegalArgumentException the originator is null
     	 */
     	public BugReportMemento(BugReport originator)
     	{
