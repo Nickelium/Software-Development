@@ -434,20 +434,25 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 		subSystem.addObserver(this);
 	}
 	
-	/**
-	 * Method to add a subsystem to the list of subsystems.
+    /**
+	 * Method to remove a subsystem 
      *
-	 * @param subSystem The subsystem to add.
+	 * @param subSystem The subsystem to remove.
      *
      * @throws IllegalArgumentException The given subsystem is null.
 	 */
-	public void removeSubSystem(SubSystem subSystem)
+	void removeSubSystem(SubSystem subSystem)
 	{
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
-		if(!subSystems.contains(subSystem)) throw new IllegalArgumentException("Subsystem does not belong to the subsystems");
-		
-		subSystems.remove(subSystem);
-		//TODO unbind observer
+		if(subSystems.contains(subSystem)) 
+		{
+			subSystems.remove(subSystem);
+			//unbind
+			subSystem.removeObserver(this);
+		}
+		else
+			for(SubSystem subSystemChild : subSystems)
+				subSystemChild.removeSubSystem(subSystem);
 	}
 
     /**
