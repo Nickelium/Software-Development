@@ -343,9 +343,13 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 	 * Method to set the latest achieved milestone
 	 *
 	 * @param latestAchievedMilestone the latest achieved milestone
+	 * 
+	 * @throws IllegalArgumentException latestAchievedMilestone is null
 	 */
 	private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+    	if(latestAchievedMilestone == null) throw new IllegalArgumentException("The milestone cannot be negative");
 		this.latestAchievedMilestone = latestAchievedMilestone;
+		notifyObservers(this, latestAchievedMilestone);
 	}
 
 	//endregion
@@ -489,6 +493,8 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 			
 		for(Role role : devsRoles)
 			forkedProject.devsRoles.add(role.copy());
+		
+		notifyObservers(this, forkedProject);
 		
 		return forkedProject;
 	}

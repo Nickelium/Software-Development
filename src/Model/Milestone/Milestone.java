@@ -201,4 +201,30 @@ public class Milestone implements Comparable<Milestone> {
     public int compareTo(Milestone o) {
         return compareMilestones(this, o);
     }
+    
+    /**
+     * Method to check if the given object equals this milestone
+     * 
+     * @param obj The object to compare
+     * 
+     * @return Return whether the object equals this milestone or not
+     * 
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+    	if(obj == null) return false;
+    	if(!(obj instanceof Milestone)) return false;
+    	
+    	try
+    	{
+    		Milestone milestone = (Milestone)obj;
+    		return compareTo(milestone) == 0;
+    	}
+    	catch(ClassCastException e)
+    	{
+    		return false;
+    	}
+    	
+    }
 }

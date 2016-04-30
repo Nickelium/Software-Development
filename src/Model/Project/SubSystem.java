@@ -242,8 +242,9 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @throws IllegalArgumentException latestAchievedMilestone is null
      */
     private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
-    	if(latestAchievedMilestone == null) throw new IllegalArgumentException("The mileston cannot be negative");
+    	if(latestAchievedMilestone == null) throw new IllegalArgumentException("The milestone cannot be negative");
         this.latestAchievedMilestone = latestAchievedMilestone;
+        notifyObservers(this, latestAchievedMilestone);
     }
 
     //endregion
