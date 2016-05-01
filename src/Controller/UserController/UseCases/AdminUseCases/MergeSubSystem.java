@@ -6,6 +6,7 @@ import Controller.UserController.UseCases.UseCase;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
+import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -64,120 +65,74 @@ public class MergeSubSystem extends UseCase {
         SubSystem subSystem = subSystemList.get(indexS);
         
         // Step 6
+        getUi().display("List of all compatible subsystems of the subsystem:");
+        List<SubSystem> related = getProjectService().getRelated(project, subSystem);
+        String parsedRelatedList = Formatter.formatSubSystemList(related);
+        getUi().display(parsedRelatedList);
         
+        // Step 7
+        int indexRelated = getUi().readInt();
+        SubSystem relatedSubSystem = related.get(indexRelated);
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // Step 6 + 7
-        getUi().display("Please enter the subsystem 1 information.");
-        getUi().display("Name:");
-        String name1 = getUi().readString();
-        if(!subSystem.isValidName(name1)) throw new ReportErrorToUserException("The given name is invalid.");
-        
-        getUi().display("Description:");
-        String description1 = getUi().readString();
-        if(!subSystem.isValidDescription(description1)) throw new ReportErrorToUserException("The description is invalid.");
-      
-        getUi().display("Please enter the subsystem 2 information.");
-        getUi().display("Name:");
-        String name2 = getUi().readString();
-        if(!subSystem.isValidName(name2)) throw new ReportErrorToUserException("The given name is invalid.");
-
-        
-        getUi().display("Description:");
-        String description2 = getUi().readString();
-        if(!subSystem.isValidDescription(description2)) throw new ReportErrorToUserException("The description is invalid.");
-
-       
         // Step 8 + 9
-        List<SubSystem> toAddSubSystem1 = new ArrayList<>();
-        List<SubSystem> toAddSubSystem2 = new ArrayList<>();
+        getUi().display("Please enter the new subsystem informations.");
+        getUi().display("Name:");
+        String name = getUi().readString();
+        if(!subSystem.isValidName(name)) throw new ReportErrorToUserException("The given name is invalid.");
         
-        for(SubSystem sub : subSystem.getSubSystems())
-        {
-        	getUi().display("Please indicate to which subsystem this belongs to (1/2):");
-        	getUi().display(sub.toString());
-        	int index = getUi().readInt();
-        	
-        	// Observers OK updates automatically in add
-        	switch(index)
-        	{
-	        	case 1:
-	        		toAddSubSystem1.add(sub);
-	        		break;
-	        	case 2 :
-	        		toAddSubSystem2.add(sub);
-	        		break;
-	        	default : 
-	        		throw new ReportErrorToUserException("This is an invalid input");
-        	}
-        }
-        
-        List<BugReport> toAddBugReport1 = new ArrayList<>();
-        List<BugReport> toAddBugReport2 = new ArrayList<>();
-        
-        for(BugReport bug : subSystem.getBugReports())
-        {
-        	getUi().display("Please indicate to which subsystem this belongs to (1/2):");
-        	getUi().display(bug.toString());
-        	int index = getUi().readInt();
-        	
-        	switch(index)
-        	{
-	        	case 1:
-	        		toAddBugReport1.add(bug);
-	        		break;
-	        	case 2 :
-	        		toAddBugReport2.add(bug);
-	        		break;
-	        	default : 
-	        		throw new ReportErrorToUserException("This is an invalid input");
-        	}
-        }
-        
+        getUi().display("Description:");
+        String description = getUi().readString();
+        if(!subSystem.isValidDescription(description)) throw new ReportErrorToUserException("The description is invalid.");
+      
         // Step 10
-        // Finalize + Creation
-        
-        
-        SubSystem parent = getProjectService().getParent(subSystem);
-        SubSystem subSystem1, subSystem2;
-        if(parent != null)
+        if(relatedSubSystem.isParent(subSystem))
         {
-        
-        	subSystem1 = getProjectService().createSubsystem(name1, description1, parent);
-        	subSystem2 = getProjectService().createSubsystem(name2, description2, parent);
+        	//related
+        	List<SubSystem> subSystemSubs = subSystem.getSubSystems();
+        	List<BugReport> subSystemBugs = subSystem.getBugReports();
+        	Milestone subSystemMilestone = subSystem.getLatestAchievedMilestone();
+        	getProjectService().removeSubSystem(project, subSystem);
+        	
+        	getProjectService().setSubSystemName(relatedSubSystem, name);
+        	getProjectService().setSubSystemDescription(relatedSubSystem, description);
+        	
+        	for(SubSystem sub : subSystemSubs)
+        		relatedSubSystem.addSubSystem(sub);
+        	for(BugReport bug : subSystemBugs)
+        		relatedSubSystem.addBugReport(bug);
+        	
+        	// Latestachieved or all milestones ?
+        	Milestone lowerMilestone = 
+        			subSystem.getLatestAchievedMilestone().compareTo(subSystemMilestone)
+        			 < 0 ? subSystem.getLatestAchievedMilestone() : subSystemMilestone;
+        	getProjectService().setNewSubSystemMilestone(relatedSubSystem, lowerMilestone);
         }
         else
         {
-        	subSystem1 = getProjectService().createSubsystem(name1, description1, project);
-        	subSystem2 = getProjectService().createSubsystem(name2, description2, project);
+        	//subsystem
+        	List<SubSystem> relatedSubs = relatedSubSystem.getSubSystems();
+        	List<BugReport> relatedBugs = relatedSubSystem.getBugReports();
+        	Milestone relatedMilestone = relatedSubSystem.getLatestAchievedMilestone();
+        	getProjectService().removeSubSystem(project, relatedSubSystem);
+        	
+        	getProjectService().setSubSystemName(subSystem, name);
+        	getProjectService().setSubSystemDescription(subSystem, description);
+        	
+        	for(SubSystem sub : relatedSubs)
+        		subSystem.addSubSystem(sub);
+        	for(BugReport bug : relatedBugs)
+        		subSystem.addBugReport(bug);
+        	
+        	// Latestachieved or all milestones ?
+        	Milestone lowerMilestone = 
+        			subSystem.getLatestAchievedMilestone().compareTo(relatedMilestone)
+        			 < 0 ? subSystem.getLatestAchievedMilestone() :relatedMilestone;
+        	getProjectService().setNewSubSystemMilestone(subSystem, lowerMilestone);
+        	
         }
         
-        for(SubSystem sub : toAddSubSystem1)
-        	subSystem1.addSubSystem(sub);
-        for(BugReport bug : toAddBugReport1)
-        	subSystem1.addBugReport(bug);
+        getUi().display("Merge completed !");
         
-        for(SubSystem sub : toAddSubSystem2)
-        	subSystem2.addSubSystem(sub);
-        for(BugReport bug : toAddBugReport2)
-        	subSystem2.addBugReport(bug);
-        
-        getProjectService().setNewSubSystemMilestone(subSystem1, subSystem.getCurrentSubsystemMilestones());
-        getProjectService().setNewSubSystemMilestone(subSystem2, subSystem.getCurrentSubsystemMilestones());
-        
-        getProjectService().removeSubSystem(project, subSystem);
-     
-        getUi().display("The subsystem has been successfully splitted.\n");
     }
     
     @Override

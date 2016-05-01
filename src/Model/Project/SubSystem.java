@@ -223,8 +223,8 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */
     void setNewSubSystemMilestone(Milestone newSubsystemMilestone) throws ReportErrorToUserException {
-        if (!SetMilestoneHelper.mileStoneIsBiggerThanCurrent(this, newSubsystemMilestone))
-            throw new ReportErrorToUserException("The new milestone is smaller than the current one");
+       // if (!SetMilestoneHelper.mileStoneIsBiggerThanCurrent(this, newSubsystemMilestone))
+        //    throw new ReportErrorToUserException("The new milestone is smaller than the current one");
         if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newSubsystemMilestone))
             throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
         if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newSubsystemMilestone))
@@ -315,6 +315,18 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
         if (!isValidSubsystem(subSystem)) throw new ReportErrorToUserException("The subsystem cannot be added!");
         subSystems.add(subSystem);
         subSystem.addObserver(this);
+    }
+    
+    /**
+     * 
+     * @param subsystem
+     * @return
+     */
+    public boolean isParent(SubSystem subsystem)
+    {
+    	if(subsystem == null) return false;
+    	if(getSubSystems().contains(subsystem)) return true;
+    	return false;
     }
     
     /**
@@ -443,6 +455,9 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 	{
 		if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
 		
+		this.name = memento.getName();
+		this.description = memento.getDescription();
+		
 		this.subSystems = memento.getSubSystems();
 		
 		for(SubSystemMemento subsystemMemento : memento.getSubSystemMementos())
@@ -475,6 +490,8 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
     */
 	public class SubSystemMemento extends Memento<SubSystem>
 	{
+		private String name;
+		private String description;
 		private List<SubSystem> subsystems;
 		private List<SubSystemMemento> subsystemMementos = new ArrayList<>();
 		
@@ -494,6 +511,8 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 		public SubSystemMemento(SubSystem originator)
 		{
 			super(originator);
+			this.name = originator.getName();
+			this.description = originator.getDescription();
 			this.subsystems =  new ArrayList<>(originator.getSubSystems());
 			for(SubSystem subsystem : subsystems)
 				subsystemMementos.add(subsystem.createMemento());
@@ -505,6 +524,16 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 			this.latestAchievedMilestone = originator.getLatestAchievedMilestone();
 			this.milestones =  new ArrayList<>(originator.milestones);
 			
+		}
+		
+		private String getName()
+		{
+			return name;
+		}
+		
+		private String getDescription()
+		{
+			return description;
 		}
 		
 		private List<SubSystem> getSubSystems()

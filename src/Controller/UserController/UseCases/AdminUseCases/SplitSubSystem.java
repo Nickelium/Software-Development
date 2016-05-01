@@ -134,11 +134,10 @@ public class SplitSubSystem extends UseCase {
         // Finalize + Creation
         
         
-        SubSystem parent = getProjectService().getParent(subSystem);
+        SubSystem parent = getProjectService().getParentSubSystem(subSystem);
         SubSystem subSystem1, subSystem2;
         if(parent != null)
         {
-        
         	subSystem1 = getProjectService().createSubsystem(name1, description1, parent);
         	subSystem2 = getProjectService().createSubsystem(name2, description2, parent);
         }
