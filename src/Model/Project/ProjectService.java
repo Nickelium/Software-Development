@@ -454,6 +454,16 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         }
         throw new ReportErrorToUserException("Ther is no subsystem that contains the given bug report.");}
 
+    
+    //TODO getparent method
+    public SubSystem getParent(SubSystem subsystem)
+    {
+    	for(SubSystem sub : getAllSubSystems())
+    		if(sub.getSubSystems().contains(subsystem)) return sub;
+    	return null;
+    }
+    
+    
     /**
      * Method to create a memento of this object
      * 

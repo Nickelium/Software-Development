@@ -12,6 +12,7 @@ import Model.Project.SubSystem;
 import Model.User.User;
 import Model.User.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,10 +72,7 @@ public class SplitSubSystem extends UseCase {
         getUi().display("Description:");
         String description1 = getUi().readString();
         if(!subSystem.isValidDescription(description1)) throw new ReportErrorToUserException("The description is invalid.");
-
-        
-        SubSystem subsystem1 = getProjectService().createSubsystem(name1, description1, project);
-        
+      
         getUi().display("Please enter the subsystem 2 information.");
         getUi().display("Name:");
         String name2 = getUi().readString();
@@ -85,10 +83,11 @@ public class SplitSubSystem extends UseCase {
         String description2 = getUi().readString();
         if(!subSystem.isValidDescription(description2)) throw new ReportErrorToUserException("The description is invalid.");
 
-        
-        SubSystem subsystem2 = getProjectService().createSubsystem(name2, description2, project);
-
+       
         // Step 8 + 9
+        List<SubSystem> toAddSubSystem1 = new ArrayList<>();
+        List<SubSystem> toAddSubSystem2 = new ArrayList<>();
+        
         for(SubSystem sub : subSystem.getSubSystems())
         {
         	getUi().display("Please indicate to which subsystem this belongs to (1/2):");
@@ -99,14 +98,18 @@ public class SplitSubSystem extends UseCase {
         	switch(index)
         	{
 	        	case 1:
-	        		subsystem1.addSubSystem(sub);
+	        		toAddSubSystem1.add(sub);
 	        		break;
 	        	case 2 :
-	        		subsystem2.addSubSystem(sub);
+	        		toAddSubSystem2.add(sub);
 	        		break;
-	        		default : throw new ReportErrorToUserException("This is an invalid input");
+	        	default : 
+	        		throw new ReportErrorToUserException("This is an invalid input");
         	}
         }
+        
+        List<BugReport> toAddBugReport1 = new ArrayList<>();
+        List<BugReport> toAddBugReport2 = new ArrayList<>();
         
         for(BugReport bug : subSystem.getBugReports())
         {
@@ -117,22 +120,49 @@ public class SplitSubSystem extends UseCase {
         	switch(index)
         	{
 	        	case 1:
-	        		subsystem1.addBugReport(bug);
+	        		toAddBugReport1.add(bug);
 	        		break;
 	        	case 2 :
-	        		subsystem2.addBugReport(bug);
+	        		toAddBugReport2.add(bug);
 	        		break;
-	        		default : throw new ReportErrorToUserException("This is an invalid input");
+	        	default : 
+	        		throw new ReportErrorToUserException("This is an invalid input");
         	}
         }
         
         // Step 10
-        getProjectService().setNewSubSystemMilestone(subsystem1, subSystem.getCurrentSubsystemMilestones());
-        getProjectService().setNewSubSystemMilestone(subsystem2, subSystem.getCurrentSubsystemMilestones());
+        // Finalize + Creation
+        
+        
+        SubSystem parent = getProjectService().getParent(subSystem);
+        SubSystem subSystem1, subSystem2;
+        if(parent != null)
+        {
+        
+        	subSystem1 = getProjectService().createSubsystem(name1, description1, parent);
+        	subSystem2 = getProjectService().createSubsystem(name2, description2, parent);
+        }
+        else
+        {
+        	subSystem1 = getProjectService().createSubsystem(name1, description1, project);
+        	subSystem2 = getProjectService().createSubsystem(name2, description2, project);
+        }
+        
+        for(SubSystem sub : toAddSubSystem1)
+        	subSystem1.addSubSystem(sub);
+        for(BugReport bug : toAddBugReport1)
+        	subSystem1.addBugReport(bug);
+        
+        for(SubSystem sub : toAddSubSystem2)
+        	subSystem2.addSubSystem(sub);
+        for(BugReport bug : toAddBugReport2)
+        	subSystem2.addBugReport(bug);
+        
+        getProjectService().setNewSubSystemMilestone(subSystem1, subSystem.getCurrentSubsystemMilestones());
+        getProjectService().setNewSubSystemMilestone(subSystem2, subSystem.getCurrentSubsystemMilestones());
         
         getProjectService().removeSubSystem(project, subSystem);
      
-
         getUi().display("The subsystem has been successfully splitted.\n");
     }
     

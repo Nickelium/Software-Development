@@ -503,7 +503,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 				bugreportMementos.add(bugReport.createMemento());
 			
 			this.latestAchievedMilestone = originator.getLatestAchievedMilestone();
-			this.milestones =  new ArrayList<>(originator.getAllMilestones());
+			this.milestones =  new ArrayList<>(originator.milestones);
 			
 		}
 		
