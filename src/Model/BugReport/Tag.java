@@ -173,6 +173,8 @@ public abstract class Tag{
 
     //region Functions
 
+    protected abstract int getBugImpact(BugReport bugReport);
+
     public abstract boolean isFinal();
 
     public abstract String toString();
