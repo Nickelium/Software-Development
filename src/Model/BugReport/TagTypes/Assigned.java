@@ -13,8 +13,6 @@ import java.util.Arrays;
  */
 public class Assigned extends Tag {
 
-    private final int MULTIPLIER = 2;
-
     /**
      * Default constructor for an Assigned tag.
      */
@@ -75,9 +73,8 @@ public class Assigned extends Tag {
 
     //TODO: Documentation
     @Override
-    protected int getBugImpact(BugReport bugReport) {
-        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
-        return (MULTIPLIER * bugReport.getImpactFactor());
+    protected double getMultiplier() {
+        return 2;
     }
 
     @Override

@@ -63,6 +63,12 @@ public class New extends Tag {
         throw new ReportErrorToUserException("No tests can be submitted because the bug report doesn't have the proper tag.");
     }
 
+    //TODO: Documentation
+    @Override
+    protected double getMultiplier() {
+        return 3;
+    }
+
     @Override
     public String toString() {
         return "New";

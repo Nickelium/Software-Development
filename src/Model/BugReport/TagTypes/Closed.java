@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * The 'Closed' tag denotes that a bug report has been closed.
  */
 public class Closed extends Tag {
+
     private int score;
 
     /**
@@ -63,6 +64,12 @@ public class Closed extends Tag {
     protected void updateTagSpecificFields(BugReport bugReport) throws ReportErrorToUserException {
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         this.setSolutionScore(bugReport, this.score);
+    }
+
+    //TODO: Documentation
+    @Override
+    protected double getMultiplier() {
+        return 0;
     }
 
     @Override

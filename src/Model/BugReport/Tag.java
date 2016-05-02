@@ -173,7 +173,13 @@ public abstract class Tag{
 
     //region Functions
 
-    protected abstract int getBugImpact(BugReport bugReport);
+    protected double getBugImpact(BugReport bugReport) {
+        if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+        return (this.getMultiplier() * bugReport.getImpactFactor());
+    }
+
+    protected abstract double getMultiplier();
+
 
     public abstract boolean isFinal();
 
