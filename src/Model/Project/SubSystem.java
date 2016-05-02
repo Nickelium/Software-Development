@@ -156,6 +156,11 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
         return Collections.unmodifiableList(bugReports);
     }
 
+    /**
+     * Method to get the height of this node
+     * 
+     * @return The height of this subsystem
+     */
     public int getHeight()
     {
     	int max = 0;
@@ -327,9 +332,11 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
     }
     
     /**
+     * Method to check if the given subsystem is a direct child of this subsystem
      * 
-     * @param subsystem
-     * @return
+     * @param subsystem The subsystem to check
+     * 
+     * @return Return whether the given subsystem is a direct child of this object or not
      */
     public boolean isParent(SubSystem subsystem)
     {

@@ -28,12 +28,22 @@ public class MergeSubSystem extends UseCase {
 
     /**
      *
-     * Lets an administrator create a subsystem.
+     * Lets an administrator merge subsystems.
      *
-     * 2. The system shows a list of all projects.
-     * 3. The user selects a project.
-     * 4. The system shows a detailed overview of the selected project and all
-     * its subsystems.
+	 * 2. The system shows a list of projects.
+	 * 3. The administrator selects a project.
+	 * 4. The system shows a list of subsystems of the selected project.
+	 * 5. The administrator selects a first subsystem.
+	 * 6. The system shows a list of subsystems compatible with the first one.
+	 *	 	A compatible subsystem is a child, a parent or a sibling of the first
+	 * 		selected subsystem in the tree of subsystems of the selected project.
+	 * 7. The administrator selects a second subsystem.
+	 * 8. The system asks for a name and description for the new subsystem.
+	 * 9. The administrator enters a name and description.
+	 * 10. The system creates a new subsystem with the lowest milestone of the
+	 * 		two original subsystems. The bug reports and subsystems that are part
+	 *		of the original two subsystems are migrated to the new subsystem. The
+	 * 		two original subsystems are removed.
      *
      * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input
@@ -88,82 +98,35 @@ public class MergeSubSystem extends UseCase {
         SubSystem reference = subSystem.getHeight() > relatedSubSystem.getHeight() ? subSystem : relatedSubSystem;
         SubSystem parentReferenceSubSystem = getProjectService().getParentSubSystem(reference);
         
+        
+        SubSystem newSubSystem;
         if(parentReferenceSubSystem != null)
-        {
-        	getProjectService().createSubsystem(name, description, parentReferenceSubSystem);
-        	//for(SubSystem sub : subSystemSubs)
-        	//	relatedSubSystem.addSubSystem(sub);
-        	//for(BugReport bug : subSystemBugs)
-        	//	relatedSubSystem.addBugReport(bug);
-        }
+        	newSubSystem = getProjectService().createSubsystem(name, description, parentReferenceSubSystem);
         else
-        {
-        	getProjectService().createSubsystem(name, description, project);
-
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // Step 10
-        if(relatedSubSystem.isParent(subSystem))
-        {
-        	//related
-        	List<SubSystem> subSystemSubs = subSystem.getSubSystems();
-        	List<BugReport> subSystemBugs = subSystem.getBugReports();
-        	Milestone subSystemMilestone = subSystem.getLatestAchievedMilestone();
-        	getProjectService().removeSubSystem(project, subSystem);
+        	newSubSystem = getProjectService().createSubsystem(name, description, project);
         	
-        	getProjectService().setSubSystemName(relatedSubSystem, name);
-        	getProjectService().setSubSystemDescription(relatedSubSystem, description);
-        	
-        	for(SubSystem sub : subSystemSubs)
-        		relatedSubSystem.addSubSystem(sub);
-        	for(BugReport bug : subSystemBugs)
-        		relatedSubSystem.addBugReport(bug);
-        	
-        	// Latestachieved or all milestones ?
-        	Milestone lowerMilestone = 
-        			subSystem.getLatestAchievedMilestone().compareTo(subSystemMilestone)
-        			 < 0 ? subSystem.getLatestAchievedMilestone() : subSystemMilestone;
-        	getProjectService().setNewSubSystemMilestone(relatedSubSystem, lowerMilestone);
-        }
-        else
-        {
-        	//subsystem
-        	List<SubSystem> relatedSubs = relatedSubSystem.getSubSystems();
-        	List<BugReport> relatedBugs = relatedSubSystem.getBugReports();
-        	Milestone relatedMilestone = relatedSubSystem.getLatestAchievedMilestone();
-        	getProjectService().removeSubSystem(project, relatedSubSystem);
-        	
-        	getProjectService().setSubSystemName(subSystem, name);
-        	getProjectService().setSubSystemDescription(subSystem, description);
-        	
-        	for(SubSystem sub : relatedSubs)
-        		subSystem.addSubSystem(sub);
-        	for(BugReport bug : relatedBugs)
-        		subSystem.addBugReport(bug);
-        	
-        	// Latestachieved or all milestones ?
-        	Milestone lowerMilestone = 
-        			subSystem.getLatestAchievedMilestone().compareTo(relatedMilestone)
-        			 < 0 ? subSystem.getLatestAchievedMilestone() :relatedMilestone;
-        	getProjectService().setNewSubSystemMilestone(subSystem, lowerMilestone);
-        	
-        }
+	    for(SubSystem sub : subSystem.getSubSystems())
+	    	if(!subSystem.equals(sub) && !relatedSubSystem.equals(sub))
+	    		newSubSystem.addSubSystem(sub);
+	    for(SubSystem sub : relatedSubSystem.getSubSystems())
+	    	if(!subSystem.equals(sub) && !relatedSubSystem.equals(sub))
+	    		newSubSystem.addSubSystem(sub);
+	   	
+	    for(BugReport bug : subSystem.getBugReports())
+	    	newSubSystem.addBugReport(bug);
+	    for(BugReport bug : relatedSubSystem.getBugReports())
+	    	newSubSystem.addBugReport(bug);
         
-        getUi().display("Merge completed !");
+	    // Latestachieved or all milestones ?
+    	Milestone lowerMilestone = 
+    			subSystem.getLatestAchievedMilestone().compareTo(relatedSubSystem.getLatestAchievedMilestone())
+    			 < 0 ? subSystem.getLatestAchievedMilestone() : relatedSubSystem.getLatestAchievedMilestone();
+    	getProjectService().setNewSubSystemMilestone(newSubSystem, lowerMilestone);
+        
+    	getProjectService().removeSubSystem(project, subSystem);
+    	getProjectService().removeSubSystem(project, relatedSubSystem);
+    	
+        getUi().display("Merge completed !\n");
         
     }
     

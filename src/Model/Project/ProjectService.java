@@ -97,22 +97,6 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     }
     
     /**
-     * Method for removing a project from the list of projects.
-     *
-     * @param project The project to remove.
-     * 
-     * @throws IllegalArgumentException the project is null
-     */
-    public void deleteSubSystem(Project project, SubSystem subSystem)
-    {
-    	if(project == null) throw new IllegalArgumentException("The project cannot be null");
-    	if(subSystem == null) throw new IllegalArgumentException("The subsystem cannot be null");
-    	
-    	if(!project.getSubSystems().contains(subSystem)) throw new IllegalArgumentException("The subsystem does not belong to the project");
-        project.removeSubSystem(subSystem);
-    }
-
-    /**
      * Method for requesting all the projects with the given developer as lead.
      *
      * @param developer The developer of which to get de project he/she leads.
@@ -306,7 +290,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Remove a subsystem from a project recursively
      * 
-     * @param project The project to remove a subsystem from
+     * @param project The project of origin
      * @param subSystem The subsystem to remove
      * 
      * @throws IllegalArgumentException project or subsystem is null
@@ -472,7 +456,13 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         throw new ReportErrorToUserException("Ther is no subsystem that contains the given bug report.");}
 
     
-    //TODO getparent method
+    /**
+     * Method to get the subsystem parent of a given subsystem
+     * 
+     * @param subsystem The subsystem to find its parent
+     * 
+     * @return The subsystem parent
+     */
     public SubSystem getParentSubSystem(SubSystem subsystem)
     {
     	for(SubSystem sub : getAllSubSystems())
@@ -480,6 +470,14 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	return null;
     }
     
+    /**
+     * Method to get all related subsystem of the given subsystem
+     * 
+     * @param origin The project of origin
+     * @param subsystem	The subsystem to get its related
+     * 
+     * @return The list of related subsystems
+     */
     public List<SubSystem> getRelated(Project origin, SubSystem subsystem)
     {
     	List<SubSystem> related = new ArrayList<>();
