@@ -227,7 +227,16 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 
 		return developers;
 	}
-
+	
+	public int getHeight()
+	{
+		int max = 0;
+		for(SubSystem sub : subSystems)
+			if(max < sub.getHeight()) 
+				max = sub.getHeight();
+		return max + 1;
+	}
+	
 	//endregion
 
 	//region Setters

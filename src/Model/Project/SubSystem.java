@@ -156,6 +156,15 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
         return Collections.unmodifiableList(bugReports);
     }
 
+    public int getHeight()
+    {
+    	int max = 0;
+		for(SubSystem sub : subSystems)
+			if(max < sub.getHeight()) 
+				max = sub.getHeight();
+		return max + 1;
+    }
+    
     //endregion
 
     //region Setters
@@ -223,8 +232,8 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
      */
     void setNewSubSystemMilestone(Milestone newSubsystemMilestone) throws ReportErrorToUserException {
-       // if (!SetMilestoneHelper.mileStoneIsBiggerThanCurrent(this, newSubsystemMilestone))
-        //    throw new ReportErrorToUserException("The new milestone is smaller than the current one");
+        if (!SetMilestoneHelper.mileStoneIsBiggerThanCurrent(this, newSubsystemMilestone))
+            throw new ReportErrorToUserException("The new milestone is smaller than the current one");
         if (!SetMilestoneHelper.milestoneDoesNotExceedSubsystemMilestone(this, newSubsystemMilestone))
             throw new ReportErrorToUserException("The new milestone exceeds milestone of subsystem!");
         if (!SetMilestoneHelper.milestoneDoesNotExceedBugReportMilestone(this, newSubsystemMilestone))

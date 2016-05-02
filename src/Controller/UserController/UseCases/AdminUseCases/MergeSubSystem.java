@@ -85,6 +85,38 @@ public class MergeSubSystem extends UseCase {
         if(!subSystem.isValidDescription(description)) throw new ReportErrorToUserException("The description is invalid.");
       
         // Step 10
+        SubSystem reference = subSystem.getHeight() > relatedSubSystem.getHeight() ? subSystem : relatedSubSystem;
+        SubSystem parentReferenceSubSystem = getProjectService().getParentSubSystem(reference);
+        
+        if(parentReferenceSubSystem != null)
+        {
+        	getProjectService().createSubsystem(name, description, parentReferenceSubSystem);
+        	//for(SubSystem sub : subSystemSubs)
+        	//	relatedSubSystem.addSubSystem(sub);
+        	//for(BugReport bug : subSystemBugs)
+        	//	relatedSubSystem.addBugReport(bug);
+        }
+        else
+        {
+        	getProjectService().createSubsystem(name, description, project);
+
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // Step 10
         if(relatedSubSystem.isParent(subSystem))
         {
         	//related
