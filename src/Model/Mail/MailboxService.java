@@ -6,6 +6,7 @@ import java.util.List;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.*;
+import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.SubSystem;
 
@@ -60,9 +61,14 @@ public class MailboxService
 		
 		List<Notification> listFiltered = new ArrayList<>();
 		for(Notification not : listSubbed)
+		{
 			if(not.getSubject() instanceof BugReport)
-				if(bugReportService.isVisibleByUser(user, (BugReport)not.getSubject()))
+			{	if(bugReportService.isVisibleByUser(user, (BugReport)not.getSubject()))
 					listFiltered.add(not);
+			}
+			else
+				listFiltered.add(not);
+		}
 		return Collections.unmodifiableList(listFiltered);
 
 	}
@@ -142,6 +148,52 @@ public class MailboxService
 		if(user == null) throw new IllegalArgumentException("User cannot be null");
 		if(s == null) throw new IllegalArgumentException("Subject cannot be null");
 		user.getMailbox().registerComment(s);
+	}
+	
+	/**
+	 * Method to register for a comment creation in the given subject
+	 * 
+	 * @param user The user that wants to register
+	 * @param s The subject to observe
+	 * 
+	 * @throws IllegalArgumentException the user or subject is null
+	 */
+	public void registerMilestone(User user, Subject s)
+	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(s == null) throw new IllegalArgumentException("Subject cannot be null");
+		user.getMailbox().registerMilestone(s);
+	}
+	
+	/**
+	 * Method to register for a comment creation in the given subject
+	 * 
+	 * @param user The user that wants to register
+	 * @param s The subject to observe
+	 * 
+	 * @throws IllegalArgumentException the user or subject or milestone is null
+	 */
+	public void registerSpecificMilestone(User user, Subject s, Milestone milestone)
+	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(s == null) throw new IllegalArgumentException("Subject cannot be null");
+		if(milestone == null)throw new IllegalArgumentException("Milestone cannot be null");
+		user.getMailbox().registerSpecificMilestone(s, milestone);
+	}
+	
+	/**
+	 * Method to register for a comment creation in the given subject
+	 * 
+	 * @param user The user that wants to register
+	 * @param s The subject to observe
+	 * 
+	 * @throws IllegalArgumentException the user or subject or milestone is null
+	 */
+	public void registerFork(User user, Subject s)
+	{
+		if(user == null) throw new IllegalArgumentException("User cannot be null");
+		if(s == null) throw new IllegalArgumentException("Subject cannot be null");
+		user.getMailbox().registerFork(s);
 	}
 	
 	/**

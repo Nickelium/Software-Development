@@ -228,6 +228,20 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 		return developers;
 	}
 
+	 /**
+     * Method to get the height of this node
+     * 
+     * @return The height of this subsystem
+     */
+	public int getHeight()
+	{
+		int max = 0;
+		for(SubSystem sub : subSystems)
+			if(max < sub.getHeight()) 
+				max = sub.getHeight();
+		return max + 1;
+	}
+	
 	//endregion
 
 	//region Setters
@@ -343,9 +357,13 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 	 * Method to set the latest achieved milestone
 	 *
 	 * @param latestAchievedMilestone the latest achieved milestone
+	 * 
+	 * @throws IllegalArgumentException latestAchievedMilestone is null
 	 */
 	private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
+    	if(latestAchievedMilestone == null) throw new IllegalArgumentException("The milestone cannot be negative");
 		this.latestAchievedMilestone = latestAchievedMilestone;
+		notifyObservers(this, latestAchievedMilestone);
 	}
 
 	//endregion
@@ -489,6 +507,8 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 			
 		for(Role role : devsRoles)
 			forkedProject.devsRoles.add(role.copy());
+		
+		notifyObservers(this, forkedProject);
 		
 		return forkedProject;
 	}

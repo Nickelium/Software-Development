@@ -23,10 +23,21 @@ public abstract class SetMilestoneHelper {
      * @throws ReportErrorToUserException TODO
      * @throws IllegalArgumentException Milestonecontainer or milestone is null.
      */
-    public static boolean milestoneDoesNotExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+    public static boolean milestoneDoesNotExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms)
+    {
         if (cont == null) throw new IllegalArgumentException("MilestoneContainer is null");
         if (ms == null) throw new IllegalArgumentException("Milestone is null");
-        Milestone minimalSubsystemMS = new Milestone("M" + Integer.MAX_VALUE);
+        
+        Milestone minimalSubsystemMS;
+		try
+		{
+			minimalSubsystemMS = new Milestone("M" + Integer.MAX_VALUE);
+		}
+		catch (ReportErrorToUserException e)
+		{
+			throw new AssertionError(e.getMessage() + " : fail to build maxvalue milestone");
+		}
+		
         List<Milestone> milestones = new ArrayList<>();
 
         for (SubSystem subSystem : cont.getAllSubSystems()) {
@@ -57,12 +68,22 @@ public abstract class SetMilestoneHelper {
      * //TODO wat is hier het nut van? is dit niet gewoon !milestoneDoesNotExceedSubsystemMilestone?
      * @throws IllegalArgumentException MilestoneContainer or milestone is null.
      */
-    public static boolean milestoneDoesExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+    public static boolean milestoneDoesExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) 
+    {
         if (cont == null) throw new IllegalArgumentException("MilestoneContainer is null");
         if (ms == null) throw new IllegalArgumentException("Milestone is null");
 
-        Milestone minimalSubsystemMS = new Milestone("M" + Integer.MAX_VALUE);
-        List<Milestone> milestones = cont.getAllMilestones();
+        Milestone minimalSubsystemMS;
+    	try
+    	{
+    		minimalSubsystemMS = new Milestone("M" + Integer.MAX_VALUE);
+    	}
+    	catch (ReportErrorToUserException e)
+    	{
+    		throw new AssertionError(e.getMessage() + " : fail to build maxvalue milestone");
+    	}
+        
+    	List<Milestone> milestones = cont.getAllMilestones();
 
         if (milestones.isEmpty()) return true;
 
@@ -99,11 +120,20 @@ public abstract class SetMilestoneHelper {
      *
      * @throws IllegalArgumentException Milestonecontainer or milestone is null.
      */
-    public static boolean milestoneDoesNotExceedBugReportMilestone(MilestoneContainer cont, Milestone ms) throws ReportErrorToUserException {
+    public static boolean milestoneDoesNotExceedBugReportMilestone(MilestoneContainer cont, Milestone ms)  
+    {
         if (cont == null) throw new IllegalArgumentException("MilestoneContainer is null");
         if (ms == null) throw new IllegalArgumentException("Milestone is null");
 
-        Milestone minimalTargetMS = new Milestone("M" + Integer.MAX_VALUE);
+        Milestone minimalTargetMS;
+    	try
+    	{
+    		minimalTargetMS = new Milestone("M" + Integer.MAX_VALUE);
+    	}
+    	catch (ReportErrorToUserException e)
+    	{
+    		throw new AssertionError(e.getMessage() + " : fail to build maxvalue milestone");
+    	}
         List<BugReport> bugReports = cont.getAllBugReports().stream().filter(x -> !x.getTag().isFinal() && x.getTargetMilestone() != null).collect(Collectors.toList());
 
         if (bugReports.isEmpty()) return true;
