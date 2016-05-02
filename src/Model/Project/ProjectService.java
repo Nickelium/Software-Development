@@ -78,6 +78,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     {
     	if(project == null) throw new IllegalArgumentException("The project cannot be null");
     	Project forkedProject = project.fork();
+    	
     	projectList.insert(forkedProject);
 		return forkedProject;	
     }
@@ -130,14 +131,17 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     /**
      * Method for requesting the project containing the bug report.
      *
-     * @param bugReport Bugreport to get the project of.
+     * @param bugReport Bug report to get the project of.
      *
      * @return The project containing the bug report.
      *
      * @throws ReportErrorToUserException There is no project containing the given bug report.
+     * @throws IllegalArgumentException Bug report is null
      */
     public Project getProjectsContainingBugReport(BugReport bugReport) throws ReportErrorToUserException
     {
+    	if(bugReport == null) throw new IllegalArgumentException("Bugreport is null");
+    	
         for(Project project : this.getAllProjects()){
             if (project.getAllBugReports().contains(bugReport)){
                 return project;
@@ -157,9 +161,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param name The name of the project
      * 
      * @throws ReportErrorToUserException The given name is empty.
+     * @throws IllegalArgumentException Project is null
      */
     public void setProjectName(Project project, String name) throws ReportErrorToUserException {
-        project.setName(name);
+    	if(project == null) throw new IllegalArgumentException("Project is null");
+    	project.setName(name);
     }
 
     /**
@@ -169,9 +175,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param description The description of the project
      * 
      * @throws ReportErrorToUserException The given description is empty.
+     * @throws IllegalArgumentException Project is null
      */
     public void setProjectDescription(Project project, String description) throws ReportErrorToUserException {
-        project.setDescription(description);
+     	if(project == null) throw new IllegalArgumentException("Project is null");
+    	project.setDescription(description);
     }
 
     /**
@@ -181,9 +189,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param date The starting date of the project.
      * 
      * @throws ReportErrorToUserException The given date is before the creation date.
+     * @throws IllegalArgumentException Project is null
      */
     public void setProjectStartingDate(Project project, TheDate date) throws ReportErrorToUserException {
-        project.setStartingDate(date);
+     	if(project == null) throw new IllegalArgumentException("Project is null");
+    	project.setStartingDate(date);
     }
 
     /**
@@ -193,9 +203,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param newBudget The budget of the project.
      * 
      * @throws ReportErrorToUserException The budget is negative.
+     * @throws IllegalArgumentException Project is null
      */
     public void setProjectBudget(Project project, double newBudget) throws ReportErrorToUserException {
-        project.setBudget(newBudget);
+     	if(project == null) throw new IllegalArgumentException("Project is null");
+    	project.setBudget(newBudget);
     }
 
     /**
@@ -205,9 +217,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param versionID The versionId to set the project to.
      * 
      * @throws ReportErrorToUserException The given versionId is lower than or equal to the current one.
+     * @throws IllegalArgumentException Project is null
      */
     public void setProjectVersionID(Project project, double versionID) throws ReportErrorToUserException {
-        project.setVersionID(versionID);
+     	if(project == null) throw new IllegalArgumentException("Project is null");
+    	project.setVersionID(versionID);
     }
 
     /**
@@ -217,9 +231,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param leadRole The lead to assign to the project.
      * 
      * @throws IllegalArgumentException The given role is null.
+     * @throws IllegalArgumentException Project is null
      */
     public void setProjectLeadRole(Project project, Lead leadRole) {
-        project.setLeadRole(leadRole);
+     	if(project == null) throw new IllegalArgumentException("Project is null");
+    	project.setLeadRole(leadRole);
     }
 
 
@@ -235,9 +251,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      * @param newProjectMilestone the new project milestone that has to be set
      * 
      * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
+     * @throws IllegalArgumentException Project is null
      */
     public void setNewProjectMilestone(Project project, Milestone newProjectMilestone) throws ReportErrorToUserException {
-        project.setNewProjectMilestone(newProjectMilestone);
+    	if(project == null) throw new IllegalArgumentException("Project is null");
+    	project.setNewProjectMilestone(newProjectMilestone);
     }
 
 
@@ -306,11 +324,11 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      *
      * @return List containing all the subsystems of all the projects.
      */
-    public List<SubSystem> getAllSubSystems(){
+    public List<SubSystem> getAllSubSystems()
+    {
         List<SubSystem> subSystems = new ArrayList<>();
-        for (Project project: this.getAllProjects()){
+        for (Project project: this.getAllProjects())
            subSystems.addAll(project.getAllSubSystems());
-        }
         return subSystems;
     }
 
@@ -453,6 +471,37 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
         }
         throw new ReportErrorToUserException("Ther is no subsystem that contains the given bug report.");}
 
+    
+    //TODO getparent method
+    public SubSystem getParentSubSystem(SubSystem subsystem)
+    {
+    	for(SubSystem sub : getAllSubSystems())
+    		if(sub.isParent(subsystem)) return sub;
+    	return null;
+    }
+    
+    public List<SubSystem> getRelated(Project origin, SubSystem subsystem)
+    {
+    	List<SubSystem> related = new ArrayList<>();
+    	related.addAll(subsystem.getSubSystems());
+    	SubSystem parentSubSystem = getParentSubSystem(subsystem);
+    	if(parentSubSystem != null)
+    	{
+    		related.add(parentSubSystem);
+    		for(SubSystem sibling : parentSubSystem.getSubSystems())
+    			if(!subsystem.equals(sibling))
+    				related.add(sibling);
+    	}			
+    	else
+    	{
+    		for(SubSystem sibling : origin.getSubSystems())
+    			if(!subsystem.equals(sibling))
+    				related.add(sibling);
+    	}
+    	
+    	return related;
+    }
+    
     /**
      * Method to create a memento of this object
      * 

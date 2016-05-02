@@ -13,6 +13,7 @@ import Model.BugReport.TagTypes.NotABug;
 import Model.BugReport.TagTypes.Resolved;
 import Model.BugReport.TagTypes.UnderReview;
 import Model.Mail.MailboxService;
+import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -91,6 +92,9 @@ public class RegisterNotifications extends IssuerUseCase{
 	        	getUi().display("What kind of change of bug report do you want to be notified :");
 	         	getUi().display("Creation of a new bug report (1) / A bug report receiving a new tag (2)");
 	         	getUi().display("A bug report receiving a specific tag (3) / A new comment for a bug report (4)");
+	        	getUi().display("A project that has achieved a new milestone (5) /\n"
+	        					+ "A project that has achieved a specific milestone (6)\n"
+	        					+ "A project being forked (7)");
 	        	
 	         	int indexChange = getUi().readInt();
 	         	//Step 7
@@ -126,7 +130,7 @@ public class RegisterNotifications extends IssuerUseCase{
 	         	            	 break;
 	         	            case "UnderReview":
 	         	            	tag = UnderReview.class;
-	         	            	 break;
+	         	            	break;
 	         	            default:
 	         	                throw new ReportErrorToUserException("The tag you entered does not exist.");
 	         	        }
@@ -134,6 +138,18 @@ public class RegisterNotifications extends IssuerUseCase{
 	         	        break;
 	         		case 4:
 	         			mailboxService.registerComment(getCurrentUser(), project);
+	         			break;
+	         		case 5:
+	         			mailboxService.registerMilestone(getCurrentUser(), project);
+	         			break;
+	         		case 6:
+	         			getUi().display("Please specify the milestone value to be notified: ");
+	         			String milestoneString = getUi().readString();
+	         			Milestone milestone = new Milestone(milestoneString);
+	         			mailboxService.registerSpecificMilestone(getCurrentUser(), project, milestone);
+	         			break;
+	         		case 7:
+	         			mailboxService.registerFork(getCurrentUser(), project);
 	         			break;
 	         		default :
 	         			throw new IndexOutOfBoundsException("Invalid index input");
@@ -167,7 +183,10 @@ public class RegisterNotifications extends IssuerUseCase{
 	        	getUi().display("What kind of change of bug report do you want to be notified :");
 	         	getUi().display("Creation of a new bug report (1) / A bug report receiving a new tag (2)");
 	         	getUi().display("A bug report receiving a specific tag (3) / A new comment for a bug report (4)");
-	        	
+	        	getUi().display("A subsystem that has achieved a new milestone (5) /\n"
+	        					+ "A subsystem that has achieved a specific milestone (6)");
+
+	         	
 	         	int indexChange = getUi().readInt();
 	         	//Step 7
 	         	switch(indexChange)
@@ -210,6 +229,15 @@ public class RegisterNotifications extends IssuerUseCase{
 	         	        break;
 	         		case 4:
 	         			mailboxService.registerComment(getCurrentUser(), subsystem);
+	         			break;
+	         		case 5:
+	         			mailboxService.registerMilestone(getCurrentUser(), subsystem);
+	         			break;
+	         		case 6:
+	         			getUi().display("Please specify the milestone value to be notified: ");
+	         			String milestoneString = getUi().readString();
+	         			Milestone milestone = new Milestone(milestoneString);
+	         			mailboxService.registerSpecificMilestone(getCurrentUser(), subsystem, milestone);
 	         			break;
 	         		default :
 	         			throw new IndexOutOfBoundsException("Invalid index input");

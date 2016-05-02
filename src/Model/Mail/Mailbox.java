@@ -5,6 +5,8 @@ import Model.BugReport.Comment;
 import Model.BugReport.Tag;
 import Model.Memento.Memento;
 import Model.Memento.Originator;
+import Model.Milestone.Milestone;
+import Model.Project.Project;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,6 +108,46 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		if(tag == null) throw new IllegalArgumentException("Tag cannot be null");
 		ObserverSpecificTag ObSTag = new ObserverSpecificTag(structure, tag);
 		registrations.add(ObSTag);
+	}
+	
+	/**
+	 * Method to register for a change of a tag of a bug report in the given subject
+	 *
+	 * @param structure The subject to observe
+	 * @throws IllegalArgumentException the structure is null
+	 */
+	public void registerMilestone(Subject structure)
+	{
+		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
+		ObserverMilestone ObMilestone = new ObserverMilestone(structure);
+		registrations.add(ObMilestone);
+	}
+	
+	/**
+	 * Method to register for a change of a tag of a bug report in the given subject
+	 *
+	 * @param structure The subject to observe
+	 * @throws IllegalArgumentException the structure or milestone is null
+	 */
+	public void registerSpecificMilestone(Subject structure, Milestone milestone)
+	{
+		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
+		if(milestone == null) throw new IllegalArgumentException("Milestone cannot be null");
+		ObserverSpecificMilestone ObSMilestone = new ObserverSpecificMilestone(structure, milestone);
+		registrations.add(ObSMilestone);
+	}
+	
+	/**
+	 * Method to register for a change of a tag of a bug report in the given subject
+	 *
+	 * @param structure The subject to observe
+	 * @throws IllegalArgumentException the structure is null
+	 */
+	public void registerFork(Subject structure)
+	{
+		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
+		ObserverFork ObFork = new ObserverFork(structure);
+		registrations.add(ObFork);
 	}
 
 	/**
@@ -398,14 +440,14 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * Inner class observer of a creation of a new bug report
 	 *
 	 */
-	private class ObserverVersion extends ObserverAspect
+	private class ObserverMilestone extends ObserverAspect
 	{
 		/**
 		 * Constructor 
 		 * 
 		 * @param structure The subject to observe
 		 */
-		public ObserverVersion(Subject structure)
+		public ObserverMilestone(Subject structure)
 		{
 			super(structure);
 		}
@@ -425,8 +467,8 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
 			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
 			
-			if(super.structure == structure && aspect instanceof Double)
-				notifications.add(new Notification("VersionID change", subject, super.structure));
+			if(super.structure == structure && aspect instanceof Milestone)
+				notifications.add(new Notification("Milestone achieved", subject, super.structure));
 			
 		}
 
@@ -437,7 +479,100 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		 */
 		@Override
 		public String toString() {
-			return "Registration for creation of new bug report in \n" + super.structure;
+			return "Registration for an achieved milestone in \n" + super.structure;
+		}
+		
+	}
+	
+	private class ObserverSpecificMilestone extends ObserverAspect
+	{
+		private Milestone milestone;
+		
+		/**
+		 * Constructor 
+		 * 
+		 * @param structure The subject to observe
+		 */
+		public ObserverSpecificMilestone(Subject structure, Milestone milestone)
+		{
+			super(structure);
+			this.milestone = milestone;
+		}
+		
+		/**
+		 * Method to use when a change occurred in the subject structure.
+		 * 
+		 * @param structure The subject
+		 * @param subject The subject that has change within
+		 * @param aspect The aspect that has changed
+		 * 
+		 * @throws IllegalArgumentException the structure, subject or aspect is null
+		 */
+		@Override
+		public void update(Subject structure, Subject subject, Object aspect) {
+			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+			
+			if(super.structure == structure && aspect instanceof Milestone 
+					&& this.milestone.equals(aspect))
+				notifications.add(new Notification("Milestone achieved" + this.milestone, subject, super.structure));
+			
+		}
+
+		/**
+		 * Method to get textual representation of this object
+		 * 
+		 * @return The String representation of this object
+		 */
+		@Override
+		public String toString() {
+			return "Registration for an achieved milestone of " + this.milestone + " in \n" + super.structure;
+		}
+		
+	}
+	
+	private class ObserverFork extends ObserverAspect
+	{
+		
+		/**
+		 * Constructor 
+		 * 
+		 * @param structure The subject to observe
+		 */
+		public ObserverFork(Subject structure)
+		{
+			super(structure);
+		}
+		
+		/**
+		 * Method to use when a change occurred in the subject structure.
+		 * 
+		 * @param structure The subject
+		 * @param subject The subject that has change within
+		 * @param aspect The aspect that has changed
+		 * 
+		 * @throws IllegalArgumentException the structure, subject or aspect is null
+		 */
+		@Override
+		public void update(Subject structure, Subject subject, Object aspect) {
+			if(structure == null) throw new IllegalArgumentException("The structure cannot be null");
+			if(subject == null) throw new IllegalArgumentException("The subject cannot be null");
+			if(aspect == null) throw new IllegalArgumentException("The aspect cannot be null");
+			
+			if(super.structure == structure && aspect instanceof Project)
+				notifications.add(new Notification("Forked project", (Project) aspect, super.structure));
+			
+		}
+
+		/**
+		 * Method to get textual representation of this object
+		 * 
+		 * @return The String representation of this object
+		 */
+		@Override
+		public String toString() {
+			return "Registration for forked project of \n" + super.structure;
 		}
 		
 	}

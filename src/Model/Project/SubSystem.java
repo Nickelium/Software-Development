@@ -156,6 +156,15 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
         return Collections.unmodifiableList(bugReports);
     }
 
+    public int getHeight()
+    {
+    	int max = 0;
+		for(SubSystem sub : subSystems)
+			if(max < sub.getHeight()) 
+				max = sub.getHeight();
+		return max + 1;
+    }
+    
     //endregion
 
     //region Setters
@@ -242,8 +251,9 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @throws IllegalArgumentException latestAchievedMilestone is null
      */
     private void setLatestAchievedMilestone(Milestone latestAchievedMilestone) {
-    	if(latestAchievedMilestone == null) throw new IllegalArgumentException("The mileston cannot be negative");
+    	if(latestAchievedMilestone == null) throw new IllegalArgumentException("The milestone cannot be negative");
         this.latestAchievedMilestone = latestAchievedMilestone;
+        notifyObservers(this, latestAchievedMilestone);
     }
 
     //endregion
@@ -256,7 +266,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @param name the name to check.
      * @return True if the name is not empty.
      */
-    private boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         if (name == null) return false;
         if (name.equals("")) return false;
         else return true;
@@ -268,7 +278,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @param description The description is valid.
      * @return True if the description is not empty.
      */
-    private boolean isValidDescription(String description) {
+    public boolean isValidDescription(String description) {
         if (description == null) return false;
         if (description.equals("")) return false;
         else return true;
@@ -280,7 +290,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @param subSystem The subsystem to check.
      * @return True if the subsystem is not already a subsystem of this subsystem.
      */
-    private boolean isValidSubsystem(SubSystem subSystem) {
+    public boolean isValidSubsystem(SubSystem subSystem) {
         if (this == subSystem) return false;
         if (this.getAllSubSystems().contains(subSystem)) return false;
         else return true;
@@ -292,7 +302,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
      * @param bugReport The bug report to check.
      * @return True if the bug report is not already a bug report of this subsystem or recursively.
      */
-    private boolean isValidBugReport(BugReport bugReport) {
+    public boolean isValidBugReport(BugReport bugReport) {
     	if(bugReport == null) return false;
         if (this.getAllBugReports().contains(bugReport)) return false;
         else return true;
@@ -314,6 +324,18 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
         if (!isValidSubsystem(subSystem)) throw new ReportErrorToUserException("The subsystem cannot be added!");
         subSystems.add(subSystem);
         subSystem.addObserver(this);
+    }
+    
+    /**
+     * 
+     * @param subsystem
+     * @return
+     */
+    public boolean isParent(SubSystem subsystem)
+    {
+    	if(subsystem == null) return false;
+    	if(getSubSystems().contains(subsystem)) return true;
+    	return false;
     }
     
     /**
@@ -442,6 +464,9 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 	{
 		if(memento == null) throw new IllegalArgumentException("The memento cannot be null");
 		
+		this.name = memento.getName();
+		this.description = memento.getDescription();
+		
 		this.subSystems = memento.getSubSystems();
 		
 		for(SubSystemMemento subsystemMemento : memento.getSubSystemMementos())
@@ -474,6 +499,8 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
     */
 	public class SubSystemMemento extends Memento<SubSystem>
 	{
+		private String name;
+		private String description;
 		private List<SubSystem> subsystems;
 		private List<SubSystemMemento> subsystemMementos = new ArrayList<>();
 		
@@ -493,6 +520,8 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 		public SubSystemMemento(SubSystem originator)
 		{
 			super(originator);
+			this.name = originator.getName();
+			this.description = originator.getDescription();
 			this.subsystems =  new ArrayList<>(originator.getSubSystems());
 			for(SubSystem subsystem : subsystems)
 				subsystemMementos.add(subsystem.createMemento());
@@ -502,8 +531,18 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 				bugreportMementos.add(bugReport.createMemento());
 			
 			this.latestAchievedMilestone = originator.getLatestAchievedMilestone();
-			this.milestones =  new ArrayList<>(originator.getAllMilestones());
+			this.milestones =  new ArrayList<>(originator.milestones);
 			
+		}
+		
+		private String getName()
+		{
+			return name;
+		}
+		
+		private String getDescription()
+		{
+			return description;
 		}
 		
 		private List<SubSystem> getSubSystems()
