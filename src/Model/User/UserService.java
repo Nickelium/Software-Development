@@ -150,7 +150,7 @@ public class UserService {
         }
     }
 
-    //endregions
+    //endregion
 
     /**
      * Getter to request the user with the given user name.
@@ -165,4 +165,6 @@ public class UserService {
         if (user == null) throw new ReportErrorToUserException("The user does not exist.");
         return user;
     }
+
+
 }

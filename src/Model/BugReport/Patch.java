@@ -1,5 +1,7 @@
 package Model.BugReport;
 
+import Model.User.User;
+
 /**
  * This class denotes a patch object.
  *
@@ -9,14 +11,17 @@ package Model.BugReport;
 public class Patch {
 
     private String value;
+    private int lines;
+    private User creator;
 
     /**
      * Constructor to create a Patch object.
      *
      * @param value the content of the new patch
      * */
-    Patch(String value) {
+    Patch(String value, User user) {
         this.setValue(value);
+        this.setCreator(user);
     }
 
     /**
@@ -28,6 +33,7 @@ public class Patch {
     private void setValue(String value) {
         if (value == null) throw new IllegalArgumentException("Value is null");
         this.value = value;
+        setLines();
     }
 
     /**
@@ -38,7 +44,25 @@ public class Patch {
         return this.value;
     }
 
+    //TODO doc
+    private void setLines() {
+        lines = value.length() - value.replaceAll("\\n", "").length() + 1;
+    }
+
+    public int getLines() {
+        return lines;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    private void setCreator(User creator) {
+        this.creator = creator;
+    }
+
     public String toString() {
         return this.getValue();
     }
+
 }
