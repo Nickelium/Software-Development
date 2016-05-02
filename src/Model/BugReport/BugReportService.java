@@ -483,7 +483,7 @@ public class BugReportService {
         return false;
     }
 
-    //endregio
+    //endregion
 
     //region Function
 
