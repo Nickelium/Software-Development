@@ -52,6 +52,7 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
     Tag tag;
     List<Developer> assignees;
     boolean pblc;
+    int impactFactor;
 
     //optional attributes
     private TargetMilestone targetMilestone;
@@ -287,6 +288,11 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
         return Collections.unmodifiableList(list);
     }
 
+    //TODO: Documentation
+    public int getImpactFactor() {
+        return this.impactFactor;
+    }
+
     //endregion
 
     //region Checkers
@@ -345,6 +351,11 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
     public boolean isValidErrorMessage(String errorMessage){
         if (errorMessage == null) return false;
         else return true;
+    }
+
+    //TODO: Documentation
+    public boolean isValidImpactFactor(int impactScore) {
+        return (impactScore > 0 && impactScore <= 10);
     }
 
 
@@ -480,6 +491,12 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
         if (!isValidErrorMessage(errorMessage))
             throw new ReportErrorToUserException("Invalid value for the error message.");
         this.errorMessage = errorMessage;
+    }
+
+    //TODO: Documentation
+    private void setImpactFactor(int impactFactor) {
+        if (!isValidImpactFactor(impactFactor)) throw new IllegalArgumentException("Invalid impactfactor");
+        this.impactFactor = impactFactor;
     }
 
     //endregion
