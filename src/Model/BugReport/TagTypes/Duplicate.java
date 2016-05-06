@@ -52,6 +52,12 @@ public class Duplicate extends Tag {
         throw new ReportErrorToUserException("No patches can be submitted because the bug report doesn't have the proper tag.");
     }
 
+    //TODO: Documentation
+    @Override
+    protected double getMultiplier() {
+        return 0;
+    }
+
     @Override
     public String toString() {
         return "Duplicate";

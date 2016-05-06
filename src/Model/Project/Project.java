@@ -2,6 +2,7 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.HealtIndicator.IHealtIndicator;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Memento.Memento;
@@ -24,7 +25,7 @@ import java.util.List;
  *  This class provides getters and setters for most attributes.
  *	Consistency is provided thanks to the checker methods.
  */
-public class Project extends Subject implements Observer, Originator<Project.ProjectMemento, Project>, MilestoneContainer
+public class Project extends Subject implements Observer, Originator<Project.ProjectMemento, Project>, MilestoneContainer, IHealtIndicator
 {
 
 	private String name;
@@ -241,8 +242,13 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 				max = sub.getHeight();
 		return max + 1;
 	}
-	
-	//endregion
+
+    //TODO: Documentation
+    public List<IHealtIndicator> getDirectHealthIndicatorComponents() {
+        return Collections.unmodifiableList(this.subSystems);
+    }
+
+    //endregion
 
 	//region Setters
 	

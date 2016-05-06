@@ -293,6 +293,10 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
         return this.impactFactor;
     }
 
+    public double getBugReportImpact() {
+        return this.getTag().getBugReportImpact(this);
+    }
+
     //endregion
 
     //region Checkers

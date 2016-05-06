@@ -71,6 +71,12 @@ public class Assigned extends Tag {
         this.removeAllTest(bugReport);
     }
 
+    //TODO: Documentation
+    @Override
+    protected double getMultiplier() {
+        return 2;
+    }
+
     @Override
     public String toString() {
         return "Assigned";

@@ -38,6 +38,12 @@ public class UnderReview extends Tag {
         throw new ReportErrorToUserException("The Bug Report doesn't has the tag Assigned, so no test can be added!");
     }
 
+    //TODO: Documentation
+    @Override
+    protected double getMultiplier() {
+        return 1;
+    }
+
     @Override
     public boolean isFinal() {
         return false;

@@ -70,6 +70,12 @@ public class Resolved extends Tag {
         this.setSelectedPatch(bugReport, getSelectedPatch());
     }
 
+    //TODO: Documentation
+    @Override
+    protected double getMultiplier() {
+        return 0.1;
+    }
+
     @Override
     public boolean isFinal() {
         return false;
