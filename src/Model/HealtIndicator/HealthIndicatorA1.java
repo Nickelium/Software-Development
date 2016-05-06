@@ -3,7 +3,7 @@ package Model.HealtIndicator;
 /**
  * Created by Tom on 2/05/16.
  */
-public class Algorithm1 implements IHealtIndicatorAlgorithm {
+public class HealthIndicatorA1 implements IHealtIndicatorAlgorithm {
     @Override
     public HealthIndicator get(IHealtIndicator object) {
         int compHealth = getHealthIndicatorComponentsHealth(object);
