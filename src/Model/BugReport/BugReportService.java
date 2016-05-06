@@ -295,7 +295,8 @@ public class BugReportService {
             linesOfCode += test.getLines();
         }
 
-        return ((double) linesOfCode) / tests.size();
+        if (linesOfCode != 0) return ((double) linesOfCode) / tests.size();
+        return 0.0;
     }
 
     //endregion
@@ -322,7 +323,8 @@ public class BugReportService {
             linesOfCode += patch.getLines();
         }
 
-        return ((double) linesOfCode) / patches.size();
+        if (linesOfCode != 0) return ((double) linesOfCode) / patches.size();
+        return 0.0;
     }
 
     //endregion

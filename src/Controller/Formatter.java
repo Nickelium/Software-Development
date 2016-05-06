@@ -2,6 +2,8 @@ package Controller;
 
 import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
+import Model.BugReport.PerformanceMetrics.InformationHolder;
+import Model.BugReport.PerformanceMetrics.MetricsComponent;
 import Model.Mail.Notification;
 import Model.Mail.ObserverAspect;
 import Model.Memento.Snapshot;
@@ -220,6 +222,19 @@ public class Formatter
 	private static String addTabulation(String str)
 	{
 		return str.replace("\n", "\n\t");
+	}
+
+	public static String formatPerformanceMetrics(List<MetricsComponent> performanceMetrics) {
+		String s = "";
+
+		for (MetricsComponent metrics : performanceMetrics) {
+			s += metrics.getTitle() + ":\n";
+			for (InformationHolder information : metrics.getInformation()) {
+				s += "  - " + information.getDescription() + " : " + information.getValue() + "\n";
+			}
+		}
+
+		return s;
 	}
 
 }

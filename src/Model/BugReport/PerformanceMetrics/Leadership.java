@@ -16,7 +16,7 @@ public class Leadership extends PerformanceMetrics {
     @Override
     MetricsComponent construct(User user) throws ReportErrorToUserException {
         //TODO
-        return null;
+        return new MetricsComponent("Leadership");
     }
 
 }

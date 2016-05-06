@@ -1,13 +1,17 @@
 package Controller.UserController.UseCases.UserUseCases;
 
+import Controller.Formatter;
 import Controller.IUI;
 import Controller.UserController.UseCases.UseCase;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
+import Model.BugReport.PerformanceMetrics.MetricsComponent;
 import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
+
+import java.util.List;
 
 /**
  * Created by Karina on 06.05.2016.
@@ -24,7 +28,20 @@ public class ShowPerformanceMetrics extends UseCase {
 
     @Override
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
-        getUi().display("Performance Metrics");
+
+        // Step 2
+        getUi().display("Please select the a developer: ");
+        List<User> developerList = getUserService().getDevelopers();
+        String parsedDevelopersList = Formatter.formatUserList(developerList);
+        getUi().display(parsedDevelopersList);
+
+        // Step 3
+        int developerIndex = getUi().readInt();
+        User developer = developerList.get(developerIndex);
+
+        // Step 4
+        List<MetricsComponent> performanceMetrics = getPerformanceMetricsService().createPerformanceMetricsForUser(developer);
+        getUi().display(Formatter.formatPerformanceMetrics(performanceMetrics));
     }
 
     //region Getters & Setters
