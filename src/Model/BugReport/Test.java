@@ -1,5 +1,7 @@
 package Model.BugReport;
 
+import Model.User.User;
+
 /**
  * This class denotes a test object.
  *
@@ -12,14 +14,17 @@ package Model.BugReport;
 public class Test {
 
     private String value;
+    private int lines;
+    private User creator;
 
     /**
      * Constructor to create a Test object.
      *
      * @param value the content of the new test
      */
-    Test(String value) {
+    Test(String value, User user) {
         this.setValue(value);
+        this.setCreator(user);
     }
 
     /**
@@ -30,6 +35,7 @@ public class Test {
     private void setValue(String value) {
         if (value == null) throw new IllegalArgumentException("Value is null");
         this.value = value;
+        setLines();
     }
 
     /**
@@ -38,6 +44,23 @@ public class Test {
      */
     public String getValue() {
         return this.value;
+    }
+
+    //TODO doc
+    private void setLines() {
+        lines = value.length() - value.replaceAll("\\n", "").length() + 1;
+    }
+
+    public int getLines() {
+        return lines;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    private void setCreator(User creator) {
+        this.creator = creator;
     }
 
     public String toString() {

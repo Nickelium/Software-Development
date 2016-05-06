@@ -27,12 +27,18 @@ public class SplitSubSystem extends UseCase {
 
     /**
      *
-     * Lets an administrator create a subsystem.
+     * Lets an administrator split a subsystem.
      *
-     * 2. The system shows a list of all projects.
-     * 3. The user selects a project.
-     * 4. The system shows a detailed overview of the selected project and all
-     * its subsystems.
+	 * 2. The system shows a list of projects.
+	 * 3. The administrator selects a project.
+	 * 4. The system shows a list of subsystems of the selected project.
+	 * 5. The administrator selects a subsystem.
+	 * 6. The system asks for a name and description for both new subsystems.
+	 * 7. The administrator enters both names and descriptions.
+	 * 8. For each bug report and subsystem that is part of the original subsystem, the system asks to which new subsystem to migrate it to.
+	 * 9. The administrator answers for each bug report and subsystem.
+	 * 10. The system creates two new subsystems with the same milestone as
+	 * the original subsystem. The original subsystem is removed.
      *
      * @throws ReportErrorToUserException
      *          in case that the method encounters invalid input

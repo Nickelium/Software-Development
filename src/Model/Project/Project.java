@@ -227,7 +227,12 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 
 		return developers;
 	}
-	
+
+	 /**
+     * Method to get the height of this node
+     * 
+     * @return The height of this subsystem
+     */
 	public int getHeight()
 	{
 		int max = 0;

@@ -18,6 +18,7 @@ import Model.Wrapper.ListWrapper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class containing services for bug reports.
@@ -156,7 +157,7 @@ public class BugReportService {
     public Test createTest(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
         if (bugReport == null) throw new IllegalArgumentException("BugReport is null");
         if (!canAddTest(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a test");
-        Test test = new Test(text);
+        Test test = new Test(text, user);
         bugReport.addTest(test);
         return test;
     }
@@ -177,7 +178,7 @@ public class BugReportService {
     public Patch createPatch(String text, User user, BugReport bugReport) throws ReportErrorToUserException {
         if (bugReport == null) throw new IllegalArgumentException("Bugreport is null");
         if (!canAddPatch(user, bugReport)) throw new ReportErrorToUserException("You are not allowed to add a patch");
-        Patch patch = new Patch(text);
+        Patch patch = new Patch(text, user);
         bugReport.addPatch(patch);
         return patch;
     }
@@ -264,6 +265,41 @@ public class BugReportService {
             bugReports.addAll(project.getAllBugReports());
         }
         return new ListWrapper<>(bugReports);
+    }
+
+    //TODO doc
+    private List<Test> getAllTestsSubmittedByDeveloper(User user) {
+        return getAllTests(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
+    }
+
+    private List<Test> getAllTests(User user) {
+        List<Test> tests = new ArrayList<>();
+        for (BugReport br : getAllBugReports(user)) {
+            tests.addAll(br.getTests());
+        }
+        return tests;
+    }
+
+    //TODO doc
+    private List<Patch> getAllPatchesSubmittedByDeveloper(User user) {
+        return getAllPatches(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
+    }
+
+    private List<Patch> getAllPatches(User user) {
+        List<Patch> patches = new ArrayList<>();
+        for (BugReport br : getAllBugReports(user)) {
+            patches.addAll(br.getPatches());
+        }
+        return patches;
+    }
+
+    //TODO doc
+    private List<BugReport> getAllBugReportsWithTagUserAssignedTo(User user, Class<? extends Tag> tag) {
+        return getAllBugReportsUserAssignedTo(user).stream().filter(x -> (x.getTag().getClass().equals(tag))).collect(Collectors.toList());
+    }
+
+    private List<BugReport> getAllBugReportsUserAssignedTo(User user) {
+        return getAllBugReports(user).stream().filter(x -> x.getAssignees().contains(user)).collect(Collectors.toList());
     }
 
     //endregion
