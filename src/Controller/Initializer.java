@@ -2,6 +2,7 @@ package Controller;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.*;
+import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.Resolved;
 import Model.Mail.MailboxService;
@@ -31,6 +32,7 @@ public class Initializer implements IInitializer {
     private DeveloperAssignmentService developerAssignmentService;
     private TagAssignmentService tagAssignmentService;
     private MailboxService mailboxService;
+    private PerformanceMetricsService performanceMetricsService;
     private Caretaker caretaker;
 
     public Initializer() {
@@ -46,6 +48,7 @@ public class Initializer implements IInitializer {
             this.bugReportService = new BugReportService(projectService);
             this.developerAssignmentService = new DeveloperAssignmentService(projectService);
             this.tagAssignmentService = new TagAssignmentService(projectService);
+            this.performanceMetricsService = new PerformanceMetricsService(bugReportService);
             this.mailboxService = new MailboxService(bugReportService, userService);
             this.caretaker = new Caretaker(projectService, mailboxService);
 
@@ -167,6 +170,10 @@ public class Initializer implements IInitializer {
         return this.tagAssignmentService;
     }
 
+    public PerformanceMetricsService getPerformanceMetricsService() {
+        return performanceMetricsService;
+    }
+
 	public MailboxService getMailboxService() {
 		return this.mailboxService;
 	}
@@ -175,6 +182,5 @@ public class Initializer implements IInitializer {
 	{
 		return caretaker;
 	}
-
 
 }

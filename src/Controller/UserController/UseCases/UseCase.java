@@ -19,8 +19,8 @@ public abstract class UseCase {
     private User currentUser;
 
     protected boolean changeSystem;
-    
-    public UseCase(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
+
+    public UseCase(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
         setUi(ui);
         setUserService(userService);
         setProjectService(projectService);

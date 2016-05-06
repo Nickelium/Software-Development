@@ -3,8 +3,10 @@ package Controller.UserController;
 import Controller.IUI;
 import Controller.UserController.UseCases.UseCase;
 import Controller.UserController.UseCases.UserUseCases.ExitProgram;
+import Controller.UserController.UseCases.UserUseCases.ShowPerformanceMetrics;
 import Controller.UserController.UseCases.UserUseCases.ShowProject;
 import Model.BugReport.BugReportService;
+import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
 import Model.Project.ProjectService;
 import Model.User.User;
 import Model.User.UserService;
@@ -20,15 +22,17 @@ public abstract class UserController {
     private UserService userService;
     private ProjectService projectService;
     private BugReportService bugReportService;
+    private PerformanceMetricsService performanceMetricsService;
     private User currentUser;
 
     protected ArrayList<UseCase> useCases = new ArrayList<>();
 
-    public UserController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser){
+    public UserController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, PerformanceMetricsService performanceMetricsService, User currentUser) {
         setUi(ui);
         setUserService(userService);
         setProjectService(projectService);
         setBugReportService(bugReportService);
+        setPerformanceMetricsService(performanceMetricsService);
         setCurrentUser(currentUser);
         initializeUseCasesUser();
     }
@@ -59,6 +63,7 @@ public abstract class UserController {
     private void initializeUseCasesUser(){
         useCases.add(new ShowProject(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser()));
         useCases.add(new ExitProgram(getUi(), getUserService(), getProjectService(), getBugReportService(), getCurrentUser()));
+        useCases.add(new ShowPerformanceMetrics(getUi(), getUserService(), getProjectService(), getBugReportService(), getPerformanceMetricsService(), getCurrentUser()));
     }
 
     //endregion
@@ -81,6 +86,10 @@ public abstract class UserController {
         this.bugReportService = bugReportService;
     }
 
+    private void setPerformanceMetricsService(PerformanceMetricsService performanceMetricsService) {
+        this.performanceMetricsService = performanceMetricsService;
+    }
+
     private void setCurrentUser(User currentUser){
         this.currentUser = currentUser;
     }
@@ -99,6 +108,10 @@ public abstract class UserController {
 
     public BugReportService getBugReportService() {
         return this.bugReportService;
+    }
+
+    public PerformanceMetricsService getPerformanceMetricsService() {
+        return this.performanceMetricsService;
     }
 
     public User getCurrentUser(){

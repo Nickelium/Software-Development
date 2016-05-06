@@ -3,6 +3,7 @@ package Controller.UserController;
 import Controller.IUI;
 import Controller.UserController.UseCases.IssuerUseCases.*;
 import Model.BugReport.BugReportService;
+import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
 import Model.BugReport.TagAssignmentService;
 import Model.Mail.MailboxService;
 import Model.Project.ProjectService;
@@ -17,8 +18,8 @@ public class IssuerController extends UserController {
     private TagAssignmentService tagAssignmentService;
     private MailboxService mailboxService;
 
-    public IssuerController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, TagAssignmentService tagAssignmentService, MailboxService mailboxService , User currentUser) {
-        super(ui, userService, projectService, bugReportService, currentUser);
+    public IssuerController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, PerformanceMetricsService performanceMetricsService, TagAssignmentService tagAssignmentService, MailboxService mailboxService, User currentUser) {
+        super(ui, userService, projectService, bugReportService, performanceMetricsService, currentUser);
         setTagAssignmentService(tagAssignmentService);
         setMailboxService(mailboxService);
         initializeUseCasesIssuer();

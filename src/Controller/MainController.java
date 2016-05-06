@@ -50,11 +50,11 @@ public class MainController {
             // choose controller
             UserController userController;
             if (currentUser instanceof Admin) {
-                userController = new AdminController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getCaretaker(), currentUser);
+                userController = new AdminController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getPerformanceMetricsService(), initializer.getCaretaker(), currentUser);
             } else if (currentUser instanceof Developer) {
-                userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), currentUser, initializer.getDeveloperAssignmentService(), initializer.getTagAssignmentService(), initializer.getMailboxService());
+                userController = new DeveloperController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getPerformanceMetricsService(), currentUser, initializer.getDeveloperAssignmentService(), initializer.getTagAssignmentService(), initializer.getMailboxService());
             } else {
-                userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getTagAssignmentService(), initializer.getMailboxService(), currentUser);
+                userController = new IssuerController(ui, initializer.getUserService(), initializer.getProjectService(), initializer.getBugReportService(), initializer.getPerformanceMetricsService(), initializer.getTagAssignmentService(), initializer.getMailboxService(), currentUser);
             }
    
             boolean logingOut = false;

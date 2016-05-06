@@ -267,12 +267,19 @@ public class BugReportService {
         return new ListWrapper<>(bugReports);
     }
 
+    //endregion
+
+    //region Performance Metrics functions
+
     //TODO doc
-    private List<Test> getAllTestsSubmittedByDeveloper(User user) {
+
+    //region Test information
+
+    public List<Test> getAllTestsSubmittedByDeveloper(User user) {
         return getAllTests(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
     }
 
-    private List<Test> getAllTests(User user) {
+    public List<Test> getAllTests(User user) {
         List<Test> tests = new ArrayList<>();
         for (BugReport br : getAllBugReports(user)) {
             tests.addAll(br.getTests());
@@ -280,12 +287,26 @@ public class BugReportService {
         return tests;
     }
 
-    //TODO doc
-    private List<Patch> getAllPatchesSubmittedByDeveloper(User user) {
+    public Double getAverageLinesOfTestCodeByUser(User user) {
+        List<Test> tests = getAllTestsSubmittedByDeveloper(user);
+        int linesOfCode = 0;
+
+        for (Test test : tests) {
+            linesOfCode += test.getLines();
+        }
+
+        return ((double) linesOfCode) / tests.size();
+    }
+
+    //endregion
+
+    //region Patch information
+
+    public List<Patch> getAllPatchesSubmittedByDeveloper(User user) {
         return getAllPatches(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
     }
 
-    private List<Patch> getAllPatches(User user) {
+    public List<Patch> getAllPatches(User user) {
         List<Patch> patches = new ArrayList<>();
         for (BugReport br : getAllBugReports(user)) {
             patches.addAll(br.getPatches());
@@ -293,14 +314,38 @@ public class BugReportService {
         return patches;
     }
 
-    //TODO doc
-    private List<BugReport> getAllBugReportsWithTagUserAssignedTo(User user, Class<? extends Tag> tag) {
+    public Double getAverageLinesOfPatchCodeByUser(User user) {
+        List<Patch> patches = getAllPatchesSubmittedByDeveloper(user);
+        int linesOfCode = 0;
+
+        for (Patch patch : patches) {
+            linesOfCode += patch.getLines();
+        }
+
+        return ((double) linesOfCode) / patches.size();
+    }
+
+    //endregion
+
+    //region Bug Report information
+
+    public List<BugReport> getAllBugReportsUserAssignedTo(User user) {
+        return getAllBugReports(user).stream().filter(x -> x.getAssignees().contains(user)).collect(Collectors.toList());
+    }
+
+    public List<BugReport> getAllBugReportsCreatedByUser(User user) {
+        return getAllBugReports(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
+    }
+
+    public List<BugReport> getAllBugReportsWithTagUserAssignedTo(User user, Class<? extends Tag> tag) {
         return getAllBugReportsUserAssignedTo(user).stream().filter(x -> (x.getTag().getClass().equals(tag))).collect(Collectors.toList());
     }
 
-    private List<BugReport> getAllBugReportsUserAssignedTo(User user) {
-        return getAllBugReports(user).stream().filter(x -> x.getAssignees().contains(user)).collect(Collectors.toList());
+    public List<BugReport> getAllBugReportsWithTagCreatedByUser(User user, Class<? extends Tag> tag) {
+        return getAllBugReportsCreatedByUser(user).stream().filter(x -> x.getTag().getClass().equals(tag)).collect(Collectors.toList());
     }
+
+    //endregion
 
     //endregion
 

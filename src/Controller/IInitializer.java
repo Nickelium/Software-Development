@@ -2,11 +2,12 @@ package Controller;
 
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
+import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
 import Model.BugReport.TagAssignmentService;
+import Model.Mail.MailboxService;
+import Model.Memento.Caretaker;
 import Model.Project.ProjectService;
 import Model.User.UserService;
-import Model.Mail.*;
-import Model.Memento.Caretaker;
 
 public interface IInitializer 
 {
@@ -20,6 +21,8 @@ public interface IInitializer
 	public DeveloperAssignmentService getDeveloperAssignmentService();
 
 	public TagAssignmentService getTagAssignmentService();
+
+	public PerformanceMetricsService getPerformanceMetricsService();
 	
 	public MailboxService getMailboxService();
 	

@@ -3,6 +3,7 @@ package Controller.UserController;
 import Controller.IUI;
 import Controller.UserController.UseCases.AdminUseCases.*;
 import Model.BugReport.BugReportService;
+import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
 import Model.Memento.Caretaker;
 import Model.Project.ProjectService;
 import Model.User.User;
@@ -15,8 +16,8 @@ public class AdminController extends UserController {
 	
 	private Caretaker caretaker;
 
-    public AdminController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, Caretaker caretaker, User currentUser) {
-        super(ui, userService, projectService, bugReportService, currentUser);
+    public AdminController(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, PerformanceMetricsService performanceMetricsService, Caretaker caretaker, User currentUser) {
+        super(ui, userService, projectService, bugReportService, performanceMetricsService, currentUser);
         this.caretaker = caretaker;
         initializeUseCasesAdmin();
     }
