@@ -2,6 +2,8 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
+import Model.HealtIndicator.IHealtIndicator;
+import Model.HealtIndicator.IHealthIndicatorAndBugImpact;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Memento.Memento;
@@ -18,7 +20,7 @@ import java.util.List;
 /**
  * This class represents a subsystem with all its related attributes.
  */
-public class SubSystem extends Subject implements Observer, Originator<SubSystem.SubSystemMemento, SubSystem>, MilestoneContainer {
+public class SubSystem extends Subject implements Observer, Originator<SubSystem.SubSystemMemento, SubSystem>, MilestoneContainer, IHealthIndicatorAndBugImpact {
 
     private String name;
     private String description;
@@ -168,6 +170,11 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 			if(max < sub.getHeight()) 
 				max = sub.getHeight();
 		return max + 1;
+    }
+
+    //TODO: Documentation
+    public List<IHealtIndicator> getDirectHealthIndicatorComponents() {
+        return Collections.unmodifiableList(this.subSystems);
     }
 
     //TODO: Documentation
