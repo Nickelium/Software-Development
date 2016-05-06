@@ -169,6 +169,17 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 				max = sub.getHeight();
 		return max + 1;
     }
+
+    //TODO: Documentation
+    public double getBugImpact() {
+        double impact = 0.0;
+
+        for (BugReport bugReport : getBugReports()) {
+            impact += bugReport.getBugReportImpact();
+        }
+
+        return impact;
+    }
     
     //endregion
 
