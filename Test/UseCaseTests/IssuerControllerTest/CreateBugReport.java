@@ -36,7 +36,7 @@ public class CreateBugReport extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(2).run();
 
         assert bugReportService.getAllBugReports(currentUser).stream().anyMatch(x -> x.getTitle().equals("Bug Report Test Title"));
@@ -65,7 +65,7 @@ public class CreateBugReport extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(2).run();
 
         assert bugReportService.getAllBugReports(currentUser).stream().anyMatch(x -> x.getTitle().equals("Bug Report Test Title"));
@@ -90,7 +90,7 @@ public class CreateBugReport extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(2).run();
 
         assert bugReportService.getAllBugReports(currentUser).stream().anyMatch(x -> x.getTitle().equals("Bug Report Test Title"));
@@ -105,7 +105,7 @@ public class CreateBugReport extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(2).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 10, Size: 2");
@@ -123,7 +123,7 @@ public class CreateBugReport extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(2).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 10, Size: 3");
@@ -143,7 +143,7 @@ public class CreateBugReport extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(2).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 0, Size: 0");

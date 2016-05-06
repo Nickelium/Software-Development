@@ -32,7 +32,7 @@ public class UpdateProject extends AdminControllerInit{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(4).run();
 
         TheDate newDate = new TheDate(11, 12, 2016);
@@ -55,7 +55,7 @@ public class UpdateProject extends AdminControllerInit{
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
             adminController.getUseCase(4).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The date is before the creation date.");
@@ -77,7 +77,7 @@ public class UpdateProject extends AdminControllerInit{
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
             adminController.getUseCase(4).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The budget cannot be negative.");

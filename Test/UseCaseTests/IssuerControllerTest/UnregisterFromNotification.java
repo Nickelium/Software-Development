@@ -27,7 +27,7 @@ public class UnregisterFromNotification extends IssuerControllerInit {
         ArrayList<String> inputRegister = new ArrayList<>(Arrays.asList(simulatedUserInputRegister));
         TestUI uiRegister = new TestUI(inputRegister);
 
-        UserController issuerControllerRegister = new IssuerController(uiRegister, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerControllerRegister = new IssuerController(uiRegister, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerControllerRegister.getUseCase(7).run();
 
         assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for creation of new bug report in"));
@@ -39,7 +39,7 @@ public class UnregisterFromNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(8).run();
 
         assertEquals(userService.getUser("doc").getMailbox().getRegistrations().size(), 0);
@@ -55,7 +55,7 @@ public class UnregisterFromNotification extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(8).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 0, Size: 0");

@@ -30,7 +30,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
 
 
@@ -48,7 +48,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
 
         assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for change of tag in"));
@@ -66,7 +66,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
 
         assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for changed of tag to"));
@@ -83,7 +83,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
 
         assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for creation of new comment in"));
@@ -102,7 +102,7 @@ public class RegisterForNotification extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(7).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The tag you entered does not exist.");
@@ -120,7 +120,7 @@ public class RegisterForNotification extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(7).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Invalid index input");
@@ -143,7 +143,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
 
         assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for creation of new bug report in"));
@@ -162,7 +162,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
 
         assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for change of tag in"));
@@ -181,7 +181,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
 
         assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for changed of tag to"));
@@ -199,7 +199,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
 
         assertTrue(userService.getUser("doc").getMailbox().getRegistrations().get(0).toString().contains("Registration for creation of new comment in"));
@@ -219,7 +219,7 @@ public class RegisterForNotification extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(7).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The tag you entered does not exist.");
@@ -238,7 +238,7 @@ public class RegisterForNotification extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(7).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Invalid index input");
@@ -262,7 +262,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
     }
 
@@ -279,7 +279,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
     }
 
@@ -295,7 +295,7 @@ public class RegisterForNotification extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(7).run();
     }
 
@@ -313,7 +313,7 @@ public class RegisterForNotification extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(7).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The tag you entered does not exist.");
@@ -333,7 +333,7 @@ public class RegisterForNotification extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(7).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Invalid index input");

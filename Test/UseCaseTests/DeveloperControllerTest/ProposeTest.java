@@ -31,7 +31,7 @@ public class ProposeTest extends DeveloperControllerInit {
 
         ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
         IUI ui = new TestUI(input);
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("maria"), developerAssignmentService, tagAssignmentService, mailboxService);
+        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("maria"), developerAssignmentService, tagAssignmentService, mailboxService);
         developerController.getUseCase(13).run();
 
         assertTrue(bugReportService.getAllBugReports(userService.getUser("major")).stream().anyMatch(x -> x.getTitle().contains("Crash") && x.getTests().size() == initialSize + 1));
@@ -54,7 +54,7 @@ public class ProposeTest extends DeveloperControllerInit {
             ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
             IUI ui = new TestUI(input);
 
-            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
             developerController.getUseCase(13).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("You are not allowed to add a test.");
@@ -81,7 +81,7 @@ public class ProposeTest extends DeveloperControllerInit {
             ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
             IUI ui = new TestUI(input);
 
-            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
             developerController.getUseCase(13).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The Bug Report doesn't has the tag Assigned, so no test can be added!");

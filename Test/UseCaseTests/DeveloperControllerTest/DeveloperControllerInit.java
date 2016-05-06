@@ -5,6 +5,7 @@ import Controller.Initializer;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
+import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
 import Model.BugReport.TagAssignmentService;
 import Model.Mail.MailboxService;
 import Model.Project.ProjectService;
@@ -22,6 +23,7 @@ public class DeveloperControllerInit {
     protected UserService userService;
     protected DeveloperAssignmentService developerAssignmentService;
     protected TagAssignmentService tagAssignmentService;
+    protected PerformanceMetricsService performanceMetricsService;
     protected MailboxService mailboxService;
 
     @Before
@@ -32,6 +34,7 @@ public class DeveloperControllerInit {
         this.userService = initializer.getUserService();
         this.developerAssignmentService = initializer.getDeveloperAssignmentService();
         this.tagAssignmentService = initializer.getTagAssignmentService();
+        this.performanceMetricsService = initializer.getPerformanceMetricsService();
         this.mailboxService = initializer.getMailboxService();
         this.userService.createDeveloper("Test", "T", "Testing", "test1");
         this.userService.createDeveloper("Test2", "T", "Testing", "test2");

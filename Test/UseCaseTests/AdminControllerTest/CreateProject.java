@@ -32,7 +32,7 @@ public class CreateProject extends AdminControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(2).run();
 
         assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test")).collect(Collectors.toList()).size() == 1;
@@ -52,7 +52,7 @@ public class CreateProject extends AdminControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
             adminController.getUseCase(2).run();
         } catch (ReportErrorToUserException e) {
             assert (e.getMessage().equals("The date is before the creation date."));
@@ -74,7 +74,7 @@ public class CreateProject extends AdminControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
             adminController.getUseCase(2).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The budget cannot be negative.");
@@ -97,7 +97,7 @@ public class CreateProject extends AdminControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
             adminController.getUseCase(2).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 5, Size: 2");

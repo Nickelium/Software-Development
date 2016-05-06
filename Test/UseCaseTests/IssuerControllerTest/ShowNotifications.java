@@ -25,7 +25,7 @@ public class ShowNotifications extends IssuerControllerInit {
         ArrayList<String> inputRegister = new ArrayList<>(Arrays.asList(simulatedUserInputRegister));
         TestUI uiRegister = new TestUI(inputRegister);
 
-        UserController issuerControllerRegister = new IssuerController(uiRegister, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerControllerRegister = new IssuerController(uiRegister, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerControllerRegister.getUseCase(7).run();
 
         String[] simulatedUserInputCreateBugReport = {
@@ -46,7 +46,7 @@ public class ShowNotifications extends IssuerControllerInit {
         ArrayList<String> inputCreateBugReport = new ArrayList<>(Arrays.asList(simulatedUserInputCreateBugReport));
         TestUI uiCreateBugReport = new TestUI(inputCreateBugReport);
 
-        UserController issuerControllerCreateBugReport = new IssuerController(uiCreateBugReport, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerControllerCreateBugReport = new IssuerController(uiCreateBugReport, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerControllerCreateBugReport.getUseCase(2).run();
 
         String[] simulatedUserInput = {
@@ -55,7 +55,7 @@ public class ShowNotifications extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(6).run();
     }
 

@@ -36,7 +36,7 @@ public class CreateComment extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(4).run();
 
         assert bugReportService.getAllBugReports(currentUser).stream().filter(x -> x.getTitle().contains("Crash")
@@ -63,7 +63,7 @@ public class CreateComment extends IssuerControllerInit {
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+        UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
         issuerController.getUseCase(4).run();
 
         assert bugReportService.getAllBugReports(currentUser).stream().filter(x -> x.getTitle().contains("Crash")
@@ -81,7 +81,7 @@ public class CreateComment extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(4).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 1, Size: 1");
@@ -102,7 +102,7 @@ public class CreateComment extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(4).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 2, Size: 1");
@@ -121,7 +121,7 @@ public class CreateComment extends IssuerControllerInit {
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, tagAssignmentService, mailboxService, currentUser);
+            UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
             issuerController.getUseCase(4).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("This is an invalid input");

@@ -23,7 +23,7 @@ public class ShowProject extends AdminControllerInit{
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
         TestUI ui = new TestUI(input);
 
-        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+        UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(0).run();
     }
 
@@ -36,7 +36,7 @@ public class ShowProject extends AdminControllerInit{
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
             TestUI ui = new TestUI(input);
 
-            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, new Caretaker(projectService, mailboxService), currentUser);
+            UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
             adminController.getUseCase(0).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 5, Size: 2");

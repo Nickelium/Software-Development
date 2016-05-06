@@ -32,7 +32,7 @@ public class AssignToProject extends DeveloperControllerInit {
         ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
         IUI ui = new TestUI(input);
 
-        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
+        DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
         developerController.getUseCase(9).run();
 
         //Check containing user after
@@ -47,7 +47,7 @@ public class AssignToProject extends DeveloperControllerInit {
             ArrayList<String> input = new ArrayList<String>(Arrays.asList(simulatedUserInput));
             IUI ui = new TestUI(input);
 
-            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
+            DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
             developerController.getUseCase(9).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("You are not assigned as lead developer in any project. You are not allowed to assign a new developer to any project.");
