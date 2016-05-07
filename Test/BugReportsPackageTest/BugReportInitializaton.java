@@ -4,6 +4,7 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.*;
 import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
 import Model.BugReport.TagTypes.Closed;
+import Model.BugReport.TagTypes.NotABug;
 import Model.BugReport.TagTypes.Resolved;
 import Model.Project.Project;
 import Model.Project.ProjectService;
@@ -49,6 +50,7 @@ public class BugReportInitializaton {
     protected BugReport bugReport1;
     protected BugReport bugReport2;
     protected BugReport bugReport3;
+    protected BugReport bugReport4;
     protected Comment comment1;
 
     @Before
@@ -97,7 +99,11 @@ public class BugReportInitializaton {
         tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(patch));
         tagAssignmentService.assignTag(issuer2, bugReport2, new Closed(1));
 
-        bugReport3 = bugReportService.createBugReport("Bug3", "Des Bug3", issuer1, subSystem2, BugReport.PUBLIC, TheDate.TheDateNow(), Arrays.asList(dev1, dev2));
+        bugReport3 = bugReportService.createBugReport("Bug3", "Des Bug3", dev2, subSystem2, BugReport.PUBLIC, TheDate.TheDateNow(), Arrays.asList(dev1, dev2));
         comment1 = bugReportService.createComment("Test Comment", issuer1, bugReport1);
+        tagAssignmentService.assignTag(dev2, bugReport3, new NotABug());
+
+        bugReport4 = bugReportService.createBugReport("Bug4", "Des Bug4", issuer2, subSystem1A1, BugReport.PUBLIC, TheDate.TheDateNow(),
+                Collections.singletonList(dev3));
     }
 }

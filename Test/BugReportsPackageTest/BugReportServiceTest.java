@@ -8,6 +8,7 @@ import Model.BugReport.SearchMethod.SearchOnFiled;
 import Model.BugReport.SearchMethod.SearchOnTitle;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
+import Model.BugReport.TagTypes.NotABug;
 import Model.BugReport.TagTypes.UnderReview;
 import Model.Milestone.Milestone;
 import Model.Milestone.TargetMilestone;
@@ -54,7 +55,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
 
     @Test
     public void getBugReportsForProjectTest(){
-        assertEquals(2, bugReportService.getBugReportsForProject(project1).size());
+        assertEquals(3, bugReportService.getBugReportsForProject(project1).size());
     }
 
     @Test
@@ -68,15 +69,15 @@ public class BugReportServiceTest extends BugReportInitializaton {
     @Test
     public void getBugReportsFiledByUserTest() throws ReportErrorToUserException {
     	Search a = new SearchOnFiled(issuer1);
-        assertEquals(2, bugReportService.search(a, issuer1).size());
+        assertEquals(1, bugReportService.search(a, issuer1).size());
         Search b = new SearchOnFiled(issuer2);
-        assertEquals(1, bugReportService.search(b, issuer2).size());
+        assertEquals(2, bugReportService.search(b, issuer2).size());
     }
 
     @Test
     public void getBugReportsWithTitleContainingTest_Valid() throws ReportErrorToUserException {
     	Search a = new SearchOnTitle("Bug");
-        assertEquals(3, bugReportService.search(a, issuer1).size());
+        assertEquals(4, bugReportService.search(a, issuer1).size());
         Search b = new SearchOnTitle("Bug1");
         assertEquals(1, bugReportService.search(b, issuer1).size());
     }
@@ -96,7 +97,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
     @Test
     public void getBugReportsWithDescriptionContainingTest_Valid() throws ReportErrorToUserException {
     	Search a = new SearchOnDescription("Bug");
-        assertEquals(3, bugReportService.search(a, issuer1).size());
+        assertEquals(4, bugReportService.search(a, issuer1).size());
         Search b = new SearchOnDescription("Des Bug1");
         assertEquals(1, bugReportService.search(b, issuer1).size());
     }
@@ -264,8 +265,8 @@ public class BugReportServiceTest extends BugReportInitializaton {
 
     @Test
     public void getAllBugReportsWithTagUserAssignedTo_Valid() {
-        assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev2, Assigned.class).size() == 1;
         assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev2, Closed.class).size() == 1;
+        assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev2, NotABug.class).size() == 1;
     }
 
     @Test
@@ -281,7 +282,8 @@ public class BugReportServiceTest extends BugReportInitializaton {
 
     @Test
     public void getAllBugReportsWithTagCreatedByUser_Valid() {
-        assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer1, Assigned.class).size() == 2;
+        assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer1, Assigned.class).size() == 1;
+        assert bugReportService.getAllBugReportsWithTagCreatedByUser(dev2, NotABug.class).size() == 1;
         assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer2, Closed.class).size() == 1;
     }
 
