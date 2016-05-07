@@ -4,9 +4,9 @@ import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportID;
 import Model.BugReport.Comment;
-import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.New;
+import Model.BugReport.TagTypes.NotABug;
 import Model.Milestone.TargetMilestone;
 import Model.Project.TheDate;
 import org.junit.Before;
@@ -61,7 +61,7 @@ public class BugReportTest extends BugReportInitializaton {
     public void getTagTest() throws ReportErrorToUserException {
         assertEquals(New.class, this.bugReport1.getTag().getClass());
         assertEquals(Closed.class, this.bugReport2.getTag().getClass());
-        assertEquals(Assigned.class, this.bugReport3.getTag().getClass());
+        assertEquals(NotABug.class, this.bugReport3.getTag().getClass());
     }
 
     @Test
