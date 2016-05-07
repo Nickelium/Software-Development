@@ -19,7 +19,7 @@ public enum HealthIndicator {
         this.string = string;
     }
 
-    public static HealthIndicator getHealtIndicatorByValue(int value) {
+    public static HealthIndicator getHealthIndicatorByValue(int value) {
         for (HealthIndicator indic : HealthIndicator.values()) {
             if (indic.getValue() == value) {
                 return indic;
