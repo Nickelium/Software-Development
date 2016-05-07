@@ -43,9 +43,9 @@ public class Reporting extends PerformanceMetrics {
 
         MetricsComponent metricsComponent = new MetricsComponent("Reporting");
 
-        metricsComponent.addInformation("The number of Duplicate bug reports submitted by the developer", (double) getBugReportService().getAllBugReportsWithTagCreatedByUser(user, Duplicate.class).size());
-        metricsComponent.addInformation("The number of NotABug bug reports submitted by the developer", (double) getBugReportService().getAllBugReportsWithTagCreatedByUser(user, NotABug.class).size());
-        metricsComponent.addInformation("The total number of bug reports submitted by the developer", (double) getBugReportService().getAllBugReportsCreatedByUser(user).size());
+        metricsComponent.addInformation("The number of Duplicate bug reports submitted by the developer", String.valueOf(getBugReportService().getAllBugReportsWithTagCreatedByUser(user, Duplicate.class).size()));
+        metricsComponent.addInformation("The number of NotABug bug reports submitted by the developer", String.valueOf(getBugReportService().getAllBugReportsWithTagCreatedByUser(user, NotABug.class).size()));
+        metricsComponent.addInformation("The total number of bug reports submitted by the developer", String.valueOf(getBugReportService().getAllBugReportsCreatedByUser(user).size()));
 
         return metricsComponent;
     }

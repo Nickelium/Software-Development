@@ -40,8 +40,8 @@ public class TestSkills extends PerformanceMetrics {
 
         MetricsComponent metricsComponent = new MetricsComponent("Test skills");
 
-        metricsComponent.addInformation("The average number of lines of code for each submitted test", getBugReportService().getAverageLinesOfTestCodeByUser(user));
-        metricsComponent.addInformation("The total number of tests submitted", (double) getBugReportService().getAllTestsSubmittedByDeveloper(user).size());
+        metricsComponent.addInformation("The average number of lines of code for each submitted test", String.valueOf(getBugReportService().getAverageLinesOfTestCodeByUser(user)));
+        metricsComponent.addInformation("The total number of tests submitted", String.valueOf(getBugReportService().getAllTestsSubmittedByDeveloper(user).size()));
 
         return metricsComponent;
     }

@@ -18,9 +18,9 @@ public class InformationHolder {
     /**
      * //TODO value zou string moeten zijn, refactoring nodig voor alle uses met information holders
      */
-    private double value;
+    private String value;
 
-    InformationHolder(String description, double value) {
+    InformationHolder(String description, String value) {
         setDescription(description);
         setValue(value);
     }
@@ -36,11 +36,11 @@ public class InformationHolder {
         this.description = description;
     }
 
-    public double getValue() {
+    public String getValue() {
         return value;
     }
 
-    private void setValue(double value) {
+    private void setValue(String value) {
         this.value = value;
     }
 

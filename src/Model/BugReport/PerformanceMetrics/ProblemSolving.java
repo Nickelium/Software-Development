@@ -46,13 +46,13 @@ public class ProblemSolving extends PerformanceMetrics {
 
         MetricsComponent metricsComponent = new MetricsComponent("Problem solving");
 
-        metricsComponent.addInformation("The number of Closed bug reports the developer is assigned to", (double) getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, Closed.class).size());
+        metricsComponent.addInformation("The number of Closed bug reports the developer is assigned to", String.valueOf(getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, Closed.class).size()));
         int numberOfUnfinishedBugReports = getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, New.class).size()
                 + getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, Assigned.class).size()
                 + getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, UnderReview.class).size();
-        metricsComponent.addInformation("The number of unfinished bug reports the developer is assigned to", (double) numberOfUnfinishedBugReports);
-        metricsComponent.addInformation("The average lines of code for each submitted patch", getBugReportService().getAverageLinesOfPatchCodeByUser(user));
-        metricsComponent.addInformation("The total number of patches submitted", (double) getBugReportService().getAllPatchesSubmittedByDeveloper(user).size());
+        metricsComponent.addInformation("The number of unfinished bug reports the developer is assigned to", String.valueOf(numberOfUnfinishedBugReports));
+        metricsComponent.addInformation("The average lines of code for each submitted patch", String.valueOf(getBugReportService().getAverageLinesOfPatchCodeByUser(user)));
+        metricsComponent.addInformation("The total number of patches submitted", String.valueOf(getBugReportService().getAllPatchesSubmittedByDeveloper(user).size()));
 
         return metricsComponent;
     }
