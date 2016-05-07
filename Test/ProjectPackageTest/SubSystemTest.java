@@ -113,8 +113,8 @@ public class SubSystemTest {
 	public void getAllBugReports_SUCCES() throws Exception
 	{
 		List<BugReport> list = new ArrayList<>();
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC,1);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC,1);
 		list.add(bug1);
 		list.add(bug2);
 	
@@ -157,7 +157,7 @@ public class SubSystemTest {
 	public void getAllMilestones_FAIL2() throws Exception{
 
 		projectService.setNewSubSystemMilestone(subsystem1,  new Milestone("M1"));
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC,1);
 		bugReportService.setTargetMilestone(bug1, new TargetMilestone("M1.2"));
 		projectService.setNewSubSystemMilestone(subsystem1, new Milestone("M1.5"));
 

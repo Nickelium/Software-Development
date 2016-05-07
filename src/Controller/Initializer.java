@@ -109,7 +109,8 @@ public class Initializer implements IInitializer {
                     subSystemB1,
                     BugReport.PUBLIC,
                     new TheDate(3, 1, 2016),
-                    Collections.singletonList(maria)
+                    Collections.singletonList(maria),
+                    2
             );
             bugReportService.setTargetMilestone(bugreport1, new TargetMilestone("M1.1"));
             bugReportService.createTest("bool test_invalid_args1(){...}", major, bugreport1);
@@ -126,7 +127,8 @@ public class Initializer implements IInitializer {
                     subSystemA31,
                     BugReport.PUBLIC,
                     new TheDate(15, 1, 2016),
-                    Arrays.asList(major, maria)
+                    Arrays.asList(major, maria),
+                    7
             );
             bugReportService.setErrorMessage(bugreport2, "Internal Error 45: The...");
 
@@ -137,7 +139,8 @@ public class Initializer implements IInitializer {
                     subSystemA2,
                     BugReport.PRIVATE,
                     new TheDate(4, 2, 2016),
-                    new ArrayList<>()
+                    new ArrayList<>(),
+                    9
             );
             bugReportService.setProcedureBug(bugreport3, "Launch with command line invocation:...");
             bugReportService.setStackTrace(bugreport3, "Exception in thread \"main\" java.lang...");

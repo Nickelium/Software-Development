@@ -63,15 +63,16 @@ public class BugReportService {
      * @param creator The creator of the bug report
      * @param subSystem The subsystem of the bug report
      * @param pblc The access right of the bug report.
+     * @param impactFactor A score between 1 and 5 to show the impact of the bug.
      *
      * @return The newly created bug report
      *
      * @throws ReportErrorToUserException the title or description is empty.
      * @throws IllegalArgumentException the creator or subsystem is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc) throws ReportErrorToUserException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc, int impactFactor) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, creator, pblc);
+        BugReport bugReport = new BugReport(title, description, creator, pblc, impactFactor);
         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
         subSystem.addBugReport(bugReport);
 
@@ -90,15 +91,16 @@ public class BugReportService {
      * @param creationDate The creation date of the bug report
      * @param initialAssignees The list of initialAssignies van de bug report
      * @param pblc The access right of the bug report.
+     * @param impactFactor A score between 1 and 5 to show the impact of the bug.
      *
      * @return The newly created bug report
      *
      * @throws ReportErrorToUserException the given title of description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationdata or tag is null.
      */
-    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc, TheDate creationDate, List<Developer> initialAssignees) throws ReportErrorToUserException
+    public BugReport createBugReport(String title, String description, Issuer creator, SubSystem subSystem, boolean pblc, TheDate creationDate, List<Developer> initialAssignees, int impactFactor) throws ReportErrorToUserException
     {
-        BugReport bugReport = new BugReport(title, description, creator, pblc, creationDate, initialAssignees, null);
+        BugReport bugReport = new BugReport(title, description, creator, pblc, creationDate, initialAssignees, null, impactFactor);
         if (subSystem == null) throw new IllegalArgumentException("Subsystem is null");
         subSystem.addBugReport(bugReport);
 
@@ -280,6 +282,7 @@ public class BugReportService {
     }
 
     public List<Test> getAllTests(User user) {
+        if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
         List<Test> tests = new ArrayList<>();
         for (BugReport br : getAllBugReports(user)) {
             tests.addAll(br.getTests());
@@ -308,6 +311,7 @@ public class BugReportService {
     }
 
     public List<Patch> getAllPatches(User user) {
+        if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
         List<Patch> patches = new ArrayList<>();
         for (BugReport br : getAllBugReports(user)) {
             patches.addAll(br.getPatches());
@@ -332,10 +336,12 @@ public class BugReportService {
     //region Bug Report information
 
     public List<BugReport> getAllBugReportsUserAssignedTo(User user) {
+        if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
         return getAllBugReports(user).stream().filter(x -> x.getAssignees().contains(user)).collect(Collectors.toList());
     }
 
     public List<BugReport> getAllBugReportsCreatedByUser(User user) {
+        if (!(user instanceof Issuer)) throw new IllegalArgumentException("This is not a issuer.");
         return getAllBugReports(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
     }
 

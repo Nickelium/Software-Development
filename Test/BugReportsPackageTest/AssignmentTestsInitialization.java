@@ -89,16 +89,16 @@ public class AssignmentTestsInitialization {
         projectService.assignRole(project2, programmer2, lead2.getDeveloper());
 
         bugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6),1);
 
         bugReport2 = bugReportService.createBugReport("Bugreport2", "Des bugreport2", issuer2, subSystem3, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev4, dev5));
+                TheDate.TheDateNow(), Arrays.asList(dev4, dev5),1);
 
         bugReportService.createTest("Test", dev3, bugReport2);
         Patch patch = bugReportService.createPatch("Patch", dev5, bugReport2);
         tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(patch));
 
         bugReport3 = bugReportService.createBugReport("Bugreport3", "Des bugreport3", issuer1, subSystem4, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev4, dev6));
+                TheDate.TheDateNow(), Arrays.asList(dev4, dev6),1);
     }
 }

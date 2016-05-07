@@ -29,7 +29,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6),1);
 
         bugReportService.createTest("Test", dev3, bugreport);
         bugReportService.createPatch("Patch", dev6, bugreport);
@@ -45,7 +45,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6),1);
 
         tagAssignmentService.assignTag(dev7, bugreport, new UnderReview());
         assertEquals(UnderReview.class, bugreport.getTag().getClass());
@@ -64,7 +64,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6),1);
 
         bugReportService.createTest("Test", dev3, bugreport);
         Patch patch = bugReportService.createPatch("Patch", dev6, bugreport);
@@ -95,7 +95,7 @@ public class TagAssignmentServiceTest extends AssignmentTestsInitialization {
 
         SubSystem subSystem = projectService.createSubsystem("Subsys test", "des", project);
         BugReport bugreport = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6),1);
 
         bugReportService.createTest("Test", dev3, bugreport);
         Patch patch = bugReportService.createPatch("Patch", dev5, bugreport);

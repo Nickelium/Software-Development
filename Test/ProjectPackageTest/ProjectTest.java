@@ -194,8 +194,8 @@ public class ProjectTest {
 	public void getAllBugReports_SUCCES() throws Exception
 	{		
 		List<BugReport> list = new ArrayList<>();
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC,1);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC,1);
 		list.add(bug1);
 		list.add(bug2);
 
@@ -227,7 +227,7 @@ public class ProjectTest {
 	public void getAllMilestones_FAIL2() throws Exception{
 
 		projectService.setNewProjectMilestone(project,  new Milestone("M1"));
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC,1);
 		bugReportService.setTargetMilestone(bug1, new TargetMilestone("M1.2"));
 		projectService.setNewProjectMilestone(project, new Milestone("M1.5"));
 
@@ -236,8 +236,8 @@ public class ProjectTest {
 	@Test
 	public void fork_SUCCES() throws Exception
 	{
-		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC);
-		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC);
+		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, subsystem1, BugReport.PUBLIC,1);
+		BugReport bug2 = bugReportService.createBugReport("bug2", "d", dev, subsystem2, BugReport.PUBLIC,1);
 
 		projectService.assignRole(project, programmer, lead.getDeveloper());
 

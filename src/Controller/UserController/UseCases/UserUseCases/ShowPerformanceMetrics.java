@@ -26,6 +26,17 @@ public class ShowPerformanceMetrics extends UseCase {
         changeSystem = false;
     }
 
+    /**
+     * Lets a user of any type view the performance metrics of a developer.
+     *
+     * 2. The system shows a list of all developers.
+     * 3. The user selects a developer.
+     * 4. The system shows the details of the developer together with the
+     *    performance metrics discussed in 3.3.6.
+     *
+     * @throws ReportErrorToUserException is thrown in case that the method encounters invalid input.
+     * @throws IndexOutOfBoundsException is thrown when a user puts an incorrect option index.
+     */
     @Override
     public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
 
