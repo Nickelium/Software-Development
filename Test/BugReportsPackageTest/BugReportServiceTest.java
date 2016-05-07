@@ -7,6 +7,7 @@ import Model.BugReport.SearchMethod.SearchOnDescription;
 import Model.BugReport.SearchMethod.SearchOnFiled;
 import Model.BugReport.SearchMethod.SearchOnTitle;
 import Model.BugReport.TagTypes.Assigned;
+import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.UnderReview;
 import Model.Milestone.Milestone;
 import Model.Milestone.TargetMilestone;
@@ -249,7 +250,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
 
     @Test
     public void getAverageLinesOfPatchCodeByUser_Valid() {
-        assert bugReportService.getAverageLinesOfPatchCodeByUser(dev3) == 1.0;
+        assert bugReportService.getAverageLinesOfPatchCodeByUser(dev3) == 2.0;
     }
 
     @Test
@@ -264,6 +265,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
     @Test
     public void getAllBugReportsWithTagUserAssignedTo_Valid() {
         assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev2, Assigned.class).size() == 1;
+        assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev2, Closed.class).size() == 1;
     }
 
     @Test
@@ -280,6 +282,7 @@ public class BugReportServiceTest extends BugReportInitializaton {
     @Test
     public void getAllBugReportsWithTagCreatedByUser_Valid() {
         assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer1, Assigned.class).size() == 2;
+        assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer2, Closed.class).size() == 1;
     }
 
     @Test
