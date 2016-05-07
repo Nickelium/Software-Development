@@ -15,13 +15,13 @@ public class BugImpactTest extends HealthIndicatorTestInitialization {
     @Test
     public void allNewTagTest() {
         double impact = subSystem3.getBugImpact();
-        assertEquals(36.0, impact, DELTA);
+        assertEquals(54.0, impact, DELTA);
     }
 
     @Test
     public void differentTagsTest() throws ReportErrorToUserException {
-        changeBugReport1TagToResolved();
-        changeBugReport5TagToAssigned();
+        changeBugReportTagToResolved(bugReport1);
+        changeBugReportTagToAssigned(bugReport5);
 
         double impact = subSystem1.getBugImpact();
         assertEquals(4.7, impact, DELTA);

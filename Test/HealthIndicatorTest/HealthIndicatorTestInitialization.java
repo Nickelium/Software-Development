@@ -110,23 +110,22 @@ public class HealthIndicatorTestInitialization {
 
     private void bugReportInitialization() throws ReportErrorToUserException {
         this.bugReport1 = this.bugReportService.createBugReport("BugReport1", "b1", iss1, subSystem1, true, 7);
-        this.bugReport2 = this.bugReportService.createBugReport("BugReport2", "b2", iss2, subSystem3, true, 3);
+        this.bugReport2 = this.bugReportService.createBugReport("BugReport2", "b2", iss2, subSystem3, true, 9);
         this.bugReport3 = this.bugReportService.createBugReport("BugReport3", "b3", iss3, subSystem2, true, 6);
         this.bugReport4 = this.bugReportService.createBugReport("BugReport4", "b4", iss3, subSystem3, true, 9);
         this.bugReport5 = this.bugReportService.createBugReport("BugReport5", "b5", iss2, subSystem1, true, 2);
     }
 
-    protected void changeBugReport1TagToResolved() throws ReportErrorToUserException {
-        this.developerAssignmentService.assignDeveloperToBugReport(this.lead.getDeveloper(), prog.getDeveloper(), bugReport1);
-        this.developerAssignmentService.assignDeveloperToBugReport(this.lead.getDeveloper(), test.getDeveloper(), bugReport1);
-        this.bugReportService.createTest("Test1", test.getDeveloper(), bugReport1);
-        Patch patch = this.bugReportService.createPatch("Patch1", prog.getDeveloper(), bugReport1);
-        this.tagAssignmentService.assignTag(this.lead.getDeveloper(), bugReport1, new Resolved(patch));
+    protected void changeBugReportTagToResolved(BugReport bugReport) throws ReportErrorToUserException {
+        this.developerAssignmentService.assignDeveloperToBugReport(this.lead.getDeveloper(), prog.getDeveloper(), bugReport);
+        this.developerAssignmentService.assignDeveloperToBugReport(this.lead.getDeveloper(), test.getDeveloper(), bugReport);
+        this.bugReportService.createTest("Test1", test.getDeveloper(), bugReport);
+        Patch patch = this.bugReportService.createPatch("Patch1", prog.getDeveloper(), bugReport);
+        this.tagAssignmentService.assignTag(this.lead.getDeveloper(), bugReport, new Resolved(patch));
     }
 
-    protected void changeBugReport5TagToAssigned() throws ReportErrorToUserException {
-        this.developerAssignmentService.assignDeveloperToBugReport(this.lead.getDeveloper(), prog.getDeveloper(), bugReport5);
-        this.developerAssignmentService.assignDeveloperToBugReport(this.lead.getDeveloper(), test.getDeveloper(), bugReport5);
-        System.out.println(bugReport5.getTag());
+    protected void changeBugReportTagToAssigned(BugReport bugReport) throws ReportErrorToUserException {
+        this.developerAssignmentService.assignDeveloperToBugReport(this.lead.getDeveloper(), prog.getDeveloper(), bugReport);
+        this.developerAssignmentService.assignDeveloperToBugReport(this.lead.getDeveloper(), test.getDeveloper(), bugReport);
     }
 }
