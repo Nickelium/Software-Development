@@ -27,7 +27,7 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(11).run();
+        developerController.getUseCase(DeveloperUseCase.DECLARE_ACHIEVED_MILESTONE.value).run();
 
         assertTrue(projectService.getAllSubSystems().stream().anyMatch(x -> x.getName().equals("SubSystemB1") && x.getLatestAchievedMilestone().getMilestoneID().equals("M1.4")));
     }
@@ -45,7 +45,7 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
             IUI ui = new TestUI(input);
 
             DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-            developerController.getUseCase(11).run();
+            developerController.getUseCase(DeveloperUseCase.DECLARE_ACHIEVED_MILESTONE.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The new milestone is smaller than the current one");
         }
@@ -66,7 +66,7 @@ public class DeclareAchievedMilestone extends DeveloperControllerInit {
             IUI ui = new TestUI(input);
 
             DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-            developerController.getUseCase(11).run();
+            developerController.getUseCase(DeveloperUseCase.DECLARE_ACHIEVED_MILESTONE.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The new milestone exceeds milestone of subsystem!");
         }

@@ -50,7 +50,7 @@ public class AssignToBugReport extends DeveloperControllerInit {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(10).run();
+        developerController.getUseCase(DeveloperUseCase.ASSIGN_TO_BUGREPORT.value).run();
 
         //Check containing user after
         assertTrue(bugReportService.getAllBugReports(userService.getUser("major")).stream()
@@ -71,7 +71,7 @@ public class AssignToBugReport extends DeveloperControllerInit {
             IUI ui = new TestUI(input);
 
             DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("test1"), developerAssignmentService, tagAssignmentService, mailboxService);
-            developerController.getUseCase(10).run();
+            developerController.getUseCase(DeveloperUseCase.ASSIGN_TO_BUGREPORT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("Cannot assign developer to bug report!");
         }

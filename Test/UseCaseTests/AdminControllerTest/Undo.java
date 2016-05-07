@@ -16,12 +16,13 @@ import java.util.List;
  */
 public class Undo extends AdminControllerInit {
 
+    //TODO
     @Test
     public void undoTest() throws Exception {
         String[] simulateUserInput = {
                 "3",
                 "0",
-                "2",
+                "3",
                 "1",
                 "2",
                 "Test",
@@ -31,10 +32,10 @@ public class Undo extends AdminControllerInit {
                 ".",
                 "1",
                 "-1",
-                "14",
+                "15",
                 "1",
                 "0",
-                "7",
+                "8",
                 "0",
         };
 

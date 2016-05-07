@@ -26,7 +26,7 @@ public class InspectBugReport extends IssuerControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(3).run();
+        issuerController.getUseCase(IssuerUseCase.INSPECT_BUGREPORT.value).run();
     }
 
     @Test
@@ -40,7 +40,7 @@ public class InspectBugReport extends IssuerControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(3).run();
+        issuerController.getUseCase(IssuerUseCase.INSPECT_BUGREPORT.value).run();
     }
 
     @Test
@@ -54,7 +54,7 @@ public class InspectBugReport extends IssuerControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(3).run();
+        issuerController.getUseCase(IssuerUseCase.INSPECT_BUGREPORT.value).run();
     }
 
     @Test
@@ -69,7 +69,7 @@ public class InspectBugReport extends IssuerControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-            issuerController.getUseCase(3).run();
+            issuerController.getUseCase(IssuerUseCase.INSPECT_BUGREPORT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("No bug reports found.");
         }
@@ -87,7 +87,7 @@ public class InspectBugReport extends IssuerControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-            issuerController.getUseCase(3).run();
+            issuerController.getUseCase(IssuerUseCase.INSPECT_BUGREPORT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("No bug reports found.");
         }
@@ -105,7 +105,7 @@ public class InspectBugReport extends IssuerControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-            issuerController.getUseCase(3).run();
+            issuerController.getUseCase(IssuerUseCase.INSPECT_BUGREPORT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("No bug reports found.");
         }
@@ -121,7 +121,7 @@ public class InspectBugReport extends IssuerControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-            issuerController.getUseCase(3).run();
+            issuerController.getUseCase(IssuerUseCase.INSPECT_BUGREPORT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("Enter a valid number.");
         }

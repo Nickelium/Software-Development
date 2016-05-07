@@ -23,7 +23,7 @@ public class DeleteProject extends AdminControllerInit{
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(5).run();
+        adminController.getUseCase(AdminUseCase.DELETE_PROJECT.value).run();
 
         assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("ProjectA"));
     }
@@ -39,7 +39,7 @@ public class DeleteProject extends AdminControllerInit{
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(5).run();
+            adminController.getUseCase(AdminUseCase.DELETE_PROJECT.value).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 6, Size: 2");
             assert sizeFirst == projectService.getAllProjects().size();

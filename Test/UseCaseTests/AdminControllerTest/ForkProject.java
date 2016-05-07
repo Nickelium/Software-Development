@@ -32,7 +32,7 @@ public class ForkProject  extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(3).run();
+        adminController.getUseCase(AdminUseCase.FORK_PROJECT.value).run();
 
         assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("ProjectA")).collect(Collectors.toList()).size() == 2;
     }
@@ -51,7 +51,7 @@ public class ForkProject  extends AdminControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(3).run();
+            adminController.getUseCase(AdminUseCase.FORK_PROJECT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The version cannot be lower than or equal to the previous one!");
             assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("ProjectA")).collect(Collectors.toList()).size() == 1;
@@ -72,7 +72,7 @@ public class ForkProject  extends AdminControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(3).run();
+            adminController.getUseCase(AdminUseCase.FORK_PROJECT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The date is before the creation date.");
             assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("ProjectA")).collect(Collectors.toList()).size() == 1;
@@ -94,7 +94,7 @@ public class ForkProject  extends AdminControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(3).run();
+            adminController.getUseCase(AdminUseCase.FORK_PROJECT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The budget cannot be negative.");
             assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("ProjectA")).collect(Collectors.toList()).size() == 1;
@@ -116,7 +116,7 @@ public class ForkProject  extends AdminControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(3).run();
+            adminController.getUseCase(AdminUseCase.FORK_PROJECT.value).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 5, Size: 2");
         }

@@ -17,6 +17,16 @@ import org.junit.Before;
  */
 public class InitializerTest {
 
+    public enum UseCase {
+        SHOW_PROJECT(0), SHOW_PERFORMANCE_METRICS(2);
+
+        public final int value;
+
+        UseCase(int value) {
+            this.value = value;
+        }
+    }
+
     protected IInitializer initializer;
     protected ProjectService projectService;
     protected BugReportService bugReportService;

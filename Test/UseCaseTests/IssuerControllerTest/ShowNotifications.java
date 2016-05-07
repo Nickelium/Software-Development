@@ -26,7 +26,7 @@ public class ShowNotifications extends IssuerControllerInit {
         TestUI uiRegister = new TestUI(inputRegister);
 
         UserController issuerControllerRegister = new IssuerController(uiRegister, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-        issuerControllerRegister.getUseCase(7).run();
+        issuerControllerRegister.getUseCase(IssuerUseCase.REGISTER_FOR_NOTIFICATION.value).run();
 
         String[] simulatedUserInputCreateBugReport = {
                 "0",
@@ -47,7 +47,7 @@ public class ShowNotifications extends IssuerControllerInit {
         TestUI uiCreateBugReport = new TestUI(inputCreateBugReport);
 
         UserController issuerControllerCreateBugReport = new IssuerController(uiCreateBugReport, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-        issuerControllerCreateBugReport.getUseCase(2).run();
+        issuerControllerCreateBugReport.getUseCase(IssuerUseCase.CREATE_BUGREPORT.value).run();
 
         String[] simulatedUserInput = {
                 "1"
@@ -56,7 +56,7 @@ public class ShowNotifications extends IssuerControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController issuerController = new IssuerController(ui, userService, projectService, bugReportService, performanceMetricsService, tagAssignmentService, mailboxService, currentUser);
-        issuerController.getUseCase(6).run();
+        issuerController.getUseCase(IssuerUseCase.SHOW_NOTIFICATIONS.value).run();
     }
 
 }
