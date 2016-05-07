@@ -271,5 +271,11 @@ public class ProjectTest {
 
 	}
 	
+	@Test
+	public void getHeight_SUCCESS2()
+	{
+		assertEquals(project.getHeight(), 3);
+	}
+	
 	
 }

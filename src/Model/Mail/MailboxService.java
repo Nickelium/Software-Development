@@ -151,7 +151,7 @@ public class MailboxService
 	}
 	
 	/**
-	 * Method to register for a comment creation in the given subject
+	 * Method to register for a milestone change in the given subject
 	 * 
 	 * @param user The user that wants to register
 	 * @param s The subject to observe
@@ -166,10 +166,11 @@ public class MailboxService
 	}
 	
 	/**
-	 * Method to register for a comment creation in the given subject
+	 * Method to register for a change to a specific milestone in the given subject
 	 * 
 	 * @param user The user that wants to register
 	 * @param s The subject to observe
+	 * @param milestone The milestone to be notified
 	 * 
 	 * @throws IllegalArgumentException the user or subject or milestone is null
 	 */
@@ -182,7 +183,7 @@ public class MailboxService
 	}
 	
 	/**
-	 * Method to register for a comment creation in the given subject
+	 * Method to register for a fork of the given subject
 	 * 
 	 * @param user The user that wants to register
 	 * @param s The subject to observe

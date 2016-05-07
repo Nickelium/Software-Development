@@ -37,6 +37,12 @@ public class TheDateTest {
 		{
 			TheDate d = new TheDate("10/50/10");
 		}
+		
+		@Test (expected = ReportErrorToUserException.class)
+		public void constructor1Param_FAILPATTERN() throws ReportErrorToUserException
+		{
+			TheDate d = new TheDate("AAA");
+		}
 
 
 		@Test

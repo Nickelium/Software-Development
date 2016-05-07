@@ -43,9 +43,9 @@ public class Notification
 	}
 	
 	/**
-	 * Getter to get the bug report that has changed
+	 * Getter to get the subject that has changed
 	 * 
-	 * @return The bug report that has changed
+	 * @return The subject that has changed
 	 */
 	public Subject getSubject()
 	{

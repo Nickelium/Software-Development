@@ -185,5 +185,30 @@ public class SubSystemTest {
 
 	}
 	
+	@Test
+	public void getSubSystems_SUCCESS()
+	{
+		assertEquals(subsystem1.getSubSystems().size(),1);
+		assertTrue(subsystem1.getSubSystems().contains(subsystem2));
+	}
+	
+	@Test
+	public void isParrent_SUCCESS()
+	{
+		assertTrue(subsystem1.isParent(subsystem2));
+	}
+	
+	@Test
+	public void isParrent_FAIL()
+	{
+		assertTrue(!subsystem1.isParent(subsystem3));
+	}
+	
+	@Test
+	public void isParrent_FAILNULL()
+	{
+		assertTrue(!subsystem1.isParent(null));
+	}
+	
 
 }

@@ -91,7 +91,8 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      */
     public Project forkProject(Project project) throws ReportErrorToUserException
     {
-    	if(project == null) throw new IllegalArgumentException("The project cannot be null");    	
+    	if(project == null) throw new IllegalArgumentException("The project cannot be null");
+    	
     	Project forkedProject = project.fork();
     	
     	projectList.insert(forkedProject);

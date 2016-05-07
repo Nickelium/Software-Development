@@ -111,7 +111,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	/**
-	 * Method to register for a change of a tag of a bug report in the given subject
+	 * Method to register for a change of milestone in the given subject
 	 *
 	 * @param structure The subject to observe
 	 * @throws IllegalArgumentException the structure is null
@@ -124,9 +124,10 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	/**
-	 * Method to register for a change of a tag of a bug report in the given subject
+	 * Method to register for a change of a specific milestone in the given subject
 	 *
 	 * @param structure The subject to observe
+	 * @param milestone The milestone to be notified
 	 * @throws IllegalArgumentException the structure or milestone is null
 	 */
 	public void registerSpecificMilestone(Subject structure, Milestone milestone)
@@ -138,7 +139,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	/**
-	 * Method to register for a change of a tag of a bug report in the given subject
+	 * Method to register for a fork of given subject
 	 *
 	 * @param structure The subject to observe
 	 * @throws IllegalArgumentException the structure is null
@@ -435,7 +436,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	}
 	
 	
-	//Innerclass observer bug report
+	//Innerclass observer
 	/**
 	 * Inner class observer of a creation of a new bug report
 	 *
@@ -492,6 +493,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		 * Constructor 
 		 * 
 		 * @param structure The subject to observe
+		 * @param milestone The milestone to be notified
 		 */
 		public ObserverSpecificMilestone(Subject structure, Milestone milestone)
 		{

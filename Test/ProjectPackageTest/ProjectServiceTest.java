@@ -170,4 +170,101 @@ public class ProjectServiceTest {
 		projectService.setNewSubSystemMilestone(s, m);
 		assertEquals(s.getLatestAchievedMilestone(), m);
 	}
+	
+	@Test
+	public void removeSubSystem_SUCCESS() throws ReportErrorToUserException
+	{
+		SubSystem s2 = projectService.createSubsystem("A", "A", s);
+		assertTrue(s.getSubSystems().contains(s2));
+		projectService.removeSubSystem(p2, s2);
+		assertTrue(!s.getSubSystems().contains(s2));
+		
+	}
+	
+	@Test
+	public void removeSubSystem_NOREMOVE() throws ReportErrorToUserException
+	{
+		SubSystem s2 = projectService.createSubsystem("A", "A", s);
+		assertTrue(s.getSubSystems().contains(s2));
+		projectService.removeSubSystem(p1, s2);
+		assertTrue(s.getSubSystems().contains(s2));
+		
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void removeSubSystem_FAILPROJECT() throws ReportErrorToUserException
+	{
+		projectService.removeSubSystem(null, s);
+		
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void removeSubSystem_FAILSUBSYSTEM() throws ReportErrorToUserException
+	{
+		projectService.removeSubSystem(p1, null);
+		
+	}
+	
+	@Test
+	public void setNewSubSystemMilestone_LIST_SUCCESS() throws ReportErrorToUserException
+	{
+		List<Milestone> milestones = new ArrayList<>();
+		milestones.add(new Milestone("M1.1"));
+		milestones.add(new Milestone("M1.2"));
+		projectService.setNewSubSystemMilestone(s, milestones);
+		assertEquals(s.getLatestAchievedMilestone(), new Milestone("M1.2"));
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void setNewSubSystemMilestone_LIST_FAILSUBSYSTEM() throws ReportErrorToUserException
+	{
+		List<Milestone> milestones = new ArrayList<>();
+		milestones.add(new Milestone("M1.1"));
+		milestones.add(new Milestone("M1.2"));
+		projectService.setNewSubSystemMilestone(null, milestones);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void setNewSubSystemMilestone_LIST_FAILMILESTONE() throws ReportErrorToUserException
+	{
+		List<Milestone> milestones = null;
+		projectService.setNewSubSystemMilestone(s, milestones);
+	}
+	
+	@Test 
+	public void getParent_SUCCESS() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		assertEquals(projectService.getParentSubSystem(ss),s);
+	}
+	
+	@Test 
+	public void getParent_NOPARENT() throws ReportErrorToUserException
+	{
+		assertEquals(projectService.getParentSubSystem(s),null);
+	}
+	
+	@Test 
+	public void getRelated_SUCCESS() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		SubSystem sss = projectService.createSubsystem("az", "zae", p2);
+		List<SubSystem> list = new ArrayList<>();
+		list.add(ss);
+		list.add(sss);
+		assertTrue(projectService.getRelated(p2, s).containsAll(list));
+		
+	}
+	
+	@Test 
+	public void getRelated_SUCCESS2() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		SubSystem sss = projectService.createSubsystem("az", "zae", ss);
+		List<SubSystem> list = new ArrayList<>();
+		list.add(s);
+		list.add(sss);
+		assertTrue(projectService.getRelated(p2, ss).containsAll(list));
+		
+	}
 }
