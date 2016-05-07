@@ -7,14 +7,35 @@ import Model.User.Developer;
 import Model.User.User;
 
 /**
- * Created by Karina on 06.05.2016.
+ * Class extending the performance metrics class, representing a reporting metric.
+ *
+ * A developer's reporting skill is measured by:
+ *
+ * The number of Duplicate bug reports submitted by the developer
+ * The number of NotABug bug reports submitted by the developer
+ * The total number of bug reports submitted by the developer
  */
 public class Reporting extends PerformanceMetrics {
 
+    /**
+     * Package visible constructor to create a new Reporting object.
+     *
+     * @param bugReportService the bug report service needed to gather information about
+     *                         the tags assigned to bug reports submitted by the developer.
+     */
     Reporting(BugReportService bugReportService) {
         super(bugReportService);
     }
 
+    /**
+     * Method returning a metrics component, containing all required information for the
+     * reporting metric. Method looks up the information, and adds the information holders
+     * to the information array.
+     *
+     * @param user the developer of who the performance metrics have to be looked up.
+     * @return a metrics component containing all needed information (information about tags and bug reports)
+     * @throws IllegalArgumentException is thrown if the user in the argument is not a developer.
+     */
     @Override
     MetricsComponent construct(User user) throws IllegalArgumentException {
         if (!(user instanceof Developer))

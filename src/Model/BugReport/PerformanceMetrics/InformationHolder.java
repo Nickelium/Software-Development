@@ -1,13 +1,23 @@
 package Model.BugReport.PerformanceMetrics;
 
-/**
- * Created by Karina on 06.05.2016.
- */
-
 // VALUE CLASS
+
+/**
+ * Value class representing an information holder object.
+ * The information holder object contains a description about a certain way
+ * that a part of a performance metric is measured. The associated value
+ * for that metric is also contained within the object.
+ */
 public class InformationHolder {
 
+    /**
+     * A description denoting what kind of information is provided by the value field.
+     */
     private String description;
+
+    /**
+     * //TODO value zou string moeten zijn, refactoring nodig voor alle uses met information holders
+     */
     private double value;
 
     InformationHolder(String description, double value) {
@@ -17,6 +27,7 @@ public class InformationHolder {
 
     //region getters & setters
 
+    //TODO
     public String getDescription() {
         return description;
     }
