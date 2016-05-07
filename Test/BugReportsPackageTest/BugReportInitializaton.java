@@ -86,10 +86,10 @@ public class BugReportInitializaton {
         subSystem1A1 = projectService.createSubsystem("Sub1A1", "Des Sub1A1", subSystem1A);
         subSystem2 = projectService.createSubsystem("Sub2", "Des Sub2", project2);
 
-        bugReport1 = bugReportService.createBugReport("Bug1", "Des Bug1", issuer1, subSystem1B, BugReport.PRIVATE);
+        bugReport1 = bugReportService.createBugReport("Bug1", "Des Bug1", issuer1, subSystem1B, BugReport.PRIVATE,1);
 
         bugReport2 = bugReportService.createBugReport("Bug2", "Des Bug2", issuer2, subSystem1A1, BugReport.PUBLIC, TheDate.TheDateNow(),
-                Collections.singletonList(dev2));
+                Collections.singletonList(dev2),1);
         bugReportService.createTest("Test", dev3, bugReport2);
         bugReportService.createTest("Test 2", dev3, bugReport2);
         bugReportService.createTest("Test 3", dev4, bugReport2);
@@ -99,11 +99,11 @@ public class BugReportInitializaton {
         tagAssignmentService.assignTag(dev1, bugReport2, new Resolved(patch));
         tagAssignmentService.assignTag(issuer2, bugReport2, new Closed(1));
 
-        bugReport3 = bugReportService.createBugReport("Bug3", "Des Bug3", dev2, subSystem2, BugReport.PUBLIC, TheDate.TheDateNow(), Arrays.asList(dev1, dev2));
+        bugReport3 = bugReportService.createBugReport("Bug3", "Des Bug3", dev2, subSystem2, BugReport.PUBLIC, TheDate.TheDateNow(), Arrays.asList(dev1, dev2),1);
         comment1 = bugReportService.createComment("Test Comment", issuer1, bugReport1);
         tagAssignmentService.assignTag(dev2, bugReport3, new NotABug());
 
         bugReport4 = bugReportService.createBugReport("Bug4", "Des Bug4", issuer2, subSystem1A1, BugReport.PUBLIC, TheDate.TheDateNow(),
-                Collections.singletonList(dev3));
+                Collections.singletonList(dev3),1);
     }
 }

@@ -107,8 +107,11 @@ public class CreateBugReport extends IssuerUseCase{
             throw new ReportErrorToUserException("Invalid answer!");
         }
 
+        getUi().display("Please specify the impact of the bug. This is a number between 0 (excluded) and 10 (included).");
+        int impact = getUi().readInt();
+
         // Step 14
-        BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem, pblc);
+        BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem, pblc, impact);
         if (!procedure.equals("")) getBugReportService().setProcedureBug(bugReport, procedure);
         if (!stackTrace.equals("")) getBugReportService().setStackTrace(bugReport, stackTrace);
         if (!errorMessage.equals("")) getBugReportService().setErrorMessage(bugReport, errorMessage);

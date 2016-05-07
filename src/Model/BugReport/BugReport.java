@@ -71,13 +71,14 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
      * @param description The description of the BugReport.
      * @param creator The issuer of the bug report.
      * @param pblc True if the bug report is public.
+     * @param impactFactor A score between 1 and 5 to show the impact of the bug.
      *
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem or creator is null.
      */
-    BugReport(String title, String description, Issuer creator, boolean pblc) throws ReportErrorToUserException
+    BugReport(String title, String description, Issuer creator, boolean pblc, int impactFactor) throws ReportErrorToUserException
     {
-        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList<>(), null);
+        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList<>(), null, impactFactor);
     }
     
     /**
@@ -90,16 +91,18 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
      * @param initialAssignies The list of assignees for this bug report.
      * @param targetMilestone The target milestone of a bug report.
      * @param pblc The access right to this bugreport.
+     * @param impactFactor A score between 1 and 5 to show the impact of the bug.
      *
      * @throws ReportErrorToUserException The title or description is empty.
      * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
      */
-    BugReport(String title, String description, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies, TargetMilestone targetMilestone) throws ReportErrorToUserException
+    BugReport(String title, String description, Issuer creator, boolean pblc, TheDate creationDate, List<Developer> initialAssignies, TargetMilestone targetMilestone, int impactFactor) throws ReportErrorToUserException
     {
         setTitle(title);
         setDescription(description);
         setCreator(creator);
         setCreationDate(creationDate);
+        setImpactFactor(impactFactor);
         this.tag = new New();
         this.pblc = pblc;
         this.id = new BugReportID();

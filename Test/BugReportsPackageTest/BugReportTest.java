@@ -23,7 +23,7 @@ public class BugReportTest extends BugReportInitializaton {
     @Before
     public void initialization() throws ReportErrorToUserException {
         super.initialization();
-        extraBugReport1 = bugReportService.createBugReport("Test bug", "Des Test Bug", issuer1, subSystem1B, BugReport.PUBLIC);
+        extraBugReport1 = bugReportService.createBugReport("Test bug", "Des Test Bug", issuer1, subSystem1B, BugReport.PUBLIC,1);
     }
 
     @Test

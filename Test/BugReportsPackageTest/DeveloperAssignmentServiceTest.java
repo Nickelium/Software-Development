@@ -29,7 +29,7 @@ public class DeveloperAssignmentServiceTest extends AssignmentTestsInitializatio
 
         extraSubsystem1 = projectService.createSubsystem("Subsys test", "des", extraProject1);
         extraBugReport1 = bugReportService.createBugReport("Bugreport1", "Des bugreport1", issuer1, subSystem1, BugReport.PUBLIC,
-                TheDate.TheDateNow(), Arrays.asList(dev3, dev6));
+                TheDate.TheDateNow(), Arrays.asList(dev3, dev6),1);
     }
 
     @Test (expected = IllegalArgumentException.class)
