@@ -56,12 +56,12 @@ public class NotificationTest
 		p2 = projectService.createProject("P", "D", new TheDate("10/10/2018"), 10, new Lead(dev));
 		s = projectService.createSubsystem("Sub", "des", p);
 		s2 = projectService.createSubsystem("Sub", "des", p2);
-		bugReport = bugReportService.createBugReport("T", "D", user, s, BugReport.PUBLIC);
-		bugReport2 = bugReportService.createBugReport("T", "D", user, s2, BugReport.PUBLIC);
+		bugReport = bugReportService.createBugReport("T", "D", user, s, BugReport.PUBLIC,1);
+		bugReport2 = bugReportService.createBugReport("T", "D", user, s2, BugReport.PUBLIC,1);
 		
 		
 		mailboxService.registerCreationBugReport(dev, p);
-		bugReportNew = bugReportService.createBugReport("T", "D", user, s, BugReport.PUBLIC);
+		bugReportNew = bugReportService.createBugReport("T", "D", user, s, BugReport.PUBLIC,1);
 		
 		notif = mailboxService.getNotifications(dev, 1).get(0);
 	}
