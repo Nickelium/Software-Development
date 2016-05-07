@@ -35,6 +35,21 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
 
     //region Projects
 
+    private boolean contains(Project projectCheck)
+    {
+    	for(Project project : getAllProjects())
+    		if(projectCheck.equals(project)) return true;
+    	return false;
+    }
+    
+    private boolean contains(SubSystem subsystemCheck)
+    {
+    	for(Project project : getAllProjects())
+    		for(SubSystem subsystem : project.getAllSubSystems())
+    			if(subsystemCheck.equals(subsystem)) return true;
+    	return false;
+    }
+    
     /**
      * Getter to request all the projects.
      *
@@ -76,7 +91,7 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
      */
     public Project forkProject(Project project) throws ReportErrorToUserException
     {
-    	if(project == null) throw new IllegalArgumentException("The project cannot be null");
+    	if(project == null) throw new IllegalArgumentException("The project cannot be null");    	
     	Project forkedProject = project.fork();
     	
     	projectList.insert(forkedProject);
