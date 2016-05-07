@@ -280,6 +280,7 @@ public class BugReportService {
     }
 
     public List<Test> getAllTests(User user) {
+        if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
         List<Test> tests = new ArrayList<>();
         for (BugReport br : getAllBugReports(user)) {
             tests.addAll(br.getTests());
@@ -308,6 +309,7 @@ public class BugReportService {
     }
 
     public List<Patch> getAllPatches(User user) {
+        if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
         List<Patch> patches = new ArrayList<>();
         for (BugReport br : getAllBugReports(user)) {
             patches.addAll(br.getPatches());
@@ -332,10 +334,12 @@ public class BugReportService {
     //region Bug Report information
 
     public List<BugReport> getAllBugReportsUserAssignedTo(User user) {
+        if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
         return getAllBugReports(user).stream().filter(x -> x.getAssignees().contains(user)).collect(Collectors.toList());
     }
 
     public List<BugReport> getAllBugReportsCreatedByUser(User user) {
+        if (!(user instanceof Issuer)) throw new IllegalArgumentException("This is not a issuer.");
         return getAllBugReports(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
     }
 

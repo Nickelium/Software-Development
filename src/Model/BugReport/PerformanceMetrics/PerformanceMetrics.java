@@ -1,6 +1,5 @@
 package Model.BugReport.PerformanceMetrics;
 
-import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.User.User;
 
@@ -15,7 +14,7 @@ public abstract class PerformanceMetrics {
         setBugReportService(bugReportService);
     }
 
-    abstract MetricsComponent construct(User user) throws ReportErrorToUserException;
+    abstract MetricsComponent construct(User user) throws IllegalArgumentException;
 
     //region setters & getters
 

@@ -1,6 +1,5 @@
 package Model.BugReport.PerformanceMetrics;
 
-import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.User.User;
 
@@ -13,9 +12,17 @@ import java.util.List;
 public class PerformanceMetricsService {
 
     private BugReportService bugReportService;
+    private Reporting reporting;
+    private Leadership leadership;
+    private TestSkills testSkills;
+    private ProblemSolving problemSolving;
 
     public PerformanceMetricsService(BugReportService bugReportService) {
         setBugReportService(bugReportService);
+        this.reporting = new Reporting(bugReportService);
+        this.leadership = new Leadership(bugReportService);
+        this.testSkills = new TestSkills(bugReportService);
+        this.problemSolving = new ProblemSolving(bugReportService);
     }
 
     //region setters & getters
@@ -30,13 +37,13 @@ public class PerformanceMetricsService {
 
     //endregion
 
-    public List<MetricsComponent> createPerformanceMetricsForUser(User user) throws ReportErrorToUserException {
+    public List<MetricsComponent> createPerformanceMetricsForUser(User user) throws IllegalArgumentException {
         List<MetricsComponent> metrics = new ArrayList<>();
 
-        metrics.add((new Reporting(bugReportService).construct(user)));
-        metrics.add((new Leadership(bugReportService).construct(user)));
-        metrics.add((new TestSkills(bugReportService).construct(user)));
-        metrics.add((new ProblemSolving(bugReportService).construct(user)));
+        metrics.add(reporting.construct(user));
+        metrics.add(leadership.construct(user));
+        metrics.add(testSkills.construct(user));
+        metrics.add(problemSolving.construct(user));
 
         return metrics;
     }

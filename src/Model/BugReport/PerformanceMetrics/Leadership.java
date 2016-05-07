@@ -1,6 +1,5 @@
 package Model.BugReport.PerformanceMetrics;
 
-import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.User.User;
 
@@ -14,7 +13,7 @@ public class Leadership extends PerformanceMetrics {
     }
 
     @Override
-    MetricsComponent construct(User user) throws ReportErrorToUserException {
+    MetricsComponent construct(User user) throws IllegalArgumentException {
         //TODO
         return new MetricsComponent("Leadership");
     }

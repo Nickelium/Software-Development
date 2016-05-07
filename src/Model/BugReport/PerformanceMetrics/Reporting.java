@@ -1,6 +1,5 @@
 package Model.BugReport.PerformanceMetrics;
 
-import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.TagTypes.Duplicate;
 import Model.BugReport.TagTypes.NotABug;
@@ -17,9 +16,9 @@ public class Reporting extends PerformanceMetrics {
     }
 
     @Override
-    MetricsComponent construct(User user) throws ReportErrorToUserException {
+    MetricsComponent construct(User user) throws IllegalArgumentException {
         if (!(user instanceof Developer))
-            throw new ReportErrorToUserException("This user doesn't have a performance metrics.");
+            throw new IllegalArgumentException("This user doesn't have a performance metrics.");
 
         MetricsComponent metricsComponent = new MetricsComponent("Reporting");
 

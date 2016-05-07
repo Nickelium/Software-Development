@@ -6,10 +6,15 @@ import Model.BugReport.SearchMethod.SearchOnAssigned;
 import Model.BugReport.SearchMethod.SearchOnDescription;
 import Model.BugReport.SearchMethod.SearchOnFiled;
 import Model.BugReport.SearchMethod.SearchOnTitle;
+import Model.BugReport.TagTypes.Assigned;
+import Model.BugReport.TagTypes.UnderReview;
 import Model.Milestone.Milestone;
 import Model.Milestone.TargetMilestone;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -181,4 +186,113 @@ public class BugReportServiceTest extends BugReportInitializaton {
         Patch patch = bugReportService.createPatch("Test", dev1, bugReport1);
         assertTrue(bugReport1.getPatches().contains(patch));
     }
+
+    //region performance metrics functions
+
+    //region Test information
+
+    @Test
+    public void getAllTestsSubmittedByDeveloper_Valid() {
+        List<Model.BugReport.Test> tests = bugReportService.getAllTestsSubmittedByDeveloper(dev3);
+        assert (tests.size() == 2);
+        assert tests.get(0).getCreator().equals(dev3);
+        assert tests.get(1).getCreator().equals(dev3);
+        assert bugReportService.getAllTests(dev3).stream().filter(x -> !(tests.contains(x)) && x.getCreator().equals(dev3)).collect(Collectors.toList()).size() == 0;
+    }
+
+    @Test
+    public void getAllTestsSubmittedByDeveloper_NoTests() {
+        List<Model.BugReport.Test> tests = bugReportService.getAllTestsSubmittedByDeveloper(dev1);
+        assert (tests.size() == 0);
+        assert bugReportService.getAllTests(dev3).stream().filter(x -> x.getCreator().equals(dev1)).collect(Collectors.toList()).size() == 0;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getAllTestsSubmittedByDeveloper_InvalidUsers() {
+        bugReportService.getAllTestsSubmittedByDeveloper(issuer1);
+    }
+
+    @Test
+    public void getAverageLinesOfTestCodeByUser_Valid() {
+        assert bugReportService.getAverageLinesOfTestCodeByUser(dev3) == 1.0;
+    }
+
+    @Test
+    public void getAverageLinesOfTestCodeByUser_NoTests() {
+        assert bugReportService.getAverageLinesOfTestCodeByUser(dev1) == 0.0;
+    }
+
+    //endregion
+
+    //region Patches information
+
+    @Test
+    public void getAllPatchesSubmittedByDeveloper_Valid() {
+        List<Model.BugReport.Patch> patches = bugReportService.getAllPatchesSubmittedByDeveloper(dev4);
+        assert (patches.size() == 2);
+        assert patches.get(0).getCreator().equals(dev4);
+        assert patches.get(1).getCreator().equals(dev4);
+        assert bugReportService.getAllPatches(dev4).stream().filter(x -> !(patches.contains(x)) && x.getCreator().equals(dev4)).collect(Collectors.toList()).size() == 0;
+    }
+
+    @Test
+    public void getAllPatchesSubmittedByDeveloper_NoPatches() {
+        List<Model.BugReport.Test> patches = bugReportService.getAllTestsSubmittedByDeveloper(dev1);
+        assert (patches.size() == 0);
+        assert bugReportService.getAllPatches(dev3).stream().filter(x -> x.getCreator().equals(dev1)).collect(Collectors.toList()).size() == 0;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getAllPatchesSubmittedByDeveloper_InvalidUser() {
+        bugReportService.getAllPatchesSubmittedByDeveloper(issuer1);
+    }
+
+    @Test
+    public void getAverageLinesOfPatchCodeByUser_Valid() {
+        assert bugReportService.getAverageLinesOfPatchCodeByUser(dev3) == 1.0;
+    }
+
+    @Test
+    public void getAverageLinesOfPatchCodeByUser_NoTests() {
+        assert bugReportService.getAverageLinesOfPatchCodeByUser(dev1) == 0.0;
+    }
+
+    //endregion
+
+    //region Bugreport information
+
+    @Test
+    public void getAllBugReportsWithTagUserAssignedTo_Valid() {
+        assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev2, Assigned.class).size() == 1;
+    }
+
+    @Test
+    public void getAllBugReportsWithTagUserAssignedTo_NoAssignedBR() {
+        assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev3, UnderReview.class).size() == 0;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getAllBugReportsWithTagUserAssignedTo_InalidUser() {
+        bugReportService.getAllBugReportsWithTagUserAssignedTo(issuer1, UnderReview.class);
+    }
+
+
+    @Test
+    public void getAllBugReportsWithTagCreatedByUser_Valid() {
+        assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer1, Assigned.class).size() == 2;
+    }
+
+    @Test
+    public void getAllBugReportsWithTagCreatedByUser_NoAssignedBR() {
+        assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer3, Assigned.class).size() == 0;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getAllBugReportsWithTagCreatedByUser_InalidUser() {
+        bugReportService.getAllBugReportsWithTagCreatedByUser(admin, Assigned.class);
+    }
+
+    //endregion
+
+    //endregion
 }
