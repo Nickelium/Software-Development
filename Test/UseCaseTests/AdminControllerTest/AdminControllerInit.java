@@ -14,7 +14,7 @@ public class AdminControllerInit extends InitializerTest {
     public enum AdminUseCase {
         CREATE_PROJECT(3), FORK_PROJECT(4),
         UPDATE_PROJECT(5), DELETE_PROJECT(6), CREATE_SUBSYSTEM(7), UNDO(8),
-        SPLIT_SUBSYSTEM(9), MERGE_SUBSYSTEM(10);
+        SPLIT_SUBSYSTEM(9), MERGE_SUBSYSTEM(10), LOGOUT(11);;
 
         public final int value;
 

@@ -14,7 +14,7 @@ public class IssuerControllerInit extends InitializerTest {
     public enum IssuerUseCase {
         CREATE_BUGREPORT(3), INSPECT_BUGREPORT(4), CREATE_COMMENT(5),
         UPDATE_BUGREPORT(6), SHOW_NOTIFICATIONS(7), REGISTER_FOR_NOTIFICATION(8),
-        UNREGISTER_FOR_NOTIFICATION(9);
+        UNREGISTER_FOR_NOTIFICATION(9), LOGOUT(10);;
 
         public final int value;
 

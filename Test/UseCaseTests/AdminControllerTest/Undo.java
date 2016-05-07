@@ -4,6 +4,8 @@ import Controller.IUI;
 import Controller.Initializer;
 import Controller.MainController;
 import Model.BugReport.BugReport;
+import UseCaseTests.DeveloperControllerTest.DeveloperControllerInit;
+import UseCaseTests.IssuerControllerTest.IssuerControllerInit;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
@@ -22,7 +24,7 @@ public class Undo extends AdminControllerInit {
         String[] simulateUserInput = {
                 "3",
                 "0",
-                "3",
+                String.valueOf(IssuerControllerInit.IssuerUseCase.CREATE_BUGREPORT.value),
                 "1",
                 "2",
                 "Test",
@@ -32,10 +34,10 @@ public class Undo extends AdminControllerInit {
                 ".",
                 "1",
                 "-1",
-                "15",
+                String.valueOf(DeveloperControllerInit.DeveloperUseCase.LOGOUT.value),
                 "1",
                 "0",
-                "8",
+                String.valueOf(AdminUseCase.UNDO.value),
                 "0",
         };
 

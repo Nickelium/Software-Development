@@ -19,7 +19,7 @@ public class DeveloperControllerInit {
 
     public enum DeveloperUseCase {
         ASSIGN_TO_PROJECT(10), ASSIGN_TO_BUGREPORT(11), DECLARE_ACHIEVED_MILESTONE(12),
-        PROPOSE_PATCH(13), PROPOSE_TEST(14);
+        PROPOSE_PATCH(13), PROPOSE_TEST(14), LOGOUT(15);
 
         public final int value;
 
