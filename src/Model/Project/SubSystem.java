@@ -2,7 +2,7 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.HealtIndicator.IHealtIndicator;
+import Model.HealtIndicator.IHealthIndicator;
 import Model.HealtIndicator.IHealthIndicatorAndBugImpact;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
@@ -173,7 +173,7 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
     }
 
     //TODO: Documentation
-    public List<IHealtIndicator> getDirectHealthIndicatorComponents() {
+    public List<IHealthIndicator> getDirectHealthIndicatorComponents() {
         return Collections.unmodifiableList(this.subSystems);
     }
 

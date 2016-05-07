@@ -4,6 +4,8 @@ import Controller.IUI;
 import Controller.Initializer;
 import Controller.MainController;
 import Model.BugReport.BugReport;
+import UseCaseTests.DeveloperControllerTest.DeveloperControllerInit;
+import UseCaseTests.IssuerControllerTest.IssuerControllerInit;
 import UseCaseTests.UseCasesUI.TestUI;
 import org.junit.Test;
 
@@ -16,12 +18,13 @@ import java.util.List;
  */
 public class Undo extends AdminControllerInit {
 
+    //TODO
     @Test
     public void undoTest() throws Exception {
         String[] simulateUserInput = {
                 "3",
                 "0",
-                "2",
+                String.valueOf(IssuerControllerInit.IssuerUseCase.CREATE_BUGREPORT.value),
                 "1",
                 "2",
                 "Test",
@@ -31,10 +34,10 @@ public class Undo extends AdminControllerInit {
                 ".",
                 "1",
                 "-1",
-                "14",
+                String.valueOf(DeveloperControllerInit.DeveloperUseCase.LOGOUT.value),
                 "1",
                 "0",
-                "7",
+                String.valueOf(AdminUseCase.UNDO.value),
                 "0",
         };
 

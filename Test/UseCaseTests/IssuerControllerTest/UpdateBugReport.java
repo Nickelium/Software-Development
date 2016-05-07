@@ -44,7 +44,7 @@ public class UpdateBugReport extends IssuerControllerInit {
         IUI ui = new TestUI(input);
 
         DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-        developerController.getUseCase(5).run();
+        developerController.getUseCase(IssuerUseCase.UPDATE_BUGREPORT.value).run();
 
         assert bugReportService.getAllBugReports(currentUser).stream().filter(x -> x.getTitle().contains("Crash") && x.getTag() instanceof Resolved).collect(Collectors.toList()).size() == 1;
     }
@@ -64,7 +64,7 @@ public class UpdateBugReport extends IssuerControllerInit {
             IUI ui = new TestUI(input);
 
             DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("maria"), developerAssignmentService, tagAssignmentService, mailboxService);
-            developerController.getUseCase(5).run();
+            developerController.getUseCase(IssuerUseCase.UPDATE_BUGREPORT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("Cannot preform tag change! No valid permission.");
             assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().contains("Crash") && x.getTag() instanceof Assigned);
@@ -85,7 +85,7 @@ public class UpdateBugReport extends IssuerControllerInit {
             IUI ui = new TestUI(input);
 
             DeveloperController developerController = new DeveloperController(ui, userService, projectService, bugReportService, performanceMetricsService, userService.getUser("major"), developerAssignmentService, tagAssignmentService, mailboxService);
-            developerController.getUseCase(5).run();
+            developerController.getUseCase(IssuerUseCase.UPDATE_BUGREPORT.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("Cannot preform tag change! No valid permission.");
             assert bugReportService.getAllBugReports(currentUser).stream().noneMatch(x -> x.getTitle().contains("Crash") && x.getTag() instanceof UnderReview);

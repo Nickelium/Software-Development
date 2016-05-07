@@ -31,7 +31,7 @@ public class CreateSubSystem extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(6).run();
+        adminController.getUseCase(AdminUseCase.CREATE_SUBSYSTEM.value).run();
 
         assert projectService.getAllSubSystems().stream().filter(x -> x.getName().equals("Sub System Name Test")).collect(Collectors.toList()).size() == 1;
     }
@@ -47,7 +47,7 @@ public class CreateSubSystem extends AdminControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(6).run();
+            adminController.getUseCase(AdminUseCase.CREATE_SUBSYSTEM.value).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 10, Size: 2");
         }
@@ -68,7 +68,7 @@ public class CreateSubSystem extends AdminControllerInit {
         TestUI ui = new TestUI(input);
 
         UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-        adminController.getUseCase(6).run();
+        adminController.getUseCase(AdminUseCase.CREATE_SUBSYSTEM.value).run();
 
         assert projectService.getAllSubSystems().stream().filter(x -> x.getName().equals("Sub System Name Test")).collect(Collectors.toList()).size() == 1;
     }
@@ -84,7 +84,7 @@ public class CreateSubSystem extends AdminControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(6).run();
+            adminController.getUseCase(AdminUseCase.CREATE_SUBSYSTEM.value).run();
         } catch (IndexOutOfBoundsException e) {
             assert e.getMessage().equals("Index: 10, Size: 8");
         }
@@ -101,7 +101,7 @@ public class CreateSubSystem extends AdminControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(6).run();
+            adminController.getUseCase(AdminUseCase.CREATE_SUBSYSTEM.value).run();
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("This is an invalid input");
         }

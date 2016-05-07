@@ -3,20 +3,20 @@ package Model.HealtIndicator;
 /**
  * Created by Tom on 2/05/16.
  */
-public class HealthIndicatorA1 implements IHealtIndicatorAlgorithm {
+public class HealthIndicatorA1 implements IHealthIndicatorAlgorithm {
     @Override
-    public HealthIndicator get(IHealtIndicator object) {
+    public HealthIndicator get(IHealthIndicator object) {
         int compHealth = getHealthIndicatorComponentsHealth(object);
         int impactHealth = getBugImpactContainerHealth(object);
 
         int health = Math.min(compHealth, impactHealth);
-        return HealthIndicator.getHealtIndicatorByValue(health);
+        return HealthIndicator.getHealthIndicatorByValue(health);
 
     }
 
-    private int getHealthIndicatorComponentsHealth(IHealtIndicator object) {
+    private int getHealthIndicatorComponentsHealth(IHealthIndicator object) {
         int minHealthValue = HealthIndicator.HEALTHY.getValue();
-        for (IHealtIndicator obj : object.getDirectHealthIndicatorComponents()) {
+        for (IHealthIndicator obj : object.getDirectHealthIndicatorComponents()) {
             int healthValue = this.get(obj).getValue();
             if (healthValue < minHealthValue) {
                 minHealthValue = healthValue;
@@ -26,7 +26,7 @@ public class HealthIndicatorA1 implements IHealtIndicatorAlgorithm {
         return minHealthValue;
     }
 
-    private int getBugImpactContainerHealth(IHealtIndicator object) {
+    private int getBugImpactContainerHealth(IHealthIndicator object) {
         double impact = 0.0;
 
         if (object instanceof IHealthIndicatorAndBugImpact) {

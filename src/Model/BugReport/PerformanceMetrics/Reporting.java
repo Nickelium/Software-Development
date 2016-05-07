@@ -19,7 +19,7 @@ public class Reporting extends PerformanceMetrics {
     @Override
     MetricsComponent construct(User user) throws ReportErrorToUserException {
         if (!(user instanceof Developer))
-            throw new ReportErrorToUserException("This user doesn't have a performance matrics.");
+            throw new ReportErrorToUserException("This user doesn't have a performance metrics.");
 
         MetricsComponent metricsComponent = new MetricsComponent("Reporting");
 

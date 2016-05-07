@@ -2,7 +2,7 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.HealtIndicator.IHealtIndicator;
+import Model.HealtIndicator.IHealthIndicator;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Memento.Memento;
@@ -25,7 +25,7 @@ import java.util.List;
  *  This class provides getters and setters for most attributes.
  *	Consistency is provided thanks to the checker methods.
  */
-public class Project extends Subject implements Observer, Originator<Project.ProjectMemento, Project>, MilestoneContainer, IHealtIndicator
+public class Project extends Subject implements Observer, Originator<Project.ProjectMemento, Project>, MilestoneContainer, IHealthIndicator
 {
 
 	private String name;
@@ -244,7 +244,7 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 	}
 
     //TODO: Documentation
-    public List<IHealtIndicator> getDirectHealthIndicatorComponents() {
+    public List<IHealthIndicator> getDirectHealthIndicatorComponents() {
         return Collections.unmodifiableList(this.subSystems);
     }
 
