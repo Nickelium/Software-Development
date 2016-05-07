@@ -70,7 +70,7 @@ public class MetricsComponent {
      *                    the information holder object.
      * @param value the value of the new information holder.
      */
-    void addInformation(String description, Double value) {
+    void addInformation(String description, String value) {
         information.add(new InformationHolder(description, value));
     }
 
