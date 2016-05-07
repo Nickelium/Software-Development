@@ -164,6 +164,18 @@ public class SubSystemTest {
 	}
 	
 	@Test
+	public void getHeight_SUCCESS1()
+	{
+		assertEquals(subsystem1.getHeight(), 3);
+	}
+	
+	@Test
+	public void getHeight_SUCCESS2()
+	{
+		assertEquals(subsystem3.getHeight(), 1);
+	}
+	
+	@Test
 	public void toString_SUCCES() throws Exception
 	{
 		String string = "Subsystem name: " + "Test1" + "\nDescription: " + "Test1 description"

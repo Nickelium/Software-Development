@@ -10,6 +10,7 @@ import Model.Mail.Mailbox;
 import Model.Mail.MailboxService;
 import Model.Mail.Notification;
 import Model.Mail.ObserverAspect;
+import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
@@ -262,6 +263,148 @@ public class MailboxServiceTest {
 	
 		List<Notification> notifications = mailboxService.getNotifications(dev, 1);
 
+	}
+
+	@Test 
+	public void registerMilestone_SUCCESS() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 0);
+		List<Notification> notifications = mailboxService.getNotifications(dev, 0);
+		assertEquals(notifications.size(), 0);
+		
+		mailboxService.registerMilestone(dev,s);
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1.1"));
+		
+		registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 1);
+	
+		notifications = mailboxService.getNotifications(dev, 1);
+		assertEquals(notifications.size(), 1);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void registerMilestone_FAILUSER() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		mailboxService.registerMilestone(null, p);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void registerMilestone_FAILSUBJECT() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		mailboxService.registerMilestone(dev, null);
+	}
+	
+	@Test (expected = IndexOutOfBoundsException.class) 
+	public void registerMilestone_NOUPDATE() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 0);
+		
+		mailboxService.registerMilestone(dev, s2);
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1.1"));
+		
+		registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 1);
+	
+		List<Notification> notifications = mailboxService.getNotifications(dev, 1);
+	}
+	
+	
+	@Test
+	public void registerSpecificMilestone_SUCCESS() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 0);
+		List<Notification> notifications = mailboxService.getNotifications(dev, 0);
+		assertEquals(notifications.size(), 0);
+		
+		mailboxService.registerSpecificMilestone(dev,s, new Milestone("M1.1"));
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1.1"));
+		
+		registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 1);
+	
+		notifications = mailboxService.getNotifications(dev, 1);
+		assertEquals(notifications.size(), 1);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void registerSpecificMilestone_FAILUSER() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		mailboxService.registerSpecificMilestone(null, p, new Milestone("M5.3"));
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void registerSpecificMilestone_FAILSUBJECT() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		mailboxService.registerSpecificMilestone(dev, null, new Milestone("M5.3"));
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void registerSpecificMilestone_FAILMILESTONE() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		mailboxService.registerSpecificMilestone(dev, p, null);
+	}
+	
+	@Test (expected = IndexOutOfBoundsException.class) 
+	public void registerSpecificMilestone_NOUPDATE() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 0);
+		
+		mailboxService.registerSpecificMilestone(dev, s2, new Milestone("M1.1"));
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1.2"));
+		
+		registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 1);
+	
+		List<Notification> notifications = mailboxService.getNotifications(dev, 1);
+	}
+	
+	@Test
+	public void registerFork_SUCCESS() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 0);
+		List<Notification> notifications = mailboxService.getNotifications(dev, 0);
+		assertEquals(notifications.size(), 0);
+		
+		mailboxService.registerFork(dev,p);
+		projectService.forkProject(p);
+		
+		registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 1);
+	
+		notifications = mailboxService.getNotifications(dev, 1);
+		assertEquals(notifications.size(), 1);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void registerFork_FAILUSER() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		mailboxService.registerFork(null, p);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void registerFork_FAILSUBJECT() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		mailboxService.registerFork(dev, null);
+	}
+	
+	@Test (expected = IndexOutOfBoundsException.class) 
+	public void registerFork_NOUPDATE() throws ReportErrorToUserException, IndexOutOfBoundsException
+	{	
+		List<ObserverAspect> registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 0);
+		
+		mailboxService.registerFork(dev, p);
+		projectService.forkProject(p2);
+		
+		registrations = mailboxService.getRegistrations(dev);
+		assertEquals(registrations.size(), 1);
+	
+		List<Notification> notifications = mailboxService.getNotifications(dev, 1);
 	}
 
 	@Test

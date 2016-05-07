@@ -102,7 +102,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 * 
 	 * @throws IllegalArgumentException the structure or tag is null
 	 */
-	public void registerSpecificTag(Subject structure, Class tag)
+	public void registerSpecificTag(Subject structure, Class<? extends Tag> tag)
 	{
 		if(structure == null) throw new IllegalArgumentException("Subject structure cannot be null");
 		if(tag == null) throw new IllegalArgumentException("Tag cannot be null");
@@ -334,7 +334,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	 */
 	private class ObserverSpecificTag extends ObserverAspect
 	{
-		private Class tag;
+		private Class<? extends Tag> tag;
 		
 		/**
 		 * Constructor 
@@ -344,7 +344,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		 * 
 		 * @throws IllegalArgumentException the tag class is null
 		 */
-		public ObserverSpecificTag(Subject structure, Class tag)
+		public ObserverSpecificTag(Subject structure, Class<? extends Tag> tag)
 		{
 			super(structure);
 			
@@ -532,6 +532,8 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 	}
 	
+	//Because a registration of a forked project actually is the same as versionID update
+	//We only provide the ObserverFork 
 	private class ObserverFork extends ObserverAspect
 	{
 		
