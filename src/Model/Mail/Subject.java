@@ -38,6 +38,15 @@ public abstract class Subject
 	}
 	
 	/**
+	 * Method to remove all observers
+	 * 
+	 */
+	public void removeAllObservers()
+	{
+		observers.clear();
+	}
+	
+	/**
 	 * Method to notify all observer of this subject
 	 *
 	 * @param s The subject that sends the notification.

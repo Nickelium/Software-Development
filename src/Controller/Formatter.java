@@ -149,6 +149,7 @@ public class Formatter
 	 */
 	public static String formatDetailedProject(Project project)
 	{
+		if(project == null) return "";
 		String parsed = project.toString();
 		for(SubSystem subSystem : project.getSubSystems())
 			parsed += "\n\t" + Formatter.addTabulation(Formatter.formatDetailedSubSystem(subSystem));
@@ -212,6 +213,7 @@ public class Formatter
 	}
 
 	public static String formatPatches(BugReport bugReport) {
+		if(bugReport == null) return "";
 		String parsed = "";
 		for (int i = 0; i < bugReport.getPatches().size(); i++) {
 			parsed += i + ": " + bugReport.getPatches().get(i) + "\n";

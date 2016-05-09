@@ -468,11 +468,12 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 	void removeSubSystem(SubSystem subSystem)
 	{
 		if(subSystem == null) throw new IllegalArgumentException("Subsystem is null");
+	
 		if(subSystems.contains(subSystem)) 
 		{
 			subSystems.remove(subSystem);
 			//unbind
-			subSystem.removeObserver(this);
+			subSystem.removeAllObservers();
 		}
 		else
 			for(SubSystem subSystemChild : subSystems)
