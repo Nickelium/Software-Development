@@ -290,18 +290,6 @@ public class BugReportService {
         return tests;
     }
 
-    public Double getAverageLinesOfTestCodeByUser(User user) {
-        List<Test> tests = getAllTestsSubmittedByDeveloper(user);
-        int linesOfCode = 0;
-
-        for (Test test : tests) {
-            linesOfCode += test.getLines();
-        }
-
-        if (linesOfCode != 0) return ((double) linesOfCode) / tests.size();
-        return 0.0;
-    }
-
     //endregion
 
     //region Patch information
@@ -317,18 +305,6 @@ public class BugReportService {
             patches.addAll(br.getPatches());
         }
         return patches;
-    }
-
-    public Double getAverageLinesOfPatchCodeByUser(User user) {
-        List<Patch> patches = getAllPatchesSubmittedByDeveloper(user);
-        int linesOfCode = 0;
-
-        for (Patch patch : patches) {
-            linesOfCode += patch.getLines();
-        }
-
-        if (linesOfCode != 0) return ((double) linesOfCode) / patches.size();
-        return 0.0;
     }
 
     //endregion

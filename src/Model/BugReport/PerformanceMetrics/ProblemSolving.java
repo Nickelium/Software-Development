@@ -1,12 +1,15 @@
 package Model.BugReport.PerformanceMetrics;
 
 import Model.BugReport.BugReportService;
+import Model.BugReport.Patch;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.New;
 import Model.BugReport.TagTypes.UnderReview;
 import Model.User.Developer;
 import Model.User.User;
+
+import java.util.List;
 
 /**
  * Class extending the performance metrics class, representing a problem solving metric.
@@ -46,15 +49,32 @@ public class ProblemSolving extends PerformanceMetrics {
 
         MetricsComponent metricsComponent = new MetricsComponent("Problem solving");
 
-        metricsComponent.addInformation("The number of Closed bug reports the developer is assigned to", String.valueOf(getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, Closed.class).size()));
+        metricsComponent.addInformation(new InformationHolderInt("The number of Closed bug reports the developer is assigned to",
+                getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, Closed.class).size()));
         int numberOfUnfinishedBugReports = getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, New.class).size()
                 + getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, Assigned.class).size()
                 + getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, UnderReview.class).size();
-        metricsComponent.addInformation("The number of unfinished bug reports the developer is assigned to", String.valueOf(numberOfUnfinishedBugReports));
-        metricsComponent.addInformation("The average lines of code for each submitted patch", String.valueOf(getBugReportService().getAverageLinesOfPatchCodeByUser(user)));
-        metricsComponent.addInformation("The total number of patches submitted", String.valueOf(getBugReportService().getAllPatchesSubmittedByDeveloper(user).size()));
+        metricsComponent.addInformation(new InformationHolderInt("The number of unfinished bug reports the developer is assigned to",
+                numberOfUnfinishedBugReports));
+        metricsComponent.addInformation(new InformationHolderDouble("The average lines of code for each submitted patch",
+                getAverageLinesOfPatchCodeByUser(user)));
+        metricsComponent.addInformation(new InformationHolderInt("The total number of patches submitted",
+                getBugReportService().getAllPatchesSubmittedByDeveloper(user).size()));
 
         return metricsComponent;
+    }
+
+
+    private double getAverageLinesOfPatchCodeByUser(User user) {
+        List<Patch> patches = getBugReportService().getAllPatchesSubmittedByDeveloper(user);
+        int linesOfCode = 0;
+
+        for (Patch patch : patches) {
+            linesOfCode += patch.getLines();
+        }
+
+        if (linesOfCode != 0) return ((double) linesOfCode) / patches.size();
+        return 0.0;
     }
 
 }

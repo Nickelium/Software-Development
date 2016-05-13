@@ -1,8 +1,11 @@
 package Model.BugReport.PerformanceMetrics;
 
 import Model.BugReport.BugReportService;
+import Model.BugReport.Test;
 import Model.User.Developer;
 import Model.User.User;
+
+import java.util.List;
 
 /**
  * Class extending the performance metrics class, representing a test skills metric.
@@ -40,11 +43,27 @@ public class TestSkills extends PerformanceMetrics {
 
         MetricsComponent metricsComponent = new MetricsComponent("Test skills");
 
-        metricsComponent.addInformation("The average number of lines of code for each submitted test", String.valueOf(getBugReportService().getAverageLinesOfTestCodeByUser(user)));
-        metricsComponent.addInformation("The total number of tests submitted", String.valueOf(getBugReportService().getAllTestsSubmittedByDeveloper(user).size()));
+        metricsComponent.addInformation(new InformationHolderDouble("The average number of lines of code for each submitted test",
+                getAverageLinesOfTestCodeByUser(user)));
+        metricsComponent.addInformation(new InformationHolderInt("The total number of tests submitted",
+                getBugReportService().getAllTestsSubmittedByDeveloper(user).size()));
 
         return metricsComponent;
     }
+
+
+    private double getAverageLinesOfTestCodeByUser(User user) {
+        List<Test> tests = getBugReportService().getAllTestsSubmittedByDeveloper(user);
+        int linesOfCode = 0;
+
+        for (Test test : tests) {
+            linesOfCode += test.getLines();
+        }
+
+        if (linesOfCode != 0) return ((double) linesOfCode) / tests.size();
+        return 0.0;
+    }
+
 
 
 }
