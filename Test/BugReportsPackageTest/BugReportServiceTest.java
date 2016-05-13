@@ -214,16 +214,6 @@ public class BugReportServiceTest extends BugReportInitializaton {
         bugReportService.getAllTestsSubmittedByDeveloper(issuer1);
     }
 
-    @Test
-    public void getAverageLinesOfTestCodeByUser_Valid() {
-        assert bugReportService.getAverageLinesOfTestCodeByUser(dev3) == 1.0;
-    }
-
-    @Test
-    public void getAverageLinesOfTestCodeByUser_NoTests() {
-        assert bugReportService.getAverageLinesOfTestCodeByUser(dev1) == 0.0;
-    }
-
     //endregion
 
     //region Patches information
@@ -247,16 +237,6 @@ public class BugReportServiceTest extends BugReportInitializaton {
     @Test(expected = IllegalArgumentException.class)
     public void getAllPatchesSubmittedByDeveloper_InvalidUser() {
         bugReportService.getAllPatchesSubmittedByDeveloper(issuer1);
-    }
-
-    @Test
-    public void getAverageLinesOfPatchCodeByUser_Valid() {
-        assert bugReportService.getAverageLinesOfPatchCodeByUser(dev3) == 2.0;
-    }
-
-    @Test
-    public void getAverageLinesOfPatchCodeByUser_NoTests() {
-        assert bugReportService.getAverageLinesOfPatchCodeByUser(dev1) == 0.0;
     }
 
     //endregion

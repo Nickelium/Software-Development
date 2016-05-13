@@ -2,7 +2,7 @@ package Controller;
 
 import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
-import Model.BugReport.PerformanceMetrics.InformationHolder;
+import Model.BugReport.PerformanceMetrics.IInformationHolder;
 import Model.BugReport.PerformanceMetrics.MetricsComponent;
 import Model.Mail.Notification;
 import Model.Mail.ObserverAspect;
@@ -231,8 +231,8 @@ public class Formatter
 
 		for (MetricsComponent metrics : performanceMetrics) {
 			s += metrics.getTitle() + ":\n";
-			for (InformationHolder information : metrics.getInformation()) {
-				s += "  - " + information.getDescription() + " : " + information.getValue() + "\n";
+			for (IInformationHolder information : metrics.getInformation()) {
+				s += "  - " + information + "\n";
 			}
 		}
 

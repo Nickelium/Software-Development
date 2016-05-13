@@ -22,7 +22,7 @@ public class MetricsComponent {
      * The information array list contains information holders for each property
      * that needs to be checked for the performance metric.
      */
-    private ArrayList<InformationHolder> information = new ArrayList<>();
+    private ArrayList<IInformationHolder> information = new ArrayList<>();
 
     /**
      * Package visible constructor to create a new metrics component object.
@@ -55,7 +55,7 @@ public class MetricsComponent {
      * Returns the list with information holders about a certain skill.
      * @return an unmodifiable list of all informations about a skill.
      */
-    public List<InformationHolder> getInformation() {
+    public List<IInformationHolder> getInformation() {
         return Collections.unmodifiableList(information);
     }
 
@@ -66,12 +66,10 @@ public class MetricsComponent {
     /**
      * Package visible method to add a new information holder to this metrics component.
      *
-     * @param description the description to what kind of information is contained in
-     *                    the information holder object.
-     * @param value the value of the new information holder.
+     * TODO
      */
-    void addInformation(String description, String value) {
-        information.add(new InformationHolder(description, value));
+    void addInformation(IInformationHolder informationHolder) {
+        information.add(informationHolder);
     }
 
 }
