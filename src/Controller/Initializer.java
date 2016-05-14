@@ -64,7 +64,7 @@ public class Initializer implements IInitializer {
             Programmer programmerMaria = new Programmer(maria);
             Tester testerMaria = new Tester(maria);
 
-            Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2016), 0.0, leadMajor);
+            Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2017), 0.0, leadMajor);
 
             projectService.assignRole(projectA, programmerMaria, leadMajor.getDeveloper());
             projectService.assignRole(projectA, testerMaria, leadMajor.getDeveloper());
@@ -89,7 +89,7 @@ public class Initializer implements IInitializer {
             // moeten we toevoegen omdat hun opgave bs is
             Tester testerMajorB = new Tester(major);
 
-            Project projectB = projectService.createProject("ProjectB", "ProjectB description", new TheDate(5, 6, 2016), 0.0, leadMaria);
+            Project projectB = projectService.createProject("ProjectB", "ProjectB description", new TheDate(5, 6, 2017), 0.0, leadMaria);
 
             projectService.assignRole(projectB, programmerMajorB, leadMaria.getDeveloper());
             projectService.assignRole(projectB, testerMajorB, leadMaria.getDeveloper());
@@ -108,7 +108,7 @@ public class Initializer implements IInitializer {
                     doc,
                     subSystemB1,
                     BugReport.PUBLIC,
-                    new TheDate(3, 1, 2016),
+                    new TheDate(3, 1, 2017),
                     Collections.singletonList(maria),
                     2
             );
@@ -126,7 +126,7 @@ public class Initializer implements IInitializer {
                     doc,
                     subSystemA31,
                     BugReport.PUBLIC,
-                    new TheDate(15, 1, 2016),
+                    new TheDate(15, 1, 2017),
                     Arrays.asList(major, maria),
                     7
             );
@@ -138,7 +138,7 @@ public class Initializer implements IInitializer {
                     charlie,
                     subSystemA2,
                     BugReport.PRIVATE,
-                    new TheDate(4, 2, 2016),
+                    new TheDate(4, 2, 2017),
                     new ArrayList<>(),
                     9
             );

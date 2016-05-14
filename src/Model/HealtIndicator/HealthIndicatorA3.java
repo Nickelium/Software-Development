@@ -6,32 +6,35 @@ package Model.HealtIndicator;
 public class HealthIndicatorA3 implements IHealthIndicatorAlgorithm {
     @Override
     public HealthIndicator get(IHealthIndicator object) {
-        int compHealth = getHealthIndicatorComponentsHealth(object);
-        int impactHealth = getBugImpactContainerHealth(object);
+        HealthIndicator compHealth = getHealthIndicatorComponentsHealth(object);
+        HealthIndicator impactHealth = getBugImpactContainerHealth(object);
 
-        int health = Math.min(compHealth, impactHealth);
-        return HealthIndicator.getHealthIndicatorByValue(health);
+        if (compHealth.compareTo(impactHealth) == -1) {
+            return compHealth;
+        } else {
+            return impactHealth;
+        }
 
     }
 
-    private int getHealthIndicatorComponentsHealth(IHealthIndicator object) {
-        int minHealthValue = HealthIndicator.HEALTHY.getValue();
+    private HealthIndicator getHealthIndicatorComponentsHealth(IHealthIndicator object) {
+        HealthIndicator minHealthValue = HealthIndicator.HEALTHY;
         for (IHealthIndicator obj : object.getDirectHealthIndicatorComponents()) {
-            int healthValue = this.get(obj).getValue();
-            if (healthValue < minHealthValue) {
+            HealthIndicator healthValue = this.get(obj);
+            if (healthValue.compareTo(minHealthValue) == -1) {
                 minHealthValue = healthValue;
             }
         }
 
-        if (minHealthValue == HealthIndicator.STABLE.getValue()) {
-            return HealthIndicator.SATISFACTORY.getValue();
+        if (minHealthValue == HealthIndicator.STABLE) {
+            return HealthIndicator.SATISFACTORY;
         } else {
             //Return the health of the minimum health value.
             return minHealthValue;
         }
     }
 
-    private int getBugImpactContainerHealth(IHealthIndicator object) {
+    private HealthIndicator getBugImpactContainerHealth(IHealthIndicator object) {
         double impact = 0.0;
 
         if (object instanceof IHealthIndicatorAndBugImpact) {
@@ -39,18 +42,18 @@ public class HealthIndicatorA3 implements IHealthIndicatorAlgorithm {
         }
 
         if (impact < 10) {
-            return HealthIndicator.HEALTHY.getValue();
+            return HealthIndicator.HEALTHY;
         }
         if (impact < 100) {
-            return HealthIndicator.SATISFACTORY.getValue();
+            return HealthIndicator.SATISFACTORY;
         }
         if (impact < 250) {
-            return HealthIndicator.STABLE.getValue();
+            return HealthIndicator.STABLE;
         }
         if (impact < 500) {
-            return HealthIndicator.SERIOUS.getValue();
+            return HealthIndicator.SERIOUS;
         } else {
-            return HealthIndicator.CRITICAL.getValue();
+            return HealthIndicator.CRITICAL;
         }
     }
 }
