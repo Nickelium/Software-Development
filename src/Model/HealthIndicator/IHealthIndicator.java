@@ -1,4 +1,4 @@
-package Model.HealtIndicator;
+package Model.HealthIndicator;
 
 import java.util.List;
 

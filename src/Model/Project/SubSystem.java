@@ -2,8 +2,8 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.HealtIndicator.IHealthIndicator;
-import Model.HealtIndicator.IHealthIndicatorAndBugImpact;
+import Model.HealthIndicator.IHealthIndicator;
+import Model.HealthIndicator.IHealthIndicatorAndBugImpact;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Memento.Memento;

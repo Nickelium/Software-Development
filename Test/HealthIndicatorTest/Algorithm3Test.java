@@ -1,9 +1,9 @@
 package HealthIndicatorTest;
 
 import CustomExceptions.ReportErrorToUserException;
-import Model.HealtIndicator.HealthIndicator;
-import Model.HealtIndicator.HealthIndicatorA3;
-import Model.HealtIndicator.IHealthIndicatorAlgorithm;
+import Model.HealthIndicator.HealthIndicator;
+import Model.HealthIndicator.HealthIndicatorA3;
+import Model.HealthIndicator.IHealthIndicatorAlgorithm;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

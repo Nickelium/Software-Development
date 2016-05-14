@@ -1,9 +1,9 @@
-package Model.HealtIndicator;
+package Model.HealthIndicator;
 
 /**
  * Created by Tom on 6/05/16.
  */
-public class HealthIndicatorA2 implements IHealthIndicatorAlgorithm {
+public class HealthIndicatorA3 implements IHealthIndicatorAlgorithm {
     @Override
     public HealthIndicator get(IHealthIndicator object) {
         HealthIndicator compHealth = getHealthIndicatorComponentsHealth(object);
@@ -26,9 +26,10 @@ public class HealthIndicatorA2 implements IHealthIndicatorAlgorithm {
             }
         }
 
-        if (minHealthValue == HealthIndicator.SATISFACTORY) {
-            return HealthIndicator.HEALTHY;
+        if (minHealthValue == HealthIndicator.STABLE) {
+            return HealthIndicator.SATISFACTORY;
         } else {
+            //Return the health of the minimum health value.
             return minHealthValue;
         }
     }
@@ -40,16 +41,16 @@ public class HealthIndicatorA2 implements IHealthIndicatorAlgorithm {
             impact = ((IHealthIndicatorAndBugImpact) object).getBugImpact();
         }
 
-        if (impact < 50) {
+        if (impact < 10) {
             return HealthIndicator.HEALTHY;
         }
         if (impact < 100) {
             return HealthIndicator.SATISFACTORY;
         }
-        if (impact < 500) {
+        if (impact < 250) {
             return HealthIndicator.STABLE;
         }
-        if (impact < 5000) {
+        if (impact < 500) {
             return HealthIndicator.SERIOUS;
         } else {
             return HealthIndicator.CRITICAL;

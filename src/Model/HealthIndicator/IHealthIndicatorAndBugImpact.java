@@ -1,4 +1,4 @@
-package Model.HealtIndicator;
+package Model.HealthIndicator;
 
 /**
  * Created by Tom on 6/05/16.

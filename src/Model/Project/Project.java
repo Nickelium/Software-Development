@@ -2,7 +2,7 @@ package Model.Project;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
-import Model.HealtIndicator.IHealthIndicator;
+import Model.HealthIndicator.IHealthIndicator;
 import Model.Mail.Observer;
 import Model.Mail.Subject;
 import Model.Memento.Memento;
@@ -547,6 +547,7 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 				+ "\nVersionID: " + versionID
 				+ "\nMilestone: " + this.getLatestAchievedMilestone()
 				+ "\nLead developer: " + getLeadRole().getDeveloper() + "\n";
+		//TODO Add health indicators to this method
 
 		for (Role role : devsRoles) {
 			string += role.toString() + "\n";
