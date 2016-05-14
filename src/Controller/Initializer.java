@@ -64,7 +64,7 @@ public class Initializer implements IInitializer {
             Programmer programmerMaria = new Programmer(maria);
             Tester testerMaria = new Tester(maria);
 
-            Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(12, 5, 2016), 0.0, leadMajor);
+            Project projectA = projectService.createProject("ProjectA", "ProjectA description", new TheDate(1, 7, 2016), 0.0, leadMajor);
 
             projectService.assignRole(projectA, programmerMaria, leadMajor.getDeveloper());
             projectService.assignRole(projectA, testerMaria, leadMajor.getDeveloper());
