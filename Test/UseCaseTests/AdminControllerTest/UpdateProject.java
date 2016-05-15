@@ -26,7 +26,7 @@ public class UpdateProject extends AdminControllerInit{
                 "0",
                 "Project Test Name",
                 "Project Test Description",
-                "11/12/2016",
+                "11/12/2017",
                 "200.0"
         };
         ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
@@ -35,7 +35,7 @@ public class UpdateProject extends AdminControllerInit{
         UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
         adminController.getUseCase(AdminUseCase.UPDATE_PROJECT.value).run();
 
-        TheDate newDate = new TheDate(11, 12, 2016);
+        TheDate newDate = new TheDate(11, 12, 2017);
         assert projectService.getAllProjects().stream().filter(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
                 && x.getStartingDate().equals(newDate) && x.getBudget() == 200.0).collect(Collectors.toList()).size() == 1;
 
@@ -71,7 +71,7 @@ public class UpdateProject extends AdminControllerInit{
                     "0",
                     "Project Test Name",
                     "Project Test Description",
-                    "11/12/2016",
+                    "11/12/2017",
                     "-200.0"
             };
             ArrayList<String> input = new ArrayList<>(Arrays.asList(simulatedUserInput));
@@ -82,7 +82,7 @@ public class UpdateProject extends AdminControllerInit{
         } catch (ReportErrorToUserException e) {
             assert e.getMessage().equals("The budget cannot be negative.");
 
-            TheDate newDate = new TheDate(11, 12, 2016);
+            TheDate newDate = new TheDate(11, 12, 2017);
             assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Project Test Name") && x.getDescription().equals("Project Test Description")
                     && x.getStartingDate().equals(newDate));
         }

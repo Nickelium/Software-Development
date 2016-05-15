@@ -143,7 +143,7 @@ public class ProjectServiceTest {
 	@Test (expected = ReportErrorToUserException.class)
 	public void getProjectContainingBugReport_FAIL() throws ReportErrorToUserException
 	{
-		Project pp = projectService.createProject("zae", "des", new TheDate("10/02/14"), 10, new Lead(dev));
+		Project pp = projectService.createProject("zae", "des", new TheDate("10/02/17"), 10, new Lead(dev));
 		SubSystem ssss = projectService.createSubsystem("az", "des", pp);
 		BugReport bug1 = bugReportService.createBugReport("bug1", "d", dev, ssss, BugReport.PUBLIC,1);
 		projectService.getProjectsContainingBugReport(bug1);
