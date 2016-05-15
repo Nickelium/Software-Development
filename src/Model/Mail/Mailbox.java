@@ -438,7 +438,7 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	
 	//Innerclass observer
 	/**
-	 * Inner class observer of a creation of a new bug report
+	 * Inner class observer of change of milestone
 	 *
 	 */
 	private class ObserverMilestone extends ObserverAspect
@@ -485,6 +485,11 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 		
 	}
 	
+	//Innerclass observer
+	/**
+	 * Inner class observer of a change of a specific milestone
+	 *
+	*/
 	private class ObserverSpecificMilestone extends ObserverAspect
 	{
 		private Milestone milestone;
@@ -536,6 +541,12 @@ public class Mailbox implements Originator<Mailbox.MailboxMemento, Mailbox>
 	
 	//Because a registration of a forked project actually is the same as versionID update
 	//We only provide the ObserverFork 
+	
+	//Innerclass observer
+	/**
+	 * Inner class observer of forked subject
+	 *
+	 */
 	private class ObserverFork extends ObserverAspect
 	{
 		
