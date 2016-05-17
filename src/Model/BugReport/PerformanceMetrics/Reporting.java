@@ -1,6 +1,9 @@
 package Model.BugReport.PerformanceMetrics;
 
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
+import Model.BugReport.SearchMethod.SearchOnCreator;
+import Model.BugReport.SearchMethod.SearchOnCreatorWithTag;
 import Model.BugReport.TagTypes.Duplicate;
 import Model.BugReport.TagTypes.NotABug;
 import Model.User.Developer;
@@ -37,18 +40,18 @@ public class Reporting extends PerformanceMetrics {
      * @throws IllegalArgumentException is thrown if the user in the argument is not a developer.
      */
     @Override
-    MetricsComponent construct(User user) throws IllegalArgumentException {
+    MetricsComponent construct(User user) throws IllegalArgumentException, ReportErrorToUserException {
         if (!(user instanceof Developer))
             throw new IllegalArgumentException("This user doesn't have a performance metrics.");
 
         MetricsComponent metricsComponent = new MetricsComponent("Reporting");
 
         metricsComponent.addInformation(new InformationHolderInt("The number of Duplicate bug reports submitted by the developer",
-                getBugReportService().getAllBugReportsWithTagCreatedByUser(user, Duplicate.class).size()));
+                getBugReportService().search(new SearchOnCreatorWithTag(user, Duplicate.class), user).size()));
         metricsComponent.addInformation(new InformationHolderInt("The number of NotABug bug reports submitted by the developer",
-                getBugReportService().getAllBugReportsWithTagCreatedByUser(user, NotABug.class).size()));
+                getBugReportService().search(new SearchOnCreatorWithTag(user, NotABug.class), user).size()));
         metricsComponent.addInformation(new InformationHolderInt("The total number of bug reports submitted by the developer",
-                getBugReportService().getAllBugReportsCreatedByUser(user).size()));
+                getBugReportService().search(new SearchOnCreator(user), user).size()));
 
         return metricsComponent;
     }

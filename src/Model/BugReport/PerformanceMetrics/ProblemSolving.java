@@ -1,7 +1,9 @@
 package Model.BugReport.PerformanceMetrics;
 
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.Patch;
+import Model.BugReport.SearchMethod.SearchOnAssignedWithTag;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.New;
@@ -43,17 +45,17 @@ public class ProblemSolving extends PerformanceMetrics {
      * @throws IllegalArgumentException is thrown if the user in the argument is not a developer.
      */
     @Override
-    MetricsComponent construct(User user) throws IllegalArgumentException {
+    MetricsComponent construct(User user) throws IllegalArgumentException, ReportErrorToUserException {
         if (!(user instanceof Developer))
             throw new IllegalArgumentException("This user doesn't have performance metrics.");
 
         MetricsComponent metricsComponent = new MetricsComponent("Problem solving");
 
         metricsComponent.addInformation(new InformationHolderInt("The number of Closed bug reports the developer is assigned to",
-                getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, Closed.class).size()));
-        int numberOfUnfinishedBugReports = getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, New.class).size()
-                + getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, Assigned.class).size()
-                + getBugReportService().getAllBugReportsWithTagUserAssignedTo(user, UnderReview.class).size();
+                getBugReportService().search(new SearchOnAssignedWithTag(user, Closed.class), user).size()));
+        int numberOfUnfinishedBugReports = getBugReportService().search(new SearchOnAssignedWithTag(user, New.class), user).size()
+                + getBugReportService().search(new SearchOnAssignedWithTag(user, Assigned.class), user).size()
+                + getBugReportService().search(new SearchOnAssignedWithTag(user, UnderReview.class), user).size();
         metricsComponent.addInformation(new InformationHolderInt("The number of unfinished bug reports the developer is assigned to",
                 numberOfUnfinishedBugReports));
         metricsComponent.addInformation(new InformationHolderDouble("The average lines of code for each submitted patch",

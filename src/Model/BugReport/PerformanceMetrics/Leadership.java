@@ -29,7 +29,6 @@ public class Leadership extends PerformanceMetrics {
      */
     @Override
     MetricsComponent construct(User user) throws IllegalArgumentException {
-        //TODO
         return new MetricsComponent("Leadership");
     }
 

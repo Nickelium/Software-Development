@@ -2,10 +2,7 @@ package BugReportsPackageTest;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.*;
-import Model.BugReport.SearchMethod.SearchOnAssigned;
-import Model.BugReport.SearchMethod.SearchOnDescription;
-import Model.BugReport.SearchMethod.SearchOnFiled;
-import Model.BugReport.SearchMethod.SearchOnTitle;
+import Model.BugReport.SearchMethod.*;
 import Model.BugReport.TagTypes.Assigned;
 import Model.BugReport.TagTypes.Closed;
 import Model.BugReport.TagTypes.NotABug;
@@ -113,6 +110,52 @@ public class BugReportServiceTest extends BugReportInitializaton {
     	Search a = new SearchOnDescription(" ");
         bugReportService.search(a, issuer1);
     }
+
+    //region performance metrics searches
+
+    @Test
+    public void getAllBugReportsWithTagUserAssignedTo_Valid() throws ReportErrorToUserException {
+        Search a = new SearchOnAssignedWithTag(dev2, Closed.class);
+        assert bugReportService.search(a, dev2).size() == 1;
+        Search b = new SearchOnAssignedWithTag(dev2, NotABug.class);
+        assert bugReportService.search(b, dev2).size() == 1;
+    }
+
+    @Test
+    public void getAllBugReportsWithTagUserAssignedTo_NoAssignedBR() throws ReportErrorToUserException {
+        Search a = new SearchOnAssignedWithTag(dev3, UnderReview.class);
+        assert bugReportService.search(a, dev3).size() == 0;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getAllBugReportsWithTagUserAssignedTo_InalidUser() throws ReportErrorToUserException {
+        Search a = new SearchOnAssignedWithTag(issuer1, UnderReview.class);
+        bugReportService.search(a, issuer1);
+    }
+
+    @Test
+    public void getAllBugReportsWithTagCreatedByUser_Valid() throws ReportErrorToUserException {
+        Search a = new SearchOnCreatorWithTag(issuer1, Assigned.class);
+        assert bugReportService.search(a, issuer1).size() == 1;
+        Search b = new SearchOnCreatorWithTag(dev2, NotABug.class);
+        assert bugReportService.search(b, dev2).size() == 1;
+        Search c = new SearchOnCreatorWithTag(issuer2, Closed.class);
+        assert bugReportService.search(c, issuer2).size() == 1;
+    }
+
+    @Test
+    public void getAllBugReportsWithTagCreatedByUser_NoAssignedBR() throws ReportErrorToUserException {
+        Search a = new SearchOnCreatorWithTag(issuer3, Assigned.class);
+        assert bugReportService.search(a, issuer3).size() == 0;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getAllBugReportsWithTagCreatedByUser_InalidUser() throws ReportErrorToUserException {
+        Search a = new SearchOnCreatorWithTag(admin, Assigned.class);
+        bugReportService.search(a, admin);
+    }
+
+    //endregion
 
     @Test
     public void createCommentTest() throws ReportErrorToUserException {
@@ -237,44 +280,6 @@ public class BugReportServiceTest extends BugReportInitializaton {
     @Test(expected = IllegalArgumentException.class)
     public void getAllPatchesSubmittedByDeveloper_InvalidUser() {
         bugReportService.getAllPatchesSubmittedByDeveloper(issuer1);
-    }
-
-    //endregion
-
-    //region Bugreport information
-
-    @Test
-    public void getAllBugReportsWithTagUserAssignedTo_Valid() {
-        assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev2, Closed.class).size() == 1;
-        assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev2, NotABug.class).size() == 1;
-    }
-
-    @Test
-    public void getAllBugReportsWithTagUserAssignedTo_NoAssignedBR() {
-        assert bugReportService.getAllBugReportsWithTagUserAssignedTo(dev3, UnderReview.class).size() == 0;
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getAllBugReportsWithTagUserAssignedTo_InalidUser() {
-        bugReportService.getAllBugReportsWithTagUserAssignedTo(issuer1, UnderReview.class);
-    }
-
-
-    @Test
-    public void getAllBugReportsWithTagCreatedByUser_Valid() {
-        assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer1, Assigned.class).size() == 1;
-        assert bugReportService.getAllBugReportsWithTagCreatedByUser(dev2, NotABug.class).size() == 1;
-        assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer2, Closed.class).size() == 1;
-    }
-
-    @Test
-    public void getAllBugReportsWithTagCreatedByUser_NoAssignedBR() {
-        assert bugReportService.getAllBugReportsWithTagCreatedByUser(issuer3, Assigned.class).size() == 0;
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getAllBugReportsWithTagCreatedByUser_InalidUser() {
-        bugReportService.getAllBugReportsWithTagCreatedByUser(admin, Assigned.class);
     }
 
     //endregion

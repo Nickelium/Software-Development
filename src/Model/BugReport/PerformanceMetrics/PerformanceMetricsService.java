@@ -1,5 +1,6 @@
 package Model.BugReport.PerformanceMetrics;
 
+import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.User.User;
 
@@ -37,7 +38,7 @@ public class PerformanceMetricsService {
 
     //endregion
 
-    public List<MetricsComponent> createPerformanceMetricsForUser(User user) throws IllegalArgumentException {
+    public List<MetricsComponent> createPerformanceMetricsForUser(User user) throws IllegalArgumentException, ReportErrorToUserException {
         List<MetricsComponent> metrics = new ArrayList<>();
 
         metrics.add(reporting.construct(user));

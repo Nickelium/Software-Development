@@ -309,28 +309,6 @@ public class BugReportService {
 
     //endregion
 
-    //region Bug Report information
-
-    public List<BugReport> getAllBugReportsUserAssignedTo(User user) {
-        if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
-        return getAllBugReports(user).stream().filter(x -> x.getAssignees().contains(user)).collect(Collectors.toList());
-    }
-
-    public List<BugReport> getAllBugReportsCreatedByUser(User user) {
-        if (!(user instanceof Issuer)) throw new IllegalArgumentException("This is not a issuer.");
-        return getAllBugReports(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
-    }
-
-    public List<BugReport> getAllBugReportsWithTagUserAssignedTo(User user, Class<? extends Tag> tag) {
-        return getAllBugReportsUserAssignedTo(user).stream().filter(x -> (x.getTag().getClass().equals(tag))).collect(Collectors.toList());
-    }
-
-    public List<BugReport> getAllBugReportsWithTagCreatedByUser(User user, Class<? extends Tag> tag) {
-        return getAllBugReportsCreatedByUser(user).stream().filter(x -> x.getTag().getClass().equals(tag)).collect(Collectors.toList());
-    }
-
-    //endregion
-
     //endregion
 
     //region Setters

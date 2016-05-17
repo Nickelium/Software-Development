@@ -20,14 +20,15 @@ public class PerformanceMetricsTest extends BugReportInitializaton {
         //assert metricsComponentList.get(0).getInformation().get(0).getValue() == 0.0;
 
         assert metricsComponentList.get(2).getTitle().equals("Test skills");
-        assert metricsComponentList.get(2).getInformation().get(0).getValue().equals("1.0");
-        assert metricsComponentList.get(2).getInformation().get(1).getValue().equals("2");
+        assert ((double) metricsComponentList.get(2).getInformation().get(0).getValue()) == 1.0;
+        assert ((int) metricsComponentList.get(2).getInformation().get(1).getValue()) == 2;
 
         assert metricsComponentList.get(3).getTitle().equals("Problem solving");
-        assert metricsComponentList.get(3).getInformation().get(0).getValue().equals("0");
-        assert metricsComponentList.get(3).getInformation().get(1).getValue().equals("1");
-        assert metricsComponentList.get(3).getInformation().get(2).getValue().equals("2.0");
-        assert metricsComponentList.get(3).getInformation().get(3).getValue().equals("1");
+        assert ((int) metricsComponentList.get(3).getInformation().get(0).getValue()) == 0;
+        assert ((int) metricsComponentList.get(3).getInformation().get(1).getValue()) == 1;
+        assert ((double) metricsComponentList.get(3).getInformation().get(2).getValue()) == 2.0;
+        assert ((int) metricsComponentList.get(3).getInformation().get(3).getValue()) == 1;
+
     }
 
     @Test
@@ -35,23 +36,23 @@ public class PerformanceMetricsTest extends BugReportInitializaton {
         List<MetricsComponent> metricsComponentList = performanceMetricsService.createPerformanceMetricsForUser(dev2);
 
         assert metricsComponentList.get(0).getTitle().equals("Reporting");
-        assert metricsComponentList.get(0).getInformation().get(0).getValue().equals("0");
-        assert metricsComponentList.get(0).getInformation().get(1).getValue().equals("1");
-        assert metricsComponentList.get(0).getInformation().get(2).getValue().equals("1");
+        assert ((int) metricsComponentList.get(0).getInformation().get(0).getValue()) == 0;
+        assert ((int) metricsComponentList.get(0).getInformation().get(1).getValue()) == 1;
+        assert ((int) metricsComponentList.get(0).getInformation().get(2).getValue()) == 1;
 
         assert metricsComponentList.get(1).getTitle().equals("Leadership");
         //TODO
         //assert metricsComponentList.get(0).getInformation().get(0).getValue() == 0.0;
 
         assert metricsComponentList.get(3).getTitle().equals("Problem solving");
-        assert metricsComponentList.get(3).getInformation().get(0).getValue().equals("1");
-        assert metricsComponentList.get(3).getInformation().get(1).getValue().equals("0");
-        assert metricsComponentList.get(3).getInformation().get(2).getValue().equals("0.0");
-        assert metricsComponentList.get(3).getInformation().get(3).getValue().equals("0");
+        assert ((int) metricsComponentList.get(3).getInformation().get(0).getValue()) == 1;
+        assert ((int) metricsComponentList.get(3).getInformation().get(1).getValue()) == 0;
+        assert ((double) metricsComponentList.get(3).getInformation().get(2).getValue()) == 0.0;
+        assert ((int) metricsComponentList.get(3).getInformation().get(3).getValue()) == 0;
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void createPerformanceMetricsForUser_UnvalidUser() throws IllegalArgumentException {
+    public void createPerformanceMetricsForUser_UnvalidUser() throws Exception {
         performanceMetricsService.createPerformanceMetricsForUser(issuer1);
     }
 
