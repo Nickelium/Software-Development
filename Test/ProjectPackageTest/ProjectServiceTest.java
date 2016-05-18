@@ -267,4 +267,137 @@ public class ProjectServiceTest {
 		assertTrue(projectService.getRelated(p2, ss).containsAll(list));
 		
 	}
+	
+	@Test
+	public void split_SUCCESS() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		List<SubSystem> list1 = new ArrayList<>();
+		list1.add(ss);
+		assertEquals(projectService.getAllSubSystems().size(), 2);
+		projectService.split(s, p2, "S1", "A", "S2", "A", list1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+		assertEquals(projectService.getAllSubSystems().size(), 3);
+		assertTrue(projectService.getAllSubSystems().stream().anyMatch(t -> t.getName().equals("S1")));
+		assertTrue(projectService.getAllSubSystems().stream().anyMatch(t -> t.getName().equals("S2")));
+		assertTrue(!projectService.getAllSubSystems().stream().anyMatch(t -> t.equals(s)));
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void split_FAIL1() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		List<SubSystem> list1 = new ArrayList<>();
+		list1.add(ss);
+		projectService.split(null, p2, "S1", "A", "S2", "A", list1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+	
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void split_FAIL2() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		List<SubSystem> list1 = new ArrayList<>();
+		list1.add(ss);
+		projectService.split(s, null, "S1", "A", "S2", "A", list1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+	
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void split_FAIL3() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		List<SubSystem> list1 = new ArrayList<>();
+		list1.add(ss);
+		projectService.split(s, p2, "S1", "A", "S2", "A", list1, null, new ArrayList<>(), new ArrayList<>());
+	
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void split_FAIL4() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		List<SubSystem> list1 = new ArrayList<>();
+		list1.add(ss);
+		projectService.split(s, p2, "S1", "A", "S2", "A", list1, new ArrayList<>(), null, new ArrayList<>());
+	
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void split_FAIL5() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		List<SubSystem> list1 = new ArrayList<>();
+		list1.add(ss);
+		projectService.split(s, p2, "S1", "A", "S2", "A", list1, new ArrayList<>(), new ArrayList<>(), null);
+	
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void split_FAILINVALIDSUBSYSTEM() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", p1);
+		List<SubSystem> list1 = new ArrayList<>();
+		list1.add(ss);
+		projectService.split(ss, p2, "S1", "A", "S2", "A", list1, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+	
+	}
+	
+	@Test
+	public void merge_SUCCESS() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1"));
+		projectService.setNewSubSystemMilestone(ss, new Milestone("M2"));
+		assertEquals(projectService.getAllSubSystems().size(), 2);
+		projectService.merge(p2, s, ss, "AA", "AA");
+		assertEquals(projectService.getAllSubSystems().size(), 1);
+		assertTrue(projectService.getAllSubSystems().stream().anyMatch(t -> t.getName().equals("AA")));
+		assertTrue(!projectService.getAllSubSystems().stream().anyMatch(t -> t.equals(s)));
+		assertTrue(!projectService.getAllSubSystems().stream().anyMatch(t -> t.equals(ss)));
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void merge_FAIL1() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1"));
+		projectService.setNewSubSystemMilestone(ss, new Milestone("M2"));
+		assertEquals(projectService.getAllSubSystems().size(), 2);
+		projectService.merge(null, s, ss, "AA", "AA");
+
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void merge_FAIL2() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1"));
+		projectService.setNewSubSystemMilestone(ss, new Milestone("M2"));
+		assertEquals(projectService.getAllSubSystems().size(), 2);
+		projectService.merge(p2, null, ss, "AA", "AA");
+
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void merge_FAIL3() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1"));
+		projectService.setNewSubSystemMilestone(ss, new Milestone("M2"));
+		assertEquals(projectService.getAllSubSystems().size(), 2);
+		projectService.merge(p2, s, null, "AA", "AA");
+
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void merge_FAIL4() throws ReportErrorToUserException
+	{
+		SubSystem ss = projectService.createSubsystem("az", "zae", s);
+		SubSystem sss = projectService.createSubsystem("az", "zae", ss);
+		projectService.setNewSubSystemMilestone(s, new Milestone("M1"));
+		projectService.setNewSubSystemMilestone(ss, new Milestone("M2"));
+		assertEquals(projectService.getAllSubSystems().size(), 3);
+		projectService.merge(p1, s, sss, "AA", "AA");
+
+	}
 }

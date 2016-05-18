@@ -93,37 +93,9 @@ public class MergeSubSystem extends UseCase {
         if(!subSystem.isValidDescription(description)) throw new ReportErrorToUserException("The description is invalid.");
       
         // Step 10
-        SubSystem reference = subSystem.getHeight() > relatedSubSystem.getHeight() ? subSystem : relatedSubSystem;
-        SubSystem parentReferenceSubSystem = getProjectService().getParentSubSystem(reference);
+       
+    	getProjectService().merge(project, subSystem, relatedSubSystem, name, description);
         
-        
-        SubSystem newSubSystem;
-        if(parentReferenceSubSystem != null)
-        	newSubSystem = getProjectService().createSubsystem(name, description, parentReferenceSubSystem);
-        else
-        	newSubSystem = getProjectService().createSubsystem(name, description, project);
-        	
-	    for(SubSystem sub : subSystem.getSubSystems())
-	    	if(!subSystem.equals(sub) && !relatedSubSystem.equals(sub))
-	    		newSubSystem.addSubSystem(sub);
-	    for(SubSystem sub : relatedSubSystem.getSubSystems())
-	    	if(!subSystem.equals(sub) && !relatedSubSystem.equals(sub))
-	    		newSubSystem.addSubSystem(sub);
-	   	
-	    for(BugReport bug : subSystem.getBugReports())
-	    	newSubSystem.addBugReport(bug);
-	    for(BugReport bug : relatedSubSystem.getBugReports())
-	    	newSubSystem.addBugReport(bug);
-        
-	    // Latestachieved or all milestones ?
-    	Milestone lowerMilestone = 
-    			subSystem.getLatestAchievedMilestone().compareTo(relatedSubSystem.getLatestAchievedMilestone())
-    			 < 0 ? subSystem.getLatestAchievedMilestone() : relatedSubSystem.getLatestAchievedMilestone();
-    	getProjectService().setNewSubSystemMilestone(newSubSystem, lowerMilestone);
-        
-    	getProjectService().removeSubSystem(project, subSystem);
-    	getProjectService().removeSubSystem(project, relatedSubSystem);
-    	
         getUi().display("Merge completed !\n");
         
     }

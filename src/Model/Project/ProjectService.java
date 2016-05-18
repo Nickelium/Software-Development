@@ -50,16 +50,37 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	return false;
     }
     
-    
-    public void split(SubSystem sToSplit, String name1, String description1, String name2, String description2,
-    			List<SubSystem> s1, List<BugReport> b1, List<SubSystem> s2, List<BugReport> b2)
+    /**
+     * Method to split a subsystem
+     * 
+     * @param sToSplit The subsystem to split
+     * @param project The project of the subsystem
+     * @param name1	The name of the first splitted subsystem
+     * @param description1	The description of the first splitted subsystem
+     * @param name2	The name of the second splitted subsystem
+     * @param description2	The description of the second splitted subsystem
+     * @param s1	The list of subsystem for the first splitted subsystem
+     * @param b1	The list of bug report for the first splitted subsystem
+     * @param s2	The list of subsystem for the second splitted subsystem
+     * @param b2	The list of bug report for the second splitted subsystem
+     * 
+     * @throws ReportErrorToUserException
+     * @throws IllegalArgumentException when one of the parameters is null, 
+     * 		the subsystem is not from the project,
+     * 		the list of subsystems/bug reports or not from the subsystem
+     */
+    public void split(SubSystem sToSplit, Project project, String name1, String description1, String name2, String description2,
+    			List<SubSystem> s1, List<BugReport> b1, List<SubSystem> s2, List<BugReport> b2) throws ReportErrorToUserException
     {
     	//check
     	if(sToSplit == null) throw new IllegalArgumentException("SubSystem to split cannot be null");
+    	if(project == null) throw new IllegalArgumentException("The project cannot be null");
     	if(s1 == null) throw new IllegalArgumentException("The first list of subsystem cannot be null"); 
     	if(b1 == null) throw new IllegalArgumentException("The first list of bug report cannot be null"); 
     	if(s2 == null) throw new IllegalArgumentException("The second list of subsystem cannot be null"); 
     	if(b2 == null) throw new IllegalArgumentException("The second list of bug report cannot be null"); 
+    	
+    	if(!project.getAllSubSystems().contains(sToSplit)) throw new IllegalArgumentException("The project or subsystem is incorrect");
     	
     	if(!sToSplit.getSubSystems().containsAll(s1)) throw new IllegalArgumentException("The first list of subsystem does not belongs to subsystem to split"); 
     	if(!sToSplit.getSubSystems().containsAll(s2)) throw new IllegalArgumentException("The second list of subsystem does not belongs to subsystem to split"); 
@@ -68,11 +89,88 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	if(!sToSplit.getBugReports().containsAll(b2))throw new IllegalArgumentException("The first list of subsystem cannot be null"); 
 
         SubSystem parent = getParentSubSystem(sToSplit);
+        
+        SubSystem subSystem1, subSystem2;
+        if(parent != null)
+        {
+        	subSystem1 = createSubsystem(name1, description1, parent);
+        	subSystem2 = createSubsystem(name2, description2, parent);
+        }
+        else
+        {
+        	subSystem1 = createSubsystem(name1, description1, project);
+        	subSystem2 = createSubsystem(name2, description2, project);
+        }
+        
+        for(SubSystem sub : s1)
+        	subSystem1.addSubSystem(sub);
+        for(BugReport bug : b1)
+        	subSystem1.addBugReport(bug);
+        
+        for(SubSystem sub : s2)
+        	subSystem2.addSubSystem(sub);
+        for(BugReport bug : b2)
+        	subSystem2.addBugReport(bug);
+        
+        setNewSubSystemMilestone(subSystem1, sToSplit.getCurrentSubsystemMilestones());
+        setNewSubSystemMilestone(subSystem2, sToSplit.getCurrentSubsystemMilestones());
+        
+        removeSubSystem(project, sToSplit);
     }
     
-    public void merge()
+    /**
+     * Method to merge subsystems
+     * 
+     * @param project The project of the subsystems
+     * @param origin	The subsystem to merge
+     * @param related	The related subsystem 
+     * @param name		The name for the merged subsystem
+     * @param description	The description for the merged subsystem
+     * 
+     * @throws ReportErrorToUserException
+     * @throws IllegalArgumentException One of the arguments is null,
+     * 		subsystem is not from the project,
+     * 		the related subsystem is not the origin's related,
+     */
+    public void merge(Project project, SubSystem origin, SubSystem related, String name, String description) throws ReportErrorToUserException
     {
+    	if(project == null) throw new IllegalArgumentException("Project cannot be null");
+    	if(origin == null) throw new IllegalArgumentException("SubSystem cannot be null");
+    	if(related == null) throw new IllegalArgumentException("Related subSystem cannot be null");
+    	  	
+    	if(!project.getAllSubSystems().contains(origin)) throw new IllegalArgumentException("The project or subsystem is incorrect");
+
+    	if(origin.equals(related))throw new IllegalArgumentException("Incorrect related subSystem");
+    	if(!getRelated(project, origin).contains(related)) throw new IllegalArgumentException("Incorrect related subsystem");
     	
+    	SubSystem reference = origin.getHeight() > related.getHeight() ? origin : related;
+        SubSystem parentReferenceSubSystem = getParentSubSystem(reference);
+        
+        SubSystem newSubSystem;
+        if(parentReferenceSubSystem != null)
+        	newSubSystem = createSubsystem(name, description, parentReferenceSubSystem);
+        else
+        	newSubSystem = createSubsystem(name, description, project);
+        	
+	    for(SubSystem sub : origin.getSubSystems())
+	    	if(!origin.equals(sub) && !related.equals(sub))
+	    		newSubSystem.addSubSystem(sub);
+	    for(SubSystem sub : related.getSubSystems())
+	    	if(!origin.equals(sub) && !related.equals(sub))
+	    		newSubSystem.addSubSystem(sub);
+	   	
+	    for(BugReport bug : origin.getBugReports())
+	    	newSubSystem.addBugReport(bug);
+	    for(BugReport bug : related.getBugReports())
+	    	newSubSystem.addBugReport(bug);
+        
+    	Milestone lowerMilestone = 
+    			origin.getLatestAchievedMilestone().compareTo(related.getLatestAchievedMilestone())
+    			 < 0 ? origin.getLatestAchievedMilestone() : related.getLatestAchievedMilestone();
+    	setNewSubSystemMilestone(newSubSystem, lowerMilestone);
+        
+    	removeSubSystem(project, origin);
+    	removeSubSystem(project, related);
     }
 
     /**
