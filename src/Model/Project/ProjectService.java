@@ -50,6 +50,31 @@ public class ProjectService implements Originator<ProjectService.ProjectServiceM
     	return false;
     }
     
+    
+    public void split(SubSystem sToSplit, String name1, String description1, String name2, String description2,
+    			List<SubSystem> s1, List<BugReport> b1, List<SubSystem> s2, List<BugReport> b2)
+    {
+    	//check
+    	if(sToSplit == null) throw new IllegalArgumentException("SubSystem to split cannot be null");
+    	if(s1 == null) throw new IllegalArgumentException("The first list of subsystem cannot be null"); 
+    	if(b1 == null) throw new IllegalArgumentException("The first list of bug report cannot be null"); 
+    	if(s2 == null) throw new IllegalArgumentException("The second list of subsystem cannot be null"); 
+    	if(b2 == null) throw new IllegalArgumentException("The second list of bug report cannot be null"); 
+    	
+    	if(!sToSplit.getSubSystems().containsAll(s1)) throw new IllegalArgumentException("The first list of subsystem does not belongs to subsystem to split"); 
+    	if(!sToSplit.getSubSystems().containsAll(s2)) throw new IllegalArgumentException("The second list of subsystem does not belongs to subsystem to split"); 
+
+    	if(!sToSplit.getBugReports().containsAll(b1))throw new IllegalArgumentException("The first list of subsystem cannot be null"); 
+    	if(!sToSplit.getBugReports().containsAll(b2))throw new IllegalArgumentException("The first list of subsystem cannot be null"); 
+
+        SubSystem parent = getParentSubSystem(sToSplit);
+    }
+    
+    public void merge()
+    {
+    	
+    }
+
     /**
      * Getter to request all the projects.
      *
