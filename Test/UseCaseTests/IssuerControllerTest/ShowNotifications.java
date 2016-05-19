@@ -39,6 +39,7 @@ public class ShowNotifications extends IssuerControllerInit {
                 "Error!!",
                 ".",
                 "1",
+                "10",
                 "0",
                 "1",
                 "-1"
