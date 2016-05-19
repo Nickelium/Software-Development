@@ -1,7 +1,7 @@
 package UseCaseTests.DeveloperControllerTest;
 
+import Controller.Initializer.AssignmentInitializer;
 import Controller.Initializer.IInitializer;
-import Controller.Initializer.Initializer;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;
@@ -39,7 +39,7 @@ public class DeveloperControllerInit {
 
     @Before
     public void initialization() throws ReportErrorToUserException {
-        this.initializer = new Initializer();
+        this.initializer = new AssignmentInitializer();
         this.projectService = initializer.getProjectService();
         this.bugReportService = initializer.getBugReportService();
         this.userService = initializer.getUserService();
