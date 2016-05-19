@@ -109,7 +109,7 @@ public class CreateBugReport extends IssuerUseCase{
 
         getUi().display("Please specify the impact of the bug. This is a number between 0 (excluded) and 10 (included).");
         int impact = getUi().readInt();
-
+        
         // Step 14
         BugReport bugReport = getBugReportService().createBugReport(title, description, issuer, subSystem, pblc, impact);
         if (!procedure.equals("")) getBugReportService().setProcedureBug(bugReport, procedure);

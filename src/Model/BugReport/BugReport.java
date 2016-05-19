@@ -515,10 +515,10 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
     /**
      * Method to set the impact factor of a bug report.
      * @param impactFactor the impact factor to be set
-     * @throws IllegalArgumentException is thrown if the impact factor is not valid.
+     * @throws ReportErrorToUserException is thrown if the impact factor is not valid.
      */
-    private void setImpactFactor(int impactFactor) {
-        if (!isValidImpactFactor(impactFactor)) throw new IllegalArgumentException("Invalid impact factor");
+    private void setImpactFactor(int impactFactor) throws ReportErrorToUserException {
+        if (!isValidImpactFactor(impactFactor)) throw new ReportErrorToUserException("Invalid impact factor");
         this.impactFactor = impactFactor;
     }
 
