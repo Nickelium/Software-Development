@@ -16,8 +16,7 @@ public class PerformanceMetricsTest extends BugReportInitializaton {
         List<MetricsComponent> metricsComponentList = performanceMetricsService.createPerformanceMetricsForUser(dev3);
 
         assert metricsComponentList.get(1).getTitle().equals("Leadership");
-        //TODO
-        //assert metricsComponentList.get(0).getInformation().get(0).getValue() == 0.0;
+        // tested in package HealthIndicatorTest
 
         assert metricsComponentList.get(2).getTitle().equals("Test skills");
         assert ((double) metricsComponentList.get(2).getInformation().get(0).getValue()) == 1.0;
@@ -41,8 +40,7 @@ public class PerformanceMetricsTest extends BugReportInitializaton {
         assert ((int) metricsComponentList.get(0).getInformation().get(2).getValue()) == 1;
 
         assert metricsComponentList.get(1).getTitle().equals("Leadership");
-        //TODO
-        //assert metricsComponentList.get(0).getInformation().get(0).getValue() == 0.0;
+        // tested in package HealthIndicatorTest
 
         assert metricsComponentList.get(3).getTitle().equals("Problem solving");
         assert ((int) metricsComponentList.get(3).getInformation().get(0).getValue()) == 1;
