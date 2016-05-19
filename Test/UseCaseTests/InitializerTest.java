@@ -1,7 +1,7 @@
 package UseCaseTests;
 
-import Controller.IInitializer;
-import Controller.Initializer;
+import Controller.Initializer.IInitializer;
+import Controller.Initializer.Initializer;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;

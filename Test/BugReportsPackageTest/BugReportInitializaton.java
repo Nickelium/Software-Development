@@ -60,7 +60,7 @@ public class BugReportInitializaton {
         this.userService = new UserService();
         this.tagAssignmentService = new TagAssignmentService(projectService);
         this.developerAssignmentService = new DeveloperAssignmentService(projectService);
-        this.performanceMetricsService = new PerformanceMetricsService(bugReportService);
+        this.performanceMetricsService = new PerformanceMetricsService(bugReportService, projectService);
 
         dev1 = userService.createDeveloper("Dev1", "", "", "dev1");
         dev2 = userService.createDeveloper("Dev2", "", "", "dev2");

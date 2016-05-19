@@ -1,6 +1,9 @@
 package Controller;
 
 
+import Controller.Initializer.DemoInitializer;
+import Controller.Initializer.IInitializer;
+import Controller.Initializer.Initializer;
 import Controller.UserController.AdminController;
 import Controller.UserController.DeveloperController;
 import Controller.UserController.IssuerController;
@@ -11,27 +14,52 @@ import Model.User.Admin;
 import Model.User.Developer;
 import Model.User.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Karina on 26.02.2016.
  */
 public class MainController {
     private IUI ui;
+    private List<IInitializer> initializerList = new ArrayList<>();
     private IInitializer initializer;
     private User currentUser;
 
     public MainController() {
         ui = new UI();
-        initializer = new Initializer();
+        initializerList.add(new Initializer());
+        initializerList.add(new DemoInitializer());
     }
 
     public MainController(IUI ui, IInitializer initializer) {
         this.ui = ui;
-        this.initializer = initializer;
+        initializerList.add(initializer);
     }
 
     public void run() throws Exception {
         startMsg();
         while (true) {
+            while (true) {
+                try {
+                    ui.display("Choose an initialization:");
+                    for (int i = 0; i < initializerList.size(); i++) {
+                        ui.display(i + ": " + initializerList.get(i).getName());
+                    }
+                    int chosenInit = ui.readInt();
+                    initializer = initializerList.get(chosenInit);
+
+                    break;
+                } catch (ReportErrorToUserException e) {
+                    ui.display(e.getMessage());
+                    ui.display("Enter 1 if you want to retry. Any other key if not.");
+                    if (ui.readInt() != 1) {
+                        ui.display("Bye!");
+                        System.exit(0);
+                    }
+                }
+            }
+
             LoginController loginController = new LoginController(ui, initializer.getUserService());
             while (true) {
                 try {
