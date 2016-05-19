@@ -1,4 +1,4 @@
-package Controller.InitializerPkg;
+package Controller.Initializer;
 
 import Model.BugReport.BugReportService;
 import Model.BugReport.DeveloperAssignmentService;

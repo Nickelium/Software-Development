@@ -1,7 +1,7 @@
 package UseCaseTests.AdminControllerTest;
 
 import Controller.IUI;
-import Controller.InitializerPkg.Initializer;
+import Controller.Initializer.Initializer;
 import Controller.MainController;
 import Model.BugReport.BugReport;
 import UseCaseTests.DeveloperControllerTest.DeveloperControllerInit;

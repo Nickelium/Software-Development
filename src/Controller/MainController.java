@@ -1,9 +1,9 @@
 package Controller;
 
 
-import Controller.InitializerPkg.DemoInitializer;
-import Controller.InitializerPkg.IInitializer;
-import Controller.InitializerPkg.Initializer;
+import Controller.Initializer.DemoInitializer;
+import Controller.Initializer.IInitializer;
+import Controller.Initializer.Initializer;
 import Controller.UserController.AdminController;
 import Controller.UserController.DeveloperController;
 import Controller.UserController.IssuerController;
