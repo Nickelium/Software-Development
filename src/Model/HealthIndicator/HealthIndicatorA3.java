@@ -9,7 +9,7 @@ public class HealthIndicatorA3 implements IHealthIndicatorAlgorithm {
      * Method to apply the health indicator algorithm.
      * Returns the appropriate health indicator value.
      *
-     * @param object usually an enum, containing different health indicator values.
+     * @param object The object of which the health indicator should be calculated.
      * @return the appropriate health indicator value
      */
     @Override
@@ -28,7 +28,7 @@ public class HealthIndicatorA3 implements IHealthIndicatorAlgorithm {
     /**
      * Method to get which health value is the lowest of a list of health indicator components.
      *
-     * @param object the list of health indicators of which the minimum needs to be found
+     * @param object The object of which the health indicator should be calculated.
      * @return the health indicator with the lowest value
      */
     private HealthIndicator getHealthIndicatorComponentsHealth(IHealthIndicator object) {

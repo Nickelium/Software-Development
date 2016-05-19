@@ -14,7 +14,7 @@ public enum HealthIndicator {
     private String string;
 
     /**
-     * Method to provide string representation of the enum values.
+     * Constructor of the health indicator enum.
      * @param string the string to be represented
      */
     HealthIndicator(String string) {
