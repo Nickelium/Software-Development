@@ -29,6 +29,7 @@ public class CreateBugReport extends IssuerControllerInit {
                 "Error!!",
                 ".",
                 "1",
+                "5",
                 "0",
                 "1",
                 "-1"
@@ -59,6 +60,7 @@ public class CreateBugReport extends IssuerControllerInit {
                 "Error!!",
                 ".",
                 "0",
+                "9",
                 "0",
                 "-1"
         };
@@ -84,6 +86,7 @@ public class CreateBugReport extends IssuerControllerInit {
                 ".",
                 ".",
                 "0",
+                "3",
                 "0",
                 "-1"
         };
