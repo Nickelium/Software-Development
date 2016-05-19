@@ -10,7 +10,7 @@ import Model.User.User;
 import Model.User.UserService;
 
 /**
- * Created by Karina on 24.03.2016.
+ * Class extending the issuer use case class, representing an update-bug-report use case.
  */
 public class UpdateBugReport extends IssuerUseCase {
 

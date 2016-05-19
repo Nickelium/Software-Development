@@ -8,7 +8,7 @@ import Model.User.User;
 import Model.User.UserService;
 
 /**
- * Created by Karina on 24.03.2016.
+ * Class extending the use case class, representing an exit-program use case.
  */
 public class ExitProgram extends UseCase {
 

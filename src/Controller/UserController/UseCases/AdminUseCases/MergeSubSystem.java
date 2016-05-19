@@ -4,19 +4,18 @@ import Controller.Formatter;
 import Controller.IUI;
 import Controller.UserController.UseCases.UseCase;
 import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
-import Model.Milestone.Milestone;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.Project.SubSystem;
 import Model.User.User;
 import Model.User.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Class extending the use case class, representing a merge use case.
+ */
 public class MergeSubSystem extends UseCase {
 
     public MergeSubSystem(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {

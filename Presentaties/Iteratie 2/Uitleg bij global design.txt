@@ -1,3 +1,0 @@
-// TODO
-
-Memento en Observer package zijn bewust buiten beschouwing gehouden voor het globale deel.

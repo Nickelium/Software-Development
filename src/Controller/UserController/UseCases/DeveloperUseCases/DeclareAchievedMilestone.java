@@ -16,7 +16,7 @@ import Model.User.UserService;
 import java.util.List;
 
 /**
- * Created by Laurens on 7/04/2016.
+ * Class extending the use case class, representing a declare-achieved-milestone use case.
  */
 public class DeclareAchievedMilestone extends DeveloperUseCase {
 

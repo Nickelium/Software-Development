@@ -14,7 +14,7 @@ import Model.User.UserService;
 import java.util.List;
 
 /**
- * Created by Karina on 24.03.2016.
+ * Class extending the issuer use case class, representing a create-comment use case.
  */
 public class CreateComment extends IssuerUseCase {
 

@@ -11,7 +11,7 @@ import Model.User.User;
 import Model.User.UserService;
 
 /**
- * Created by Tom on 11/04/16.
+ * Class extending the developer use case class, representing a propose-test use case.
  */
 public class ProposeTest extends DeveloperUseCase {
 

@@ -15,7 +15,9 @@ import Model.User.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Class extending the use case class, representing a split subsystem use case.
+ */
 public class SplitSubSystem extends UseCase {
 
     public SplitSubSystem(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {

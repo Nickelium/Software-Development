@@ -11,7 +11,9 @@ import Model.User.User;
 
 import java.util.List;
 
-
+/**
+ * Class extending the issuer use case class, representing an unregister-notifications use case.
+ */
 public class UnregisterNotifications extends IssuerUseCase{
 
 	private MailboxService mailboxService;

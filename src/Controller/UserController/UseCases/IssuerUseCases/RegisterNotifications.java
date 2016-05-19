@@ -5,13 +5,7 @@ import Controller.IUI;
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
-import Model.BugReport.Tag;
-import Model.BugReport.TagTypes.Assigned;
-import Model.BugReport.TagTypes.Closed;
-import Model.BugReport.TagTypes.Duplicate;
-import Model.BugReport.TagTypes.NotABug;
-import Model.BugReport.TagTypes.Resolved;
-import Model.BugReport.TagTypes.UnderReview;
+import Model.BugReport.TagTypes.*;
 import Model.Mail.MailboxService;
 import Model.Milestone.Milestone;
 import Model.Project.Project;
@@ -21,9 +15,9 @@ import Model.User.User;
 
 import java.util.List;
 
-//import Model.Mail.Notification;
-
-
+/**
+ * Class extending the issuer use case class, representing a register-notifications use case.
+ */
 public class RegisterNotifications extends IssuerUseCase{
 
 	private MailboxService mailboxService;

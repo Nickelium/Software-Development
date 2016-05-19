@@ -11,7 +11,7 @@ import Model.User.User;
 import Model.User.UserService;
 
 /**
- * Created by Karina on 25.03.2016.
+ * Abstract class extending the Issuer use case class, representing a developer use case object.
  */
 public abstract class DeveloperUseCase extends IssuerUseCase {
 

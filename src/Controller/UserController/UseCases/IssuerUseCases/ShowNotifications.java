@@ -3,19 +3,17 @@ package Controller.UserController.UseCases.IssuerUseCases;
 import Controller.Formatter;
 import Controller.IUI;
 import CustomExceptions.ReportErrorToUserException;
-import Model.BugReport.BugReport;
 import Model.BugReport.BugReportService;
 import Model.Mail.MailboxService;
 import Model.Mail.Notification;
-import Model.Project.Project;
 import Model.Project.ProjectService;
-import Model.Project.SubSystem;
-import Model.User.Issuer;
 import Model.User.User;
-import Model.User.UserService;
 
 import java.util.List;
 
+/**
+ * Class extending the issuer use case class, representing a show-notifications use case.
+ */
 public class ShowNotifications extends IssuerUseCase{
 
 	private MailboxService mailboxService;
