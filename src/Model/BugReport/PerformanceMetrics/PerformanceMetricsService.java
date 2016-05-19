@@ -2,6 +2,7 @@ package Model.BugReport.PerformanceMetrics;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.BugReportService;
+import Model.Project.ProjectService;
 import Model.User.User;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ public class PerformanceMetricsService {
     private TestSkills testSkills;
     private ProblemSolving problemSolving;
 
-    public PerformanceMetricsService(BugReportService bugReportService) {
+    public PerformanceMetricsService(BugReportService bugReportService, ProjectService projectService) {
         setBugReportService(bugReportService);
         this.reporting = new Reporting(bugReportService);
-        this.leadership = new Leadership(bugReportService);
+        this.leadership = new Leadership(bugReportService, projectService);
         this.testSkills = new TestSkills(bugReportService);
         this.problemSolving = new ProblemSolving(bugReportService);
     }

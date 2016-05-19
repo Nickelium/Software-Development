@@ -1,6 +1,9 @@
 package Model.BugReport.PerformanceMetrics;
 
 import Model.BugReport.BugReportService;
+import Model.HealthIndicator.HealthIndicatorA1;
+import Model.HealthIndicator.HealthIndicatorA2;
+import Model.HealthIndicator.HealthIndicatorA3;
 import Model.Project.Project;
 import Model.Project.ProjectService;
 import Model.User.Developer;
@@ -42,9 +45,9 @@ public class Leadership extends PerformanceMetrics {
 
         for (Project project : getProjectService().getProjectsOfLeadRole((Developer) user)) {
             InformationHolderMultiValue holder = new InformationHolderMultiValue(project.getName());
-            holder.addValue(new InformationHolderString("Health Indicator Algorithm 1", ));
-            holder.addValue(new InformationHolderString("Health Indicator Algorithm 2", ));
-            holder.addValue(new InformationHolderString("Health Indicator Algorithm 3", ));
+            holder.addValue(new InformationHolderString("Health Indicator Algorithm 1", new HealthIndicatorA1().get(project).toString()));
+            holder.addValue(new InformationHolderString("Health Indicator Algorithm 2", new HealthIndicatorA2().get(project).toString()));
+            holder.addValue(new InformationHolderString("Health Indicator Algorithm 3", new HealthIndicatorA3().get(project).toString()));
 
             metricsComponent.addInformation(holder);
         }
