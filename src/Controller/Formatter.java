@@ -4,6 +4,9 @@ import Model.BugReport.BugReport;
 import Model.BugReport.Comment;
 import Model.BugReport.PerformanceMetrics.IInformationHolder;
 import Model.BugReport.PerformanceMetrics.MetricsComponent;
+import Model.HealthIndicator.HealthIndicatorA1;
+import Model.HealthIndicator.HealthIndicatorA2;
+import Model.HealthIndicator.HealthIndicatorA3;
 import Model.Mail.Notification;
 import Model.Mail.ObserverAspect;
 import Model.Memento.Snapshot;
@@ -151,6 +154,9 @@ public class Formatter
 	{
 		if(project == null) return "";
 		String parsed = project.toString();
+		parsed += "\n* Health Indicator Algorithm 1: " + new HealthIndicatorA1().get(project);
+		parsed += "\n* Health Indicator Algorithm 2: " + new HealthIndicatorA2().get(project);
+		parsed += "\n* Health Indicator Algorithm 3: " + new HealthIndicatorA3().get(project);
 		for(SubSystem subSystem : project.getSubSystems())
 			parsed += "\n\t" + Formatter.addTabulation(Formatter.formatDetailedSubSystem(subSystem));
 		return parsed;
@@ -167,6 +173,9 @@ public class Formatter
 	{
 		if(subSystem == null) return "";
 		String parsed = subSystem.toString();
+		parsed += "\n* Health Indicator Algorithm 1: " + new HealthIndicatorA1().get(subSystem);
+		parsed += "\n* Health Indicator Algorithm 2: " + new HealthIndicatorA2().get(subSystem);
+		parsed += "\n* Health Indicator Algorithm 3: " + new HealthIndicatorA3().get(subSystem);
 		for(SubSystem sub : subSystem.getSubSystems())
 			parsed += "\n\t" + Formatter.addTabulation(Formatter.formatDetailedSubSystem(sub));
 		return parsed;
