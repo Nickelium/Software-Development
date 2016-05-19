@@ -261,10 +261,10 @@ public class ProjectTest {
 				+ "\nStarting Date: " + project.getStartingDate() + "\nBudget: " + project.getBudget()
 				+ "\nVersionID: " + project.getVersionID()
 				+ "\nMilestone: " + project.getLatestAchievedMilestone()
-				+ "\nLead developer: " + project.getLeadRole().getDeveloper() + "\n";
+				+ "\nLead developer: " + project.getLeadRole().getDeveloper();
 
 		for (Role role : project.getDevsRoles()) {
-			string += role.toString() + "\n";
+			string += "\n" +role.toString() ;
 		}
 
 		assertEquals(project.toString(), string);
