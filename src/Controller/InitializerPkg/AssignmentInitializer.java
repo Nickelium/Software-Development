@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Initializer implements IInitializer {
+public class AssignmentInitializer implements IInitializer {
     private UserService userService;
     private ProjectService projectService;
     private BugReportService bugReportService;
@@ -35,7 +35,7 @@ public class Initializer implements IInitializer {
     private PerformanceMetricsService performanceMetricsService;
     private Caretaker caretaker;
 
-    public Initializer() {
+    public AssignmentInitializer() {
         init();
     }
 
