@@ -48,7 +48,7 @@ public class InformationHolderMultiValue implements IInformationHolder<List<IInf
     public String toString() {
         String str = description + ":";
         for (IInformationHolder<String> value : getValue()) {
-            str += "  + " + value.toString() + "\n";
+            str += "\n   + " + value.toString();
         }
         return str;
     }
