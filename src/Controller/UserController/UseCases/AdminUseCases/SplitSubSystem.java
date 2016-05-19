@@ -135,37 +135,8 @@ public class SplitSubSystem extends UseCase {
         }
         
         // Step 10
-        // Finalize + Creation
+        getProjectService().split(subSystem, project, name1, description1, name2, description2, toAddSubSystem1, toAddBugReport1, toAddSubSystem2, toAddBugReport2);
         
-        
-        SubSystem parent = getProjectService().getParentSubSystem(subSystem);
-        SubSystem subSystem1, subSystem2;
-        if(parent != null)
-        {
-        	subSystem1 = getProjectService().createSubsystem(name1, description1, parent);
-        	subSystem2 = getProjectService().createSubsystem(name2, description2, parent);
-        }
-        else
-        {
-        	subSystem1 = getProjectService().createSubsystem(name1, description1, project);
-        	subSystem2 = getProjectService().createSubsystem(name2, description2, project);
-        }
-        
-        for(SubSystem sub : toAddSubSystem1)
-        	subSystem1.addSubSystem(sub);
-        for(BugReport bug : toAddBugReport1)
-        	subSystem1.addBugReport(bug);
-        
-        for(SubSystem sub : toAddSubSystem2)
-        	subSystem2.addSubSystem(sub);
-        for(BugReport bug : toAddBugReport2)
-        	subSystem2.addBugReport(bug);
-        
-        getProjectService().setNewSubSystemMilestone(subSystem1, subSystem.getCurrentSubsystemMilestones());
-        getProjectService().setNewSubSystemMilestone(subSystem2, subSystem.getCurrentSubsystemMilestones());
-        
-        getProjectService().removeSubSystem(project, subSystem);
-     
         getUi().display("The subsystem has been successfully splitted.\n");
     }
     
