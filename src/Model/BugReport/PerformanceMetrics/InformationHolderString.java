@@ -67,4 +67,9 @@ public class InformationHolderString implements IInformationHolder<String> {
 
     //endregion
 
+    @Override
+    public String toString() {
+        return description + " : " + value;
+    }
+
 }
