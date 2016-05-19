@@ -9,7 +9,7 @@ public interface IHealthIndicator {
 
     /**
      * Method to get health indicator components of an object.
-     * @return the applicable health indicator, calculated by a chosen algorithm.
+     * @return List of the health indicator components.
      */
     List<IHealthIndicator> getDirectHealthIndicatorComponents();
 }
