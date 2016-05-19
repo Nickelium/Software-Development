@@ -1,6 +1,9 @@
 package Model.BugReport.PerformanceMetrics;
 
 import Model.BugReport.BugReportService;
+import Model.Project.Project;
+import Model.Project.ProjectService;
+import Model.User.Developer;
 import Model.User.User;
 
 /**
@@ -11,14 +14,17 @@ import Model.User.User;
  */
 public class Leadership extends PerformanceMetrics {
 
+    private ProjectService projectService;
+
     /**
      * Package visible constructor to create a new Leadership object.
      *
      * @param bugReportService the bug report service needed to gather
      *                         information about the health indicators.
      */
-    Leadership(BugReportService bugReportService) {
+    Leadership(BugReportService bugReportService, ProjectService projectService) {
         super(bugReportService);
+        setProjectService(projectService);
     }
 
     /**
@@ -29,7 +35,29 @@ public class Leadership extends PerformanceMetrics {
      */
     @Override
     MetricsComponent construct(User user) throws IllegalArgumentException {
-        return new MetricsComponent("Leadership");
+        if (!(user instanceof Developer))
+            throw new IllegalArgumentException("This user doesn't have performance metrics.");
+
+        MetricsComponent metricsComponent = new MetricsComponent("Leadership");
+
+        for (Project project : getProjectService().getProjectsOfLeadRole((Developer) user)) {
+            InformationHolderMultiValue holder = new InformationHolderMultiValue(project.getName());
+            holder.addValue(new InformationHolderString("Health Indicator Algorithm 1", ));
+            holder.addValue(new InformationHolderString("Health Indicator Algorithm 2", ));
+            holder.addValue(new InformationHolderString("Health Indicator Algorithm 3", ));
+
+            metricsComponent.addInformation(holder);
+        }
+
+        return metricsComponent;
+    }
+
+    private ProjectService getProjectService() {
+        return projectService;
+    }
+
+    private void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
 }
