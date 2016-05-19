@@ -273,14 +273,22 @@ public class BugReportService {
 
     //region Performance Metrics functions
 
-    //TODO doc
-
     //region Test information
 
+    /**
+     * Method returning a list of all tests, submitted by a given developer.
+     * @param user the developer by who the tests have to be submitted
+     * @return a list of all tests meeting the requirements.
+     */
     public List<Test> getAllTestsSubmittedByDeveloper(User user) {
         return getAllTests(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
     }
 
+    /**
+     * Method returning a list of all tests for all bug reports visible to the given developer.
+     * @param user the developer for who the bug reports are visible
+     * @return a list of all tests for bug reports visible by the developer
+     */
     public List<Test> getAllTests(User user) {
         if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
         List<Test> tests = new ArrayList<>();
@@ -294,10 +302,20 @@ public class BugReportService {
 
     //region Patch information
 
+    /**
+     * Method returning a list of all patches, submitted by a given developer.
+     * @param user the developer by who the patches have to be submitted
+     * @return a list of all patches meeting the requirements.
+     */
     public List<Patch> getAllPatchesSubmittedByDeveloper(User user) {
         return getAllPatches(user).stream().filter(x -> x.getCreator().equals(user)).collect(Collectors.toList());
     }
 
+    /**
+     * Method returning a list of all patches for all bug reports visible to the given developer.
+     * @param user the developer for who the bug reports are visible
+     * @return a list of all patches for bug reports visible by the developer
+     */
     public List<Patch> getAllPatches(User user) {
         if (!(user instanceof Developer)) throw new IllegalArgumentException("This is not a developer.");
         List<Patch> patches = new ArrayList<>();

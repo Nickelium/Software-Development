@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Karina on 25.03.2016.
+ * Class extending the use case class, representing an assign-to-project use case.
  */
 public class AssignToProject extends DeveloperUseCase {
 

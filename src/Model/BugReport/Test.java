@@ -46,23 +46,41 @@ public class Test {
         return this.value;
     }
 
-    //TODO doc
+    /**
+     * Method to calculate and set the amount of lines the test has.
+     */
     private void setLines() {
         lines = value.length() - value.replaceAll("\\n", "").length() + 1;
     }
 
+    /**
+     * Method to return the amount of lines in the test.
+     * @return the amount of lines in a test
+     */
     public int getLines() {
         return lines;
     }
 
+    /**
+     * Method to return the creator of the test.
+     * @return the creator of the test
+     */
     public User getCreator() {
         return creator;
     }
 
+    /**
+     * Method to set the creator of the test.
+     * @param creator the user which has created the test
+     */
     private void setCreator(User creator) {
         this.creator = creator;
     }
 
+    /**
+     * Returns a textual representation of the value of the test object
+     * @return a textual representation of the value of the test object
+     */
     public String toString() {
         return this.getValue();
     }

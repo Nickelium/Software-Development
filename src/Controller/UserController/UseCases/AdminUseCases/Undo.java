@@ -13,7 +13,9 @@ import Model.User.UserService;
 
 import java.util.List;
 
-
+/**
+ * Class extending the use case class, representing an undo use case.
+ */
 public class Undo extends UseCase 
 {
 	private Caretaker caretaker;

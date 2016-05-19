@@ -291,11 +291,19 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
         return Collections.unmodifiableList(list);
     }
 
-    //TODO: Documentation
+    /**
+     * Method returning the impact factor of the bug report.
+     * @return the bug impact of the bug report.
+     */
     public int getImpactFactor() {
         return this.impactFactor;
     }
 
+    /**
+     * Method returning the bug report impact of the bug report.
+     * This is determined by the tag type of the bug report and its impact factor.
+     * @return the bug report impact value
+     */
     public double getBugReportImpact() {
         return this.getTag().getBugReportImpact(this);
     }
@@ -360,7 +368,11 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
         else return true;
     }
 
-    //TODO: Documentation
+    /**
+     * Method to check whether an impact factor is valid.
+     * @param impactScore the score value that needs to be checked
+     * @return true if the impact factor is valid, false if not
+     */
     public boolean isValidImpactFactor(int impactScore) {
         return (impactScore > 0 && impactScore <= 10);
     }
@@ -500,9 +512,13 @@ public class BugReport extends Subject implements Observer, Originator<BugReport
         this.errorMessage = errorMessage;
     }
 
-    //TODO: Documentation
+    /**
+     * Method to set the impact factor of a bug report.
+     * @param impactFactor the impact factor to be set
+     * @throws IllegalArgumentException is thrown if the impact factor is not valid.
+     */
     private void setImpactFactor(int impactFactor) {
-        if (!isValidImpactFactor(impactFactor)) throw new IllegalArgumentException("Invalid impactfactor");
+        if (!isValidImpactFactor(impactFactor)) throw new IllegalArgumentException("Invalid impact factor");
         this.impactFactor = impactFactor;
     }
 

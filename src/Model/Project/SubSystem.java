@@ -172,12 +172,20 @@ public class SubSystem extends Subject implements Observer, Originator<SubSystem
 		return max + 1;
     }
 
-    //TODO: Documentation
+    /**
+     * Method returning a list of all health indicator components of a subsystem.
+     * @return a list of all health indicator components of a subsystem
+     */
     public List<IHealthIndicator> getDirectHealthIndicatorComponents() {
         return Collections.unmodifiableList(this.subSystems);
     }
 
-    //TODO: Documentation
+    /**
+     * Method returning the bug impact of the subsystem
+     * The bug impact is equal to the summation of (Multiplier(br) * ImpactFactor(br)), for each bug report br.
+     *
+     * @return the bug impact of the subsystem
+     */
     public double getBugImpact() {
         double impact = 0.0;
 

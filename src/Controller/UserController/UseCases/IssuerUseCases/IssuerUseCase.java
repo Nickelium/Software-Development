@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Karina on 24.03.2016.
+ * Abstract class extending the use case class, representing an issuer use case object.
  */
 public abstract class IssuerUseCase extends UseCase {
 

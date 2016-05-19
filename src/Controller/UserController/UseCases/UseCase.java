@@ -8,7 +8,7 @@ import Model.User.User;
 import Model.User.UserService;
 
 /**
- * Created by Karina on 24.03.2016.
+ * Abstract class representing a use case object
  */
 public abstract class UseCase {
 

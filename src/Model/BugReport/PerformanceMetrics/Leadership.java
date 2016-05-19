@@ -31,7 +31,10 @@ public class Leadership extends PerformanceMetrics {
     }
 
     /**
-     * // TODO Implement
+     * Method returning a metrics component, containing all required information for the
+     * leadership metric. Method looks up the information, and adds the multi value information
+     * holders to the information array.
+     *
      * @param user the developer of who the performance metrics have to be looked up.
      * @return a metrics component containing all needed information (health indicators)
      * @throws IllegalArgumentException is thrown if the user in the argument is not a developer.

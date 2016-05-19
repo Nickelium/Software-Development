@@ -16,7 +16,7 @@ import Model.User.UserService;
 import java.util.List;
 
 /**
- * Created by Karina on 24.03.2016.
+ * Class extending the use case class, representing a fork project use case.
  */
 public class ForkProject extends UseCase {
 

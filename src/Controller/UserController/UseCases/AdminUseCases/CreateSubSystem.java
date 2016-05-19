@@ -14,7 +14,7 @@ import Model.User.UserService;
 import java.util.List;
 
 /**
- * Created by Karina on 24.03.2016.
+ * Class extending the use case class, representing a create subsystem use case.
  */
 public class CreateSubSystem extends UseCase {
 

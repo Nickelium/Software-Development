@@ -14,7 +14,7 @@ import Model.User.UserService;
 import java.util.List;
 
 /**
- * Created by Karina on 06.05.2016.
+ * Class extending the use case class, representing a show-performance-metrics use case.
  */
 public class ShowPerformanceMetrics extends UseCase {
 

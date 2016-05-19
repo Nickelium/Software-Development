@@ -11,7 +11,7 @@ import Model.User.User;
 import Model.User.UserService;
 
 /**
- * Created by Karina on 11.04.2016.
+ * Class extending the developer use case class, representing a propose-patch use case.
  */
 public class ProposePatch extends DeveloperUseCase {
 

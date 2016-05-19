@@ -16,7 +16,7 @@ import Model.User.UserService;
 import java.util.List;
 
 /**
- * Created by Karina on 25.03.2016.
+ * Class extending the use case class, representing an assign-to-bug-report use case.
  */
 public class AssignToBugReport extends DeveloperUseCase {
 
