@@ -1,7 +1,7 @@
 package Model.HealthIndicator;
 
 /**
- * Created by Tom on 6/05/16.
+ * Enumeration representing different health indicator values.
  */
 public enum HealthIndicator {
     //Order as below is natural order.
@@ -13,10 +13,18 @@ public enum HealthIndicator {
 
     private String string;
 
+    /**
+     * Method to provide string representation of the enum values.
+     * @param string the string to be represented
+     */
     HealthIndicator(String string) {
         this.string = string;
     }
 
+    /**
+     * Method returning a string of the enum values
+     * @return the string of the enum value
+     */
     public String toString() {
         return this.string;
     }
