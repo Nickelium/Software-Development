@@ -51,8 +51,8 @@ public class Formatter
 	{
 		String parsed ="";
 		for(int i=0; i< listMilestone.size(); i++)
-			parsed += i + ": " + listMilestone.get(i).toString() + "\n";
-		return parsed;
+			parsed += i + ": " + listMilestone.get(i).toString() + "\n\n";
+		return parsed + "\n";
 
 	}
 	
@@ -67,7 +67,7 @@ public class Formatter
 	{
 		String parsed ="";
 		for(int i=0; i< listProject.size(); i++)
-            parsed += i + ": " + listProject.get(i).toString() + "\n";
+            parsed += i + ": " + listProject.get(i).toString() + "\n\n";
         return parsed;
 		
 	}
@@ -83,7 +83,7 @@ public class Formatter
 	{
 		String parsed ="";
 		for(int i=0; i< listSubSystem.size(); i++)
-            parsed += i + ": " + listSubSystem.get(i).toString() + "\n";
+            parsed += i + ": " + listSubSystem.get(i).toString() + "\n\n";
         return parsed;
 		
 	}
@@ -99,7 +99,7 @@ public class Formatter
 	{
 		String parsed ="";
 		for(int i=0; i< listBugReport.size(); i++)
-            parsed += i + ": " + listBugReport.get(i).toString() + "\n";
+            parsed += i + ": " + listBugReport.get(i).toString() + "\n\n";
         return parsed;
 
 	}
@@ -158,7 +158,7 @@ public class Formatter
 		parsed += "\n* Health Indicator Algorithm 2: " + new HealthIndicatorA2().get(project);
 		parsed += "\n* Health Indicator Algorithm 3: " + new HealthIndicatorA3().get(project);
 		for(SubSystem subSystem : project.getSubSystems())
-			parsed += "\n\t" + Formatter.addTabulation(Formatter.formatDetailedSubSystem(subSystem));
+			parsed += "\n\n\t" + Formatter.addTabulation(Formatter.formatDetailedSubSystem(subSystem));
 		return parsed;
 	}
 	
@@ -177,7 +177,7 @@ public class Formatter
 		parsed += "\n* Health Indicator Algorithm 2: " + new HealthIndicatorA2().get(subSystem);
 		parsed += "\n* Health Indicator Algorithm 3: " + new HealthIndicatorA3().get(subSystem);
 		for(SubSystem sub : subSystem.getSubSystems())
-			parsed += "\n\t" + Formatter.addTabulation(Formatter.formatDetailedSubSystem(sub));
+			parsed += "\n\n\t" + Formatter.addTabulation(Formatter.formatDetailedSubSystem(sub));
 		return parsed;
 	}
 
@@ -194,7 +194,7 @@ public class Formatter
 		String parsed = bugReport.toString();
 		for(Comment comm : bugReport.getComments())
 			parsed += "\n\t" + Formatter.addTabulation(Formatter.formatDetailedComment(comm));
-        return parsed;
+        return parsed + "\n";
     }
 	
 	private static String formatDetailedComment(Comment comment)
@@ -211,14 +211,14 @@ public class Formatter
 		String parsed ="";
 		for(int i=0; i< notifications.size(); i++)
             parsed += i + ": \n" + notifications.get(i).toString() + "\n";
-        return parsed;
+        return parsed + "\n";
 	}
 
 	public static String formatRegistrationList(List<ObserverAspect> registrations) {
 		String parsed ="";
 		for(int i=0; i< registrations.size(); i++)
             parsed += i + ": \n" + registrations.get(i).toString() + "\n";
-        return parsed;
+        return parsed + "\n";
 	}
 
 	public static String formatPatches(BugReport bugReport) {
@@ -227,7 +227,7 @@ public class Formatter
 		for (int i = 0; i < bugReport.getPatches().size(); i++) {
 			parsed += i + ": " + bugReport.getPatches().get(i) + "\n";
 		}
-		return parsed;
+		return parsed + "\n";
 	}
 	
 	private static String addTabulation(String str)

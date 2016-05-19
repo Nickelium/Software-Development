@@ -549,11 +549,10 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 				+ "\nStarting Date: " + getStartingDate() + "\nBudget: " + getBudget()
 				+ "\nVersionID: " + versionID
 				+ "\nMilestone: " + this.getLatestAchievedMilestone()
-				+ "\nLead developer: " + getLeadRole().getDeveloper() + "\n";
-		//TODO Add health indicators to this method
+				+ "\nLead developer: " + getLeadRole().getDeveloper();
 
 		for (Role role : devsRoles) {
-			string += role.toString() + "\n";
+			string += "\n" + role.toString() ;
 		}
 
 		return string;
