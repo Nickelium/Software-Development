@@ -1,4 +1,4 @@
-package Controller.Initializer;
+package Controller.InitializerPkg;
 
 import CustomExceptions.ReportErrorToUserException;
 import Model.BugReport.*;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Initializer implements IInitializer {
+public class DemoInitializer implements IInitializer {
     private UserService userService;
     private ProjectService projectService;
     private BugReportService bugReportService;
@@ -35,7 +35,7 @@ public class Initializer implements IInitializer {
     private PerformanceMetricsService performanceMetricsService;
     private Caretaker caretaker;
 
-    public Initializer() {
+    public DemoInitializer() {
         init();
     }
 
@@ -177,17 +177,16 @@ public class Initializer implements IInitializer {
         return performanceMetricsService;
     }
 
-	public MailboxService getMailboxService() {
-		return this.mailboxService;
-	}
-	
-	public Caretaker getCaretaker()
-	{
-		return caretaker;
-	}
+    public MailboxService getMailboxService() {
+        return this.mailboxService;
+    }
+
+    public Caretaker getCaretaker() {
+        return caretaker;
+    }
 
     public String getName() {
-        return "Assignment Initialization";
+        return "Demo Initialization";
     }
 
     ;

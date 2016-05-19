@@ -1,9 +1,9 @@
 package Controller;
 
 
-import Controller.Initializer.DemoInitializer;
-import Controller.Initializer.IInitializer;
-import Controller.Initializer.Initializer;
+import Controller.InitializerPkg.AssignmentInitializer;
+import Controller.InitializerPkg.DemoInitializer;
+import Controller.InitializerPkg.IInitializer;
 import Controller.UserController.AdminController;
 import Controller.UserController.DeveloperController;
 import Controller.UserController.IssuerController;
@@ -28,7 +28,7 @@ public class MainController {
 
     public MainController() {
         ui = new UI();
-        initializerList.add(new Initializer());
+        initializerList.add(new AssignmentInitializer());
         initializerList.add(new DemoInitializer());
     }
 
