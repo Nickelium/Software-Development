@@ -40,25 +40,23 @@ public class Milestone implements Comparable<Milestone> {
     /**
      * Constructor to create a milestone object with the default milestone ID (M0).
      *
-     * @throws ReportErrorToUserException //TODO
+     * @throws ReportErrorToUserException is thrown if the milestoneID is invalid
      */
     public Milestone() throws ReportErrorToUserException {
         this.setMilestoneID("M0");
     }
 
     /**
-     * // TODO
-     *
-     * @return
+     * Method to return the value of the milestone ID as a string.
+     * @return the value of the milestone ID as a string
      */
     public String getMilestoneID() {
         return this.toString();
     }
 
     /**
-     * TODO
-     *
-     * @return
+     * Method to return the layered representation of the milestone ID.
+     * @return the layered representation of the milestone ID
      */
     public int[] getLayeredMilestone() {
         return this.layeredMilestone;
@@ -79,6 +77,13 @@ public class Milestone implements Comparable<Milestone> {
         }
     }
 
+    /**
+     * Method to create the layered milestone representation of a given milestone.
+     * Each layer represents a level in the dot separated structure of the milestone ID.
+     *
+     * @param milestoneID the milestone ID of which the layered milestone has to be made
+     * @return the layered milestone ID
+     */
     private int[] milestoneStringToArray(String milestoneID) {
         if (milestoneID == null) throw new IllegalArgumentException("milestoneId is null");
         String milestoneNumbers = milestoneID.substring(1);
@@ -94,7 +99,7 @@ public class Milestone implements Comparable<Milestone> {
 
     /**
      * Method to determine whether a given milestone ID is a valid milestone ID.
-     * <p>
+     *
      * Requirements for a valid milestone ID:
      * the milestone ID has to start with a capital letter M.
      * all non-numerical characters have to be dots.
@@ -146,6 +151,17 @@ public class Milestone implements Comparable<Milestone> {
         return true;
     }
 
+    /**
+     * Method to compare milestone to each other. The values of the milestones are
+     * evaluated at each level of the layered milestone. When a difference is found,
+     * the comparison is finished.
+     *
+     * @param m1 the first milestone
+     * @param m2 the second milestone
+     * @return 1 if the first milestone ID is greater than the second milestone ID
+     *         0 if both milestone IDs are equal to each other
+     *         -1 if the first milestone ID is smaller than the second milestone ID
+     */
     private int compareMilestones(Milestone m1, Milestone m2) {
         if (m1 == null) throw new IllegalArgumentException("Milestone 1 is null");
         if (m2 == null) throw new IllegalArgumentException("Milestone 2 is null");
@@ -180,6 +196,10 @@ public class Milestone implements Comparable<Milestone> {
         return 0;
     }
 
+    /**
+     * Returns a string representation of the layered milestone ID object.
+     * @return a string representation of the milestone ID
+     */
     @Override
     public String toString() {
         String milestone = "M";

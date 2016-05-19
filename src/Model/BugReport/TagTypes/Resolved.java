@@ -70,7 +70,10 @@ public class Resolved extends Tag {
         this.setSelectedPatch(bugReport, getSelectedPatch());
     }
 
-    //TODO: Documentation
+    /**
+     * Method returning the multiplier value, needed for the calculation of bug impact.
+     * @return the multiplier of the specific tag
+     */
     @Override
     protected double getMultiplier() {
         return 0.1;

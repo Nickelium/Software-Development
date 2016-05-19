@@ -44,23 +44,41 @@ public class Patch {
         return this.value;
     }
 
-    //TODO doc
+    /**
+     * Method to calculate and set the amount of lines the patch has.
+     */
     private void setLines() {
         lines = value.length() - value.replaceAll("\\n", "").length() + 1;
     }
 
+    /**
+     * Method to return the amount of lines in the patch.
+     * @return the amount of lines in a patch
+     */
     public int getLines() {
         return lines;
     }
 
+    /**
+     * Method to return the creator of the patch.
+     * @return the creator of the patch
+     */
     public User getCreator() {
         return creator;
     }
 
+    /**
+     * Method to set the creator of the patch.
+     * @param creator the user which has created the patch
+     */
     private void setCreator(User creator) {
         this.creator = creator;
     }
 
+    /**
+     * Returns a textual representation of the value of the patch object
+     * @return a textual representation of the value of the patch object
+     */
     public String toString() {
         return this.getValue();
     }

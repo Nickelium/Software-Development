@@ -243,7 +243,10 @@ public class Project extends Subject implements Observer, Originator<Project.Pro
 		return max + 1;
 	}
 
-    //TODO: Documentation
+	/**
+	 * Method returning a list of all health indicator components of a project.
+	 * @return a list of all health indicator components of a project
+     */
     public List<IHealthIndicator> getDirectHealthIndicatorComponents() {
         return Collections.unmodifiableList(this.subSystems);
     }

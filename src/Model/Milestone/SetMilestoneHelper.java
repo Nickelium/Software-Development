@@ -20,8 +20,7 @@ public abstract class SetMilestoneHelper {
      * @param ms   The new milestone.
      * @return True if the given milestone does not exceed the milestones of the subsystems.
      *
-     * @throws ReportErrorToUserException TODO
-     * @throws IllegalArgumentException Milestonecontainer or milestone is null.
+     * @throws IllegalArgumentException is thrown if milestone container or milestone is null.
      */
     public static boolean milestoneDoesNotExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms)
     {
@@ -65,7 +64,6 @@ public abstract class SetMilestoneHelper {
      * @param ms   The new milestone.
      * @return True if the given milestone does exceed the milestones of the subsystems.
      *
-     * //TODO wat is hier het nut van? is dit niet gewoon !milestoneDoesNotExceedSubsystemMilestone?
      * @throws IllegalArgumentException MilestoneContainer or milestone is null.
      */
     public static boolean milestoneDoesExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) 

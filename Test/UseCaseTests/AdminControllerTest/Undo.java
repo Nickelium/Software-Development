@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class Undo extends AdminControllerInit {
 
-    //TODO
     @Test
     public void undoTest() throws Exception {
         String[] simulateUserInput = {
