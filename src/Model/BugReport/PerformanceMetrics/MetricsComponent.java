@@ -65,6 +65,8 @@ public class MetricsComponent {
 
     /**
      * Package visible method to add a new information holder to a metrics component.
+     * 
+     * @param informationHolder the object that contains the information
      */
     void addInformation(IInformationHolder informationHolder) {
         information.add(informationHolder);

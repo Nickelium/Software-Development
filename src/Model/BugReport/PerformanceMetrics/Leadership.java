@@ -24,6 +24,7 @@ public class Leadership extends PerformanceMetrics {
      *
      * @param bugReportService the bug report service needed to gather
      *                         information about the health indicators.
+     * @param projectService the projectService to get the projects
      */
     Leadership(BugReportService bugReportService, ProjectService projectService) {
         super(bugReportService);
