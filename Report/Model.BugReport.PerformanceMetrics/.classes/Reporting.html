@@ -1,0 +1,142 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Reporting</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport.PerformanceMetrics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Reporting (Model.BugReport.PerformanceMetrics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Reporting</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport.PerformanceMetrics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>4</i>&nbsp;import Model.BugReport.BugReportService;
+<i>5</i>&nbsp;import Model.BugReport.SearchMethod.SearchOnCreator;
+<i>6</i>&nbsp;import Model.BugReport.SearchMethod.SearchOnCreatorWithTag;
+<i>7</i>&nbsp;import Model.BugReport.TagTypes.Duplicate;
+<i>8</i>&nbsp;import Model.BugReport.TagTypes.NotABug;
+<i>9</i>&nbsp;import Model.User.Developer;
+<i>10</i>&nbsp;import Model.User.User;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Class extending the performance metrics class, representing a reporting metric.
+<i>14</i>&nbsp; *
+<i>15</i>&nbsp; * A developer&#39;s reporting skill is measured by:
+<i>16</i>&nbsp; *
+<i>17</i>&nbsp; * The number of Duplicate bug reports submitted by the developer
+<i>18</i>&nbsp; * The number of NotABug bug reports submitted by the developer
+<i>19</i>&nbsp; * The total number of bug reports submitted by the developer
+<i>20</i>&nbsp; */
+<i>21</i>&nbsp;public class Reporting extends PerformanceMetrics {
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Package visible constructor to create a new Reporting object.
+<i>25</i>&nbsp;     *
+<i>26</i>&nbsp;     * @param bugReportService the bug report service needed to gather information about
+<i>27</i>&nbsp;     *                         the tags assigned to bug reports submitted by the developer.
+<i>28</i>&nbsp;     */
+<i>29</i>&nbsp;    Reporting(BugReportService bugReportService) {
+<b class="fc"><i>30</i>&nbsp;        super(bugReportService);</b>
+<b class="fc"><i>31</i>&nbsp;    }</b>
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    /**
+<i>34</i>&nbsp;     * Method returning a metrics component, containing all required information for the
+<i>35</i>&nbsp;     * reporting metric. Method looks up the information, and adds the information holders
+<i>36</i>&nbsp;     * to the information array.
+<i>37</i>&nbsp;     *
+<i>38</i>&nbsp;     * @param user the developer of who the performance metrics have to be looked up.
+<i>39</i>&nbsp;     * @return a metrics component containing all needed information (information about tags and bug reports)
+<i>40</i>&nbsp;     * @throws IllegalArgumentException is thrown if the user in the argument is not a developer.
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    @Override
+<i>43</i>&nbsp;    MetricsComponent construct(User user) throws IllegalArgumentException, ReportErrorToUserException {
+<b class="fc"><i>44</i>&nbsp;        if (!(user instanceof Developer))</b>
+<b class="fc"><i>45</i>&nbsp;            throw new IllegalArgumentException(&quot;This user doesn&#39;t have a performance metrics.&quot;);</b>
+<i>46</i>&nbsp;
+<b class="fc"><i>47</i>&nbsp;        MetricsComponent metricsComponent = new MetricsComponent(&quot;Reporting&quot;);</b>
+<i>48</i>&nbsp;
+<b class="fc"><i>49</i>&nbsp;        metricsComponent.addInformation(new InformationHolderInt(&quot;The number of Duplicate bug reports submitted by the developer&quot;,</b>
+<b class="fc"><i>50</i>&nbsp;                getBugReportService().search(new SearchOnCreatorWithTag(user, Duplicate.class), user).size()));</b>
+<b class="fc"><i>51</i>&nbsp;        metricsComponent.addInformation(new InformationHolderInt(&quot;The number of NotABug bug reports submitted by the developer&quot;,</b>
+<b class="fc"><i>52</i>&nbsp;                getBugReportService().search(new SearchOnCreatorWithTag(user, NotABug.class), user).size()));</b>
+<b class="fc"><i>53</i>&nbsp;        metricsComponent.addInformation(new InformationHolderInt(&quot;The total number of bug reports submitted by the developer&quot;,</b>
+<b class="fc"><i>54</i>&nbsp;                getBugReportService().search(new SearchOnCreator(user), user).size()));</b>
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;        return metricsComponent;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,333 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Milestone</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Milestone</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Milestone (Model.Milestone)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Milestone</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95,6%
+  </span>
+  <span class="absValue">
+    (65/ 68)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Milestone;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.Objects;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import static java.lang.Character.isDigit;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Class representing a Milestone object.
+<i>11</i>&nbsp; *
+<i>12</i>&nbsp; * A milestone is a label given to a bug report, project or subsystem.
+<i>13</i>&nbsp; * For a project or subsystem such a milestone represents the progress achieved
+<i>14</i>&nbsp; * so far.
+<i>15</i>&nbsp; *
+<i>16</i>&nbsp; * A milestone is identified by a String value: the milestone ID.
+<i>17</i>&nbsp; *
+<i>18</i>&nbsp; * Milestones are comparable: e.g. M0.5 smaller than M1.2.1 and M1.2.1 smaller than M1.3.0
+<i>19</i>&nbsp; *
+<i>20</i>&nbsp; * Initially all projects and subsystems have the default achieved milestone: M0.
+<i>21</i>&nbsp; */
+<i>22</i>&nbsp;public class Milestone implements Comparable&lt;Milestone&gt; {
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * The milestone ID has no limits in terms of layering (number of dot separated numbers),
+<i>26</i>&nbsp;     * but numbers it contains must be in the range of the int data structure.
+<i>27</i>&nbsp;     */
+<i>28</i>&nbsp;    private int[] layeredMilestone;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * Constructor to create a milestone object with a given milestone ID.
+<i>32</i>&nbsp;     *
+<i>33</i>&nbsp;     * @param milestoneID the given milestone ID
+<i>34</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the milestoneID is not valid.
+<i>35</i>&nbsp;     */
+<b class="fc"><i>36</i>&nbsp;    public Milestone(String milestoneID) throws ReportErrorToUserException {</b>
+<b class="fc"><i>37</i>&nbsp;        setMilestoneID(milestoneID);</b>
+<b class="fc"><i>38</i>&nbsp;    }</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    /**
+<i>41</i>&nbsp;     * Constructor to create a milestone object with the default milestone ID (M0).
+<i>42</i>&nbsp;     *
+<i>43</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the milestoneID is invalid
+<i>44</i>&nbsp;     */
+<b class="fc"><i>45</i>&nbsp;    public Milestone() throws ReportErrorToUserException {</b>
+<b class="fc"><i>46</i>&nbsp;        this.setMilestoneID(&quot;M0&quot;);</b>
+<b class="fc"><i>47</i>&nbsp;    }</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    /**
+<i>50</i>&nbsp;     * Method to return the value of the milestone ID as a string.
+<i>51</i>&nbsp;     * @return the value of the milestone ID as a string
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    public String getMilestoneID() {
+<b class="fc"><i>54</i>&nbsp;        return this.toString();</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * Method to return the layered representation of the milestone ID.
+<i>59</i>&nbsp;     * @return the layered representation of the milestone ID
+<i>60</i>&nbsp;     */
+<i>61</i>&nbsp;    public int[] getLayeredMilestone() {
+<b class="fc"><i>62</i>&nbsp;        return this.layeredMilestone;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    /**
+<i>66</i>&nbsp;     * Method to set the layered milestone of the milestone object.
+<i>67</i>&nbsp;     * Also saves a string representation of the object.
+<i>68</i>&nbsp;     *
+<i>69</i>&nbsp;     * @param milestoneID the milestone ID that needs to be set.
+<i>70</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the given milestone ID is not valid.
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    public void setMilestoneID(String milestoneID) throws ReportErrorToUserException {
+<b class="fc"><i>73</i>&nbsp;        if (isValidMilestoneID(milestoneID)) {</b>
+<b class="fc"><i>74</i>&nbsp;            this.layeredMilestone = milestoneStringToArray(milestoneID);</b>
+<i>75</i>&nbsp;        } else {
+<b class="fc"><i>76</i>&nbsp;            throw new ReportErrorToUserException(&quot;Invalid milestoneID has been supplied&quot;);</b>
+<i>77</i>&nbsp;        }
+<b class="fc"><i>78</i>&nbsp;    }</b>
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;    /**
+<i>81</i>&nbsp;     * Method to create the layered milestone representation of a given milestone.
+<i>82</i>&nbsp;     * Each layer represents a level in the dot separated structure of the milestone ID.
+<i>83</i>&nbsp;     *
+<i>84</i>&nbsp;     * @param milestoneID the milestone ID of which the layered milestone has to be made
+<i>85</i>&nbsp;     * @return the layered milestone ID
+<i>86</i>&nbsp;     */
+<i>87</i>&nbsp;    private int[] milestoneStringToArray(String milestoneID) {
+<b class="fc"><i>88</i>&nbsp;        if (milestoneID == null) throw new IllegalArgumentException(&quot;milestoneId is null&quot;);</b>
+<b class="fc"><i>89</i>&nbsp;        String milestoneNumbers = milestoneID.substring(1);</b>
+<b class="fc"><i>90</i>&nbsp;        String[] stringArray = milestoneNumbers.split(&quot;\\.&quot;);</b>
+<b class="fc"><i>91</i>&nbsp;        int[] intArray = new int[stringArray.length];</b>
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;        for (int i = 0; i &lt; stringArray.length; i++) {</b>
+<b class="fc"><i>94</i>&nbsp;            intArray[i] = Integer.parseInt(stringArray[i]);</b>
+<i>95</i>&nbsp;        }
+<i>96</i>&nbsp;
+<b class="fc"><i>97</i>&nbsp;        return intArray;</b>
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    /**
+<i>101</i>&nbsp;     * Method to determine whether a given milestone ID is a valid milestone ID.
+<i>102</i>&nbsp;     *
+<i>103</i>&nbsp;     * Requirements for a valid milestone ID:
+<i>104</i>&nbsp;     * the milestone ID has to start with a capital letter M.
+<i>105</i>&nbsp;     * all non-numerical characters have to be dots.
+<i>106</i>&nbsp;     * between each couple of dots there has to be at least one digit.
+<i>107</i>&nbsp;     * the last character of the milestone ID has to be a digit.
+<i>108</i>&nbsp;     *
+<i>109</i>&nbsp;     * @param milestoneID the milestone ID that has to be checked.
+<i>110</i>&nbsp;     * @return true if the milestone ID is valid, false if not.
+<i>111</i>&nbsp;     */
+<i>112</i>&nbsp;    public boolean isValidMilestoneID(String milestoneID) {
+<b class="fc"><i>113</i>&nbsp;        if (milestoneID == null) return false;</b>
+<i>114</i>&nbsp;        // the milestone ID has to start with a capital letter M.
+<b class="fc"><i>115</i>&nbsp;        if (!(Objects.equals(milestoneID.substring(0, 1), &quot;M&quot;)))</b>
+<b class="fc"><i>116</i>&nbsp;            return false;</b>
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;        // all non-numerical characters have to be dots.
+<b class="fc"><i>119</i>&nbsp;        char[] chars = new char[milestoneID.length() - 1];</b>
+<b class="fc"><i>120</i>&nbsp;        milestoneID.getChars(1, milestoneID.length(), chars, 0);</b>
+<b class="fc"><i>121</i>&nbsp;        for (char c : chars) {</b>
+<b class="fc"><i>122</i>&nbsp;            if (!(isDigit(c) || c == &#39;.&#39;))</b>
+<b class="fc"><i>123</i>&nbsp;                return false;</b>
+<i>124</i>&nbsp;        }
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;        // between each couple of dots there has to be at least one digit.
+<b class="fc"><i>127</i>&nbsp;        if (!hasDigitBetweenEveryCoupleDots(chars))</b>
+<b class="fc"><i>128</i>&nbsp;            return false;</b>
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;        // the last character of the milestone ID has to be a digit.
+<b class="fc"><i>131</i>&nbsp;        if (chars[chars.length - 1] == &#39;.&#39;)</b>
+<b class="fc"><i>132</i>&nbsp;            return false;</b>
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;        // All tests passed: string is valid.
+<b class="fc"><i>135</i>&nbsp;        return true;</b>
+<i>136</i>&nbsp;    }
+<i>137</i>&nbsp;
+<i>138</i>&nbsp;    /**
+<i>139</i>&nbsp;     * Method to check if there is a digit between every couple of dots
+<i>140</i>&nbsp;     *
+<i>141</i>&nbsp;     * @param chars a list of characters representing the milestone ID
+<i>142</i>&nbsp;     * @return true if there is a digit between every couple of dots, false if not
+<i>143</i>&nbsp;     */
+<i>144</i>&nbsp;    private boolean hasDigitBetweenEveryCoupleDots(char[] chars) {
+<b class="fc"><i>145</i>&nbsp;        if (chars == null) return false;</b>
+<b class="fc"><i>146</i>&nbsp;        for (int i = 0; i &lt;= chars.length - 2; i++) {</b>
+<b class="fc"><i>147</i>&nbsp;            if (chars[i] == &#39;.&#39; &amp;&amp; chars[i + 1] == &#39;.&#39;) {</b>
+<b class="fc"><i>148</i>&nbsp;                return false;</b>
+<i>149</i>&nbsp;            }
+<i>150</i>&nbsp;        }
+<b class="fc"><i>151</i>&nbsp;        return true;</b>
+<i>152</i>&nbsp;    }
+<i>153</i>&nbsp;
+<i>154</i>&nbsp;    /**
+<i>155</i>&nbsp;     * Method to compare milestone to each other. The values of the milestones are
+<i>156</i>&nbsp;     * evaluated at each level of the layered milestone. When a difference is found,
+<i>157</i>&nbsp;     * the comparison is finished.
+<i>158</i>&nbsp;     *
+<i>159</i>&nbsp;     * @param m1 the first milestone
+<i>160</i>&nbsp;     * @param m2 the second milestone
+<i>161</i>&nbsp;     * @return 1 if the first milestone ID is greater than the second milestone ID
+<i>162</i>&nbsp;     *         0 if both milestone IDs are equal to each other
+<i>163</i>&nbsp;     *         -1 if the first milestone ID is smaller than the second milestone ID
+<i>164</i>&nbsp;     */
+<i>165</i>&nbsp;    private int compareMilestones(Milestone m1, Milestone m2) {
+<b class="fc"><i>166</i>&nbsp;        if (m1 == null) throw new IllegalArgumentException(&quot;Milestone 1 is null&quot;);</b>
+<b class="fc"><i>167</i>&nbsp;        if (m2 == null) throw new IllegalArgumentException(&quot;Milestone 2 is null&quot;);</b>
+<b class="fc"><i>168</i>&nbsp;        int[] layeredMilestone1 = m1.getLayeredMilestone();</b>
+<b class="fc"><i>169</i>&nbsp;        int[] layeredMilestone2 = m2.getLayeredMilestone();</b>
+<b class="fc"><i>170</i>&nbsp;        int lengthL1 = layeredMilestone1.length;</b>
+<b class="fc"><i>171</i>&nbsp;        int lengthL2 = layeredMilestone2.length;</b>
+<b class="fc"><i>172</i>&nbsp;        int index = 0;</b>
+<i>173</i>&nbsp;
+<b class="fc"><i>174</i>&nbsp;        while (index &lt; lengthL1 &amp;&amp; index &lt; lengthL2) {</b>
+<b class="fc"><i>175</i>&nbsp;            if (layeredMilestone1[index] &gt; layeredMilestone2[index])</b>
+<b class="fc"><i>176</i>&nbsp;                return 1;</b>
+<b class="fc"><i>177</i>&nbsp;            else if (layeredMilestone1[index] &lt; layeredMilestone2[index])</b>
+<b class="fc"><i>178</i>&nbsp;                return -1;</b>
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;            // if both layers are equal, do nothing
+<i>181</i>&nbsp;
+<i>182</i>&nbsp;            // Checks needed for milestones with different number of layers
+<b class="fc"><i>183</i>&nbsp;            if (index == lengthL1 - 1 &amp;&amp; index &lt; lengthL2 - 1)</b>
+<b class="fc"><i>184</i>&nbsp;                return -1; // milestone2 has more layers, is therefor bigger than milestone1</b>
+<b class="fc"><i>185</i>&nbsp;            else if (index &lt; lengthL1 - 1 &amp;&amp; index == lengthL2 - 1)</b>
+<b class="fc"><i>186</i>&nbsp;                return 1; // milestone1 has more layers, is therefor bigger than milestone2</b>
+<b class="fc"><i>187</i>&nbsp;            else if (index == lengthL1 - 1 &amp;&amp; index == lengthL2 - 1)</b>
+<b class="fc"><i>188</i>&nbsp;                return 0;</b>
+<i>189</i>&nbsp;
+<i>190</i>&nbsp;            // No changes in current layer, continue with next layer
+<b class="fc"><i>191</i>&nbsp;            index++;</b>
+<i>192</i>&nbsp;        }
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;        // Program should never be able to reach this; consistency checks while creating
+<i>195</i>&nbsp;        // Milestone object (setMilestoneID) prevents this.
+<b class="nc"><i>196</i>&nbsp;        return 0;</b>
+<i>197</i>&nbsp;    }
+<i>198</i>&nbsp;
+<i>199</i>&nbsp;    /**
+<i>200</i>&nbsp;     * Returns a string representation of the layered milestone ID object.
+<i>201</i>&nbsp;     * @return a string representation of the milestone ID
+<i>202</i>&nbsp;     */
+<i>203</i>&nbsp;    @Override
+<i>204</i>&nbsp;    public String toString() {
+<b class="fc"><i>205</i>&nbsp;        String milestone = &quot;M&quot;;</b>
+<b class="fc"><i>206</i>&nbsp;        for (int layer : this.getLayeredMilestone()) {</b>
+<b class="fc"><i>207</i>&nbsp;            milestone = milestone + &quot;.&quot; + layer;</b>
+<i>208</i>&nbsp;        }
+<b class="fc"><i>209</i>&nbsp;        return milestone.substring(0, 1) + milestone.substring(2);</b>
+<i>210</i>&nbsp;    }
+<i>211</i>&nbsp;
+<i>212</i>&nbsp;    /**
+<i>213</i>&nbsp;     * The value 0 if the argument is a Milestone lexicographically equal to this Milestone;
+<i>214</i>&nbsp;     * a value of 1 if the argument is a Milestone lexicographically less than this Milestone.
+<i>215</i>&nbsp;     * a value of -1 if the argument is a Milestone lexicographically greater than this Milestone;
+<i>216</i>&nbsp;     *
+<i>217</i>&nbsp;     * @param o the other milestone to compare this milestone to
+<i>218</i>&nbsp;     * @return 1 if this milestone &gt; the value of o, 0 if this milestone = the value of o, -1 if this milestone &lt; the value of o.
+<i>219</i>&nbsp;     */
+<i>220</i>&nbsp;    @Override
+<i>221</i>&nbsp;    public int compareTo(Milestone o) {
+<b class="fc"><i>222</i>&nbsp;        return compareMilestones(this, o);</b>
+<i>223</i>&nbsp;    }
+<i>224</i>&nbsp;    
+<i>225</i>&nbsp;    /**
+<i>226</i>&nbsp;     * Method to check if the given object equals this milestone
+<i>227</i>&nbsp;     * 
+<i>228</i>&nbsp;     * @param obj The object to compare
+<i>229</i>&nbsp;     * 
+<i>230</i>&nbsp;     * @return Return whether the object equals this milestone or not
+<i>231</i>&nbsp;     * 
+<i>232</i>&nbsp;     */
+<i>233</i>&nbsp;    @Override
+<i>234</i>&nbsp;    public boolean equals(Object obj)
+<i>235</i>&nbsp;    {
+<b class="fc"><i>236</i>&nbsp;    	if(obj == null) return false;</b>
+<b class="fc"><i>237</i>&nbsp;    	if(!(obj instanceof Milestone)) return false;</b>
+<i>238</i>&nbsp;    	
+<i>239</i>&nbsp;    	try
+<i>240</i>&nbsp;    	{
+<b class="fc"><i>241</i>&nbsp;    		Milestone milestone = (Milestone)obj;</b>
+<b class="fc"><i>242</i>&nbsp;    		return compareTo(milestone) == 0;</b>
+<i>243</i>&nbsp;    	}
+<b class="nc"><i>244</i>&nbsp;    	catch(ClassCastException e)</b>
+<i>245</i>&nbsp;    	{
+<b class="nc"><i>246</i>&nbsp;    		return false;</b>
+<i>247</i>&nbsp;    	}
+<i>248</i>&nbsp;    	
+<i>249</i>&nbsp;    }
+<i>250</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

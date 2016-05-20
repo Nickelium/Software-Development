@@ -1,0 +1,152 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TestSkills</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport.PerformanceMetrics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TestSkills (Model.BugReport.PerformanceMetrics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TestSkills</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,1%
+  </span>
+  <span class="absValue">
+    (16/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport.PerformanceMetrics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Model.BugReport.BugReportService;
+<i>4</i>&nbsp;import Model.BugReport.Test;
+<i>5</i>&nbsp;import Model.User.Developer;
+<i>6</i>&nbsp;import Model.User.User;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * Class extending the performance metrics class, representing a test skills metric.
+<i>12</i>&nbsp; *
+<i>13</i>&nbsp; * A developer&#39;s test skill is measured by:
+<i>14</i>&nbsp; *
+<i>15</i>&nbsp; * The average number of lines of code for each submitted tests
+<i>16</i>&nbsp; * The total number of tests submitted
+<i>17</i>&nbsp; */
+<i>18</i>&nbsp;public class TestSkills extends PerformanceMetrics {
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     * Package visible constructor to create a new TestSkills object.
+<i>22</i>&nbsp;     *
+<i>23</i>&nbsp;     * @param bugReportService the bug report service needed to gather
+<i>24</i>&nbsp;     *                         information about the tests assigned to bug reports.
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    TestSkills(BugReportService bugReportService) {
+<b class="fc"><i>27</i>&nbsp;        super(bugReportService);</b>
+<b class="fc"><i>28</i>&nbsp;    }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * Method returning a metrics component, containing all required information for the
+<i>32</i>&nbsp;     * test skills metric. Method looks up the information, and adds the information holders
+<i>33</i>&nbsp;     * to the information array.
+<i>34</i>&nbsp;     *
+<i>35</i>&nbsp;     * @param user the developer of who the performance metrics have to be looked up.
+<i>36</i>&nbsp;     * @return a metrics component containing all needed information (information about tests)
+<i>37</i>&nbsp;     * @throws IllegalArgumentException is thrown if the user in the argument is not a developer.
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    @Override
+<i>40</i>&nbsp;    MetricsComponent construct(User user) throws IllegalArgumentException {
+<b class="fc"><i>41</i>&nbsp;        if (!(user instanceof Developer))</b>
+<b class="nc"><i>42</i>&nbsp;            throw new IllegalArgumentException(&quot;This user doesn&#39;t have a performance metrics.&quot;);</b>
+<i>43</i>&nbsp;
+<b class="fc"><i>44</i>&nbsp;        MetricsComponent metricsComponent = new MetricsComponent(&quot;Test skills&quot;);</b>
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;        metricsComponent.addInformation(new InformationHolderDouble(&quot;The average number of lines of code for each submitted test&quot;,</b>
+<b class="fc"><i>47</i>&nbsp;                getAverageLinesOfTestCodeByUser(user)));</b>
+<b class="fc"><i>48</i>&nbsp;        metricsComponent.addInformation(new InformationHolderInt(&quot;The total number of tests submitted&quot;,</b>
+<b class="fc"><i>49</i>&nbsp;                getBugReportService().getAllTestsSubmittedByDeveloper(user).size()));</b>
+<i>50</i>&nbsp;
+<b class="fc"><i>51</i>&nbsp;        return metricsComponent;</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    private double getAverageLinesOfTestCodeByUser(User user) {
+<b class="fc"><i>56</i>&nbsp;        List&lt;Test&gt; tests = getBugReportService().getAllTestsSubmittedByDeveloper(user);</b>
+<b class="fc"><i>57</i>&nbsp;        int linesOfCode = 0;</b>
+<i>58</i>&nbsp;
+<b class="fc"><i>59</i>&nbsp;        for (Test test : tests) {</b>
+<b class="fc"><i>60</i>&nbsp;            linesOfCode += test.getLines();</b>
+<b class="fc"><i>61</i>&nbsp;        }</b>
+<i>62</i>&nbsp;
+<b class="fc"><i>63</i>&nbsp;        if (linesOfCode != 0) return ((double) linesOfCode) / tests.size();</b>
+<b class="fc"><i>64</i>&nbsp;        return 0.0;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

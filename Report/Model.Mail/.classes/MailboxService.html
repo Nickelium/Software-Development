@@ -1,0 +1,322 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MailboxService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Mail</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MailboxService (Model.Mail)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MailboxService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84,6%
+  </span>
+  <span class="absValue">
+    (11/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84,4%
+  </span>
+  <span class="absValue">
+    (54/ 64)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Mail;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.ArrayList;
+<i>4</i>&nbsp;import java.util.Collections;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>8</i>&nbsp;import Model.BugReport.*;
+<i>9</i>&nbsp;import Model.Milestone.Milestone;
+<i>10</i>&nbsp;import Model.Project.Project;
+<i>11</i>&nbsp;import Model.Project.SubSystem;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import Model.User.User;
+<i>14</i>&nbsp;import Model.User.UserService;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/**
+<i>17</i>&nbsp; * Class that provides methods to handle with mailbox and registrations operations
+<i>18</i>&nbsp; *
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;public class MailboxService 
+<i>21</i>&nbsp;{
+<i>22</i>&nbsp;	private BugReportService bugReportService;
+<i>23</i>&nbsp;	private UserService userService;
+<i>24</i>&nbsp;	
+<i>25</i>&nbsp;	/**
+<i>26</i>&nbsp;	 * Constructor 
+<i>27</i>&nbsp;	 * 
+<i>28</i>&nbsp;	 * @param bugReportService The bugreport service to use.
+<i>29</i>&nbsp;	 * @param userService The user service to use.
+<i>30</i>&nbsp;	 * 
+<i>31</i>&nbsp;	 * @throws IllegalArgumentException the bugreportservice or userservice is null
+<i>32</i>&nbsp;	 */
+<i>33</i>&nbsp;	public MailboxService(BugReportService bugReportService, UserService userService)
+<b class="fc"><i>34</i>&nbsp;	{</b>
+<b class="fc"><i>35</i>&nbsp;		if(bugReportService == null) throw new IllegalArgumentException(&quot;The bugreportservice cannot be null&quot;);</b>
+<b class="fc"><i>36</i>&nbsp;		if(userService == null) throw new IllegalArgumentException(&quot;The userservice cannot be null&quot;);</b>
+<i>37</i>&nbsp;
+<b class="fc"><i>38</i>&nbsp;		this.bugReportService = bugReportService;</b>
+<b class="fc"><i>39</i>&nbsp;		this.userService = userService;</b>
+<b class="fc"><i>40</i>&nbsp;	}</b>
+<i>41</i>&nbsp;	/**
+<i>42</i>&nbsp;	 * Method to get a list of notifications
+<i>43</i>&nbsp;	 * 
+<i>44</i>&nbsp;	 * @param user The user&#39;s mailbox
+<i>45</i>&nbsp;	 * @param number The number of notifications to get 
+<i>46</i>&nbsp;	 * 
+<i>47</i>&nbsp;	 * @return The list of notifications
+<i>48</i>&nbsp;	 * 
+<i>49</i>&nbsp;	 * @throws IllegalArgumentException the user is null or negative number
+<i>50</i>&nbsp;	 * 
+<i>51</i>&nbsp;	 * @throws IndexOutOfBoundsException when the given number is incorrect
+<i>52</i>&nbsp;	 */
+<i>53</i>&nbsp;	public List&lt;Notification&gt; getNotifications(User user, int number) throws IndexOutOfBoundsException
+<i>54</i>&nbsp;	{
+<b class="fc"><i>55</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="fc"><i>56</i>&nbsp;		if(number &lt; 0) throw new IllegalArgumentException(&quot;The number cannot be negative&quot;);</b>
+<i>57</i>&nbsp;		
+<b class="fc"><i>58</i>&nbsp;		List&lt;Notification&gt; listOriginal = user.getMailbox().getNotifications();</b>
+<b class="fc"><i>59</i>&nbsp;		List&lt;Notification&gt; listOrderRecent = reverse(listOriginal);</b>
+<b class="fc"><i>60</i>&nbsp;		List&lt;Notification&gt; listSubbed = listOrderRecent.subList(0, number);</b>
+<i>61</i>&nbsp;		
+<b class="fc"><i>62</i>&nbsp;		List&lt;Notification&gt; listFiltered = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>63</i>&nbsp;		for(Notification not : listSubbed)</b>
+<i>64</i>&nbsp;		{
+<b class="fc"><i>65</i>&nbsp;			if(not.getSubject() instanceof BugReport)</b>
+<b class="fc"><i>66</i>&nbsp;			{	if(bugReportService.isVisibleByUser(user, (BugReport)not.getSubject()))</b>
+<b class="fc"><i>67</i>&nbsp;					listFiltered.add(not);</b>
+<i>68</i>&nbsp;			}
+<i>69</i>&nbsp;			else
+<b class="nc"><i>70</i>&nbsp;				listFiltered.add(not);</b>
+<b class="fc"><i>71</i>&nbsp;		}</b>
+<b class="fc"><i>72</i>&nbsp;		return Collections.unmodifiableList(listFiltered);</b>
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;	}
+<i>75</i>&nbsp;	
+<i>76</i>&nbsp;	/**
+<i>77</i>&nbsp;	 * Method to get all registrations of a given user
+<i>78</i>&nbsp;	 *  
+<i>79</i>&nbsp;	 * @param user The user to retrieve it&#39;s registrations 
+<i>80</i>&nbsp;	 * 
+<i>81</i>&nbsp;	 * @return The list of registrations
+<i>82</i>&nbsp;	 * 
+<i>83</i>&nbsp;	 * @throws IllegalArgumentException the user is null
+<i>84</i>&nbsp;	 */
+<i>85</i>&nbsp;	public List&lt;ObserverAspect&gt; getRegistrations(User user)
+<i>86</i>&nbsp;	{
+<b class="fc"><i>87</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="fc"><i>88</i>&nbsp;		return Collections.unmodifiableList(user.getMailbox().getRegistrations());</b>
+<i>89</i>&nbsp;	}
+<i>90</i>&nbsp;	
+<i>91</i>&nbsp;	/**
+<i>92</i>&nbsp;	 * Method to register for a bug report creation in the given subject
+<i>93</i>&nbsp;	 * 
+<i>94</i>&nbsp;	 * @param user The user that wants to register
+<i>95</i>&nbsp;	 * @param s The subject to observe
+<i>96</i>&nbsp;	 * 
+<i>97</i>&nbsp;	 * @throws IllegalArgumentException the user or subject is null
+<i>98</i>&nbsp;	 */
+<i>99</i>&nbsp;	public void registerCreationBugReport(User user, Subject s)
+<i>100</i>&nbsp;	{
+<b class="fc"><i>101</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="fc"><i>102</i>&nbsp;		if(s == null) throw new IllegalArgumentException(&quot;Subject cannot be null&quot;);</b>
+<b class="fc"><i>103</i>&nbsp;		user.getMailbox().registerBugReport(s);</b>
+<b class="fc"><i>104</i>&nbsp;	}</b>
+<i>105</i>&nbsp;	
+<i>106</i>&nbsp;	/**
+<i>107</i>&nbsp;	 * Method to register for a changed tag in the given subject
+<i>108</i>&nbsp;	 * 
+<i>109</i>&nbsp;	 * @param user The user that wants to register
+<i>110</i>&nbsp;	 * @param s The subject to observe
+<i>111</i>&nbsp;	 * 
+<i>112</i>&nbsp;	 * @throws IllegalArgumentException the user or subject is null
+<i>113</i>&nbsp;	 */
+<i>114</i>&nbsp;	public void registerTag(User user, Subject s)
+<i>115</i>&nbsp;	{
+<b class="fc"><i>116</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="fc"><i>117</i>&nbsp;		if(s == null) throw new IllegalArgumentException(&quot;Subject cannot be null&quot;);</b>
+<b class="fc"><i>118</i>&nbsp;		user.getMailbox().registerTag(s);</b>
+<b class="fc"><i>119</i>&nbsp;	}</b>
+<i>120</i>&nbsp;	
+<i>121</i>&nbsp;	/**
+<i>122</i>&nbsp;	 * Method to register for a change to a specific tag in the given subject
+<i>123</i>&nbsp;	 * 
+<i>124</i>&nbsp;	 * @param user The user that wants to register
+<i>125</i>&nbsp;	 * @param s The subject to observe
+<i>126</i>&nbsp;	 * @param tag The tag change to be notified
+<i>127</i>&nbsp;	 * 
+<i>128</i>&nbsp;	 * @throws IllegalArgumentException the user or subject or tag is null
+<i>129</i>&nbsp;	 */
+<i>130</i>&nbsp;	public void registerSpecificTag(User user, Subject s, Class tag)
+<i>131</i>&nbsp;	{
+<b class="fc"><i>132</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="fc"><i>133</i>&nbsp;		if(s == null) throw new IllegalArgumentException(&quot;Subject cannot be null&quot;);</b>
+<b class="fc"><i>134</i>&nbsp;		if(tag == null) throw new IllegalArgumentException(&quot;Tag cannot be null&quot;);</b>
+<b class="fc"><i>135</i>&nbsp;		user.getMailbox().registerSpecificTag(s,tag);</b>
+<b class="fc"><i>136</i>&nbsp;	}</b>
+<i>137</i>&nbsp;	
+<i>138</i>&nbsp;	/**
+<i>139</i>&nbsp;	 * Method to register for a comment creation in the given subject
+<i>140</i>&nbsp;	 * 
+<i>141</i>&nbsp;	 * @param user The user that wants to register
+<i>142</i>&nbsp;	 * @param s The subject to observe
+<i>143</i>&nbsp;	 * 
+<i>144</i>&nbsp;	 * @throws IllegalArgumentException the user or subject is null
+<i>145</i>&nbsp;	 */
+<i>146</i>&nbsp;	public void registerComment(User user, Subject s)
+<i>147</i>&nbsp;	{
+<b class="fc"><i>148</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="fc"><i>149</i>&nbsp;		if(s == null) throw new IllegalArgumentException(&quot;Subject cannot be null&quot;);</b>
+<b class="fc"><i>150</i>&nbsp;		user.getMailbox().registerComment(s);</b>
+<b class="fc"><i>151</i>&nbsp;	}</b>
+<i>152</i>&nbsp;	
+<i>153</i>&nbsp;	/**
+<i>154</i>&nbsp;	 * Method to register for a milestone change in the given subject
+<i>155</i>&nbsp;	 * 
+<i>156</i>&nbsp;	 * @param user The user that wants to register
+<i>157</i>&nbsp;	 * @param s The subject to observe
+<i>158</i>&nbsp;	 * 
+<i>159</i>&nbsp;	 * @throws IllegalArgumentException the user or subject is null
+<i>160</i>&nbsp;	 */
+<i>161</i>&nbsp;	public void registerMilestone(User user, Subject s)
+<i>162</i>&nbsp;	{
+<b class="fc"><i>163</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="fc"><i>164</i>&nbsp;		if(s == null) throw new IllegalArgumentException(&quot;Subject cannot be null&quot;);</b>
+<b class="fc"><i>165</i>&nbsp;		user.getMailbox().registerMilestone(s);</b>
+<b class="fc"><i>166</i>&nbsp;	}</b>
+<i>167</i>&nbsp;	
+<i>168</i>&nbsp;	/**
+<i>169</i>&nbsp;	 * Method to register for a change to a specific milestone in the given subject
+<i>170</i>&nbsp;	 * 
+<i>171</i>&nbsp;	 * @param user The user that wants to register
+<i>172</i>&nbsp;	 * @param s The subject to observe
+<i>173</i>&nbsp;	 * @param milestone The milestone to be notified
+<i>174</i>&nbsp;	 * 
+<i>175</i>&nbsp;	 * @throws IllegalArgumentException the user or subject or milestone is null
+<i>176</i>&nbsp;	 */
+<i>177</i>&nbsp;	public void registerSpecificMilestone(User user, Subject s, Milestone milestone)
+<i>178</i>&nbsp;	{
+<b class="nc"><i>179</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="nc"><i>180</i>&nbsp;		if(s == null) throw new IllegalArgumentException(&quot;Subject cannot be null&quot;);</b>
+<b class="nc"><i>181</i>&nbsp;		if(milestone == null)throw new IllegalArgumentException(&quot;Milestone cannot be null&quot;);</b>
+<b class="nc"><i>182</i>&nbsp;		user.getMailbox().registerSpecificMilestone(s, milestone);</b>
+<b class="nc"><i>183</i>&nbsp;	}</b>
+<i>184</i>&nbsp;	
+<i>185</i>&nbsp;	/**
+<i>186</i>&nbsp;	 * Method to register for a fork of the given subject
+<i>187</i>&nbsp;	 * 
+<i>188</i>&nbsp;	 * @param user The user that wants to register
+<i>189</i>&nbsp;	 * @param s The subject to observe
+<i>190</i>&nbsp;	 * 
+<i>191</i>&nbsp;	 * @throws IllegalArgumentException the user or subject or milestone is null
+<i>192</i>&nbsp;	 */
+<i>193</i>&nbsp;	public void registerFork(User user, Subject s)
+<i>194</i>&nbsp;	{
+<b class="nc"><i>195</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="nc"><i>196</i>&nbsp;		if(s == null) throw new IllegalArgumentException(&quot;Subject cannot be null&quot;);</b>
+<b class="nc"><i>197</i>&nbsp;		user.getMailbox().registerFork(s);</b>
+<b class="nc"><i>198</i>&nbsp;	}</b>
+<i>199</i>&nbsp;	
+<i>200</i>&nbsp;	/**
+<i>201</i>&nbsp;	 * Method to unregister for a given registration
+<i>202</i>&nbsp;	 * 
+<i>203</i>&nbsp;	 * @param user The user that wants to register
+<i>204</i>&nbsp;	 * @param registration The registration to unregister
+<i>205</i>&nbsp;	 * 
+<i>206</i>&nbsp;	 * @throws IllegalArgumentException the user or registration is null
+<i>207</i>&nbsp;	 */
+<i>208</i>&nbsp;	public void unregister(User user, ObserverAspect registration)
+<i>209</i>&nbsp;	{
+<b class="fc"><i>210</i>&nbsp;		if(user == null) throw new IllegalArgumentException(&quot;User cannot be null&quot;);</b>
+<b class="fc"><i>211</i>&nbsp;		if(registration == null) throw new IllegalArgumentException(&quot;The registration cannot be null&quot;);</b>
+<b class="fc"><i>212</i>&nbsp;		user.getMailbox().unregister(registration);</b>
+<b class="fc"><i>213</i>&nbsp;	}</b>
+<i>214</i>&nbsp;	
+<i>215</i>&nbsp;	private List&lt;Notification&gt; reverse(List&lt;Notification&gt; list)
+<i>216</i>&nbsp;	{
+<b class="fc"><i>217</i>&nbsp;		if(list == null) throw new IllegalArgumentException(&quot;List cannot be null&quot;);</b>
+<i>218</i>&nbsp;		
+<b class="fc"><i>219</i>&nbsp;	    List&lt;Notification&gt; nList = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>220</i>&nbsp;	    for(int index = list.size() - 1; index &gt;= 0; index--)</b>
+<b class="fc"><i>221</i>&nbsp;	    	nList.add(list.get(index));</b>
+<i>222</i>&nbsp;	    
+<b class="fc"><i>223</i>&nbsp;	    return nList;</b>
+<i>224</i>&nbsp;	}
+<i>225</i>&nbsp;	
+<i>226</i>&nbsp;	/**
+<i>227</i>&nbsp;	 * Method to get all mailboxes of the system
+<i>228</i>&nbsp;	 * 
+<i>229</i>&nbsp;	 * @return The list of mailboxes
+<i>230</i>&nbsp;	 */
+<i>231</i>&nbsp;	public List&lt;Mailbox&gt; getAllMailboxes()
+<i>232</i>&nbsp;	{
+<b class="fc"><i>233</i>&nbsp;		List&lt;Mailbox&gt; mailboxes = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>234</i>&nbsp;		for(User user : userService.getUserList())</b>
+<b class="fc"><i>235</i>&nbsp;			mailboxes.add(user.getMailbox());</b>
+<b class="fc"><i>236</i>&nbsp;		return Collections.unmodifiableList(mailboxes);</b>
+<i>237</i>&nbsp;	}
+<i>238</i>&nbsp;	
+<i>239</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

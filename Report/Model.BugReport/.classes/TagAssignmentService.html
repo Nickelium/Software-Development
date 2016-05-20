@@ -1,0 +1,212 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TagAssignmentService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TagAssignmentService (Model.BugReport)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TagAssignmentService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,9%
+  </span>
+  <span class="absValue">
+    (37/ 39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>4</i>&nbsp;import Model.BugReport.TagTypes.Assigned;
+<i>5</i>&nbsp;import Model.BugReport.TagTypes.Closed;
+<i>6</i>&nbsp;import Model.Project.Project;
+<i>7</i>&nbsp;import Model.Project.ProjectService;
+<i>8</i>&nbsp;import Model.Roles.Role;
+<i>9</i>&nbsp;import Model.User.User;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.util.Arrays;
+<i>12</i>&nbsp;import java.util.List;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/**
+<i>15</i>&nbsp; * Class creates a service that is responsible for assigning tags to bug reports.
+<i>16</i>&nbsp; *
+<i>17</i>&nbsp; * Contains a checker to check whether a user can assign a tag to a specific bug report.
+<i>18</i>&nbsp; * Also contains a method to assign a tag to a specific bug report.
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;public class TagAssignmentService {
+<i>21</i>&nbsp;    private ProjectService projectService;
+<i>22</i>&nbsp;    private List&lt;Class&lt;? extends Tag&gt;&gt; creatorTagPermissons;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    /**
+<i>26</i>&nbsp;     * Default constructor for tagAssignmentService.
+<i>27</i>&nbsp;     *
+<i>28</i>&nbsp;     * @param projectService The project service the tagAssignmentService can use.
+<i>29</i>&nbsp;     *
+<i>30</i>&nbsp;     * @throws  IllegalArgumentException the given projectservice is null.
+<i>31</i>&nbsp;     */
+<b class="fc"><i>32</i>&nbsp;    public TagAssignmentService(ProjectService projectService){</b>
+<b class="fc"><i>33</i>&nbsp;        if (projectService == null) throw new IllegalArgumentException(&quot;Projectservice is null&quot;);</b>
+<i>34</i>&nbsp;
+<b class="fc"><i>35</i>&nbsp;        this.projectService = projectService;</b>
+<b class="fc"><i>36</i>&nbsp;        this.creatorTagPermissons = Arrays.asList(Closed.class, Assigned.class);</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * Method for changing the tag of the given bug report
+<i>41</i>&nbsp;     *
+<i>42</i>&nbsp;     * @param user The user requesting the tag change.
+<i>43</i>&nbsp;     * @param bugReport The bug report to which to assign the tag.
+<i>44</i>&nbsp;     * @param tag The tag to which to switch the bug report.
+<i>45</i>&nbsp;     *
+<i>46</i>&nbsp;     * @throws ReportErrorToUserException The user doesn&#39;t have the permission to assign the tag to the bug report.
+<i>47</i>&nbsp;     * @throws IllegalArgumentException One of the arguments is null.
+<i>48</i>&nbsp;     */
+<i>49</i>&nbsp;    public void assignTag(User user, BugReport bugReport, Tag tag) throws ReportErrorToUserException {
+<b class="fc"><i>50</i>&nbsp;        if (user == null) throw new IllegalArgumentException(&quot;User is null&quot;);</b>
+<b class="fc"><i>51</i>&nbsp;        if (bugReport == null) throw new IllegalArgumentException(&quot;Bugreport is null&quot;);</b>
+<b class="fc"><i>52</i>&nbsp;        if (tag == null) throw new IllegalArgumentException(&quot;Tag is null&quot;);</b>
+<b class="fc"><i>53</i>&nbsp;        if (!canAssignTag(user, bugReport, tag.getClass()))</b>
+<b class="fc"><i>54</i>&nbsp;            throw new ReportErrorToUserException(&quot;Not allowed to perform tag change!&quot;);</b>
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;        bugReport.setTag(tag);</b>
+<b class="fc"><i>57</i>&nbsp;    }</b>
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    /**
+<i>60</i>&nbsp;     * Checker to check if the user has the permission to assign the tag to the given bug report
+<i>61</i>&nbsp;     *
+<i>62</i>&nbsp;     * @param user The user requesting the tag change.
+<i>63</i>&nbsp;     * @param bugReport The bug report to which to assign the tag.
+<i>64</i>&nbsp;     * @param tag The tag to which to switch the bug report.
+<i>65</i>&nbsp;     *
+<i>66</i>&nbsp;     * @return True if the user has the permission to assign the tag to the burgreport.
+<i>67</i>&nbsp;     *
+<i>68</i>&nbsp;     * @throws IllegalArgumentException One of the given arguments is null.
+<i>69</i>&nbsp;     * @throws ReportErrorToUserException One of the arguments doesn&#39;t match.
+<i>70</i>&nbsp;     */
+<i>71</i>&nbsp;    public boolean canAssignTag(User user, BugReport bugReport, Class&lt;? extends Tag&gt; tag) throws ReportErrorToUserException {
+<b class="fc"><i>72</i>&nbsp;        if (user == null) throw new IllegalArgumentException(&quot;User is null&quot;);</b>
+<b class="fc"><i>73</i>&nbsp;        if (bugReport == null) throw new IllegalArgumentException(&quot;BugReport is null&quot;);</b>
+<b class="fc"><i>74</i>&nbsp;        if (tag == null) throw new IllegalArgumentException(&quot;Tag is null&quot;);</b>
+<i>75</i>&nbsp;
+<b class="fc"><i>76</i>&nbsp;        if (!validTagChangePolicy(bugReport, tag)){</b>
+<b class="fc"><i>77</i>&nbsp;            return false;</b>
+<i>78</i>&nbsp;        }
+<b class="fc"><i>79</i>&nbsp;        if (bugReport.getCreator().equals(user) &amp;&amp; this.validCreatorPermissions(tag)) {</b>
+<b class="fc"><i>80</i>&nbsp;            return true;</b>
+<i>81</i>&nbsp;        }
+<i>82</i>&nbsp;        try
+<i>83</i>&nbsp;        {
+<b class="fc"><i>84</i>&nbsp;            Project project = getProjectService().getProjectsContainingBugReport(bugReport);</b>
+<b class="fc"><i>85</i>&nbsp;            Role role = getUserRoleWithinProject(user, project);</b>
+<i>86</i>&nbsp;	
+<b class="fc"><i>87</i>&nbsp;	        if (role == null){</b>
+<b class="fc"><i>88</i>&nbsp;                return false;</b>
+<i>89</i>&nbsp;            }
+<i>90</i>&nbsp;
+<b class="fc"><i>91</i>&nbsp;            return role.canAssignTag(tag);</b>
+<i>92</i>&nbsp;        }
+<b class="nc"><i>93</i>&nbsp;        catch(ReportErrorToUserException e)</b>
+<i>94</i>&nbsp;        {
+<b class="nc"><i>95</i>&nbsp;        	return false;</b>
+<i>96</i>&nbsp;        }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    private boolean validTagChangePolicy(BugReport bugReport, Class&lt;? extends Tag&gt; tag) {
+<b class="fc"><i>101</i>&nbsp;        if (bugReport == null) throw new IllegalArgumentException(&quot;Bugreport is null&quot;);</b>
+<b class="fc"><i>102</i>&nbsp;        return bugReport.getTag().canChangeToTag(tag);</b>
+<i>103</i>&nbsp;    }
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;    private boolean validCreatorPermissions(Class&lt;? extends Tag&gt; tag) {
+<b class="fc"><i>106</i>&nbsp;        return this.getCreatorTagPermissons().contains(tag);</b>
+<i>107</i>&nbsp;    }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    private Role getUserRoleWithinProject(User user, Project project){
+<b class="fc"><i>110</i>&nbsp;        if (project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>111</i>&nbsp;        if (project.getLeadRole().getDeveloper().equals(user)) {</b>
+<b class="fc"><i>112</i>&nbsp;            return project.getLeadRole();</b>
+<i>113</i>&nbsp;        }
+<b class="fc"><i>114</i>&nbsp;        for (Role role: project.getDevsRoles()){</b>
+<b class="fc"><i>115</i>&nbsp;            if (role.getDeveloper().equals(user)){</b>
+<b class="fc"><i>116</i>&nbsp;                return role;</b>
+<i>117</i>&nbsp;            }
+<b class="fc"><i>118</i>&nbsp;        }</b>
+<b class="fc"><i>119</i>&nbsp;        return null;</b>
+<i>120</i>&nbsp;    }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    private ProjectService getProjectService() {
+<b class="fc"><i>123</i>&nbsp;        return projectService;</b>
+<i>124</i>&nbsp;    }
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;    private List&lt;Class&lt;? extends Tag&gt;&gt; getCreatorTagPermissons() {
+<b class="fc"><i>127</i>&nbsp;        return creatorTagPermissons;</b>
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

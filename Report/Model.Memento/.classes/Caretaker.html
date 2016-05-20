@@ -1,0 +1,166 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Caretaker</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Memento</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Caretaker (Model.Memento)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Caretaker</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Memento;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.UserController.UseCases.UseCase;
+<i>4</i>&nbsp;import Model.Mail.MailboxService;
+<i>5</i>&nbsp;import Model.Project.ProjectService;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * This class will save the system multiple times and keep these saves.
+<i>12</i>&nbsp; * This class provides a mechanism to restore the system to one of the saves.
+<i>13</i>&nbsp; * 
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public class Caretaker 
+<i>16</i>&nbsp;{
+<b class="fc"><i>17</i>&nbsp;	private List&lt;Snapshot&gt; snapshots = new ArrayList&lt;&gt;();</b>
+<i>18</i>&nbsp;	
+<i>19</i>&nbsp;	private ProjectService projectService;
+<i>20</i>&nbsp;	private MailboxService mailboxService;
+<i>21</i>&nbsp;	
+<i>22</i>&nbsp;	/**
+<i>23</i>&nbsp;	 * Constructor 
+<i>24</i>&nbsp;	 * 
+<i>25</i>&nbsp;	 * @param projectService The project service to use.
+<i>26</i>&nbsp;	 * @param mailboxService The mailbox service to use.
+<i>27</i>&nbsp;	 * 
+<i>28</i>&nbsp;	 * @throws IllegalArgumentException the projectservice or mailboxservice is null
+<i>29</i>&nbsp;	 */
+<i>30</i>&nbsp;	public Caretaker(ProjectService projectService, MailboxService mailboxService)
+<b class="fc"><i>31</i>&nbsp;	{</b>
+<b class="fc"><i>32</i>&nbsp;		if(projectService == null) throw new IllegalArgumentException(&quot;The projectService cannot be null&quot;);</b>
+<b class="fc"><i>33</i>&nbsp;		if(mailboxService == null) throw new IllegalArgumentException(&quot;The mailboxService cannot be null&quot;);</b>
+<i>34</i>&nbsp;		
+<b class="fc"><i>35</i>&nbsp;		this.projectService = projectService;</b>
+<b class="fc"><i>36</i>&nbsp;		this.mailboxService = mailboxService;</b>
+<b class="fc"><i>37</i>&nbsp;	}</b>
+<i>38</i>&nbsp;	
+<i>39</i>&nbsp;	/**
+<i>40</i>&nbsp;	 * Method to save the system
+<i>41</i>&nbsp;	 * 
+<i>42</i>&nbsp;	 * @param usecase The usecase that lead to a save of the system
+<i>43</i>&nbsp;	 * 
+<i>44</i>&nbsp;	 * @throws IllegalArgumentException the usecase is null
+<i>45</i>&nbsp;	 */
+<i>46</i>&nbsp;	public void saveState(UseCase usecase)
+<i>47</i>&nbsp;	{
+<b class="fc"><i>48</i>&nbsp;		if(usecase == null) throw new IllegalArgumentException(&quot;The usecase cannot be null&quot;);</b>
+<b class="fc"><i>49</i>&nbsp;		snapshots.add(new Snapshot(usecase, projectService, mailboxService));</b>
+<b class="fc"><i>50</i>&nbsp;	}</b>
+<i>51</i>&nbsp;	
+<i>52</i>&nbsp;	/**
+<i>53</i>&nbsp;	 * Method to restore the system to the given snapshot
+<i>54</i>&nbsp;	 * 
+<i>55</i>&nbsp;	 * @param snapshot The snapshot to restore to
+<i>56</i>&nbsp;	 * 
+<i>57</i>&nbsp;	 * @throws IllegalArgumentException the snapshot is null
+<i>58</i>&nbsp;	 */
+<i>59</i>&nbsp;	public void restoreState(Snapshot snapshot)
+<i>60</i>&nbsp;	{
+<b class="fc"><i>61</i>&nbsp;		if(snapshot == null) throw new IllegalArgumentException(&quot;The snapshot cannot be null&quot;);</b>
+<b class="fc"><i>62</i>&nbsp;		snapshot.restore();</b>
+<b class="fc"><i>63</i>&nbsp;	}</b>
+<i>64</i>&nbsp;	
+<i>65</i>&nbsp;	/**
+<i>66</i>&nbsp;	 * Getter to request a number  of snapshots
+<i>67</i>&nbsp;	 * 
+<i>68</i>&nbsp;	 * @param number The amount of snapshots to get
+<i>69</i>&nbsp;	 * 
+<i>70</i>&nbsp;	 * @return The list of snapshots
+<i>71</i>&nbsp;	 * 
+<i>72</i>&nbsp;	 * @throws IllegalArgumentException the number cannot be negative
+<i>73</i>&nbsp;	 */
+<i>74</i>&nbsp;	public List&lt;Snapshot&gt; getSnapshots(int number)
+<i>75</i>&nbsp;	{
+<b class="fc"><i>76</i>&nbsp;		if(number  &lt; 0) throw new IllegalArgumentException(&quot;The number cannot be negative&quot;);</b>
+<i>77</i>&nbsp;		
+<b class="fc"><i>78</i>&nbsp;		int startIndex = snapshots.size() - number;</b>
+<b class="fc"><i>79</i>&nbsp;		if(startIndex &lt; 0)</b>
+<b class="fc"><i>80</i>&nbsp;			startIndex = 0;</b>
+<b class="fc"><i>81</i>&nbsp;		return snapshots.subList(startIndex, snapshots.size());</b>
+<i>82</i>&nbsp;	}
+<i>83</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

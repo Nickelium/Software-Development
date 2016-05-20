@@ -1,0 +1,157 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ShowPerformanceMetrics</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Controller.UserController.UseCases.UserUseCases</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ShowPerformanceMetrics (Controller.UserController.UseCases.UserUseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShowPerformanceMetrics</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Controller.UserController.UseCases.UserUseCases;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.Formatter;
+<i>4</i>&nbsp;import Controller.IUI;
+<i>5</i>&nbsp;import Controller.UserController.UseCases.UseCase;
+<i>6</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>7</i>&nbsp;import Model.BugReport.BugReportService;
+<i>8</i>&nbsp;import Model.BugReport.PerformanceMetrics.MetricsComponent;
+<i>9</i>&nbsp;import Model.BugReport.PerformanceMetrics.PerformanceMetricsService;
+<i>10</i>&nbsp;import Model.Project.ProjectService;
+<i>11</i>&nbsp;import Model.User.User;
+<i>12</i>&nbsp;import Model.User.UserService;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import java.util.List;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/**
+<i>17</i>&nbsp; * Class extending the use case class, representing a show-performance-metrics use case.
+<i>18</i>&nbsp; */
+<i>19</i>&nbsp;public class ShowPerformanceMetrics extends UseCase {
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    private PerformanceMetricsService performanceMetricsService;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public ShowPerformanceMetrics(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, PerformanceMetricsService performanceMetricsService, User currentUser) {
+<b class="fc"><i>24</i>&nbsp;        super(ui, userService, projectService, bugReportService, currentUser);</b>
+<b class="fc"><i>25</i>&nbsp;        setPerformanceMetricsService(performanceMetricsService);</b>
+<b class="fc"><i>26</i>&nbsp;        changeSystem = false;</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Lets a user of any type view the performance metrics of a developer.
+<i>31</i>&nbsp;     *
+<i>32</i>&nbsp;     * 2. The system shows a list of all developers.
+<i>33</i>&nbsp;     * 3. The user selects a developer.
+<i>34</i>&nbsp;     * 4. The system shows the details of the developer together with the
+<i>35</i>&nbsp;     *    performance metrics discussed in 3.3.6.
+<i>36</i>&nbsp;     *
+<i>37</i>&nbsp;     * @throws ReportErrorToUserException is thrown in case that the method encounters invalid input.
+<i>38</i>&nbsp;     * @throws IndexOutOfBoundsException is thrown when a user puts an incorrect option index.
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;    @Override
+<i>41</i>&nbsp;    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;        // Step 2
+<b class="fc"><i>44</i>&nbsp;        getUi().display(&quot;Please select the a developer: &quot;);</b>
+<b class="fc"><i>45</i>&nbsp;        List&lt;User&gt; developerList = getUserService().getDevelopers();</b>
+<b class="fc"><i>46</i>&nbsp;        String parsedDevelopersList = Formatter.formatUserList(developerList);</b>
+<b class="fc"><i>47</i>&nbsp;        getUi().display(parsedDevelopersList);</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;        // Step 3
+<b class="fc"><i>50</i>&nbsp;        int developerIndex = getUi().readInt();</b>
+<b class="fc"><i>51</i>&nbsp;        User developer = developerList.get(developerIndex);</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;        // Step 4
+<b class="fc"><i>54</i>&nbsp;        List&lt;MetricsComponent&gt; performanceMetrics = getPerformanceMetricsService().createPerformanceMetricsForUser(developer);</b>
+<b class="fc"><i>55</i>&nbsp;        getUi().display(Formatter.formatPerformanceMetrics(performanceMetrics));</b>
+<b class="fc"><i>56</i>&nbsp;    }</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    //region Getters &amp; Setters
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    public PerformanceMetricsService getPerformanceMetricsService() {
+<b class="fc"><i>61</i>&nbsp;        return performanceMetricsService;</b>
+<i>62</i>&nbsp;    }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    private void setPerformanceMetricsService(PerformanceMetricsService performanceMetricsService) {
+<b class="fc"><i>65</i>&nbsp;        this.performanceMetricsService = performanceMetricsService;</b>
+<b class="fc"><i>66</i>&nbsp;    }</b>
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    //endregion
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    @Override
+<i>71</i>&nbsp;    public String toString() {
+<b class="fc"><i>72</i>&nbsp;        return &quot;Show Performance Metrics&quot;;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

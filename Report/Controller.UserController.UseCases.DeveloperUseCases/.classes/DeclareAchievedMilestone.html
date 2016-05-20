@@ -1,0 +1,199 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DeclareAchievedMilestone</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Controller.UserController.UseCases.DeveloperUseCases</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DeclareAchievedMilestone (Controller.UserController.UseCases.DeveloperUseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DeclareAchievedMilestone</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93,5%
+  </span>
+  <span class="absValue">
+    (29/ 31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Controller.UserController.UseCases.DeveloperUseCases;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.Formatter;
+<i>4</i>&nbsp;import Controller.IUI;
+<i>5</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>6</i>&nbsp;import Model.BugReport.BugReportService;
+<i>7</i>&nbsp;import Model.BugReport.DeveloperAssignmentService;
+<i>8</i>&nbsp;import Model.BugReport.TagAssignmentService;
+<i>9</i>&nbsp;import Model.Milestone.Milestone;
+<i>10</i>&nbsp;import Model.Project.Project;
+<i>11</i>&nbsp;import Model.Project.ProjectService;
+<i>12</i>&nbsp;import Model.Project.SubSystem;
+<i>13</i>&nbsp;import Model.User.User;
+<i>14</i>&nbsp;import Model.User.UserService;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import java.util.List;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;/**
+<i>19</i>&nbsp; * Class extending the use case class, representing a declare-achieved-milestone use case.
+<i>20</i>&nbsp; */
+<i>21</i>&nbsp;public class DeclareAchievedMilestone extends DeveloperUseCase {
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public DeclareAchievedMilestone(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, TagAssignmentService tagAssignmentService, DeveloperAssignmentService developerAssignmentService, User currentUser) {
+<b class="fc"><i>24</i>&nbsp;        super(ui, userService, projectService, bugReportService, tagAssignmentService, developerAssignmentService, currentUser);</b>
+<b class="fc"><i>25</i>&nbsp;        changeSystem = true;</b>
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * 2. The system shows a list of projects.
+<i>30</i>&nbsp;     * 3. The developer selects a project.
+<i>31</i>&nbsp;     * 4. The system shows a list of subsystems of the selected project.
+<i>32</i>&nbsp;     * 5. The developer selects a subsystem.
+<i>33</i>&nbsp;     * 6. The system shows the currently achieved milestones and asks for a new
+<i>34</i>&nbsp;     * one.
+<i>35</i>&nbsp;     * 7. The developer proposes a new achieved milestone.
+<i>36</i>&nbsp;     * 8. The system updates the achieved milestone of the selected component.
+<i>37</i>&nbsp;     * If necessary, the system rst recursively updates the achieved milestone
+<i>38</i>&nbsp;     * of all the subsystems that the component contains.
+<i>39</i>&nbsp;     *
+<i>40</i>&nbsp;     * Extensions:
+<i>41</i>&nbsp;     * 5a. The developer indicates he wants to change the achieved milestone of
+<i>42</i>&nbsp;     * the entire project.
+<i>43</i>&nbsp;     * 1. The use case continues with step 6.
+<i>44</i>&nbsp;     *
+<i>45</i>&nbsp;     * 8a. The new achieved milestone could not be assigned due to some con-
+<i>46</i>&nbsp;     * straint (see in 3.3.4).
+<i>47</i>&nbsp;     * 1. The system is restored and the use case has no eect.
+<i>48</i>&nbsp;     * 2. The use case ends here.
+<i>49</i>&nbsp;     *
+<i>50</i>&nbsp;     * @throws ReportErrorToUserException Something went wrong and has to be reported to user.
+<i>51</i>&nbsp;     * @throws IndexOutOfBoundsException Non valid index for selecting entered.
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    @Override
+<i>54</i>&nbsp;    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;        // Step 2
+<b class="fc"><i>57</i>&nbsp;        getUi().display(&quot;Select the project that you want to add an achieved milestone to: &quot;);</b>
+<i>58</i>&nbsp;
+<b class="fc"><i>59</i>&nbsp;        List&lt;Project&gt; projectList = getProjectService().getAllProjects();</b>
+<b class="fc"><i>60</i>&nbsp;        String formattedProjectList = Formatter.formatProjectList(projectList);</b>
+<b class="fc"><i>61</i>&nbsp;        getUi().display(formattedProjectList);</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;        // Step 3
+<b class="fc"><i>64</i>&nbsp;        int projectIndex = getUi().readInt();</b>
+<b class="fc"><i>65</i>&nbsp;        Project project = projectList.get(projectIndex);</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;        // Step 4
+<b class="fc"><i>68</i>&nbsp;        getUi().display(&quot;Select the subsystem that you want to declare an achieve milestone to: &quot;);</b>
+<b class="fc"><i>69</i>&nbsp;        List&lt;SubSystem&gt; subSystemList = project.getAllSubSystems();</b>
+<b class="fc"><i>70</i>&nbsp;        String formattedSubSystemList = Formatter.formatSubSystemList(subSystemList);</b>
+<b class="fc"><i>71</i>&nbsp;        getUi().display(formattedSubSystemList);</b>
+<b class="fc"><i>72</i>&nbsp;        getUi().display((subSystemList.size()) + &quot;: Declare a milestone for the entire project.&quot;);</b>
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;        // Step 5
+<i>75</i>&nbsp;
+<b class="fc"><i>76</i>&nbsp;        int subSystemIndex = getUi().readInt();</b>
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;        List&lt;Milestone&gt; milestoneList;
+<i>79</i>&nbsp;
+<b class="fc"><i>80</i>&nbsp;        SubSystem subSystem = null;</b>
+<i>81</i>&nbsp;
+<b class="fc"><i>82</i>&nbsp;        if(subSystemIndex != subSystemList.size()){</b>
+<b class="fc"><i>83</i>&nbsp;            subSystem = subSystemList.get(subSystemIndex);</b>
+<b class="fc"><i>84</i>&nbsp;            milestoneList = subSystem.getAllMilestones();</b>
+<i>85</i>&nbsp;        }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;        // Step 5a
+<i>88</i>&nbsp;        else {
+<b class="nc"><i>89</i>&nbsp;            milestoneList = project.getAllMilestones();</b>
+<i>90</i>&nbsp;        }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;        // Step 6
+<b class="fc"><i>93</i>&nbsp;        getUi().display(&quot;These are the currently achieved milestones: &quot;);</b>
+<b class="fc"><i>94</i>&nbsp;        String formattedMilestoneList = Formatter.formatMilestoneList(milestoneList);</b>
+<b class="fc"><i>95</i>&nbsp;        getUi().display(formattedMilestoneList);</b>
+<b class="fc"><i>96</i>&nbsp;        getUi().display(&quot;Please enter a new milestone: &quot;);</b>
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;        // Step 7
+<b class="fc"><i>99</i>&nbsp;        String newMilestone = getUi().readString();</b>
+<b class="fc"><i>100</i>&nbsp;        Milestone newMilestoneObject = new Milestone(newMilestone);</b>
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;        // Step 8
+<i>103</i>&nbsp;        // Step 8a is handled in the Subsystem &amp; Project class, throws a
+<i>104</i>&nbsp;        // ReportErrorToUserException when the milestone cannot be assigned.
+<b class="fc"><i>105</i>&nbsp;        if(subSystem != null )</b>
+<b class="fc"><i>106</i>&nbsp;            getProjectService().setNewSubSystemMilestone(subSystem, newMilestoneObject);</b>
+<i>107</i>&nbsp;        else
+<b class="nc"><i>108</i>&nbsp;            getProjectService().setNewProjectMilestone(project, newMilestoneObject);</b>
+<b class="fc"><i>109</i>&nbsp;    }</b>
+<i>110</i>&nbsp;    
+<i>111</i>&nbsp;    @Override
+<i>112</i>&nbsp;	public String toString()
+<i>113</i>&nbsp;	{
+<b class="fc"><i>114</i>&nbsp;		return &quot;Declare Achieved Milestone&quot;;</b>
+<i>115</i>&nbsp;	}
+<i>116</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

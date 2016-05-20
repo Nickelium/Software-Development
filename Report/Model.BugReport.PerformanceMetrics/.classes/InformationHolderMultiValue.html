@@ -1,0 +1,165 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: InformationHolderMultiValue</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport.PerformanceMetrics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: InformationHolderMultiValue (Model.BugReport.PerformanceMetrics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">InformationHolderMultiValue</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83,3%
+  </span>
+  <span class="absValue">
+    (5/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93,3%
+  </span>
+  <span class="absValue">
+    (14/ 15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport.PerformanceMetrics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;// VALUE CLASS
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.ArrayList;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * Value class representing an information holder object with multiple values.
+<i>10</i>&nbsp; * The values are a list of Information Holders, containing strings.
+<i>11</i>&nbsp; */
+<i>12</i>&nbsp;public class InformationHolderMultiValue implements IInformationHolder&lt;List&lt;IInformationHolder&lt;String&gt;&gt;&gt; {
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * The description of what data the information holder holds.
+<i>16</i>&nbsp;     */
+<i>17</i>&nbsp;    private String description;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * The value of the information holder
+<i>21</i>&nbsp;     */
+<i>22</i>&nbsp;    private List&lt;IInformationHolder&lt;String&gt;&gt; value;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * Constructor to create an empty multi value information holder object.
+<i>26</i>&nbsp;     * @param description the description of what data the information holder holds.
+<i>27</i>&nbsp;     */
+<b class="fc"><i>28</i>&nbsp;    InformationHolderMultiValue(String description) {</b>
+<b class="fc"><i>29</i>&nbsp;        setDescription(description);</b>
+<b class="fc"><i>30</i>&nbsp;        this.value = new ArrayList&lt;IInformationHolder&lt;String&gt;&gt;();</b>
+<b class="fc"><i>31</i>&nbsp;    }</b>
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    //region getters &amp; setters
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * Returns the description of the information holder
+<i>37</i>&nbsp;     * @return the description field of the information holder object
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    public String getDescription() {
+<b class="nc"><i>40</i>&nbsp;        return description;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Method to set the description of the information holder object.
+<i>45</i>&nbsp;     * @param description the new description to be set
+<i>46</i>&nbsp;     */
+<i>47</i>&nbsp;    private void setDescription(String description) {
+<b class="fc"><i>48</i>&nbsp;        this.description = description;</b>
+<b class="fc"><i>49</i>&nbsp;    }</b>
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    /**
+<i>52</i>&nbsp;     * Returns the value of an information holder: a list of information holder values.
+<i>53</i>&nbsp;     * @return the list of values.
+<i>54</i>&nbsp;     */
+<i>55</i>&nbsp;    public List&lt;IInformationHolder&lt;String&gt;&gt; getValue() {
+<b class="fc"><i>56</i>&nbsp;        return value;</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    /**
+<i>60</i>&nbsp;     * Method to add a new value to the information holder object.
+<i>61</i>&nbsp;     * @param informationHolder the new value (information holder) to added to the list of values
+<i>62</i>&nbsp;     */
+<i>63</i>&nbsp;    void addValue(IInformationHolder&lt;String&gt; informationHolder) {
+<b class="fc"><i>64</i>&nbsp;        this.value.add(informationHolder);</b>
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    //endregion
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    /**
+<i>70</i>&nbsp;     * Method to represent the information holder as a string.
+<i>71</i>&nbsp;     * @return a textual representation of the multi value information holder object
+<i>72</i>&nbsp;     */
+<i>73</i>&nbsp;    @Override
+<i>74</i>&nbsp;    public String toString() {
+<b class="fc"><i>75</i>&nbsp;        String str = description + &quot;:&quot;;</b>
+<b class="fc"><i>76</i>&nbsp;        for (IInformationHolder&lt;String&gt; value : getValue()) {</b>
+<b class="fc"><i>77</i>&nbsp;            str += &quot;\n   + &quot; + value.toString();</b>
+<b class="fc"><i>78</i>&nbsp;        }</b>
+<b class="fc"><i>79</i>&nbsp;        return str;</b>
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

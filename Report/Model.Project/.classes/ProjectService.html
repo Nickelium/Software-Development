@@ -1,0 +1,836 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ProjectService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Project</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ProjectService (Model.Project)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ProjectService</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,3%
+  </span>
+  <span class="absValue">
+    (33/ 35)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90,1%
+  </span>
+  <span class="absValue">
+    (164/ 182)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ProjectService$ProjectServiceMemento</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    94,9%
+  </span>
+  <span class="absValue">
+    (37/ 39)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90,6%
+  </span>
+  <span class="absValue">
+    (174/ 192)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Project;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>5</i>&nbsp;import Model.BugReport.BugReport;
+<i>6</i>&nbsp;import Model.Memento.Memento;
+<i>7</i>&nbsp;import Model.Memento.Originator;
+<i>8</i>&nbsp;import Model.Milestone.Milestone;
+<i>9</i>&nbsp;import Model.Project.Project.ProjectMemento;
+<i>10</i>&nbsp;import Model.Roles.Lead;
+<i>11</i>&nbsp;import Model.Roles.Role;
+<i>12</i>&nbsp;import Model.User.Developer;
+<i>13</i>&nbsp;import Model.User.User;
+<i>14</i>&nbsp;import Model.Wrapper.IListWrapper;
+<i>15</i>&nbsp;import Model.Wrapper.ListWrapper;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import java.util.ArrayList;
+<i>18</i>&nbsp;import java.util.Collections;
+<i>19</i>&nbsp;import java.util.List;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;/**
+<i>22</i>&nbsp; * This class is used as a service to operate on projects and subsystems.
+<i>23</i>&nbsp; */
+<i>24</i>&nbsp;public class ProjectService implements Originator&lt;ProjectService.ProjectServiceMemento, ProjectService&gt;
+<i>25</i>&nbsp;{
+<i>26</i>&nbsp;    private IListWrapper&lt;Project&gt; projectList;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Default constructor for a project service.
+<i>30</i>&nbsp;     */
+<i>31</i>&nbsp;    public ProjectService()
+<b class="fc"><i>32</i>&nbsp;    {</b>
+<b class="fc"><i>33</i>&nbsp;        this.projectList = new ListWrapper&lt;&gt;();</b>
+<b class="fc"><i>34</i>&nbsp;    }</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    //region Projects
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    private boolean contains(Project projectCheck)
+<i>39</i>&nbsp;    {
+<b class="nc"><i>40</i>&nbsp;    	for(Project project : getAllProjects())</b>
+<b class="nc"><i>41</i>&nbsp;    		if(projectCheck.equals(project)) return true;</b>
+<b class="nc"><i>42</i>&nbsp;    	return false;</b>
+<i>43</i>&nbsp;    }
+<i>44</i>&nbsp;    
+<i>45</i>&nbsp;    private boolean contains(SubSystem subsystemCheck)
+<i>46</i>&nbsp;    {
+<b class="nc"><i>47</i>&nbsp;    	for(Project project : getAllProjects())</b>
+<b class="nc"><i>48</i>&nbsp;    		for(SubSystem subsystem : project.getAllSubSystems())</b>
+<b class="nc"><i>49</i>&nbsp;    			if(subsystemCheck.equals(subsystem)) return true;</b>
+<b class="nc"><i>50</i>&nbsp;    	return false;</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;    
+<i>53</i>&nbsp;    /**
+<i>54</i>&nbsp;     * Method to split a subsystem
+<i>55</i>&nbsp;     * 
+<i>56</i>&nbsp;     * @param sToSplit The subsystem to split
+<i>57</i>&nbsp;     * @param project The project of the subsystem
+<i>58</i>&nbsp;     * @param name1	The name of the first splitted subsystem
+<i>59</i>&nbsp;     * @param description1	The description of the first splitted subsystem
+<i>60</i>&nbsp;     * @param name2	The name of the second splitted subsystem
+<i>61</i>&nbsp;     * @param description2	The description of the second splitted subsystem
+<i>62</i>&nbsp;     * @param s1	The list of subsystem for the first splitted subsystem
+<i>63</i>&nbsp;     * @param b1	The list of bug report for the first splitted subsystem
+<i>64</i>&nbsp;     * @param s2	The list of subsystem for the second splitted subsystem
+<i>65</i>&nbsp;     * @param b2	The list of bug report for the second splitted subsystem
+<i>66</i>&nbsp;     * 
+<i>67</i>&nbsp;     * @throws ReportErrorToUserException
+<i>68</i>&nbsp;     * @throws IllegalArgumentException when one of the parameters is null, 
+<i>69</i>&nbsp;     * 		the subsystem is not from the project,
+<i>70</i>&nbsp;     * 		the list of subsystems/bug reports or not from the subsystem
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    public void split(SubSystem sToSplit, Project project, String name1, String description1, String name2, String description2,
+<i>73</i>&nbsp;    			List&lt;SubSystem&gt; s1, List&lt;BugReport&gt; b1, List&lt;SubSystem&gt; s2, List&lt;BugReport&gt; b2) throws ReportErrorToUserException
+<i>74</i>&nbsp;    {
+<i>75</i>&nbsp;    	//check
+<b class="fc"><i>76</i>&nbsp;    	if(sToSplit == null) throw new IllegalArgumentException(&quot;SubSystem to split cannot be null&quot;);</b>
+<b class="fc"><i>77</i>&nbsp;    	if(project == null) throw new IllegalArgumentException(&quot;The project cannot be null&quot;);</b>
+<b class="fc"><i>78</i>&nbsp;    	if(s1 == null) throw new IllegalArgumentException(&quot;The first list of subsystem cannot be null&quot;); </b>
+<b class="fc"><i>79</i>&nbsp;    	if(b1 == null) throw new IllegalArgumentException(&quot;The first list of bug report cannot be null&quot;); </b>
+<b class="fc"><i>80</i>&nbsp;    	if(s2 == null) throw new IllegalArgumentException(&quot;The second list of subsystem cannot be null&quot;); </b>
+<b class="fc"><i>81</i>&nbsp;    	if(b2 == null) throw new IllegalArgumentException(&quot;The second list of bug report cannot be null&quot;); </b>
+<i>82</i>&nbsp;    	
+<b class="fc"><i>83</i>&nbsp;    	if(!project.getAllSubSystems().contains(sToSplit)) throw new IllegalArgumentException(&quot;The project or subsystem is incorrect&quot;);</b>
+<i>84</i>&nbsp;    	
+<b class="fc"><i>85</i>&nbsp;    	if(!sToSplit.getSubSystems().containsAll(s1)) throw new IllegalArgumentException(&quot;The first list of subsystem does not belongs to subsystem to split&quot;); </b>
+<b class="fc"><i>86</i>&nbsp;    	if(!sToSplit.getSubSystems().containsAll(s2)) throw new IllegalArgumentException(&quot;The second list of subsystem does not belongs to subsystem to split&quot;); </b>
+<i>87</i>&nbsp;
+<b class="fc"><i>88</i>&nbsp;    	if(!sToSplit.getBugReports().containsAll(b1))throw new IllegalArgumentException(&quot;The first list of subsystem cannot be null&quot;); </b>
+<b class="fc"><i>89</i>&nbsp;    	if(!sToSplit.getBugReports().containsAll(b2))throw new IllegalArgumentException(&quot;The first list of subsystem cannot be null&quot;); </b>
+<i>90</i>&nbsp;
+<b class="fc"><i>91</i>&nbsp;        SubSystem parent = getParentSubSystem(sToSplit);</b>
+<i>92</i>&nbsp;        
+<i>93</i>&nbsp;        SubSystem subSystem1, subSystem2;
+<b class="fc"><i>94</i>&nbsp;        if(parent != null)</b>
+<i>95</i>&nbsp;        {
+<b class="fc"><i>96</i>&nbsp;        	subSystem1 = createSubsystem(name1, description1, parent);</b>
+<b class="fc"><i>97</i>&nbsp;        	subSystem2 = createSubsystem(name2, description2, parent);</b>
+<i>98</i>&nbsp;        }
+<i>99</i>&nbsp;        else
+<i>100</i>&nbsp;        {
+<b class="fc"><i>101</i>&nbsp;        	subSystem1 = createSubsystem(name1, description1, project);</b>
+<b class="fc"><i>102</i>&nbsp;        	subSystem2 = createSubsystem(name2, description2, project);</b>
+<i>103</i>&nbsp;        }
+<i>104</i>&nbsp;        
+<b class="fc"><i>105</i>&nbsp;        for(SubSystem sub : s1)</b>
+<b class="fc"><i>106</i>&nbsp;        	subSystem1.addSubSystem(sub);</b>
+<b class="fc"><i>107</i>&nbsp;        for(BugReport bug : b1)</b>
+<b class="nc"><i>108</i>&nbsp;        	subSystem1.addBugReport(bug);</b>
+<i>109</i>&nbsp;        
+<b class="fc"><i>110</i>&nbsp;        for(SubSystem sub : s2)</b>
+<b class="fc"><i>111</i>&nbsp;        	subSystem2.addSubSystem(sub);</b>
+<b class="fc"><i>112</i>&nbsp;        for(BugReport bug : b2)</b>
+<b class="nc"><i>113</i>&nbsp;        	subSystem2.addBugReport(bug);</b>
+<i>114</i>&nbsp;        
+<b class="fc"><i>115</i>&nbsp;        setNewSubSystemMilestone(subSystem1, sToSplit.getCurrentSubsystemMilestones());</b>
+<b class="fc"><i>116</i>&nbsp;        setNewSubSystemMilestone(subSystem2, sToSplit.getCurrentSubsystemMilestones());</b>
+<i>117</i>&nbsp;        
+<b class="fc"><i>118</i>&nbsp;        removeSubSystem(project, sToSplit);</b>
+<b class="fc"><i>119</i>&nbsp;    }</b>
+<i>120</i>&nbsp;    
+<i>121</i>&nbsp;    /**
+<i>122</i>&nbsp;     * Method to merge subsystems
+<i>123</i>&nbsp;     * 
+<i>124</i>&nbsp;     * @param project The project of the subsystems
+<i>125</i>&nbsp;     * @param origin	The subsystem to merge
+<i>126</i>&nbsp;     * @param related	The related subsystem 
+<i>127</i>&nbsp;     * @param name		The name for the merged subsystem
+<i>128</i>&nbsp;     * @param description	The description for the merged subsystem
+<i>129</i>&nbsp;     * 
+<i>130</i>&nbsp;     * @throws ReportErrorToUserException
+<i>131</i>&nbsp;     * @throws IllegalArgumentException One of the arguments is null,
+<i>132</i>&nbsp;     * 		subsystem is not from the project,
+<i>133</i>&nbsp;     * 		the related subsystem is not the origin&#39;s related,
+<i>134</i>&nbsp;     */
+<i>135</i>&nbsp;    public void merge(Project project, SubSystem origin, SubSystem related, String name, String description) throws ReportErrorToUserException
+<i>136</i>&nbsp;    {
+<b class="fc"><i>137</i>&nbsp;    	if(project == null) throw new IllegalArgumentException(&quot;Project cannot be null&quot;);</b>
+<b class="fc"><i>138</i>&nbsp;    	if(origin == null) throw new IllegalArgumentException(&quot;SubSystem cannot be null&quot;);</b>
+<b class="fc"><i>139</i>&nbsp;    	if(related == null) throw new IllegalArgumentException(&quot;Related subSystem cannot be null&quot;);</b>
+<i>140</i>&nbsp;    	  	
+<b class="fc"><i>141</i>&nbsp;    	if(!project.getAllSubSystems().contains(origin)) throw new IllegalArgumentException(&quot;The project or subsystem is incorrect&quot;);</b>
+<i>142</i>&nbsp;
+<b class="fc"><i>143</i>&nbsp;    	if(origin.equals(related))throw new IllegalArgumentException(&quot;Incorrect related subSystem&quot;);</b>
+<b class="fc"><i>144</i>&nbsp;    	if(!getRelated(project, origin).contains(related)) throw new IllegalArgumentException(&quot;Incorrect related subsystem&quot;);</b>
+<i>145</i>&nbsp;    	
+<b class="fc"><i>146</i>&nbsp;    	SubSystem reference = origin.getHeight() &gt; related.getHeight() ? origin : related;</b>
+<b class="fc"><i>147</i>&nbsp;        SubSystem parentReferenceSubSystem = getParentSubSystem(reference);</b>
+<i>148</i>&nbsp;        
+<i>149</i>&nbsp;        SubSystem newSubSystem;
+<b class="fc"><i>150</i>&nbsp;        if(parentReferenceSubSystem != null)</b>
+<b class="nc"><i>151</i>&nbsp;        	newSubSystem = createSubsystem(name, description, parentReferenceSubSystem);</b>
+<i>152</i>&nbsp;        else
+<b class="fc"><i>153</i>&nbsp;        	newSubSystem = createSubsystem(name, description, project);</b>
+<i>154</i>&nbsp;        	
+<b class="fc"><i>155</i>&nbsp;	    for(SubSystem sub : origin.getSubSystems())</b>
+<b class="fc"><i>156</i>&nbsp;	    	if(!origin.equals(sub) &amp;&amp; !related.equals(sub))</b>
+<b class="nc"><i>157</i>&nbsp;	    		newSubSystem.addSubSystem(sub);</b>
+<b class="fc"><i>158</i>&nbsp;	    for(SubSystem sub : related.getSubSystems())</b>
+<b class="fc"><i>159</i>&nbsp;	    	if(!origin.equals(sub) &amp;&amp; !related.equals(sub))</b>
+<b class="fc"><i>160</i>&nbsp;	    		newSubSystem.addSubSystem(sub);</b>
+<i>161</i>&nbsp;	   	
+<b class="fc"><i>162</i>&nbsp;	    for(BugReport bug : origin.getBugReports())</b>
+<b class="nc"><i>163</i>&nbsp;	    	newSubSystem.addBugReport(bug);</b>
+<b class="fc"><i>164</i>&nbsp;	    for(BugReport bug : related.getBugReports())</b>
+<b class="nc"><i>165</i>&nbsp;	    	newSubSystem.addBugReport(bug);</b>
+<i>166</i>&nbsp;        
+<b class="fc"><i>167</i>&nbsp;    	Milestone lowerMilestone = </b>
+<b class="fc"><i>168</i>&nbsp;    			origin.getLatestAchievedMilestone().compareTo(related.getLatestAchievedMilestone())</b>
+<b class="fc"><i>169</i>&nbsp;    			 &lt; 0 ? origin.getLatestAchievedMilestone() : related.getLatestAchievedMilestone();</b>
+<b class="fc"><i>170</i>&nbsp;    	setNewSubSystemMilestone(newSubSystem, lowerMilestone);</b>
+<i>171</i>&nbsp;        
+<b class="fc"><i>172</i>&nbsp;    	removeSubSystem(project, origin);</b>
+<b class="fc"><i>173</i>&nbsp;    	removeSubSystem(project, related);</b>
+<b class="fc"><i>174</i>&nbsp;    }</b>
+<i>175</i>&nbsp;
+<i>176</i>&nbsp;    /**
+<i>177</i>&nbsp;     * Getter to request all the projects.
+<i>178</i>&nbsp;     *
+<i>179</i>&nbsp;     * @return An unmodifiable list of all the projects.
+<i>180</i>&nbsp;     */
+<i>181</i>&nbsp;    public List&lt;Project&gt; getAllProjects()
+<i>182</i>&nbsp;    {
+<b class="fc"><i>183</i>&nbsp;        return Collections.unmodifiableList(projectList.getAll());</b>
+<i>184</i>&nbsp;    }
+<i>185</i>&nbsp;
+<i>186</i>&nbsp;    /**
+<i>187</i>&nbsp;     * Method to create a new project and add it to the project list.
+<i>188</i>&nbsp;     *
+<i>189</i>&nbsp;     * @param name The name of the project.
+<i>190</i>&nbsp;     * @param description The description of the project.
+<i>191</i>&nbsp;     * @param startingDate The starting date of the project.
+<i>192</i>&nbsp;     * @param budget The budget of the project.
+<i>193</i>&nbsp;     * @param leadRole The lead of the project.
+<i>194</i>&nbsp;     *
+<i>195</i>&nbsp;     * @return The newly created project.
+<i>196</i>&nbsp;     *
+<i>197</i>&nbsp;     * @throws ReportErrorToUserException One of the given arguments is not valid.
+<i>198</i>&nbsp;     */
+<i>199</i>&nbsp;    public Project createProject(String name, String description, TheDate startingDate, double budget, Lead leadRole) throws ReportErrorToUserException {
+<b class="fc"><i>200</i>&nbsp;        Project project = new Project(name, description, startingDate, budget, leadRole);</b>
+<b class="fc"><i>201</i>&nbsp;        projectList.insert(project);</b>
+<b class="fc"><i>202</i>&nbsp;        return project;</b>
+<i>203</i>&nbsp;    }
+<i>204</i>&nbsp;    
+<i>205</i>&nbsp;    /**
+<i>206</i>&nbsp;     * Method to fork a project and add it to the project list.
+<i>207</i>&nbsp;     * 
+<i>208</i>&nbsp;     * @param project The project that will be forked
+<i>209</i>&nbsp;     * 
+<i>210</i>&nbsp;     * @return The forked project
+<i>211</i>&nbsp;     * 
+<i>212</i>&nbsp;     * @throws ReportErrorToUserException One of attributes of the project could not be forked.
+<i>213</i>&nbsp;     * @throws IllegalArgumentException the project is null
+<i>214</i>&nbsp;     */
+<i>215</i>&nbsp;    public Project forkProject(Project project) throws ReportErrorToUserException
+<i>216</i>&nbsp;    {
+<b class="fc"><i>217</i>&nbsp;    	if(project == null) throw new IllegalArgumentException(&quot;The project cannot be null&quot;);</b>
+<i>218</i>&nbsp;    	
+<b class="fc"><i>219</i>&nbsp;    	Project forkedProject = project.fork();</b>
+<i>220</i>&nbsp;    	
+<b class="fc"><i>221</i>&nbsp;    	projectList.insert(forkedProject);</b>
+<b class="fc"><i>222</i>&nbsp;		return forkedProject;	</b>
+<i>223</i>&nbsp;    }
+<i>224</i>&nbsp;
+<i>225</i>&nbsp;    /**
+<i>226</i>&nbsp;     * Method for removing a project from the list of projects.
+<i>227</i>&nbsp;     *
+<i>228</i>&nbsp;     * @param project The project to remove.
+<i>229</i>&nbsp;     * 
+<i>230</i>&nbsp;     * @throws IllegalArgumentException the project is null
+<i>231</i>&nbsp;     */
+<i>232</i>&nbsp;    public void deleteProject(Project project)
+<i>233</i>&nbsp;    {
+<b class="fc"><i>234</i>&nbsp;    	if(project == null) throw new IllegalArgumentException(&quot;The project cannot be null&quot;);</b>
+<b class="fc"><i>235</i>&nbsp;        projectList.delete(project);</b>
+<b class="fc"><i>236</i>&nbsp;    }</b>
+<i>237</i>&nbsp;    
+<i>238</i>&nbsp;    /**
+<i>239</i>&nbsp;     * Method for requesting all the projects with the given developer as lead.
+<i>240</i>&nbsp;     *
+<i>241</i>&nbsp;     * @param developer The developer of which to get de project he/she leads.
+<i>242</i>&nbsp;     *
+<i>243</i>&nbsp;     * @return An unmodifiable list of all the projects the given developer leads.
+<i>244</i>&nbsp;     * 
+<i>245</i>&nbsp;     * @throws IllegalArgumentException the developer is null
+<i>246</i>&nbsp;     */
+<i>247</i>&nbsp;    public List&lt;Project&gt; getProjectsOfLeadRole(Developer developer)
+<i>248</i>&nbsp;    {
+<b class="fc"><i>249</i>&nbsp;    	if(developer == null) throw new IllegalArgumentException(&quot;The developer cannot be null&quot;);</b>
+<b class="fc"><i>250</i>&nbsp;        List&lt;Project&gt; prjList = projectList.getAllMatching(x -&gt; x.getLeadRole().getDeveloper().equals(developer));</b>
+<b class="fc"><i>251</i>&nbsp;        return Collections.unmodifiableList(prjList);</b>
+<i>252</i>&nbsp;    }
+<i>253</i>&nbsp;
+<i>254</i>&nbsp;    /**
+<i>255</i>&nbsp;     * Method for requesting the project containing the bug report.
+<i>256</i>&nbsp;     *
+<i>257</i>&nbsp;     * @param bugReport Bug report to get the project of.
+<i>258</i>&nbsp;     *
+<i>259</i>&nbsp;     * @return The project containing the bug report.
+<i>260</i>&nbsp;     *
+<i>261</i>&nbsp;     * @throws ReportErrorToUserException There is no project containing the given bug report.
+<i>262</i>&nbsp;     * @throws IllegalArgumentException Bug report is null
+<i>263</i>&nbsp;     */
+<i>264</i>&nbsp;    public Project getProjectsContainingBugReport(BugReport bugReport) throws ReportErrorToUserException
+<i>265</i>&nbsp;    {
+<b class="fc"><i>266</i>&nbsp;    	if(bugReport == null) throw new IllegalArgumentException(&quot;Bugreport is null&quot;);</b>
+<i>267</i>&nbsp;    	
+<b class="fc"><i>268</i>&nbsp;        for(Project project : this.getAllProjects()){</b>
+<b class="fc"><i>269</i>&nbsp;            if (project.getAllBugReports().contains(bugReport)){</b>
+<b class="fc"><i>270</i>&nbsp;                return project;</b>
+<i>271</i>&nbsp;            }
+<b class="fc"><i>272</i>&nbsp;        }</b>
+<b class="nc"><i>273</i>&nbsp;        throw new ReportErrorToUserException(&quot;There is no project containing the given bug report.&quot;);</b>
+<i>274</i>&nbsp;    }
+<i>275</i>&nbsp;
+<i>276</i>&nbsp;    //endregion
+<i>277</i>&nbsp;
+<i>278</i>&nbsp;    //region Project Setters
+<i>279</i>&nbsp;
+<i>280</i>&nbsp;    /**
+<i>281</i>&nbsp;     * Setter to set the name of the project.
+<i>282</i>&nbsp;     *
+<i>283</i>&nbsp;     * @param project The project to set the name of.
+<i>284</i>&nbsp;     * @param name The name of the project
+<i>285</i>&nbsp;     * 
+<i>286</i>&nbsp;     * @throws ReportErrorToUserException The given name is empty.
+<i>287</i>&nbsp;     * @throws IllegalArgumentException Project is null
+<i>288</i>&nbsp;     */
+<i>289</i>&nbsp;    public void setProjectName(Project project, String name) throws ReportErrorToUserException {
+<b class="fc"><i>290</i>&nbsp;    	if(project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>291</i>&nbsp;    	project.setName(name);</b>
+<b class="fc"><i>292</i>&nbsp;    }</b>
+<i>293</i>&nbsp;
+<i>294</i>&nbsp;    /**
+<i>295</i>&nbsp;     * Setter to set the description of the project
+<i>296</i>&nbsp;     *
+<i>297</i>&nbsp;     * @param project The project to set the description of.
+<i>298</i>&nbsp;     * @param description The description of the project
+<i>299</i>&nbsp;     * 
+<i>300</i>&nbsp;     * @throws ReportErrorToUserException The given description is empty.
+<i>301</i>&nbsp;     * @throws IllegalArgumentException Project is null
+<i>302</i>&nbsp;     */
+<i>303</i>&nbsp;    public void setProjectDescription(Project project, String description) throws ReportErrorToUserException {
+<b class="fc"><i>304</i>&nbsp;     	if(project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>305</i>&nbsp;    	project.setDescription(description);</b>
+<b class="fc"><i>306</i>&nbsp;    }</b>
+<i>307</i>&nbsp;
+<i>308</i>&nbsp;    /**
+<i>309</i>&nbsp;     * Setter to set the starting date of the project.
+<i>310</i>&nbsp;     *
+<i>311</i>&nbsp;     * @param project The project to set the date of.
+<i>312</i>&nbsp;     * @param date The starting date of the project.
+<i>313</i>&nbsp;     * 
+<i>314</i>&nbsp;     * @throws ReportErrorToUserException The given date is before the creation date.
+<i>315</i>&nbsp;     * @throws IllegalArgumentException Project is null
+<i>316</i>&nbsp;     */
+<i>317</i>&nbsp;    public void setProjectStartingDate(Project project, TheDate date) throws ReportErrorToUserException {
+<b class="fc"><i>318</i>&nbsp;     	if(project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>319</i>&nbsp;    	project.setStartingDate(date);</b>
+<b class="fc"><i>320</i>&nbsp;    }</b>
+<i>321</i>&nbsp;
+<i>322</i>&nbsp;    /**
+<i>323</i>&nbsp;     * Setter to set the budget of the project.
+<i>324</i>&nbsp;     *
+<i>325</i>&nbsp;     * @param project The project to set the budget of.
+<i>326</i>&nbsp;     * @param newBudget The budget of the project.
+<i>327</i>&nbsp;     * 
+<i>328</i>&nbsp;     * @throws ReportErrorToUserException The budget is negative.
+<i>329</i>&nbsp;     * @throws IllegalArgumentException Project is null
+<i>330</i>&nbsp;     */
+<i>331</i>&nbsp;    public void setProjectBudget(Project project, double newBudget) throws ReportErrorToUserException {
+<b class="fc"><i>332</i>&nbsp;     	if(project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>333</i>&nbsp;    	project.setBudget(newBudget);</b>
+<b class="fc"><i>334</i>&nbsp;    }</b>
+<i>335</i>&nbsp;
+<i>336</i>&nbsp;    /**
+<i>337</i>&nbsp;     * Setter to set the versionId of the project.
+<i>338</i>&nbsp;     *
+<i>339</i>&nbsp;     * @param project The project to set the version id of.
+<i>340</i>&nbsp;     * @param versionID The versionId to set the project to.
+<i>341</i>&nbsp;     * 
+<i>342</i>&nbsp;     * @throws ReportErrorToUserException The given versionId is lower than or equal to the current one.
+<i>343</i>&nbsp;     * @throws IllegalArgumentException Project is null
+<i>344</i>&nbsp;     */
+<i>345</i>&nbsp;    public void setProjectVersionID(Project project, double versionID) throws ReportErrorToUserException {
+<b class="fc"><i>346</i>&nbsp;     	if(project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>347</i>&nbsp;    	project.setVersionID(versionID);</b>
+<b class="fc"><i>348</i>&nbsp;    }</b>
+<i>349</i>&nbsp;
+<i>350</i>&nbsp;    /**
+<i>351</i>&nbsp;     * Setter to set the lead of the project
+<i>352</i>&nbsp;     *
+<i>353</i>&nbsp;     * @param project The project to assign the lead to.
+<i>354</i>&nbsp;     * @param leadRole The lead to assign to the project.
+<i>355</i>&nbsp;     * 
+<i>356</i>&nbsp;     * @throws IllegalArgumentException The given role is null.
+<i>357</i>&nbsp;     * @throws IllegalArgumentException Project is null
+<i>358</i>&nbsp;     */
+<i>359</i>&nbsp;    public void setProjectLeadRole(Project project, Lead leadRole) {
+<b class="fc"><i>360</i>&nbsp;     	if(project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>361</i>&nbsp;    	project.setLeadRole(leadRole);</b>
+<b class="fc"><i>362</i>&nbsp;    }</b>
+<i>363</i>&nbsp;
+<i>364</i>&nbsp;
+<i>365</i>&nbsp;    /**
+<i>366</i>&nbsp;     * Method to set a new project milestone.
+<i>367</i>&nbsp;     * 
+<i>368</i>&nbsp;     * There occurs consistency checking:
+<i>369</i>&nbsp;     * first pass: project milestone should not exceed any subsystem milestone
+<i>370</i>&nbsp;     * second pass: project milestone should not exceed the target milestone of
+<i>371</i>&nbsp;     * any related bug report with a non-final tag.
+<i>372</i>&nbsp;     *
+<i>373</i>&nbsp;     * @param project The project to assign the new milestone to.
+<i>374</i>&nbsp;     * @param newProjectMilestone the new project milestone that has to be set
+<i>375</i>&nbsp;     * 
+<i>376</i>&nbsp;     * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
+<i>377</i>&nbsp;     * @throws IllegalArgumentException Project is null
+<i>378</i>&nbsp;     */
+<i>379</i>&nbsp;    public void setNewProjectMilestone(Project project, Milestone newProjectMilestone) throws ReportErrorToUserException {
+<b class="fc"><i>380</i>&nbsp;    	if(project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>381</i>&nbsp;    	project.setNewProjectMilestone(newProjectMilestone);</b>
+<b class="fc"><i>382</i>&nbsp;    }</b>
+<i>383</i>&nbsp;
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;    //endregion
+<i>386</i>&nbsp;
+<i>387</i>&nbsp;    //region Subsystems
+<i>388</i>&nbsp;
+<i>389</i>&nbsp;    /**
+<i>390</i>&nbsp;     * Method to create a subsystem and insert it into an existing subsystem.
+<i>391</i>&nbsp;     *
+<i>392</i>&nbsp;     * @param name        The name of the new subsystem.
+<i>393</i>&nbsp;     * @param description The description of the new subsystem.
+<i>394</i>&nbsp;     * 
+<i>395</i>&nbsp;     * @param subSystem   The subsystem to insert the new one in.
+<i>396</i>&nbsp;     * @return The newly created subsystem.
+<i>397</i>&nbsp;     * 
+<i>398</i>&nbsp;     * @throws ReportErrorToUserException One of the string arguments are wrong.
+<i>399</i>&nbsp;     * @throws IllegalArgumentException the subsystem is null
+<i>400</i>&nbsp;     */
+<i>401</i>&nbsp;    public SubSystem createSubsystem(String name, String description, SubSystem subSystem) throws ReportErrorToUserException {
+<b class="fc"><i>402</i>&nbsp;        if (subSystem == null) throw new IllegalArgumentException(&quot;Subsystem is null&quot;);</b>
+<b class="fc"><i>403</i>&nbsp;        SubSystem newSubsystem = new SubSystem(name, description);</b>
+<b class="fc"><i>404</i>&nbsp;        subSystem.addSubSystem(newSubsystem);</b>
+<i>405</i>&nbsp;
+<b class="fc"><i>406</i>&nbsp;        return newSubsystem;</b>
+<i>407</i>&nbsp;    }
+<i>408</i>&nbsp;
+<i>409</i>&nbsp;    /**
+<i>410</i>&nbsp;     * Method to create a subsystem and insert it into an existing project.
+<i>411</i>&nbsp;     *
+<i>412</i>&nbsp;     * @param name        The name of the new subsystem.
+<i>413</i>&nbsp;     * @param description The description of the new subsystem.
+<i>414</i>&nbsp;     * @param project     The project to insert the new subsystem in.
+<i>415</i>&nbsp;     * 
+<i>416</i>&nbsp;     * @return The newly created subsystem.
+<i>417</i>&nbsp;     * 
+<i>418</i>&nbsp;     * @throws ReportErrorToUserException One of the string arguments are wrong.
+<i>419</i>&nbsp;     * @throws IllegalArgumentException the project is null
+<i>420</i>&nbsp;     */
+<i>421</i>&nbsp;    public SubSystem createSubsystem(String name, String description, Project project) throws ReportErrorToUserException {
+<b class="fc"><i>422</i>&nbsp;        if (project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>423</i>&nbsp;        SubSystem newSubsystem = new SubSystem(name, description);</b>
+<b class="fc"><i>424</i>&nbsp;        project.addSubSystem(newSubsystem);</b>
+<i>425</i>&nbsp;
+<b class="fc"><i>426</i>&nbsp;        return newSubsystem;</b>
+<i>427</i>&nbsp;    }
+<i>428</i>&nbsp;    
+<i>429</i>&nbsp;    /**
+<i>430</i>&nbsp;     * Remove a subsystem from a project recursively
+<i>431</i>&nbsp;     * 
+<i>432</i>&nbsp;     * @param project The project of origin
+<i>433</i>&nbsp;     * @param subSystem The subsystem to remove
+<i>434</i>&nbsp;     * 
+<i>435</i>&nbsp;     * @throws IllegalArgumentException project or subsystem is null
+<i>436</i>&nbsp;     */
+<i>437</i>&nbsp;    public void removeSubSystem(Project project, SubSystem subSystem)
+<i>438</i>&nbsp;    {
+<b class="fc"><i>439</i>&nbsp;    	if(project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>440</i>&nbsp;    	if(subSystem == null) throw new IllegalArgumentException(&quot;Subsystem is null&quot;);</b>
+<b class="fc"><i>441</i>&nbsp;    	project.removeSubSystem(subSystem);</b>
+<b class="fc"><i>442</i>&nbsp;    }</b>
+<i>443</i>&nbsp; 
+<i>444</i>&nbsp;
+<i>445</i>&nbsp;    /**
+<i>446</i>&nbsp;     * Method for requesting all the subsystems of all the projects.
+<i>447</i>&nbsp;     *
+<i>448</i>&nbsp;     * @return List containing all the subsystems of all the projects.
+<i>449</i>&nbsp;     */
+<i>450</i>&nbsp;    public List&lt;SubSystem&gt; getAllSubSystems()
+<i>451</i>&nbsp;    {
+<b class="fc"><i>452</i>&nbsp;        List&lt;SubSystem&gt; subSystems = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>453</i>&nbsp;        for (Project project: this.getAllProjects())</b>
+<b class="fc"><i>454</i>&nbsp;           subSystems.addAll(project.getAllSubSystems());</b>
+<b class="fc"><i>455</i>&nbsp;        return subSystems;</b>
+<i>456</i>&nbsp;    }
+<i>457</i>&nbsp;
+<i>458</i>&nbsp;    //endregion
+<i>459</i>&nbsp;
+<i>460</i>&nbsp;    //region Subsystem setters
+<i>461</i>&nbsp;
+<i>462</i>&nbsp;    /**
+<i>463</i>&nbsp;     * Setter to set the name of the subsystem.
+<i>464</i>&nbsp;     *
+<i>465</i>&nbsp;     * @param subSystem The subsystem to set the name of.
+<i>466</i>&nbsp;     * @param name The name of the subsystem
+<i>467</i>&nbsp;     * 
+<i>468</i>&nbsp;     * @throws ReportErrorToUserException The given name is empty.
+<i>469</i>&nbsp;     * throws IllegalArgumentException The subsystem is null.
+<i>470</i>&nbsp;     */
+<i>471</i>&nbsp;    public void setSubSystemName(SubSystem subSystem, String name) throws ReportErrorToUserException {
+<b class="fc"><i>472</i>&nbsp;        if(subSystem == null) throw new IllegalArgumentException(&quot;The subsystem cannot be null&quot;);</b>
+<b class="fc"><i>473</i>&nbsp;    	subSystem.setName(name);}</b>
+<i>474</i>&nbsp;
+<i>475</i>&nbsp;    /**
+<i>476</i>&nbsp;     * Setter to set the description of the subsystem.
+<i>477</i>&nbsp;     *
+<i>478</i>&nbsp;     * @param subSystem The subsystem to set the description of.
+<i>479</i>&nbsp;     * @param description The description of the subsystem.
+<i>480</i>&nbsp;     * 
+<i>481</i>&nbsp;     * @throws ReportErrorToUserException The given description is empty.
+<i>482</i>&nbsp;     * throws IllegalArgumentException The subsystem is null.
+<i>483</i>&nbsp;     */
+<i>484</i>&nbsp;    public void setSubSystemDescription(SubSystem subSystem, String description) throws ReportErrorToUserException {
+<b class="fc"><i>485</i>&nbsp;    	if(subSystem == null) throw new IllegalArgumentException(&quot;The subsystem cannot be null&quot;);</b>
+<b class="fc"><i>486</i>&nbsp;    	subSystem.setDescription(description);}</b>
+<i>487</i>&nbsp;
+<i>488</i>&nbsp;    /**
+<i>489</i>&nbsp;     * Method to set a new subsystem milestone.
+<i>490</i>&nbsp;     * 
+<i>491</i>&nbsp;     * There occurs consistency checking:
+<i>492</i>&nbsp;     * first pass: subsystem milestone should not exceed any recursive subsystem&#39;s milestone
+<i>493</i>&nbsp;     * second pass: subsystem milestone should not exceed the target milestone of
+<i>494</i>&nbsp;     * any related bug report with a non-final tag.
+<i>495</i>&nbsp;     *
+<i>496</i>&nbsp;     * @param subSystem The subsystem to set the new milestone of.
+<i>497</i>&nbsp;     * @param newSubsystemMilestone the new subsystem milestone that has to be set
+<i>498</i>&nbsp;     * 
+<i>499</i>&nbsp;     * @throws ReportErrorToUserException is thrown in case that a constraint is broken.
+<i>500</i>&nbsp;     * throws IllegalArgumentException The subsystem is null.
+<i>501</i>&nbsp;     */
+<i>502</i>&nbsp;    public void setNewSubSystemMilestone(SubSystem subSystem, Milestone newSubsystemMilestone) throws ReportErrorToUserException {
+<b class="fc"><i>503</i>&nbsp;    	if(subSystem == null) throw new IllegalArgumentException(&quot;The subsystem cannot be null&quot;);</b>
+<b class="fc"><i>504</i>&nbsp;    	subSystem.setNewSubSystemMilestone(newSubsystemMilestone);</b>
+<b class="fc"><i>505</i>&nbsp;    }</b>
+<i>506</i>&nbsp;
+<i>507</i>&nbsp;    /**
+<i>508</i>&nbsp;     * Method to set milestones to a subsystem
+<i>509</i>&nbsp;     * 
+<i>510</i>&nbsp;     * @param subSystem The subsystem to set its milestone
+<i>511</i>&nbsp;     * @param milestoneList The list of milestones 
+<i>512</i>&nbsp;     * 
+<i>513</i>&nbsp;     * @throws IllegalArgumentException subsystem or milestoneList is null
+<i>514</i>&nbsp;     * @throws ReportErrorToUserException is thrown in case that a constraint is broken
+<i>515</i>&nbsp;     */
+<i>516</i>&nbsp;    public void setNewSubSystemMilestone(SubSystem subSystem, List&lt;Milestone&gt; milestoneList) throws ReportErrorToUserException
+<i>517</i>&nbsp;    {
+<b class="fc"><i>518</i>&nbsp;    	if(subSystem == null) throw new IllegalArgumentException(&quot;The subsystem cannot be null&quot;);</b>
+<b class="fc"><i>519</i>&nbsp;    	if(milestoneList == null) throw new IllegalArgumentException(&quot;The milestone list cannot be null&quot;);</b>
+<i>520</i>&nbsp;    	
+<b class="fc"><i>521</i>&nbsp;    	for(Milestone milestone : milestoneList)</b>
+<b class="fc"><i>522</i>&nbsp;    		subSystem.setNewSubSystemMilestone(milestone);</b>
+<b class="fc"><i>523</i>&nbsp;    }</b>
+<i>524</i>&nbsp;    
+<i>525</i>&nbsp;    //endregion
+<i>526</i>&nbsp;
+<i>527</i>&nbsp;    //region Functions
+<i>528</i>&nbsp;
+<i>529</i>&nbsp;    /**
+<i>530</i>&nbsp;     * Method to assign a role to a user for a specified project.
+<i>531</i>&nbsp;     *
+<i>532</i>&nbsp;     * @param project the project to which the role assignment is being made
+<i>533</i>&nbsp;     * @param role the role that is being set to the specified user
+<i>534</i>&nbsp;     * @param user the user to which the new role is being assigned
+<i>535</i>&nbsp;     *
+<i>536</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the user cannot be assigned
+<i>537</i>&nbsp;     *                                    to the role in the project.
+<i>538</i>&nbsp;     * @throws IllegalArgumentException The project, role or user is null.
+<i>539</i>&nbsp;     */
+<i>540</i>&nbsp;    public void assignRole(Project project, Role role, User user) throws ReportErrorToUserException {
+<b class="fc"><i>541</i>&nbsp;        if (project == null) throw new IllegalArgumentException(&quot;Project is null&quot;);</b>
+<b class="fc"><i>542</i>&nbsp;        if (role == null) throw new IllegalArgumentException(&quot;Role is null&quot;);</b>
+<b class="fc"><i>543</i>&nbsp;        if (user == null) throw new IllegalArgumentException(&quot;User is null&quot;);</b>
+<b class="fc"><i>544</i>&nbsp;        if (!canAssignRole(project, role, user))</b>
+<b class="nc"><i>545</i>&nbsp;            throw new ReportErrorToUserException(&quot;You cannot assign this developer to the project.&quot;);</b>
+<b class="fc"><i>546</i>&nbsp;        project.addRole(role);</b>
+<b class="fc"><i>547</i>&nbsp;    }</b>
+<i>548</i>&nbsp;
+<i>549</i>&nbsp;    //endregion
+<i>550</i>&nbsp;
+<i>551</i>&nbsp;    //region Checker
+<i>552</i>&nbsp;
+<i>553</i>&nbsp;    private boolean canAssignRole(Project project, Role role, User user) {
+<b class="fc"><i>554</i>&nbsp;    	if(project == null) return false;</b>
+<b class="fc"><i>555</i>&nbsp;    	if(role == null) return false;</b>
+<b class="fc"><i>556</i>&nbsp;    	if(user == null) return false;</b>
+<i>557</i>&nbsp;    	
+<b class="fc"><i>558</i>&nbsp;        if (!project.getLeadRole().getDeveloper().equals(user)) {</b>
+<b class="nc"><i>559</i>&nbsp;            return false;</b>
+<b class="fc"><i>560</i>&nbsp;        } else if (isRoleAlreadyInProject(project, role)) {</b>
+<b class="nc"><i>561</i>&nbsp;            return false;</b>
+<i>562</i>&nbsp;        }
+<b class="fc"><i>563</i>&nbsp;        return true;</b>
+<i>564</i>&nbsp;    }
+<i>565</i>&nbsp;
+<i>566</i>&nbsp;    private boolean isRoleAlreadyInProject(Project project, Role role) {
+<b class="fc"><i>567</i>&nbsp;    	if(project == null) throw new IllegalArgumentException(&quot;The project is null&quot;);</b>
+<b class="fc"><i>568</i>&nbsp;    	if(role == null) throw new IllegalArgumentException(&quot;The role is null&quot;);</b>
+<i>569</i>&nbsp;    	
+<b class="fc"><i>570</i>&nbsp;        return project.getDevsRoles().stream().anyMatch(x -&gt; x.getDeveloper().equals(role.getDeveloper())</b>
+<b class="fc"><i>571</i>&nbsp;                &amp;&amp; x.getClass().equals(role.getClass()));</b>
+<i>572</i>&nbsp;    }
+<i>573</i>&nbsp;
+<i>574</i>&nbsp;    //endregion
+<i>575</i>&nbsp;
+<i>576</i>&nbsp;    //region Memento Functions
+<i>577</i>&nbsp;
+<i>578</i>&nbsp;    /**
+<i>579</i>&nbsp;     * Method for requesting the subsystem containing the bug report.
+<i>580</i>&nbsp;     *
+<i>581</i>&nbsp;     * @param bugReport Bugreport to get the subsystem of.
+<i>582</i>&nbsp;     * @return The subsystem containing the bug report.
+<i>583</i>&nbsp;     * 
+<i>584</i>&nbsp;     * @throws ReportErrorToUserException There is no subsystem containing the given bug report.
+<i>585</i>&nbsp;     * @throws IllegalArgumentException The bug report is null.
+<i>586</i>&nbsp;     */
+<i>587</i>&nbsp;    public SubSystem getSubsystemWhichContainsBugReport(BugReport bugReport) throws ReportErrorToUserException {
+<b class="fc"><i>588</i>&nbsp;        if(bugReport == null) throw new IllegalArgumentException(&quot;The bug report cannot be null&quot;);</b>
+<i>589</i>&nbsp;        
+<b class="fc"><i>590</i>&nbsp;    	for (SubSystem subSystem : this.getAllSubSystems()) {</b>
+<b class="fc"><i>591</i>&nbsp;            if (subSystem.getBugReports().contains(bugReport)) {</b>
+<b class="fc"><i>592</i>&nbsp;                return subSystem;</b>
+<i>593</i>&nbsp;            }
+<b class="fc"><i>594</i>&nbsp;        }</b>
+<b class="nc"><i>595</i>&nbsp;        throw new ReportErrorToUserException(&quot;Ther is no subsystem that contains the given bug report.&quot;);}</b>
+<i>596</i>&nbsp;
+<i>597</i>&nbsp;    
+<i>598</i>&nbsp;    /**
+<i>599</i>&nbsp;     * Method to get the subsystem parent of a given subsystem
+<i>600</i>&nbsp;     * 
+<i>601</i>&nbsp;     * @param subsystem The subsystem to find its parent
+<i>602</i>&nbsp;     * 
+<i>603</i>&nbsp;     * @return The subsystem parent
+<i>604</i>&nbsp;     */
+<i>605</i>&nbsp;    public SubSystem getParentSubSystem(SubSystem subsystem)
+<i>606</i>&nbsp;    {
+<b class="fc"><i>607</i>&nbsp;    	for(SubSystem sub : getAllSubSystems())</b>
+<b class="fc"><i>608</i>&nbsp;    		if(sub.isParent(subsystem)) return sub;</b>
+<b class="fc"><i>609</i>&nbsp;    	return null;</b>
+<i>610</i>&nbsp;    }
+<i>611</i>&nbsp;    
+<i>612</i>&nbsp;    /**
+<i>613</i>&nbsp;     * Method to get all related subsystem of the given subsystem
+<i>614</i>&nbsp;     * 
+<i>615</i>&nbsp;     * @param origin The project of origin
+<i>616</i>&nbsp;     * @param subsystem	The subsystem to get its related
+<i>617</i>&nbsp;     * 
+<i>618</i>&nbsp;     * @return The list of related subsystems
+<i>619</i>&nbsp;     */
+<i>620</i>&nbsp;    public List&lt;SubSystem&gt; getRelated(Project origin, SubSystem subsystem)
+<i>621</i>&nbsp;    {
+<b class="fc"><i>622</i>&nbsp;    	List&lt;SubSystem&gt; related = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>623</i>&nbsp;    	related.addAll(subsystem.getSubSystems());</b>
+<b class="fc"><i>624</i>&nbsp;    	SubSystem parentSubSystem = getParentSubSystem(subsystem);</b>
+<b class="fc"><i>625</i>&nbsp;    	if(parentSubSystem != null)</b>
+<i>626</i>&nbsp;    	{
+<b class="fc"><i>627</i>&nbsp;    		related.add(parentSubSystem);</b>
+<b class="fc"><i>628</i>&nbsp;    		for(SubSystem sibling : parentSubSystem.getSubSystems())</b>
+<b class="fc"><i>629</i>&nbsp;    			if(!subsystem.equals(sibling))</b>
+<b class="fc"><i>630</i>&nbsp;    				related.add(sibling);</b>
+<i>631</i>&nbsp;    	}			
+<i>632</i>&nbsp;    	else
+<i>633</i>&nbsp;    	{
+<b class="fc"><i>634</i>&nbsp;    		for(SubSystem sibling : origin.getSubSystems())</b>
+<b class="fc"><i>635</i>&nbsp;    			if(!subsystem.equals(sibling))</b>
+<b class="fc"><i>636</i>&nbsp;    				related.add(sibling);</b>
+<i>637</i>&nbsp;    	}
+<i>638</i>&nbsp;    	
+<b class="fc"><i>639</i>&nbsp;    	return related;</b>
+<i>640</i>&nbsp;    }
+<i>641</i>&nbsp;    
+<i>642</i>&nbsp;    /**
+<i>643</i>&nbsp;     * Method to create a memento of this object
+<i>644</i>&nbsp;     * 
+<i>645</i>&nbsp;     * @return The memento of this object
+<i>646</i>&nbsp;     */
+<i>647</i>&nbsp;	@Override
+<i>648</i>&nbsp;	public ProjectServiceMemento createMemento() 
+<i>649</i>&nbsp;	{
+<b class="fc"><i>650</i>&nbsp;		return new ProjectServiceMemento(this);</b>
+<i>651</i>&nbsp;	}
+<i>652</i>&nbsp;	
+<i>653</i>&nbsp;	/**
+<i>654</i>&nbsp;	 * Method to restore this object given the memento
+<i>655</i>&nbsp;	 * 
+<i>656</i>&nbsp;	 * @param memento The memento to restore to
+<i>657</i>&nbsp;	 * 
+<i>658</i>&nbsp;	 * @throws IllegalArgumentException the memento is null
+<i>659</i>&nbsp;	 */
+<i>660</i>&nbsp;	@Override
+<i>661</i>&nbsp;	public void restoreMemento(ProjectServiceMemento memento)
+<i>662</i>&nbsp;    {
+<b class="fc"><i>663</i>&nbsp;		if(memento == null) throw new IllegalArgumentException(&quot;The memento cannot be null&quot;);</b>
+<i>664</i>&nbsp;		
+<b class="fc"><i>665</i>&nbsp;    	this.projectList = new ListWrapper&lt;&gt;(memento.getListProject());</b>
+<i>666</i>&nbsp;    	
+<b class="fc"><i>667</i>&nbsp;    	for(ProjectMemento projectMemento :	memento.getProjectMementos())</b>
+<b class="fc"><i>668</i>&nbsp;    		projectMemento.getOriginator().restoreMemento(projectMemento);</b>
+<i>669</i>&nbsp;    	
+<b class="fc"><i>670</i>&nbsp;    }</b>
+<i>671</i>&nbsp;
+<i>672</i>&nbsp;    //endregion
+<i>673</i>&nbsp;
+<i>674</i>&nbsp;    //region Innerclass Memento
+<i>675</i>&nbsp;
+<i>676</i>&nbsp;    /**
+<i>677</i>&nbsp;     * This class provides utility for saving the state of the system at a certain point in time
+<i>678</i>&nbsp;     * during execution of the Bug Trap software.
+<i>679</i>&nbsp;     *
+<i>680</i>&nbsp;     * The projectService memento saves the state of the following attributes of the projectService:
+<i>681</i>&nbsp;     * listProject.
+<i>682</i>&nbsp;     *
+<i>683</i>&nbsp;     * This class provides private methods to request the values of the saved fields.
+<i>684</i>&nbsp;     * This wide interface (private getters + public constructor) is provided to the class ProjectService,
+<i>685</i>&nbsp;     * while the narrow interface (public constructor) is provided to any class.
+<i>686</i>&nbsp;     */
+<b class="fc"><i>687</i>&nbsp;	public class ProjectServiceMemento extends Memento&lt;ProjectService&gt;</b>
+<i>688</i>&nbsp;	{
+<i>689</i>&nbsp;		private List&lt;Project&gt; listProject;
+<b class="fc"><i>690</i>&nbsp;		private List&lt;ProjectMemento&gt; projectMementos = new ArrayList&lt;&gt;();</b>
+<i>691</i>&nbsp;		
+<i>692</i>&nbsp;		/**
+<i>693</i>&nbsp;    	 * Constructor 
+<i>694</i>&nbsp;    	 * 
+<i>695</i>&nbsp;    	 * @param originator The originator to build a memento from
+<i>696</i>&nbsp;    	 * 
+<i>697</i>&nbsp;    	 * @throws IllegalArgumentException the originator is null
+<i>698</i>&nbsp;    	 */
+<i>699</i>&nbsp;		public ProjectServiceMemento(ProjectService originator)
+<b class="fc"><i>700</i>&nbsp;		{</b>
+<b class="fc"><i>701</i>&nbsp;			super(originator);</b>
+<b class="fc"><i>702</i>&nbsp;			listProject = new ArrayList&lt;&gt;(originator.getAllProjects());</b>
+<b class="fc"><i>703</i>&nbsp;			for(Project p : listProject)</b>
+<b class="fc"><i>704</i>&nbsp;				projectMementos.add(p.createMemento());</b>
+<b class="fc"><i>705</i>&nbsp;		}</b>
+<i>706</i>&nbsp;		
+<i>707</i>&nbsp;		/**
+<i>708</i>&nbsp;    	 * Returns the list project of the projectService memento
+<i>709</i>&nbsp;    	 * @return the list project of the projectService memento
+<i>710</i>&nbsp;    	 */
+<i>711</i>&nbsp;		private List&lt;Project&gt; getListProject()
+<i>712</i>&nbsp;		{
+<b class="fc"><i>713</i>&nbsp;			return listProject;</b>
+<i>714</i>&nbsp;		}
+<i>715</i>&nbsp;		
+<i>716</i>&nbsp;		/**
+<i>717</i>&nbsp;		 * Returns the list of project mementos.
+<i>718</i>&nbsp;		 * @return the list of project mementos.
+<i>719</i>&nbsp;		 */
+<i>720</i>&nbsp;		private List&lt;ProjectMemento&gt; getProjectMementos()
+<i>721</i>&nbsp;		{
+<b class="fc"><i>722</i>&nbsp;			return projectMementos;</b>
+<i>723</i>&nbsp;		}
+<i>724</i>&nbsp;	}
+<i>725</i>&nbsp;
+<i>726</i>&nbsp;    //endregion
+<i>727</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

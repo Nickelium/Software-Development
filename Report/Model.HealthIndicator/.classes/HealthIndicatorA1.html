@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: HealthIndicatorA1</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.HealthIndicator</a> ]
+</div>
+
+<h1>Coverage Summary for Class: HealthIndicatorA1 (Model.HealthIndicator)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HealthIndicatorA1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (20/ 25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.HealthIndicator;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * Class representing the first health indicator algorithm.
+<i>5</i>&nbsp; */
+<b class="fc"><i>6</i>&nbsp;public class HealthIndicatorA1 implements IHealthIndicatorAlgorithm {</b>
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;    /**
+<i>9</i>&nbsp;     * Method to apply the health indicator algorithm.
+<i>10</i>&nbsp;     * Returns the appropriate health indicator value.
+<i>11</i>&nbsp;     *
+<i>12</i>&nbsp;     * @param object The object of which the health indicator should be calculated.
+<i>13</i>&nbsp;     * @return the appropriate health indicator value
+<i>14</i>&nbsp;     */
+<i>15</i>&nbsp;    @Override
+<i>16</i>&nbsp;    public HealthIndicator get(IHealthIndicator object) {
+<b class="fc"><i>17</i>&nbsp;        HealthIndicator compHealth = getHealthIndicatorComponentsHealth(object);</b>
+<b class="fc"><i>18</i>&nbsp;        HealthIndicator impactHealth = getBugImpactContainerHealth(object);</b>
+<i>19</i>&nbsp;
+<b class="fc"><i>20</i>&nbsp;        if (compHealth.compareTo(impactHealth) == -1) {</b>
+<b class="fc"><i>21</i>&nbsp;            return compHealth;</b>
+<i>22</i>&nbsp;        } else {
+<b class="fc"><i>23</i>&nbsp;            return impactHealth;</b>
+<i>24</i>&nbsp;        }
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Method to get which health value is the lowest of a list of health indicator components.
+<i>30</i>&nbsp;     *
+<i>31</i>&nbsp;     * @param object The object of which the health indicator should be calculated.
+<i>32</i>&nbsp;     * @return the health indicator with the lowest value
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;    private HealthIndicator getHealthIndicatorComponentsHealth(IHealthIndicator object) {
+<b class="fc"><i>35</i>&nbsp;        HealthIndicator minHealthValue = HealthIndicator.HEALTHY;</b>
+<b class="fc"><i>36</i>&nbsp;        for (IHealthIndicator obj : object.getDirectHealthIndicatorComponents()) {</b>
+<b class="fc"><i>37</i>&nbsp;            HealthIndicator healthValue = this.get(obj);</b>
+<b class="fc"><i>38</i>&nbsp;            if (healthValue.compareTo(minHealthValue) == -1) {</b>
+<b class="fc"><i>39</i>&nbsp;                minHealthValue = healthValue;</b>
+<i>40</i>&nbsp;            }
+<b class="fc"><i>41</i>&nbsp;        }</b>
+<i>42</i>&nbsp;        //Return the health of the minimum health value.
+<b class="fc"><i>43</i>&nbsp;        return minHealthValue;</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    /**
+<i>47</i>&nbsp;     * Method implementing the metrics of a specific algorithm.
+<i>48</i>&nbsp;     * The impact of a bug is deciding for the kind of health indicator being returned.
+<i>49</i>&nbsp;     *
+<i>50</i>&nbsp;     * Healthy All direct components3 are Healthy and
+<i>51</i>&nbsp;     * if S is a subsystem, then BugImpact(S) &lt; 50
+<i>52</i>&nbsp;     *
+<i>53</i>&nbsp;     * Satisfactory All direct components are Satisfactory or higher and
+<i>54</i>&nbsp;     * if S is a subsystem, then BugImpact(S) &lt; 100
+<i>55</i>&nbsp;     *
+<i>56</i>&nbsp;     * Stable All direct components are Stable or higher and
+<i>57</i>&nbsp;     * if S is a subsystem, then BugImpact(S) &lt; 500
+<i>58</i>&nbsp;     *
+<i>59</i>&nbsp;     * Serious All direct components are Serious or higher and
+<i>60</i>&nbsp;     * if S is a subsystem, then BugImpact(S) &lt; 1000
+<i>61</i>&nbsp;     *
+<i>62</i>&nbsp;     * Critical Otherwise
+<i>63</i>&nbsp;     *
+<i>64</i>&nbsp;     * @param object the object for which a bug impact is being calculated,
+<i>65</i>&nbsp;     *               usually a subsystem.
+<i>66</i>&nbsp;     * @return the applicable health indicator value for the given object
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    private HealthIndicator getBugImpactContainerHealth(IHealthIndicator object) {
+<b class="fc"><i>69</i>&nbsp;        double impact = 0.0;</b>
+<i>70</i>&nbsp;
+<b class="fc"><i>71</i>&nbsp;        if (object instanceof IHealthIndicatorAndBugImpact) {</b>
+<b class="fc"><i>72</i>&nbsp;            impact = ((IHealthIndicatorAndBugImpact) object).getBugImpact();</b>
+<i>73</i>&nbsp;        }
+<i>74</i>&nbsp;
+<b class="fc"><i>75</i>&nbsp;        if (impact &lt; 50) {</b>
+<b class="fc"><i>76</i>&nbsp;            return HealthIndicator.HEALTHY;</b>
+<i>77</i>&nbsp;        }
+<b class="fc"><i>78</i>&nbsp;        if (impact &lt; 100) {</b>
+<b class="fc"><i>79</i>&nbsp;            return HealthIndicator.SATISFACTORY;</b>
+<i>80</i>&nbsp;        }
+<b class="nc"><i>81</i>&nbsp;        if (impact &lt; 500) {</b>
+<b class="nc"><i>82</i>&nbsp;            return HealthIndicator.STABLE;</b>
+<i>83</i>&nbsp;        }
+<b class="nc"><i>84</i>&nbsp;        if (impact &lt; 1000) {</b>
+<b class="nc"><i>85</i>&nbsp;            return HealthIndicator.SERIOUS;</b>
+<i>86</i>&nbsp;        } else {
+<b class="nc"><i>87</i>&nbsp;            return HealthIndicator.CRITICAL;</b>
+<i>88</i>&nbsp;        }
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SearchOnFiled</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport.SearchMethod</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SearchOnFiled (Model.BugReport.SearchMethod)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SearchOnFiled</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport.SearchMethod;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Model.BugReport.BugReport;
+<i>4</i>&nbsp;import Model.BugReport.BugReportService;
+<i>5</i>&nbsp;import Model.BugReport.Search;
+<i>6</i>&nbsp;import Model.User.User;
+<i>7</i>&nbsp;import Model.Wrapper.IListWrapper;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.Collections;
+<i>10</i>&nbsp;import java.util.List;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Class extending the search class, providing functionality for searching bug reports
+<i>14</i>&nbsp; * filed by a specific user. The user is passed on to the class through the constructor.
+<i>15</i>&nbsp; */
+<i>16</i>&nbsp;public class SearchOnFiled extends Search
+<i>17</i>&nbsp;{
+<i>18</i>&nbsp;	private User user;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;	/**
+<i>21</i>&nbsp;	 * Constructor to create a new Search On Filed object.
+<i>22</i>&nbsp;	 *
+<i>23</i>&nbsp;	 * @param user the user requesting the search
+<i>24</i>&nbsp;	 *
+<i>25</i>&nbsp;	 * @throws IllegalArgumentException User is null.
+<i>26</i>&nbsp;	 */
+<i>27</i>&nbsp;	public SearchOnFiled(User user)
+<b class="fc"><i>28</i>&nbsp;	{</b>
+<b class="fc"><i>29</i>&nbsp;		if (user == null) throw new IllegalArgumentException(&quot;User is null&quot;);</b>
+<b class="fc"><i>30</i>&nbsp;		this.user = user;</b>
+<b class="fc"><i>31</i>&nbsp;	}</b>
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;	/**
+<i>34</i>&nbsp;	 * Method to execute the search command. Method returns a list of all bug reports
+<i>35</i>&nbsp;	 * that meet the search requirements.
+<i>36</i>&nbsp;	 *
+<i>37</i>&nbsp;	 * @param bugReportService the bug report service, requesting the search
+<i>38</i>&nbsp;	 * @param user the user requesting the search
+<i>39</i>&nbsp;	 * 
+<i>40</i>&nbsp;	 * @return an unmodifiable list of all bug reports that meet the search requirements.
+<i>41</i>&nbsp;	 *
+<i>42</i>&nbsp;	 * @throws IllegalArgumentException Bugreportservice or user is null.
+<i>43</i>&nbsp;	 */
+<i>44</i>&nbsp;	@Override
+<i>45</i>&nbsp;	protected List&lt;BugReport&gt; apply(BugReportService bugReportService, User user)
+<i>46</i>&nbsp;	{
+<b class="fc"><i>47</i>&nbsp;		if (bugReportService == null) throw new IllegalArgumentException(&quot;Bugreportservice is null&quot;);</b>
+<b class="fc"><i>48</i>&nbsp;		if (user == null) throw new IllegalArgumentException(&quot;User is null&quot;);</b>
+<b class="fc"><i>49</i>&nbsp;		IListWrapper&lt;BugReport&gt; bugReportList = getAllBugReportsWrapped(bugReportService, user);</b>
+<i>50</i>&nbsp;
+<b class="fc"><i>51</i>&nbsp;		List&lt;BugReport&gt; bugReports = bugReportList.getAllMatching(x -&gt; x.getCreator().equals(this.user));</b>
+<b class="fc"><i>52</i>&nbsp;		return Collections.unmodifiableList(bugReports);</b>
+<i>53</i>&nbsp;		
+<i>54</i>&nbsp;	}
+<i>55</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>
