@@ -1,0 +1,190 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MergeSubSystem</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Controller.UserController.UseCases.AdminUseCases</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MergeSubSystem (Controller.UserController.UseCases.AdminUseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MergeSubSystem</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (32/ 32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Controller.UserController.UseCases.AdminUseCases;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.Formatter;
+<i>4</i>&nbsp;import Controller.IUI;
+<i>5</i>&nbsp;import Controller.UserController.UseCases.UseCase;
+<i>6</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>7</i>&nbsp;import Model.BugReport.BugReportService;
+<i>8</i>&nbsp;import Model.Project.Project;
+<i>9</i>&nbsp;import Model.Project.ProjectService;
+<i>10</i>&nbsp;import Model.Project.SubSystem;
+<i>11</i>&nbsp;import Model.User.User;
+<i>12</i>&nbsp;import Model.User.UserService;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import java.util.List;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;/**
+<i>17</i>&nbsp; * Class extending the use case class, representing a merge use case.
+<i>18</i>&nbsp; */
+<i>19</i>&nbsp;public class MergeSubSystem extends UseCase {
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public MergeSubSystem(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, User currentUser) {
+<b class="fc"><i>22</i>&nbsp;        super(ui, userService, projectService, bugReportService, currentUser);</b>
+<b class="fc"><i>23</i>&nbsp;        changeSystem = true;</b>
+<b class="fc"><i>24</i>&nbsp;    }</b>
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /**
+<i>27</i>&nbsp;     *
+<i>28</i>&nbsp;     * Lets an administrator merge subsystems.
+<i>29</i>&nbsp;     *
+<i>30</i>&nbsp;	 * 2. The system shows a list of projects.
+<i>31</i>&nbsp;	 * 3. The administrator selects a project.
+<i>32</i>&nbsp;	 * 4. The system shows a list of subsystems of the selected project.
+<i>33</i>&nbsp;	 * 5. The administrator selects a first subsystem.
+<i>34</i>&nbsp;	 * 6. The system shows a list of subsystems compatible with the first one.
+<i>35</i>&nbsp;	 *	 	A compatible subsystem is a child, a parent or a sibling of the first
+<i>36</i>&nbsp;	 * 		selected subsystem in the tree of subsystems of the selected project.
+<i>37</i>&nbsp;	 * 7. The administrator selects a second subsystem.
+<i>38</i>&nbsp;	 * 8. The system asks for a name and description for the new subsystem.
+<i>39</i>&nbsp;	 * 9. The administrator enters a name and description.
+<i>40</i>&nbsp;	 * 10. The system creates a new subsystem with the lowest milestone of the
+<i>41</i>&nbsp;	 * 		two original subsystems. The bug reports and subsystems that are part
+<i>42</i>&nbsp;	 *		of the original two subsystems are migrated to the new subsystem. The
+<i>43</i>&nbsp;	 * 		two original subsystems are removed.
+<i>44</i>&nbsp;     *
+<i>45</i>&nbsp;     * @throws ReportErrorToUserException
+<i>46</i>&nbsp;     *          in case that the method encounters invalid input
+<i>47</i>&nbsp;     * @throws IndexOutOfBoundsException
+<i>48</i>&nbsp;     *		   thrown when a user puts an incorrect option index.
+<i>49</i>&nbsp;     *
+<i>50</i>&nbsp;     */
+<i>51</i>&nbsp;    @Override
+<i>52</i>&nbsp;    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;        // Step 2
+<b class="fc"><i>55</i>&nbsp;        getUi().display(&quot;List of all projects:&quot;);</b>
+<b class="fc"><i>56</i>&nbsp;        List&lt;Project&gt; projectList = getProjectService().getAllProjects();</b>
+<b class="fc"><i>57</i>&nbsp;        String parsedProjectList = Formatter.formatProjectList(projectList);</b>
+<b class="fc"><i>58</i>&nbsp;        getUi().display(parsedProjectList);</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;        // Step 3
+<b class="fc"><i>61</i>&nbsp;        int indexP = getUi().readInt();</b>
+<b class="fc"><i>62</i>&nbsp;        Project project = projectList.get(indexP);</b>
+<i>63</i>&nbsp;        
+<i>64</i>&nbsp;        // Step 4
+<b class="fc"><i>65</i>&nbsp;        getUi().display(&quot;List of all subsystems of this project:&quot;);</b>
+<b class="fc"><i>66</i>&nbsp;        List&lt;SubSystem&gt; subSystemList = project.getAllSubSystems();</b>
+<b class="fc"><i>67</i>&nbsp;        String parsedSubSystemList = Formatter.formatSubSystemList(subSystemList);</b>
+<b class="fc"><i>68</i>&nbsp;        getUi().display(parsedSubSystemList);</b>
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;        // Step 5
+<b class="fc"><i>71</i>&nbsp;        int indexS = getUi().readInt();</b>
+<b class="fc"><i>72</i>&nbsp;        SubSystem subSystem = subSystemList.get(indexS);</b>
+<i>73</i>&nbsp;        
+<i>74</i>&nbsp;        // Step 6
+<b class="fc"><i>75</i>&nbsp;        getUi().display(&quot;List of all compatible subsystems of the subsystem:&quot;);</b>
+<b class="fc"><i>76</i>&nbsp;        List&lt;SubSystem&gt; related = getProjectService().getRelated(project, subSystem);</b>
+<b class="fc"><i>77</i>&nbsp;        String parsedRelatedList = Formatter.formatSubSystemList(related);</b>
+<b class="fc"><i>78</i>&nbsp;        getUi().display(parsedRelatedList);</b>
+<i>79</i>&nbsp;        
+<i>80</i>&nbsp;        // Step 7
+<b class="fc"><i>81</i>&nbsp;        int indexRelated = getUi().readInt();</b>
+<b class="fc"><i>82</i>&nbsp;        SubSystem relatedSubSystem = related.get(indexRelated);</b>
+<i>83</i>&nbsp;        
+<i>84</i>&nbsp;        // Step 8 + 9
+<b class="fc"><i>85</i>&nbsp;        getUi().display(&quot;Please enter the new subsystem informations.&quot;);</b>
+<b class="fc"><i>86</i>&nbsp;        getUi().display(&quot;Name:&quot;);</b>
+<b class="fc"><i>87</i>&nbsp;        String name = getUi().readString();</b>
+<b class="fc"><i>88</i>&nbsp;        if(!subSystem.isValidName(name)) throw new ReportErrorToUserException(&quot;The given name is invalid.&quot;);</b>
+<i>89</i>&nbsp;        
+<b class="fc"><i>90</i>&nbsp;        getUi().display(&quot;Description:&quot;);</b>
+<b class="fc"><i>91</i>&nbsp;        String description = getUi().readString();</b>
+<b class="fc"><i>92</i>&nbsp;        if(!subSystem.isValidDescription(description)) throw new ReportErrorToUserException(&quot;The description is invalid.&quot;);</b>
+<i>93</i>&nbsp;      
+<i>94</i>&nbsp;        // Step 10
+<i>95</i>&nbsp;       
+<b class="fc"><i>96</i>&nbsp;    	getProjectService().merge(project, subSystem, relatedSubSystem, name, description);</b>
+<i>97</i>&nbsp;        
+<b class="fc"><i>98</i>&nbsp;        getUi().display(&quot;Merge completed !\n&quot;);</b>
+<i>99</i>&nbsp;        
+<b class="fc"><i>100</i>&nbsp;    }</b>
+<i>101</i>&nbsp;    
+<i>102</i>&nbsp;    @Override
+<i>103</i>&nbsp;	public String toString()
+<i>104</i>&nbsp;	{
+<b class="fc"><i>105</i>&nbsp;		return &quot;Merge Subsystem&quot;;</b>
+<i>106</i>&nbsp;	}
+<i>107</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

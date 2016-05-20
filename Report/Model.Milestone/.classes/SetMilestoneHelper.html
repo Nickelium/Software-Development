@@ -1,0 +1,232 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SetMilestoneHelper</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Milestone</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SetMilestoneHelper (Model.Milestone)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SetMilestoneHelper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84%
+  </span>
+  <span class="absValue">
+    (42/ 50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Milestone;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>4</i>&nbsp;import Model.BugReport.BugReport;
+<i>5</i>&nbsp;import Model.Project.SubSystem;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;import java.util.stream.Collectors;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; * Helper class for setting the milestones in project and subsystem. To avoid duplicate code.
+<i>13</i>&nbsp; */
+<b class="nc"><i>14</i>&nbsp;public abstract class SetMilestoneHelper {</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    /**
+<i>17</i>&nbsp;     * Check that the give milestone does not exceed the milestones of the subsystems.
+<i>18</i>&nbsp;     *
+<i>19</i>&nbsp;     * @param cont The class containing the milestones.
+<i>20</i>&nbsp;     * @param ms   The new milestone.
+<i>21</i>&nbsp;     * @return True if the given milestone does not exceed the milestones of the subsystems.
+<i>22</i>&nbsp;     *
+<i>23</i>&nbsp;     * @throws IllegalArgumentException is thrown if milestone container or milestone is null.
+<i>24</i>&nbsp;     */
+<i>25</i>&nbsp;    public static boolean milestoneDoesNotExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms)
+<i>26</i>&nbsp;    {
+<b class="fc"><i>27</i>&nbsp;        if (cont == null) throw new IllegalArgumentException(&quot;MilestoneContainer is null&quot;);</b>
+<b class="fc"><i>28</i>&nbsp;        if (ms == null) throw new IllegalArgumentException(&quot;Milestone is null&quot;);</b>
+<i>29</i>&nbsp;        
+<i>30</i>&nbsp;        Milestone minimalSubsystemMS;
+<i>31</i>&nbsp;		try
+<i>32</i>&nbsp;		{
+<b class="fc"><i>33</i>&nbsp;			minimalSubsystemMS = new Milestone(&quot;M&quot; + Integer.MAX_VALUE);</b>
+<i>34</i>&nbsp;		}
+<b class="nc"><i>35</i>&nbsp;		catch (ReportErrorToUserException e)</b>
+<i>36</i>&nbsp;		{
+<b class="nc"><i>37</i>&nbsp;			throw new AssertionError(e.getMessage() + &quot; : fail to build maxvalue milestone&quot;);</b>
+<b class="fc"><i>38</i>&nbsp;		}</b>
+<i>39</i>&nbsp;		
+<b class="fc"><i>40</i>&nbsp;        List&lt;Milestone&gt; milestones = new ArrayList&lt;&gt;();</b>
+<i>41</i>&nbsp;
+<b class="fc"><i>42</i>&nbsp;        for (SubSystem subSystem : cont.getAllSubSystems()) {</b>
+<b class="fc"><i>43</i>&nbsp;            milestones.addAll(subSystem.getCurrentSubsystemMilestones());</b>
+<b class="fc"><i>44</i>&nbsp;        }</b>
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;        if (milestones.isEmpty()) return true;</b>
+<i>47</i>&nbsp;
+<b class="fc"><i>48</i>&nbsp;        for (Milestone milestone : milestones) {</b>
+<b class="fc"><i>49</i>&nbsp;            if (milestone.compareTo(minimalSubsystemMS) &lt; 0) {</b>
+<b class="fc"><i>50</i>&nbsp;                minimalSubsystemMS = milestone;</b>
+<i>51</i>&nbsp;            }
+<b class="fc"><i>52</i>&nbsp;        }</b>
+<i>53</i>&nbsp;
+<b class="fc"><i>54</i>&nbsp;        if(ms.compareTo(minimalSubsystemMS) &gt; 0)</b>
+<b class="fc"><i>55</i>&nbsp;            return false;</b>
+<i>56</i>&nbsp;        else
+<b class="fc"><i>57</i>&nbsp;            return true; // new ms is &lt;= the highest allowed milestone</b>
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    /**
+<i>61</i>&nbsp;     * Check that the given milestone does exceed the milestones of the subsystems.
+<i>62</i>&nbsp;     *
+<i>63</i>&nbsp;     * @param cont The class containing the milestones.
+<i>64</i>&nbsp;     * @param ms   The new milestone.
+<i>65</i>&nbsp;     * @return True if the given milestone does exceed the milestones of the subsystems.
+<i>66</i>&nbsp;     *
+<i>67</i>&nbsp;     * @throws IllegalArgumentException MilestoneContainer or milestone is null.
+<i>68</i>&nbsp;     */
+<i>69</i>&nbsp;    public static boolean milestoneDoesExceedSubsystemMilestone(MilestoneContainer cont, Milestone ms) 
+<i>70</i>&nbsp;    {
+<b class="fc"><i>71</i>&nbsp;        if (cont == null) throw new IllegalArgumentException(&quot;MilestoneContainer is null&quot;);</b>
+<b class="fc"><i>72</i>&nbsp;        if (ms == null) throw new IllegalArgumentException(&quot;Milestone is null&quot;);</b>
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;        Milestone minimalSubsystemMS;
+<i>75</i>&nbsp;    	try
+<i>76</i>&nbsp;    	{
+<b class="fc"><i>77</i>&nbsp;    		minimalSubsystemMS = new Milestone(&quot;M&quot; + Integer.MAX_VALUE);</b>
+<i>78</i>&nbsp;    	}
+<b class="nc"><i>79</i>&nbsp;    	catch (ReportErrorToUserException e)</b>
+<i>80</i>&nbsp;    	{
+<b class="nc"><i>81</i>&nbsp;    		throw new AssertionError(e.getMessage() + &quot; : fail to build maxvalue milestone&quot;);</b>
+<b class="fc"><i>82</i>&nbsp;    	}</b>
+<i>83</i>&nbsp;        
+<b class="fc"><i>84</i>&nbsp;    	List&lt;Milestone&gt; milestones = cont.getAllMilestones();</b>
+<i>85</i>&nbsp;
+<b class="fc"><i>86</i>&nbsp;        if (milestones.isEmpty()) return true;</b>
+<i>87</i>&nbsp;
+<b class="fc"><i>88</i>&nbsp;        for (Milestone milestone : milestones) {</b>
+<b class="fc"><i>89</i>&nbsp;            if (milestone.compareTo(minimalSubsystemMS) &lt; 0) {</b>
+<i>90</i>&nbsp;                // milestone is smaller than the smallest subsystem milestone up to now
+<b class="fc"><i>91</i>&nbsp;                minimalSubsystemMS = milestone;</b>
+<i>92</i>&nbsp;            }
+<b class="fc"><i>93</i>&nbsp;        }</b>
+<i>94</i>&nbsp;
+<b class="fc"><i>95</i>&nbsp;        if(ms.compareTo(minimalSubsystemMS) &gt; 0)</b>
+<b class="fc"><i>96</i>&nbsp;            return true;</b>
+<i>97</i>&nbsp;        else
+<b class="fc"><i>98</i>&nbsp;            return false; // new ms is &gt;= the highest milestone of any subsystem</b>
+<i>99</i>&nbsp;    }
+<i>100</i>&nbsp;
+<i>101</i>&nbsp;    /**
+<i>102</i>&nbsp;     * Check that the given milestone is bigger than the latest milestone.
+<i>103</i>&nbsp;     *
+<i>104</i>&nbsp;     * @param cont The class containing the milestone.
+<i>105</i>&nbsp;     * @param ms   The milestone to assign to the class.
+<i>106</i>&nbsp;     * @return True if the given milestone is bigger than the current milestone.
+<i>107</i>&nbsp;     */
+<i>108</i>&nbsp;    public static boolean mileStoneIsBiggerThanCurrent(MilestoneContainer cont, Milestone ms) {
+<b class="fc"><i>109</i>&nbsp;        return ms.compareTo(cont.getLatestAchievedMilestone()) &gt; 0;</b>
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    /**
+<i>113</i>&nbsp;     * Check that the given milestone does not exceed the milestones of the bug reports.
+<i>114</i>&nbsp;     *
+<i>115</i>&nbsp;     * @param cont The class containing the milestones.
+<i>116</i>&nbsp;     * @param ms   The new milestone.
+<i>117</i>&nbsp;     * @return True if the given milestone does not exceed the milestones of the bug reports.
+<i>118</i>&nbsp;     *
+<i>119</i>&nbsp;     * @throws IllegalArgumentException Milestonecontainer or milestone is null.
+<i>120</i>&nbsp;     */
+<i>121</i>&nbsp;    public static boolean milestoneDoesNotExceedBugReportMilestone(MilestoneContainer cont, Milestone ms)  
+<i>122</i>&nbsp;    {
+<b class="fc"><i>123</i>&nbsp;        if (cont == null) throw new IllegalArgumentException(&quot;MilestoneContainer is null&quot;);</b>
+<b class="fc"><i>124</i>&nbsp;        if (ms == null) throw new IllegalArgumentException(&quot;Milestone is null&quot;);</b>
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;        Milestone minimalTargetMS;
+<i>127</i>&nbsp;    	try
+<i>128</i>&nbsp;    	{
+<b class="fc"><i>129</i>&nbsp;    		minimalTargetMS = new Milestone(&quot;M&quot; + Integer.MAX_VALUE);</b>
+<i>130</i>&nbsp;    	}
+<b class="nc"><i>131</i>&nbsp;    	catch (ReportErrorToUserException e)</b>
+<i>132</i>&nbsp;    	{
+<b class="nc"><i>133</i>&nbsp;    		throw new AssertionError(e.getMessage() + &quot; : fail to build maxvalue milestone&quot;);</b>
+<b class="fc"><i>134</i>&nbsp;    	}</b>
+<b class="fc"><i>135</i>&nbsp;        List&lt;BugReport&gt; bugReports = cont.getAllBugReports().stream().filter(x -&gt; !x.getTag().isFinal() &amp;&amp; x.getTargetMilestone() != null).collect(Collectors.toList());</b>
+<i>136</i>&nbsp;
+<b class="fc"><i>137</i>&nbsp;        if (bugReports.isEmpty()) return true;</b>
+<b class="fc"><i>138</i>&nbsp;        for (BugReport br : bugReports) {</b>
+<b class="fc"><i>139</i>&nbsp;            if (br.getTargetMilestone().compareTo(minimalTargetMS) &lt; 0) {</b>
+<b class="fc"><i>140</i>&nbsp;                minimalTargetMS = br.getTargetMilestone();</b>
+<i>141</i>&nbsp;            }
+<b class="fc"><i>142</i>&nbsp;        }</b>
+<i>143</i>&nbsp;
+<b class="fc"><i>144</i>&nbsp;        if(ms.compareTo(minimalTargetMS) &gt; 0)</b>
+<b class="fc"><i>145</i>&nbsp;            return false;</b>
+<i>146</i>&nbsp;        else
+<b class="nc"><i>147</i>&nbsp;            return true; // new ms is &lt;= the highest allowed milestone</b>
+<i>148</i>&nbsp;    }
+<i>149</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,172 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Test</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Test (Model.BugReport)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Test</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/ 16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Model.User.User;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * This class denotes a test object.
+<i>7</i>&nbsp; *
+<i>8</i>&nbsp; * A test is a piece of code that triggers a bug. Projects tracked by BugTrap
+<i>9</i>&nbsp; * can be implemented in different programming languages and to have maximal
+<i>10</i>&nbsp; * flexibility, tests are represented as text.
+<i>11</i>&nbsp; *
+<i>12</i>&nbsp; * The test text data are represented by the &#39;value&#39; field.
+<i>13</i>&nbsp; */
+<i>14</i>&nbsp;public class Test {
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    private String value;
+<i>17</i>&nbsp;    private int lines;
+<i>18</i>&nbsp;    private User creator;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /**
+<i>21</i>&nbsp;     * Constructor to create a Test object.
+<i>22</i>&nbsp;     *
+<i>23</i>&nbsp;     * @param value the content of the new test
+<i>24</i>&nbsp;     * @param user The creator of the test
+<i>25</i>&nbsp;     */
+<b class="fc"><i>26</i>&nbsp;    Test(String value, User user) {</b>
+<b class="fc"><i>27</i>&nbsp;        this.setValue(value);</b>
+<b class="fc"><i>28</i>&nbsp;        this.setCreator(user);</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Method to set a new value for a specific test.
+<i>33</i>&nbsp;     * @param value the new value to be set
+<i>34</i>&nbsp;     * @throws IllegalArgumentException Value is null.
+<i>35</i>&nbsp;     */
+<i>36</i>&nbsp;    private void setValue(String value) {
+<b class="fc"><i>37</i>&nbsp;        if (value == null) throw new IllegalArgumentException(&quot;Value is null&quot;);</b>
+<b class="fc"><i>38</i>&nbsp;        this.value = value;</b>
+<b class="fc"><i>39</i>&nbsp;        setLines();</b>
+<b class="fc"><i>40</i>&nbsp;    }</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    /**
+<i>43</i>&nbsp;     * Returns the value of the test object.
+<i>44</i>&nbsp;     * @return the value of the test object
+<i>45</i>&nbsp;     */
+<i>46</i>&nbsp;    public String getValue() {
+<b class="fc"><i>47</i>&nbsp;        return this.value;</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    /**
+<i>51</i>&nbsp;     * Method to calculate and set the amount of lines the test has.
+<i>52</i>&nbsp;     */
+<i>53</i>&nbsp;    private void setLines() {
+<b class="fc"><i>54</i>&nbsp;        lines = value.length() - value.replaceAll(&quot;\\n&quot;, &quot;&quot;).length() + 1;</b>
+<b class="fc"><i>55</i>&nbsp;    }</b>
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    /**
+<i>58</i>&nbsp;     * Method to return the amount of lines in the test.
+<i>59</i>&nbsp;     * @return the amount of lines in a test
+<i>60</i>&nbsp;     */
+<i>61</i>&nbsp;    public int getLines() {
+<b class="fc"><i>62</i>&nbsp;        return lines;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    /**
+<i>66</i>&nbsp;     * Method to return the creator of the test.
+<i>67</i>&nbsp;     * @return the creator of the test
+<i>68</i>&nbsp;     */
+<i>69</i>&nbsp;    public User getCreator() {
+<b class="fc"><i>70</i>&nbsp;        return creator;</b>
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    /**
+<i>74</i>&nbsp;     * Method to set the creator of the test.
+<i>75</i>&nbsp;     * @param creator the user which has created the test
+<i>76</i>&nbsp;     */
+<i>77</i>&nbsp;    private void setCreator(User creator) {
+<b class="fc"><i>78</i>&nbsp;        this.creator = creator;</b>
+<b class="fc"><i>79</i>&nbsp;    }</b>
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    /**
+<i>82</i>&nbsp;     * Returns a textual representation of the value of the test object
+<i>83</i>&nbsp;     * @return a textual representation of the value of the test object
+<i>84</i>&nbsp;     */
+<i>85</i>&nbsp;    public String toString() {
+<b class="fc"><i>86</i>&nbsp;        return this.getValue();</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Leadership</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport.PerformanceMetrics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Leadership (Model.BugReport.PerformanceMetrics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Leadership</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,1%
+  </span>
+  <span class="absValue">
+    (16/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport.PerformanceMetrics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Model.BugReport.BugReportService;
+<i>4</i>&nbsp;import Model.HealthIndicator.HealthIndicatorA1;
+<i>5</i>&nbsp;import Model.HealthIndicator.HealthIndicatorA2;
+<i>6</i>&nbsp;import Model.HealthIndicator.HealthIndicatorA3;
+<i>7</i>&nbsp;import Model.Project.Project;
+<i>8</i>&nbsp;import Model.Project.ProjectService;
+<i>9</i>&nbsp;import Model.User.Developer;
+<i>10</i>&nbsp;import Model.User.User;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Class extending the performance metrics class, representing a leadership metric.
+<i>14</i>&nbsp; *
+<i>15</i>&nbsp; * A developer&#39;s leadership skill is measured by the health indicator
+<i>16</i>&nbsp; * of every project in which the developer is lead.
+<i>17</i>&nbsp; */
+<i>18</i>&nbsp;public class Leadership extends PerformanceMetrics {
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    private ProjectService projectService;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Package visible constructor to create a new Leadership object.
+<i>24</i>&nbsp;     *
+<i>25</i>&nbsp;     * @param bugReportService the bug report service needed to gather
+<i>26</i>&nbsp;     *                         information about the health indicators.
+<i>27</i>&nbsp;     * @param projectService the projectService to get the projects
+<i>28</i>&nbsp;     */
+<i>29</i>&nbsp;    Leadership(BugReportService bugReportService, ProjectService projectService) {
+<b class="fc"><i>30</i>&nbsp;        super(bugReportService);</b>
+<b class="fc"><i>31</i>&nbsp;        setProjectService(projectService);</b>
+<b class="fc"><i>32</i>&nbsp;    }</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    /**
+<i>35</i>&nbsp;     * Method returning a metrics component, containing all required information for the
+<i>36</i>&nbsp;     * leadership metric. Method looks up the information, and adds the multi value information
+<i>37</i>&nbsp;     * holders to the information array.
+<i>38</i>&nbsp;     *
+<i>39</i>&nbsp;     * @param user the developer of who the performance metrics have to be looked up.
+<i>40</i>&nbsp;     * @return a metrics component containing all needed information (health indicators)
+<i>41</i>&nbsp;     * @throws IllegalArgumentException is thrown if the user in the argument is not a developer.
+<i>42</i>&nbsp;     */
+<i>43</i>&nbsp;    @Override
+<i>44</i>&nbsp;    MetricsComponent construct(User user) throws IllegalArgumentException {
+<b class="fc"><i>45</i>&nbsp;        if (!(user instanceof Developer))</b>
+<b class="nc"><i>46</i>&nbsp;            throw new IllegalArgumentException(&quot;This user doesn&#39;t have performance metrics.&quot;);</b>
+<i>47</i>&nbsp;
+<b class="fc"><i>48</i>&nbsp;        MetricsComponent metricsComponent = new MetricsComponent(&quot;Leadership&quot;);</b>
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;        for (Project project : getProjectService().getProjectsOfLeadRole((Developer) user)) {</b>
+<b class="fc"><i>51</i>&nbsp;            InformationHolderMultiValue holder = new InformationHolderMultiValue(project.getName());</b>
+<b class="fc"><i>52</i>&nbsp;            holder.addValue(new InformationHolderString(&quot;Health Indicator Algorithm 1&quot;, new HealthIndicatorA1().get(project).toString()));</b>
+<b class="fc"><i>53</i>&nbsp;            holder.addValue(new InformationHolderString(&quot;Health Indicator Algorithm 2&quot;, new HealthIndicatorA2().get(project).toString()));</b>
+<b class="fc"><i>54</i>&nbsp;            holder.addValue(new InformationHolderString(&quot;Health Indicator Algorithm 3&quot;, new HealthIndicatorA3().get(project).toString()));</b>
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;            metricsComponent.addInformation(holder);</b>
+<b class="fc"><i>57</i>&nbsp;        }</b>
+<i>58</i>&nbsp;
+<b class="fc"><i>59</i>&nbsp;        return metricsComponent;</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    private ProjectService getProjectService() {
+<b class="fc"><i>63</i>&nbsp;        return projectService;</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    private void setProjectService(ProjectService projectService) {
+<b class="fc"><i>67</i>&nbsp;        this.projectService = projectService;</b>
+<b class="fc"><i>68</i>&nbsp;    }</b>
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

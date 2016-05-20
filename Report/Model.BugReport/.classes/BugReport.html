@@ -1,0 +1,940 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BugReport</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BugReport (Model.BugReport)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BugReport</td>
+<td class="coverageStat">
+  <span class="percent">
+    98%
+  </span>
+  <span class="absValue">
+    (49/ 50)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98,1%
+  </span>
+  <span class="absValue">
+    (156/ 159)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BugReport$BugReportMemento</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/ 16)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    98,3%
+  </span>
+  <span class="absValue">
+    (57/ 58)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    98,3%
+  </span>
+  <span class="absValue">
+    (172/ 175)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>4</i>&nbsp;import Model.BugReport.TagTypes.New;
+<i>5</i>&nbsp;import Model.Mail.Observer;
+<i>6</i>&nbsp;import Model.Mail.Subject;
+<i>7</i>&nbsp;import Model.Memento.Memento;
+<i>8</i>&nbsp;import Model.Memento.Originator;
+<i>9</i>&nbsp;import Model.Milestone.TargetMilestone;
+<i>10</i>&nbsp;import Model.Project.TheDate;
+<i>11</i>&nbsp;import Model.User.Developer;
+<i>12</i>&nbsp;import Model.User.Issuer;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import java.util.ArrayList;
+<i>15</i>&nbsp;import java.util.Collections;
+<i>16</i>&nbsp;import java.util.List;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;/**
+<i>19</i>&nbsp; * Class representing a Bug report object.
+<i>20</i>&nbsp; *
+<i>21</i>&nbsp; * A bug report signals that something is wrong with a specific
+<i>22</i>&nbsp; * subsystem.
+<i>23</i>&nbsp; *
+<i>24</i>&nbsp; * This class provides getters and setters for most attributes.
+<i>25</i>&nbsp; * This class provides a method to create new bug reports.
+<i>26</i>&nbsp; * This class provides public checkers when setting new values to certain attributes.
+<i>27</i>&nbsp; *
+<i>28</i>&nbsp; */
+<i>29</i>&nbsp;public class BugReport extends Subject implements Observer, Originator&lt;BugReport.BugReportMemento,BugReport&gt;{
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    //region Static Attributes
+<i>32</i>&nbsp;    public static final boolean PUBLIC = true;
+<i>33</i>&nbsp;    public static final boolean PRIVATE = false;
+<i>34</i>&nbsp;    //endregion
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    //region Attributes
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    private BugReportID id;
+<i>39</i>&nbsp;    private String title;
+<i>40</i>&nbsp;    private String description;
+<i>41</i>&nbsp;    private TheDate creationDate;
+<i>42</i>&nbsp;    private Issuer creator;
+<i>43</i>&nbsp;    private List&lt;Comment&gt; comments;
+<i>44</i>&nbsp;    private List&lt;BugReport&gt; dependencies;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    // default access right attributes
+<i>48</i>&nbsp;    int solutionScore;
+<i>49</i>&nbsp;    List&lt;Patch&gt; patches;
+<i>50</i>&nbsp;    List&lt;Test&gt; tests;
+<i>51</i>&nbsp;    Patch selectedPatch;
+<i>52</i>&nbsp;    Tag tag;
+<i>53</i>&nbsp;    List&lt;Developer&gt; assignees;
+<i>54</i>&nbsp;    boolean pblc;
+<i>55</i>&nbsp;    int impactFactor;
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    //optional attributes
+<i>58</i>&nbsp;    private TargetMilestone targetMilestone;
+<i>59</i>&nbsp;    private String procedureBug;
+<i>60</i>&nbsp;    private String stackTrace;
+<i>61</i>&nbsp;    private String errorMessage;
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    //endregion
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    //region Constructor
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    /**
+<i>68</i>&nbsp;     * Default constructor for a BugReport.
+<i>69</i>&nbsp;     *
+<i>70</i>&nbsp;     * @param title The title of the BugReport.
+<i>71</i>&nbsp;     * @param description The description of the BugReport.
+<i>72</i>&nbsp;     * @param creator The issuer of the bug report.
+<i>73</i>&nbsp;     * @param pblc True if the bug report is public.
+<i>74</i>&nbsp;     * @param impactFactor A score between 1 and 5 to show the impact of the bug.
+<i>75</i>&nbsp;     *
+<i>76</i>&nbsp;     * @throws ReportErrorToUserException The title or description is empty.
+<i>77</i>&nbsp;     * @throws IllegalArgumentException The subsystem or creator is null.
+<i>78</i>&nbsp;     */
+<i>79</i>&nbsp;    BugReport(String title, String description, Issuer creator, boolean pblc, int impactFactor) throws ReportErrorToUserException
+<i>80</i>&nbsp;    {
+<b class="fc"><i>81</i>&nbsp;        this(title, description, creator, pblc, TheDate.TheDateNow(), new ArrayList&lt;&gt;(), null, impactFactor);</b>
+<b class="fc"><i>82</i>&nbsp;    }</b>
+<i>83</i>&nbsp;    
+<i>84</i>&nbsp;    /**
+<i>85</i>&nbsp;     * Constructor for a Bugreport.
+<i>86</i>&nbsp;     *
+<i>87</i>&nbsp;     * @param title The title of the bug report.
+<i>88</i>&nbsp;     * @param description The description of the bug report.
+<i>89</i>&nbsp;     * @param creator The creator of the bug report.
+<i>90</i>&nbsp;     * @param creationDate The creation date of this bug report.
+<i>91</i>&nbsp;     * @param initialAssignies The list of assignees for this bug report.
+<i>92</i>&nbsp;     * @param targetMilestone The target milestone of a bug report.
+<i>93</i>&nbsp;     * @param pblc The access right to this bugreport.
+<i>94</i>&nbsp;     * @param impactFactor A score between 1 and 5 to show the impact of the bug.
+<i>95</i>&nbsp;     *
+<i>96</i>&nbsp;     * @throws ReportErrorToUserException The title or description is empty.
+<i>97</i>&nbsp;     * @throws IllegalArgumentException The subsystem, creator, creationDate or tag is null.
+<i>98</i>&nbsp;     */
+<i>99</i>&nbsp;    BugReport(String title, String description, Issuer creator, boolean pblc, TheDate creationDate, List&lt;Developer&gt; initialAssignies, TargetMilestone targetMilestone, int impactFactor) throws ReportErrorToUserException
+<b class="fc"><i>100</i>&nbsp;    {</b>
+<b class="fc"><i>101</i>&nbsp;        setTitle(title);</b>
+<b class="fc"><i>102</i>&nbsp;        setDescription(description);</b>
+<b class="fc"><i>103</i>&nbsp;        setCreator(creator);</b>
+<b class="fc"><i>104</i>&nbsp;        setCreationDate(creationDate);</b>
+<b class="fc"><i>105</i>&nbsp;        setImpactFactor(impactFactor);</b>
+<b class="fc"><i>106</i>&nbsp;        this.tag = new New();</b>
+<b class="fc"><i>107</i>&nbsp;        this.pblc = pblc;</b>
+<b class="fc"><i>108</i>&nbsp;        this.id = new BugReportID();</b>
+<i>109</i>&nbsp;
+<b class="fc"><i>110</i>&nbsp;        this.comments = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>111</i>&nbsp;        this.dependencies = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>112</i>&nbsp;        this.patches = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>113</i>&nbsp;        this.tests = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>114</i>&nbsp;        this.assignees = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>115</i>&nbsp;        this.targetMilestone = targetMilestone;</b>
+<i>116</i>&nbsp;
+<b class="fc"><i>117</i>&nbsp;        for (Developer dev : initialAssignies) {</b>
+<b class="fc"><i>118</i>&nbsp;            this.addAssignee(dev);</b>
+<b class="fc"><i>119</i>&nbsp;        }</b>
+<b class="fc"><i>120</i>&nbsp;    }</b>
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;    //endregion
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    //region Getters
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;    /**
+<i>127</i>&nbsp;     * Getter to request the unique id of the bug report.
+<i>128</i>&nbsp;     *
+<i>129</i>&nbsp;     * @return The unique id of the bug report.
+<i>130</i>&nbsp;     */
+<i>131</i>&nbsp;    public BugReportID getId(){
+<b class="fc"><i>132</i>&nbsp;        return this.id;</b>
+<i>133</i>&nbsp;    }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;    /**
+<i>136</i>&nbsp;     * Getter to request the title of the bug report.
+<i>137</i>&nbsp;     *
+<i>138</i>&nbsp;     * @return The title of the bug report.
+<i>139</i>&nbsp;     */
+<i>140</i>&nbsp;    public String getTitle() {
+<b class="fc"><i>141</i>&nbsp;        return this.title;</b>
+<i>142</i>&nbsp;    }
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;    /**
+<i>145</i>&nbsp;     * Getter to request the description of the bug report.
+<i>146</i>&nbsp;     *
+<i>147</i>&nbsp;     * @return The description of the bug report.
+<i>148</i>&nbsp;     */
+<i>149</i>&nbsp;    public String getDescription() {
+<b class="fc"><i>150</i>&nbsp;        return this.description;</b>
+<i>151</i>&nbsp;    }
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;    /**
+<i>154</i>&nbsp;     * Getter to request the creationDate of the bug report.
+<i>155</i>&nbsp;     *
+<i>156</i>&nbsp;     * @return The creationDate of the bug report.
+<i>157</i>&nbsp;     */
+<i>158</i>&nbsp;    public TheDate getCreationDate() {
+<b class="fc"><i>159</i>&nbsp;        return this.creationDate;</b>
+<i>160</i>&nbsp;    }
+<i>161</i>&nbsp;
+<i>162</i>&nbsp;    /**
+<i>163</i>&nbsp;     * Getter to request the creator of the bug report.
+<i>164</i>&nbsp;     *
+<i>165</i>&nbsp;     * @return The creator of the bug report.
+<i>166</i>&nbsp;     */
+<i>167</i>&nbsp;    public Issuer getCreator(){
+<b class="fc"><i>168</i>&nbsp;        return this.creator;</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    /**
+<i>172</i>&nbsp;     * Getter to request the tag of the bug report.
+<i>173</i>&nbsp;     *
+<i>174</i>&nbsp;     * @return The tag of the bug report.
+<i>175</i>&nbsp;     */
+<i>176</i>&nbsp;    public Tag getTag() {
+<b class="fc"><i>177</i>&nbsp;        return tag;</b>
+<i>178</i>&nbsp;    }
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    /**
+<i>181</i>&nbsp;     * Getter to request the developers assigned to the bug report.
+<i>182</i>&nbsp;     *
+<i>183</i>&nbsp;     * @return The list of developers assigned to the bug report
+<i>184</i>&nbsp;     */
+<i>185</i>&nbsp;    public List&lt;Developer&gt; getAssignees() {
+<b class="fc"><i>186</i>&nbsp;        return Collections.unmodifiableList(this.assignees);</b>
+<i>187</i>&nbsp;    }
+<i>188</i>&nbsp;
+<i>189</i>&nbsp;    /**
+<i>190</i>&nbsp;     * Getter to request the comments given on the bug report.
+<i>191</i>&nbsp;     *
+<i>192</i>&nbsp;     * @return The list of comments given on the bug report.
+<i>193</i>&nbsp;     */
+<i>194</i>&nbsp;    public List&lt;Comment&gt; getComments() {
+<b class="fc"><i>195</i>&nbsp;        return Collections.unmodifiableList(this.comments);</b>
+<i>196</i>&nbsp;    }
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;    /**
+<i>199</i>&nbsp;     * Getter to request the dependencies of the bug report.
+<i>200</i>&nbsp;     *
+<i>201</i>&nbsp;     * @return The list of dependencies of the bug report.
+<i>202</i>&nbsp;     */
+<b class="fc"><i>203</i>&nbsp;    public List&lt;BugReport&gt; getDependencies(){return Collections.unmodifiableList(this.dependencies);}</b>
+<i>204</i>&nbsp;
+<i>205</i>&nbsp;    /**
+<i>206</i>&nbsp;     * Getter to request procedure bug
+<i>207</i>&nbsp;     * 
+<i>208</i>&nbsp;     * @return The procedureBug
+<i>209</i>&nbsp;     */
+<i>210</i>&nbsp;    public String getProcedureBug()
+<i>211</i>&nbsp;    {
+<b class="fc"><i>212</i>&nbsp;    	return procedureBug;</b>
+<i>213</i>&nbsp;    }
+<i>214</i>&nbsp;    
+<i>215</i>&nbsp;    /**
+<i>216</i>&nbsp;     * Getter to request the stacktrace
+<i>217</i>&nbsp;     * 
+<i>218</i>&nbsp;     * @return The stacktrace
+<i>219</i>&nbsp;     */
+<i>220</i>&nbsp;    public String getStackTrace()
+<i>221</i>&nbsp;    {
+<b class="fc"><i>222</i>&nbsp;    	return stackTrace;</b>
+<i>223</i>&nbsp;    }
+<i>224</i>&nbsp;    
+<i>225</i>&nbsp;    /**
+<i>226</i>&nbsp;     * Getter to request error message
+<i>227</i>&nbsp;     * 
+<i>228</i>&nbsp;     * @return The error message
+<i>229</i>&nbsp;     */
+<i>230</i>&nbsp;    public String getErrorMessage()
+<i>231</i>&nbsp;    {
+<b class="fc"><i>232</i>&nbsp;    	return errorMessage;</b>
+<i>233</i>&nbsp;    }
+<i>234</i>&nbsp;
+<i>235</i>&nbsp;    /**
+<i>236</i>&nbsp;     * Getter to request the current score of the bugReport.
+<i>237</i>&nbsp;     *
+<i>238</i>&nbsp;     * @return 0 if not rated and value between 1 and 5 otherwise.
+<i>239</i>&nbsp;     */
+<i>240</i>&nbsp;    public int getSolutionScore() {
+<b class="fc"><i>241</i>&nbsp;        return this.solutionScore;</b>
+<i>242</i>&nbsp;    }
+<i>243</i>&nbsp;
+<i>244</i>&nbsp;    /**
+<i>245</i>&nbsp;     * Getter to request all the patches of the current bug report.
+<i>246</i>&nbsp;     *
+<i>247</i>&nbsp;     * @return An unmodifiable list of all the patches.
+<i>248</i>&nbsp;     */
+<i>249</i>&nbsp;    public List&lt;Patch&gt; getPatches() {
+<b class="fc"><i>250</i>&nbsp;        return Collections.unmodifiableList(this.patches);</b>
+<i>251</i>&nbsp;    }
+<i>252</i>&nbsp;
+<i>253</i>&nbsp;    /**
+<i>254</i>&nbsp;     * Getter to request all the test of the current bug report.
+<i>255</i>&nbsp;     *
+<i>256</i>&nbsp;     * @return An unmodifiable list of all the tests.
+<i>257</i>&nbsp;     */
+<i>258</i>&nbsp;    public List&lt;Test&gt; getTests() {
+<b class="fc"><i>259</i>&nbsp;        return Collections.unmodifiableList(this.tests);</b>
+<i>260</i>&nbsp;    }
+<i>261</i>&nbsp;
+<i>262</i>&nbsp;    /**
+<i>263</i>&nbsp;     * Getter to request the selected patch.
+<i>264</i>&nbsp;     *
+<i>265</i>&nbsp;     * @return The selected patch or null if no patch available.
+<i>266</i>&nbsp;     */
+<i>267</i>&nbsp;    public Patch getSelectedPatch() {
+<b class="fc"><i>268</i>&nbsp;        return this.selectedPatch;</b>
+<i>269</i>&nbsp;    }
+<i>270</i>&nbsp;
+<i>271</i>&nbsp;    /**
+<i>272</i>&nbsp;     * Method to get the target milestone of a bug report.
+<i>273</i>&nbsp;     *
+<i>274</i>&nbsp;     * @return the target milestone of a bug report.
+<i>275</i>&nbsp;     */
+<i>276</i>&nbsp;    public TargetMilestone getTargetMilestone() {
+<b class="fc"><i>277</i>&nbsp;        return this.targetMilestone;</b>
+<i>278</i>&nbsp;    }
+<i>279</i>&nbsp;
+<i>280</i>&nbsp;    /**
+<i>281</i>&nbsp;     * Getter to get all the comments of the bug report.
+<i>282</i>&nbsp;     *
+<i>283</i>&nbsp;     * @return An unmodifiable list of all the comments of the bug report. (recursively)
+<i>284</i>&nbsp;     */
+<i>285</i>&nbsp;    public List&lt;Comment&gt; getAllComments() {
+<b class="fc"><i>286</i>&nbsp;        List&lt;Comment&gt; list = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>287</i>&nbsp;        for (Comment comm : comments) {</b>
+<b class="fc"><i>288</i>&nbsp;            list.add(comm);</b>
+<b class="fc"><i>289</i>&nbsp;            list.addAll(comm.getAllComments());</b>
+<b class="fc"><i>290</i>&nbsp;        }</b>
+<b class="fc"><i>291</i>&nbsp;        return Collections.unmodifiableList(list);</b>
+<i>292</i>&nbsp;    }
+<i>293</i>&nbsp;
+<i>294</i>&nbsp;    /**
+<i>295</i>&nbsp;     * Method returning the impact factor of the bug report.
+<i>296</i>&nbsp;     * @return the bug impact of the bug report.
+<i>297</i>&nbsp;     */
+<i>298</i>&nbsp;    public int getImpactFactor() {
+<b class="fc"><i>299</i>&nbsp;        return this.impactFactor;</b>
+<i>300</i>&nbsp;    }
+<i>301</i>&nbsp;
+<i>302</i>&nbsp;    /**
+<i>303</i>&nbsp;     * Method returning the bug report impact of the bug report.
+<i>304</i>&nbsp;     * This is determined by the tag type of the bug report and its impact factor.
+<i>305</i>&nbsp;     * @return the bug report impact value
+<i>306</i>&nbsp;     */
+<i>307</i>&nbsp;    public double getBugReportImpact() {
+<b class="fc"><i>308</i>&nbsp;        return this.getTag().getBugReportImpact(this);</b>
+<i>309</i>&nbsp;    }
+<i>310</i>&nbsp;
+<i>311</i>&nbsp;    //endregion
+<i>312</i>&nbsp;
+<i>313</i>&nbsp;    //region Checkers
+<i>314</i>&nbsp;
+<i>315</i>&nbsp;    /**
+<i>316</i>&nbsp;     * Checker to check if the title of the bug report is valid.
+<i>317</i>&nbsp;     *
+<i>318</i>&nbsp;     * @param title The title of the bug report.
+<i>319</i>&nbsp;     *
+<i>320</i>&nbsp;     * @return True if the title is not null or not empty. False otherwise.
+<i>321</i>&nbsp;     */
+<i>322</i>&nbsp;    public boolean isValidTitle(String title){
+<b class="fc"><i>323</i>&nbsp;        if (title == null)return false;</b>
+<b class="fc"><i>324</i>&nbsp;        if (title.equals(&quot;&quot;)) return false;</b>
+<b class="fc"><i>325</i>&nbsp;        else return true;</b>
+<i>326</i>&nbsp;    }
+<i>327</i>&nbsp;    
+<i>328</i>&nbsp;    /**
+<i>329</i>&nbsp;     * Checker to check if the description of the bug report is valid.
+<i>330</i>&nbsp;     *
+<i>331</i>&nbsp;     * @param description The description of the bug report.
+<i>332</i>&nbsp;     *
+<i>333</i>&nbsp;     * @return True if the description is not null or not empty. False otherwise.
+<i>334</i>&nbsp;     */
+<i>335</i>&nbsp;    public boolean isValidDescription(String description){
+<b class="fc"><i>336</i>&nbsp;        if (description == null)return false;</b>
+<b class="fc"><i>337</i>&nbsp;        if (description.equals(&quot;&quot;)) return false;</b>
+<b class="fc"><i>338</i>&nbsp;        else return true;</b>
+<i>339</i>&nbsp;    }
+<i>340</i>&nbsp;
+<i>341</i>&nbsp;    /**
+<i>342</i>&nbsp;     * Checker to check if the procedure is valid
+<i>343</i>&nbsp;     * @param procedureBug the procedure bug that needs to be checked
+<i>344</i>&nbsp;     * @return true when valid, false when invalid
+<i>345</i>&nbsp;     */
+<i>346</i>&nbsp;    public boolean isValidProcedureBug(String procedureBug){
+<b class="fc"><i>347</i>&nbsp;        if (procedureBug == null) return false;</b>
+<b class="fc"><i>348</i>&nbsp;        else return true;</b>
+<i>349</i>&nbsp;    }
+<i>350</i>&nbsp;
+<i>351</i>&nbsp;    /**
+<i>352</i>&nbsp;     * Checker to check if the stack trace is valid
+<i>353</i>&nbsp;     * @param stackTrace the stack trace that needs to be checked
+<i>354</i>&nbsp;     * @return true when valid, false when invalid
+<i>355</i>&nbsp;     */
+<i>356</i>&nbsp;    public boolean isValidStackTrace(String stackTrace){
+<b class="fc"><i>357</i>&nbsp;        if (stackTrace == null) return false;</b>
+<b class="fc"><i>358</i>&nbsp;        else return true;</b>
+<i>359</i>&nbsp;    }
+<i>360</i>&nbsp;
+<i>361</i>&nbsp;    /**
+<i>362</i>&nbsp;     * Checker to check fi the error message is valid
+<i>363</i>&nbsp;     * @param errorMessage the error message that needs to be checked
+<i>364</i>&nbsp;     * @return true when valid, false when invalid
+<i>365</i>&nbsp;     */
+<i>366</i>&nbsp;    public boolean isValidErrorMessage(String errorMessage){
+<b class="fc"><i>367</i>&nbsp;        if (errorMessage == null) return false;</b>
+<b class="fc"><i>368</i>&nbsp;        else return true;</b>
+<i>369</i>&nbsp;    }
+<i>370</i>&nbsp;
+<i>371</i>&nbsp;    /**
+<i>372</i>&nbsp;     * Method to check whether an impact factor is valid.
+<i>373</i>&nbsp;     * @param impactScore the score value that needs to be checked
+<i>374</i>&nbsp;     * @return true if the impact factor is valid, false if not
+<i>375</i>&nbsp;     */
+<i>376</i>&nbsp;    public boolean isValidImpactFactor(int impactScore) {
+<b class="fc"><i>377</i>&nbsp;        return (impactScore &gt; 0 &amp;&amp; impactScore &lt;= 10);</b>
+<i>378</i>&nbsp;    }
+<i>379</i>&nbsp;
+<i>380</i>&nbsp;
+<i>381</i>&nbsp;    /**
+<i>382</i>&nbsp;     * Returns if the bug report is public.
+<i>383</i>&nbsp;     *
+<i>384</i>&nbsp;     * @return True if the bug report is public.
+<i>385</i>&nbsp;     */
+<i>386</i>&nbsp;    public boolean isPublic() {
+<b class="fc"><i>387</i>&nbsp;        return pblc;</b>
+<i>388</i>&nbsp;    }
+<i>389</i>&nbsp;
+<i>390</i>&nbsp;    //endregion
+<i>391</i>&nbsp;
+<i>392</i>&nbsp;    //region Setters
+<i>393</i>&nbsp;
+<i>394</i>&nbsp;    /**
+<i>395</i>&nbsp;     * Method to set the title of a bug report.
+<i>396</i>&nbsp;     * @param title the title that needs to be set
+<i>397</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the new title is not valid.
+<i>398</i>&nbsp;     */
+<i>399</i>&nbsp;    private void setTitle(String title) throws ReportErrorToUserException {
+<b class="fc"><i>400</i>&nbsp;        if (!isValidTitle(title)) throw new ReportErrorToUserException(&quot;The title cannot be empty!&quot;);</b>
+<b class="fc"><i>401</i>&nbsp;        this.title = title;</b>
+<b class="fc"><i>402</i>&nbsp;    }</b>
+<i>403</i>&nbsp;
+<i>404</i>&nbsp;    /**
+<i>405</i>&nbsp;     * Method to set the description of a bug report.
+<i>406</i>&nbsp;     * @param description the description that needs to be set
+<i>407</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the new description is not valid.
+<i>408</i>&nbsp;     */
+<i>409</i>&nbsp;    private void setDescription(String description) throws ReportErrorToUserException {
+<b class="fc"><i>410</i>&nbsp;        if (!isValidDescription(description)) throw new ReportErrorToUserException(&quot;The description cannot be empty!&quot;);</b>
+<b class="fc"><i>411</i>&nbsp;        this.description = description;</b>
+<b class="fc"><i>412</i>&nbsp;    }</b>
+<i>413</i>&nbsp;
+<i>414</i>&nbsp;    /**
+<i>415</i>&nbsp;     * Method to set the creation date of a bug report.
+<i>416</i>&nbsp;     * @param creationDate the new creation date that needs to be set
+<i>417</i>&nbsp;     * @throws IllegalArgumentException Creation date is null.
+<i>418</i>&nbsp;     */
+<i>419</i>&nbsp;    private void setCreationDate(TheDate creationDate) {
+<b class="fc"><i>420</i>&nbsp;        if (creationDate == null) throw new IllegalArgumentException(&quot;CreationDate is null&quot;);</b>
+<b class="fc"><i>421</i>&nbsp;        this.creationDate = creationDate;</b>
+<b class="fc"><i>422</i>&nbsp;    }</b>
+<i>423</i>&nbsp;
+<i>424</i>&nbsp;    /**
+<i>425</i>&nbsp;     * Method to set the creator of a bug report.
+<i>426</i>&nbsp;     * @param creator the new creator that needs to be set
+<i>427</i>&nbsp;     * @throws IllegalArgumentException Issuer is null.
+<i>428</i>&nbsp;     */
+<i>429</i>&nbsp;    private void setCreator(Issuer creator) {
+<b class="fc"><i>430</i>&nbsp;        if (creator == null) throw new IllegalArgumentException(&quot;The issuer is null&quot;);</b>
+<b class="fc"><i>431</i>&nbsp;        this.creator = creator;</b>
+<b class="fc"><i>432</i>&nbsp;    }</b>
+<i>433</i>&nbsp;
+<i>434</i>&nbsp;    /**
+<i>435</i>&nbsp;     * Method to set the assignees of a bug report.
+<i>436</i>&nbsp;     * @param initialAssignees the list of assignees that needs to be set
+<i>437</i>&nbsp;     * @throws IllegalArgumentException Initial Assignees is null.
+<i>438</i>&nbsp;     */
+<i>439</i>&nbsp;    private void setAssignees(List&lt;Developer&gt; initialAssignees) {
+<b class="nc"><i>440</i>&nbsp;        if (initialAssignees == null) throw new IllegalArgumentException(&quot;List cannot be null&quot;);</b>
+<b class="nc"><i>441</i>&nbsp;        this.assignees = new ArrayList&lt;&gt;(initialAssignees);</b>
+<b class="nc"><i>442</i>&nbsp;    }</b>
+<i>443</i>&nbsp;
+<i>444</i>&nbsp;    /**
+<i>445</i>&nbsp;     * Setter to change the tag of the bug report.
+<i>446</i>&nbsp;     *
+<i>447</i>&nbsp;     * @param tag The tag to which to set the bug report.
+<i>448</i>&nbsp;     *
+<i>449</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the tag cannot be changed to the new tag.
+<i>450</i>&nbsp;     * @throws IllegalArgumentException Tag is null.
+<i>451</i>&nbsp;     */
+<i>452</i>&nbsp;    void setTag(Tag tag) throws ReportErrorToUserException {
+<b class="fc"><i>453</i>&nbsp;        if (tag == null) throw new IllegalArgumentException(&quot;Tag is null&quot;);</b>
+<b class="fc"><i>454</i>&nbsp;        this.getTag().changeTag(this, tag);</b>
+<b class="fc"><i>455</i>&nbsp;        notifyObservers(this, tag);</b>
+<b class="fc"><i>456</i>&nbsp;    }</b>
+<i>457</i>&nbsp;
+<i>458</i>&nbsp;    /**
+<i>459</i>&nbsp;     * Method to set a new target milestone of a bug report.
+<i>460</i>&nbsp;     *
+<i>461</i>&nbsp;     * @param targetMilestone the new target milestone of a bug report.
+<i>462</i>&nbsp;     *
+<i>463</i>&nbsp;     * @throws IllegalArgumentException the targetmilestone is null.
+<i>464</i>&nbsp;     */
+<i>465</i>&nbsp;    void setTargetMilestone(TargetMilestone targetMilestone){
+<b class="fc"><i>466</i>&nbsp;    	if(targetMilestone == null) throw new IllegalArgumentException(&quot;The target milestone is null&quot;);</b>
+<b class="fc"><i>467</i>&nbsp;        this.targetMilestone = targetMilestone;</b>
+<b class="fc"><i>468</i>&nbsp;    }</b>
+<i>469</i>&nbsp;
+<i>470</i>&nbsp;    /**
+<i>471</i>&nbsp;     * Method to set a new procedure bug.
+<i>472</i>&nbsp;     * Method requires the input string to be a valid procedure bug.
+<i>473</i>&nbsp;     *
+<i>474</i>&nbsp;     * @param procedureBug the procedure bug to be set.
+<i>475</i>&nbsp;     *
+<i>476</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the procedure bug is invalid.
+<i>477</i>&nbsp;     */
+<i>478</i>&nbsp;    void setProcedureBug(String procedureBug) throws ReportErrorToUserException
+<i>479</i>&nbsp;    {
+<b class="fc"><i>480</i>&nbsp;        if (!isValidProcedureBug(procedureBug))</b>
+<b class="fc"><i>481</i>&nbsp;            throw new ReportErrorToUserException(&quot;Invalid value for the way to reproduce the bug.&quot;);</b>
+<b class="fc"><i>482</i>&nbsp;        this.procedureBug = procedureBug;</b>
+<i>483</i>&nbsp;   
+<b class="fc"><i>484</i>&nbsp;    }</b>
+<i>485</i>&nbsp;
+<i>486</i>&nbsp;    /**
+<i>487</i>&nbsp;     * Method to set a new stack trace.
+<i>488</i>&nbsp;     *
+<i>489</i>&nbsp;     * Method requires the input string to be a valid stack trace.
+<i>490</i>&nbsp;     * @param stackTrace the procedure bug to be set.
+<i>491</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the stack trace is invalid.
+<i>492</i>&nbsp;     *
+<i>493</i>&nbsp;     */
+<i>494</i>&nbsp;    void setStackTrace(String stackTrace) throws ReportErrorToUserException
+<i>495</i>&nbsp;    {
+<b class="fc"><i>496</i>&nbsp;        if (!isValidStackTrace(stackTrace)) throw new ReportErrorToUserException(&quot;Invalid value for the stack trace.&quot;);</b>
+<b class="fc"><i>497</i>&nbsp;        this.stackTrace = stackTrace;</b>
+<b class="fc"><i>498</i>&nbsp;    }</b>
+<i>499</i>&nbsp;
+<i>500</i>&nbsp;    /**
+<i>501</i>&nbsp;     * Method to set a new error message.
+<i>502</i>&nbsp;     *
+<i>503</i>&nbsp;     * Method requires the input string to be a valid error message.
+<i>504</i>&nbsp;     * @param errorMessage the procedure bug to be set.
+<i>505</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the error message is invalid.
+<i>506</i>&nbsp;     *
+<i>507</i>&nbsp;     */
+<i>508</i>&nbsp;    void setErrorMessage(String errorMessage) throws ReportErrorToUserException
+<i>509</i>&nbsp;    {
+<b class="fc"><i>510</i>&nbsp;        if (!isValidErrorMessage(errorMessage))</b>
+<b class="fc"><i>511</i>&nbsp;            throw new ReportErrorToUserException(&quot;Invalid value for the error message.&quot;);</b>
+<b class="fc"><i>512</i>&nbsp;        this.errorMessage = errorMessage;</b>
+<b class="fc"><i>513</i>&nbsp;    }</b>
+<i>514</i>&nbsp;
+<i>515</i>&nbsp;    /**
+<i>516</i>&nbsp;     * Method to set the impact factor of a bug report.
+<i>517</i>&nbsp;     * @param impactFactor the impact factor to be set
+<i>518</i>&nbsp;     * @throws ReportErrorToUserException is thrown if the impact factor is not valid.
+<i>519</i>&nbsp;     */
+<i>520</i>&nbsp;    private void setImpactFactor(int impactFactor) throws ReportErrorToUserException {
+<b class="fc"><i>521</i>&nbsp;        if (!isValidImpactFactor(impactFactor)) throw new ReportErrorToUserException(&quot;Invalid impact factor&quot;);</b>
+<b class="fc"><i>522</i>&nbsp;        this.impactFactor = impactFactor;</b>
+<b class="fc"><i>523</i>&nbsp;    }</b>
+<i>524</i>&nbsp;
+<i>525</i>&nbsp;    //endregion
+<i>526</i>&nbsp;
+<i>527</i>&nbsp;    //region Functions
+<i>528</i>&nbsp;
+<i>529</i>&nbsp;    /**
+<i>530</i>&nbsp;     * Function for adding an assignee to the bug report.
+<i>531</i>&nbsp;     * The bug report is given the &quot;Assigned&quot; tag.
+<i>532</i>&nbsp;     *
+<i>533</i>&nbsp;     * @param developer The developer to assign to the bug report.
+<i>534</i>&nbsp;     *
+<i>535</i>&nbsp;     * @throws IllegalArgumentException The given developer is null.
+<i>536</i>&nbsp;     * @throws ReportErrorToUserException Assigning the developer caused an error.
+<i>537</i>&nbsp;     */
+<i>538</i>&nbsp;
+<i>539</i>&nbsp;    void addAssignee(Developer developer) throws ReportErrorToUserException {
+<b class="fc"><i>540</i>&nbsp;        if (developer == null) throw new IllegalArgumentException(&quot;Developer to assign is null&quot;);</b>
+<b class="fc"><i>541</i>&nbsp;        this.getTag().assignDeveloper(this, developer);</b>
+<b class="fc"><i>542</i>&nbsp;    }</b>
+<i>543</i>&nbsp;
+<i>544</i>&nbsp;    /**
+<i>545</i>&nbsp;     * Function to add a comment to the list of comments.
+<i>546</i>&nbsp;     *
+<i>547</i>&nbsp;     * @param comment The comment to add to the comments.
+<i>548</i>&nbsp;     *
+<i>549</i>&nbsp;     * @throws IllegalArgumentException The given comment is null.
+<i>550</i>&nbsp;     */
+<i>551</i>&nbsp;    void addComment(Comment comment){
+<b class="fc"><i>552</i>&nbsp;        if (comment == null) throw new IllegalArgumentException(&quot;Comment is null&quot;);</b>
+<b class="fc"><i>553</i>&nbsp;        this.comments.add(comment);</b>
+<b class="fc"><i>554</i>&nbsp;        comment.addObserver(this);</b>
+<b class="fc"><i>555</i>&nbsp;		notifyObservers(this, comment);</b>
+<b class="fc"><i>556</i>&nbsp;    }</b>
+<i>557</i>&nbsp;    
+<i>558</i>&nbsp;    /**
+<i>559</i>&nbsp;     * Function to add a patch to the list of patches.
+<i>560</i>&nbsp;     *
+<i>561</i>&nbsp;     * @param patch The patch to add tot the patches.
+<i>562</i>&nbsp;     * @throws IllegalArgumentException The given patch is null.
+<i>563</i>&nbsp;     * @throws ReportErrorToUserException Unable to add patch to bug report.
+<i>564</i>&nbsp;     */
+<i>565</i>&nbsp;    void addPatch(Patch patch) throws ReportErrorToUserException {
+<b class="fc"><i>566</i>&nbsp;        if (patch == null) throw new IllegalArgumentException(&quot;Patch is null&quot;);</b>
+<b class="fc"><i>567</i>&nbsp;        this.getTag().addPatch(this, patch);</b>
+<b class="fc"><i>568</i>&nbsp;    }</b>
+<i>569</i>&nbsp;
+<i>570</i>&nbsp;    /**
+<i>571</i>&nbsp;     * Function to add a test to the list of tests.
+<i>572</i>&nbsp;     *
+<i>573</i>&nbsp;     * @param test The test to add to the tests.
+<i>574</i>&nbsp;     * @throws IllegalArgumentException The given test is null.
+<i>575</i>&nbsp;     * @throws ReportErrorToUserException Unable to add test to the bug report.
+<i>576</i>&nbsp;     */
+<i>577</i>&nbsp;    void addTest(Test test) throws ReportErrorToUserException {
+<b class="fc"><i>578</i>&nbsp;        if (test == null) throw new IllegalArgumentException(&quot;Test is null&quot;);</b>
+<b class="fc"><i>579</i>&nbsp;        this.getTag().addTest(this, test);</b>
+<b class="fc"><i>580</i>&nbsp;    }</b>
+<i>581</i>&nbsp;
+<i>582</i>&nbsp;    /**
+<i>583</i>&nbsp;     * Method for adding a dependency to the list of dependencies.
+<i>584</i>&nbsp;     *
+<i>585</i>&nbsp;     * @param dependency The dependency to add.
+<i>586</i>&nbsp;     * @throws IllegalArgumentException The given dependency is null.
+<i>587</i>&nbsp;     */
+<i>588</i>&nbsp;    void addDependency(BugReport dependency) {
+<b class="fc"><i>589</i>&nbsp;        if (dependency == null) throw new IllegalArgumentException(&quot;Dependency is null&quot;);</b>
+<i>590</i>&nbsp;
+<b class="fc"><i>591</i>&nbsp;        this.dependencies.add(dependency);</b>
+<b class="fc"><i>592</i>&nbsp;    }</b>
+<i>593</i>&nbsp;
+<i>594</i>&nbsp;    //endregion
+<i>595</i>&nbsp;
+<i>596</i>&nbsp;    //region Object Functions
+<i>597</i>&nbsp;
+<i>598</i>&nbsp;    /**
+<i>599</i>&nbsp;     * Overrides the equals method to only look at the id to check for equality.
+<i>600</i>&nbsp;     *
+<i>601</i>&nbsp;     * @param obj The bugReport to compare this bugReport to.
+<i>602</i>&nbsp;     * @return True if the id of both bugReport are the same.
+<i>603</i>&nbsp;     */
+<i>604</i>&nbsp;    public boolean equals(Object obj) {
+<b class="fc"><i>605</i>&nbsp;        if (obj instanceof BugReport) {</b>
+<b class="fc"><i>606</i>&nbsp;            return ((BugReport) obj).getId().equals(this.getId());</b>
+<i>607</i>&nbsp;        } else {
+<b class="fc"><i>608</i>&nbsp;            return false;</b>
+<i>609</i>&nbsp;        }
+<i>610</i>&nbsp;    }
+<i>611</i>&nbsp;
+<i>612</i>&nbsp;    /**
+<i>613</i>&nbsp;     * Method to represent a bug report as a string.
+<i>614</i>&nbsp;     * &lt;p&gt;
+<i>615</i>&nbsp;     * Makes use of getters for bug report attributes to create
+<i>616</i>&nbsp;     * one full string which will be passed on to the formatter.
+<i>617</i>&nbsp;     *
+<i>618</i>&nbsp;     * @return The bug report as a string.
+<i>619</i>&nbsp;     */
+<i>620</i>&nbsp;    @Override
+<i>621</i>&nbsp;    public String toString() {
+<b class="fc"><i>622</i>&nbsp;        String str =</b>
+<b class="fc"><i>623</i>&nbsp;                &quot;Bugreport ID: &quot; + getId() + &quot;\nTitle: &quot; + getTitle()</b>
+<b class="fc"><i>624</i>&nbsp;                        + &quot;\nDescription: &quot; + getDescription() + &quot;\nCreation date: &quot;</b>
+<b class="fc"><i>625</i>&nbsp;                        + getCreationDate() + &quot;\nTag: &quot; + getTag() + &quot;\nCreator: &quot;</b>
+<b class="fc"><i>626</i>&nbsp;                        + getCreator();</b>
+<i>627</i>&nbsp;
+<b class="fc"><i>628</i>&nbsp;        if (this.getTargetMilestone() != null) {</b>
+<b class="fc"><i>629</i>&nbsp;            str += &quot;\nTarget Milestone: &quot; + getTargetMilestone().toString();</b>
+<i>630</i>&nbsp;        }
+<i>631</i>&nbsp;
+<b class="fc"><i>632</i>&nbsp;        if (!this.getTests().isEmpty()) str += &quot;\nTests : &quot;;</b>
+<b class="fc"><i>633</i>&nbsp;        for (Test test : getTests())</b>
+<b class="fc"><i>634</i>&nbsp;            str += &quot;\n&quot; + test.toString();</b>
+<i>635</i>&nbsp;
+<b class="fc"><i>636</i>&nbsp;        if (!this.getPatches().isEmpty()) str += &quot;\nPatches : &quot;;</b>
+<b class="fc"><i>637</i>&nbsp;        for (Patch patch : getPatches())</b>
+<b class="fc"><i>638</i>&nbsp;            str += &quot;\n&quot; + patch.toString();</b>
+<i>639</i>&nbsp;
+<b class="fc"><i>640</i>&nbsp;        if (this.selectedPatch != null) {</b>
+<b class="fc"><i>641</i>&nbsp;            str += &quot;\nSelected Patch: &quot; + selectedPatch;</b>
+<i>642</i>&nbsp;        }
+<i>643</i>&nbsp;
+<b class="fc"><i>644</i>&nbsp;        if (this.getSolutionScore() != 0) {</b>
+<b class="fc"><i>645</i>&nbsp;            str += &quot;\nScore of solution: &quot; + getSolutionScore();</b>
+<i>646</i>&nbsp;        }
+<i>647</i>&nbsp;
+<b class="fc"><i>648</i>&nbsp;        if (this.getProcedureBug() != null) {</b>
+<b class="fc"><i>649</i>&nbsp;            str += &quot;\nProcedure bug: &quot; + getProcedureBug();</b>
+<i>650</i>&nbsp;        }
+<i>651</i>&nbsp;
+<b class="fc"><i>652</i>&nbsp;        if (this.getErrorMessage() != null) {</b>
+<b class="fc"><i>653</i>&nbsp;            str += &quot;\nError message: &quot; + getErrorMessage();</b>
+<i>654</i>&nbsp;        }
+<i>655</i>&nbsp;
+<b class="fc"><i>656</i>&nbsp;        if (this.getStackTrace() != null) {</b>
+<b class="fc"><i>657</i>&nbsp;            str += &quot;\nStacktrace: &quot; + getStackTrace();</b>
+<i>658</i>&nbsp;        }
+<i>659</i>&nbsp;
+<b class="fc"><i>660</i>&nbsp;        str += &quot;\nAssignees: &quot;;</b>
+<i>661</i>&nbsp;
+<b class="fc"><i>662</i>&nbsp;        for (Developer dev : getAssignees())</b>
+<b class="fc"><i>663</i>&nbsp;            str += dev.toString() + &quot;, &quot;;</b>
+<i>664</i>&nbsp;
+<i>665</i>&nbsp;        //remove last comma
+<b class="fc"><i>666</i>&nbsp;        if (str.length() - 2 &gt; 0 &amp;&amp; str.charAt(str.length() - 2) == &#39;,&#39;)</b>
+<b class="fc"><i>667</i>&nbsp;            return str.substring(0, str.length() - 2);</b>
+<i>668</i>&nbsp;        else
+<b class="fc"><i>669</i>&nbsp;            return str;</b>
+<i>670</i>&nbsp;    }
+<i>671</i>&nbsp;
+<i>672</i>&nbsp;    //endregion
+<i>673</i>&nbsp;
+<i>674</i>&nbsp;    //region Memento Functions
+<i>675</i>&nbsp;
+<i>676</i>&nbsp;    /**
+<i>677</i>&nbsp;     * Method called to notify this observer
+<i>678</i>&nbsp;     *
+<i>679</i>&nbsp;     * @param structure     The structure
+<i>680</i>&nbsp;     * @param subject The subject
+<i>681</i>&nbsp;     * @param aspect The aspect that has changed
+<i>682</i>&nbsp;     *
+<i>683</i>&nbsp;     * @throws IllegalArgumentException The structure, comment or aspect is null.
+<i>684</i>&nbsp;     */
+<i>685</i>&nbsp;    @Override
+<i>686</i>&nbsp;    public void update(Subject structure, Subject subject, Object aspect)
+<i>687</i>&nbsp;    {
+<b class="fc"><i>688</i>&nbsp;    	if(structure == null) throw new IllegalArgumentException(&quot;The structure cannot be null&quot;);</b>
+<b class="fc"><i>689</i>&nbsp;		if(subject == null) throw new IllegalArgumentException(&quot;The subject cannot be null&quot;);</b>
+<b class="fc"><i>690</i>&nbsp;		if(aspect == null) throw new IllegalArgumentException(&quot;The aspect cannot be null&quot;);</b>
+<b class="fc"><i>691</i>&nbsp;        notifyObservers(this, aspect);</b>
+<b class="fc"><i>692</i>&nbsp;    }</b>
+<i>693</i>&nbsp;
+<i>694</i>&nbsp;    /**
+<i>695</i>&nbsp;     * Method used to create a new memento object for the bug report.
+<i>696</i>&nbsp;     *
+<i>697</i>&nbsp;     * @return a memento object for the bug report.
+<i>698</i>&nbsp;     */
+<i>699</i>&nbsp;    @Override
+<i>700</i>&nbsp;    public BugReportMemento createMemento()
+<i>701</i>&nbsp;    {
+<b class="fc"><i>702</i>&nbsp;        return new BugReportMemento(this);</b>
+<i>703</i>&nbsp;    }
+<i>704</i>&nbsp;
+<i>705</i>&nbsp;    /**
+<i>706</i>&nbsp;     * Method used to restore an old memento.
+<i>707</i>&nbsp;     * This method will restore the tag, assignees and comments of the bug report
+<i>708</i>&nbsp;     * to the values as recorded in the memento object.
+<i>709</i>&nbsp;     *
+<i>710</i>&nbsp;     * @param memento the memento object that contains the old values
+<i>711</i>&nbsp;     *
+<i>712</i>&nbsp;     * @throws IllegalArgumentException the memento is null
+<i>713</i>&nbsp;     */
+<i>714</i>&nbsp;    @Override
+<i>715</i>&nbsp;    public void restoreMemento(BugReportMemento memento)
+<i>716</i>&nbsp;    {
+<b class="fc"><i>717</i>&nbsp;    	if(memento == null) throw new IllegalArgumentException(&quot;The memento cannot be null&quot;);</b>
+<i>718</i>&nbsp;
+<b class="fc"><i>719</i>&nbsp;        this.tag = memento.getTag();</b>
+<b class="fc"><i>720</i>&nbsp;        this.assignees = memento.getAssignees();</b>
+<b class="fc"><i>721</i>&nbsp;        this.comments = memento.getComments();</b>
+<i>722</i>&nbsp;
+<b class="fc"><i>723</i>&nbsp;        this.targetMilestone = memento.getTargetMilestone();</b>
+<i>724</i>&nbsp;
+<b class="fc"><i>725</i>&nbsp;        this.tests = memento.getTests();</b>
+<b class="fc"><i>726</i>&nbsp;        this.patches = memento.getPatches();</b>
+<b class="fc"><i>727</i>&nbsp;    }</b>
+<i>728</i>&nbsp;
+<i>729</i>&nbsp;    //endregion
+<i>730</i>&nbsp;
+<i>731</i>&nbsp;    //Innerclass Memento
+<i>732</i>&nbsp;    /**
+<i>733</i>&nbsp;     * This class provides utility for saving the state of the system at a certain point in time
+<i>734</i>&nbsp;     * during execution of the Bug Trap software.
+<i>735</i>&nbsp;     *
+<i>736</i>&nbsp;     * The bug report memento saves the state of the following attributes of the bug report:
+<i>737</i>&nbsp;     * tag, assignees, comments, targetMilestone, tests and patches.
+<i>738</i>&nbsp;     *
+<i>739</i>&nbsp;     * This class provides private methods to request the values of the saved fields.
+<i>740</i>&nbsp;     * This wide interface (private getters) is provided to the class Bugreport,
+<i>741</i>&nbsp;     * while the narrow interface (public constructor) is provided to any class.
+<i>742</i>&nbsp;     */
+<b class="fc"><i>743</i>&nbsp;    public class BugReportMemento extends Memento&lt;BugReport&gt;</b>
+<i>744</i>&nbsp;    {
+<i>745</i>&nbsp;
+<i>746</i>&nbsp;    	private Tag tag;
+<i>747</i>&nbsp;    	private List&lt;Developer&gt; assignees;
+<i>748</i>&nbsp;    	private List&lt;Comment&gt; comments;
+<i>749</i>&nbsp;    	
+<i>750</i>&nbsp;    	private TargetMilestone targetMilestone;
+<i>751</i>&nbsp;    	
+<i>752</i>&nbsp;    	private List&lt;Test&gt; tests;
+<i>753</i>&nbsp;    	private List&lt;Patch&gt; patches;
+<i>754</i>&nbsp;    	
+<i>755</i>&nbsp;    	/**
+<i>756</i>&nbsp;    	 * Constructor 
+<i>757</i>&nbsp;    	 * 
+<i>758</i>&nbsp;    	 * @param originator The originator to build a memento from
+<i>759</i>&nbsp;         *
+<i>760</i>&nbsp;         * @throws IllegalArgumentException the originator is null
+<i>761</i>&nbsp;    	 */
+<i>762</i>&nbsp;    	public BugReportMemento(BugReport originator)
+<b class="fc"><i>763</i>&nbsp;    	{</b>
+<b class="fc"><i>764</i>&nbsp;    		super(originator);</b>
+<b class="fc"><i>765</i>&nbsp;    		this.tag = originator.getTag();</b>
+<b class="fc"><i>766</i>&nbsp;    		this.assignees = new ArrayList&lt;&gt;(originator.getAssignees());</b>
+<b class="fc"><i>767</i>&nbsp;    		this.comments = new ArrayList&lt;&gt;(originator.getComments());</b>
+<i>768</i>&nbsp;    		
+<b class="fc"><i>769</i>&nbsp;    		this.targetMilestone = originator.getTargetMilestone();</b>
+<i>770</i>&nbsp;    		
+<b class="fc"><i>771</i>&nbsp;    		this.tests =  new ArrayList&lt;&gt;(originator.getTests());</b>
+<b class="fc"><i>772</i>&nbsp;    		this.patches =  new ArrayList&lt;&gt;(originator.getPatches());</b>
+<b class="fc"><i>773</i>&nbsp;    	}</b>
+<i>774</i>&nbsp;
+<i>775</i>&nbsp;    	/**
+<i>776</i>&nbsp;    	 * Returns the tag object of the bug report memento
+<i>777</i>&nbsp;    	 * @return the tag object of the bug report memento
+<i>778</i>&nbsp;         */
+<i>779</i>&nbsp;    	private Tag getTag()
+<i>780</i>&nbsp;    	{
+<b class="fc"><i>781</i>&nbsp;    		return tag;</b>
+<i>782</i>&nbsp;    	}
+<i>783</i>&nbsp;
+<i>784</i>&nbsp;    	/**
+<i>785</i>&nbsp;    	 * Returns the list with assignees of the bug report memento
+<i>786</i>&nbsp;    	 * @return the list with assignees of the bug report memento
+<i>787</i>&nbsp;    	 */
+<i>788</i>&nbsp;    	private List&lt;Developer&gt; getAssignees()
+<i>789</i>&nbsp;    	{
+<b class="fc"><i>790</i>&nbsp;    		return new ArrayList&lt;&gt;(assignees);</b>
+<i>791</i>&nbsp;    	}
+<i>792</i>&nbsp;
+<i>793</i>&nbsp;    	/**
+<i>794</i>&nbsp;    	 * Returns the list with comments of the bug report memento
+<i>795</i>&nbsp;    	 * @return the list with comments of the bug report memento
+<i>796</i>&nbsp;         */
+<i>797</i>&nbsp;    	private List&lt;Comment&gt; getComments()
+<i>798</i>&nbsp;    	{
+<b class="fc"><i>799</i>&nbsp;    		return new ArrayList&lt;&gt;(comments);</b>
+<i>800</i>&nbsp;    	}
+<i>801</i>&nbsp;
+<i>802</i>&nbsp;    	/**
+<i>803</i>&nbsp;    	 * Returns the target milestone object of the bug report memento
+<i>804</i>&nbsp;    	 * @return the target milestone object of the bug report memento
+<i>805</i>&nbsp;         */
+<i>806</i>&nbsp;    	private TargetMilestone getTargetMilestone()
+<i>807</i>&nbsp;    	{
+<b class="fc"><i>808</i>&nbsp;    		return targetMilestone;</b>
+<i>809</i>&nbsp;    	}
+<i>810</i>&nbsp;
+<i>811</i>&nbsp;    	/**
+<i>812</i>&nbsp;    	 * Returns the list with tests of the bug report memento
+<i>813</i>&nbsp;    	 * @return the list with tests of the bug report memento
+<i>814</i>&nbsp;         */
+<i>815</i>&nbsp;    	private List&lt;Test&gt; getTests()
+<i>816</i>&nbsp;    	{
+<b class="fc"><i>817</i>&nbsp;    		return new ArrayList&lt;&gt;(tests);</b>
+<i>818</i>&nbsp;    	}
+<i>819</i>&nbsp;
+<i>820</i>&nbsp;    	/**
+<i>821</i>&nbsp;    	 * Returns the list with patches of the bug report memento
+<i>822</i>&nbsp;    	 * @return the list with patches of the bug report memento
+<i>823</i>&nbsp;         */
+<i>824</i>&nbsp;    	private List&lt;Patch&gt; getPatches()
+<i>825</i>&nbsp;    	{
+<b class="fc"><i>826</i>&nbsp;    		return new ArrayList&lt;&gt;(patches);</b>
+<i>827</i>&nbsp;    	}
+<i>828</i>&nbsp;    }
+<i>829</i>&nbsp;
+<i>830</i>&nbsp;
+<i>831</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

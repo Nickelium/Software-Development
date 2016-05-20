@@ -1,0 +1,129 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Programmer</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Roles</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Programmer (Model.Roles)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Programmer</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Roles;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Model.BugReport.TagTypes.UnderReview;
+<i>4</i>&nbsp;import Model.User.Developer;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.Collections;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * Class extending the Role class, representing a Programmer role object.
+<i>10</i>&nbsp; *
+<i>11</i>&nbsp; * A programmer writes code for the projects he is assigned to.
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;public class Programmer extends Role {
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Constructor for a programmer.
+<i>17</i>&nbsp;     *
+<i>18</i>&nbsp;     * @param developer The developer assigned to the programmer role.
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    public Programmer(Developer developer){
+<b class="fc"><i>21</i>&nbsp;        super(developer);</b>
+<b class="fc"><i>22</i>&nbsp;        this.tagPermissions = Collections.singletonList(UnderReview.class);</b>
+<b class="fc"><i>23</i>&nbsp;    }</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    /**
+<i>26</i>&nbsp;     * Getter to request the name of the role.
+<i>27</i>&nbsp;     *
+<i>28</i>&nbsp;     * @return The the name of the role and the developer.
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    @Override
+<i>31</i>&nbsp;    public String toString() {
+<b class="fc"><i>32</i>&nbsp;        return &quot;Programmer: &quot; + getDeveloper().toString();</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * Method to copy this programmer object.
+<i>37</i>&nbsp;     *
+<i>38</i>&nbsp;     * @return The copied role.
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;	@Override
+<i>41</i>&nbsp;	public Role copy() {
+<b class="fc"><i>42</i>&nbsp;		return new Programmer(getDeveloper());</b>
+<i>43</i>&nbsp;	}
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>
