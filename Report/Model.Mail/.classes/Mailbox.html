@@ -1,0 +1,836 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Mailbox</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.Mail</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Mailbox (Model.Mail)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Mailbox</td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (12/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80,4%
+  </span>
+  <span class="absValue">
+    (37/ 46)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Mailbox$MailboxMemento</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverBugReport</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverComment</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (4/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverFork</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverMilestone</td>
+<td class="coverageStat">
+  <span class="percent">
+    33,3%
+  </span>
+  <span class="absValue">
+    (1/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    30%
+  </span>
+  <span class="absValue">
+    (3/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverSpecificMilestone</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverSpecificTag</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    46,2%
+  </span>
+  <span class="absValue">
+    (6/ 13)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Mailbox$ObserverTag</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (4/ 10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    65,8%
+  </span>
+  <span class="absValue">
+    (25/ 38)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    56,9%
+  </span>
+  <span class="absValue">
+    (70/ 123)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.Mail;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Model.BugReport.BugReport;
+<i>4</i>&nbsp;import Model.BugReport.Comment;
+<i>5</i>&nbsp;import Model.BugReport.Tag;
+<i>6</i>&nbsp;import Model.Memento.Memento;
+<i>7</i>&nbsp;import Model.Memento.Originator;
+<i>8</i>&nbsp;import Model.Milestone.Milestone;
+<i>9</i>&nbsp;import Model.Project.Project;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.util.ArrayList;
+<i>12</i>&nbsp;import java.util.Collections;
+<i>13</i>&nbsp;import java.util.List;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;/**
+<i>16</i>&nbsp; * Class that represents a mailbox of a user.
+<i>17</i>&nbsp; * A mailbox contains all notifications of which a user is registered to.
+<i>18</i>&nbsp; * A mailbox also contains all his registrations.
+<i>19</i>&nbsp; * 
+<i>20</i>&nbsp; */
+<b class="fc"><i>21</i>&nbsp;public class Mailbox implements Originator&lt;Mailbox.MailboxMemento, Mailbox&gt;</b>
+<i>22</i>&nbsp;{
+<i>23</i>&nbsp;	private List&lt;Notification&gt; notifications;
+<i>24</i>&nbsp;	private List&lt;ObserverAspect&gt; registrations;
+<i>25</i>&nbsp;	
+<i>26</i>&nbsp;	/**
+<i>27</i>&nbsp;	 * Constructor of this mailbox object
+<i>28</i>&nbsp;	 * 
+<i>29</i>&nbsp;	 */
+<i>30</i>&nbsp;	public Mailbox() 
+<b class="fc"><i>31</i>&nbsp;	{</b>
+<b class="fc"><i>32</i>&nbsp;		this.notifications = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>33</i>&nbsp;		this.registrations = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>34</i>&nbsp;	}</b>
+<i>35</i>&nbsp;	
+<i>36</i>&nbsp;	/**
+<i>37</i>&nbsp;	 * Method to get all notifications of this mailbox.
+<i>38</i>&nbsp;	 * 
+<i>39</i>&nbsp;	 * @return An unmodifiable list of notifications of this mailbox
+<i>40</i>&nbsp;	 */
+<i>41</i>&nbsp;	public List&lt;Notification&gt; getNotifications()
+<i>42</i>&nbsp;	{
+<b class="fc"><i>43</i>&nbsp;		return Collections.unmodifiableList(this.notifications);</b>
+<i>44</i>&nbsp;	}
+<i>45</i>&nbsp;	
+<i>46</i>&nbsp;	/**
+<i>47</i>&nbsp;	 * Method to get all registrations of this mailbox.
+<i>48</i>&nbsp;	 * 
+<i>49</i>&nbsp;	 * @return An unmodifiable list of ObserverAspect of this mailbox
+<i>50</i>&nbsp;	 */
+<i>51</i>&nbsp;	public List&lt;ObserverAspect&gt; getRegistrations()
+<i>52</i>&nbsp;	{
+<b class="fc"><i>53</i>&nbsp;		return Collections.unmodifiableList(this.registrations);</b>
+<i>54</i>&nbsp;	}
+<i>55</i>&nbsp;	
+<i>56</i>&nbsp;	/**
+<i>57</i>&nbsp;	 * Method to register for a creation of a new bug report in the given subject
+<i>58</i>&nbsp;	 *
+<i>59</i>&nbsp;	 * @param structure The subject to observe
+<i>60</i>&nbsp;	 * 
+<i>61</i>&nbsp;	 * @throws IllegalArgumentException the structure is null
+<i>62</i>&nbsp;	 */
+<i>63</i>&nbsp;	public void registerBugReport(Subject structure)
+<i>64</i>&nbsp;	{
+<b class="fc"><i>65</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>66</i>&nbsp;		ObserverBugReport ObBug = new ObserverBugReport(structure);</b>
+<b class="fc"><i>67</i>&nbsp;		registrations.add(ObBug);</b>
+<b class="fc"><i>68</i>&nbsp;	}</b>
+<i>69</i>&nbsp;	
+<i>70</i>&nbsp;	/**
+<i>71</i>&nbsp;	 * Method to register for a creation of a new comment in the given subject
+<i>72</i>&nbsp;	 *
+<i>73</i>&nbsp;	 * @param structure The subject to observe
+<i>74</i>&nbsp;	 * 
+<i>75</i>&nbsp;	 * @throws IllegalArgumentException the structure is null
+<i>76</i>&nbsp;	 */
+<i>77</i>&nbsp;	public void registerComment(Subject structure)
+<i>78</i>&nbsp;	{
+<b class="fc"><i>79</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>80</i>&nbsp;		ObserverComment ObComm = new ObserverComment(structure);</b>
+<b class="fc"><i>81</i>&nbsp;		registrations.add(ObComm);</b>
+<b class="fc"><i>82</i>&nbsp;	}</b>
+<i>83</i>&nbsp;	
+<i>84</i>&nbsp;	/**
+<i>85</i>&nbsp;	 * Method to register for a change of a tag of a bug report in the given subject
+<i>86</i>&nbsp;	 *
+<i>87</i>&nbsp;	 * @param structure The subject to observe
+<i>88</i>&nbsp;	 * @throws IllegalArgumentException the structure is null
+<i>89</i>&nbsp;	 */
+<i>90</i>&nbsp;	public void registerTag(Subject structure)
+<i>91</i>&nbsp;	{
+<b class="fc"><i>92</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>93</i>&nbsp;		ObserverTag ObTag = new ObserverTag(structure);</b>
+<b class="fc"><i>94</i>&nbsp;		registrations.add(ObTag);</b>
+<b class="fc"><i>95</i>&nbsp;	}</b>
+<i>96</i>&nbsp;	
+<i>97</i>&nbsp;	/**
+<i>98</i>&nbsp;	 * Method to register for a change of a tag to a specific tag of a bug report in the given subject
+<i>99</i>&nbsp;	 *
+<i>100</i>&nbsp;	 * @param structure The subject to observe
+<i>101</i>&nbsp;	 * @param tag The specific tag 
+<i>102</i>&nbsp;	 * 
+<i>103</i>&nbsp;	 * @throws IllegalArgumentException the structure or tag is null
+<i>104</i>&nbsp;	 */
+<i>105</i>&nbsp;	public void registerSpecificTag(Subject structure, Class&lt;? extends Tag&gt; tag)
+<i>106</i>&nbsp;	{
+<b class="fc"><i>107</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>108</i>&nbsp;		if(tag == null) throw new IllegalArgumentException(&quot;Tag cannot be null&quot;);</b>
+<b class="fc"><i>109</i>&nbsp;		ObserverSpecificTag ObSTag = new ObserverSpecificTag(structure, tag);</b>
+<b class="fc"><i>110</i>&nbsp;		registrations.add(ObSTag);</b>
+<b class="fc"><i>111</i>&nbsp;	}</b>
+<i>112</i>&nbsp;	
+<i>113</i>&nbsp;	/**
+<i>114</i>&nbsp;	 * Method to register for a change of milestone in the given subject
+<i>115</i>&nbsp;	 *
+<i>116</i>&nbsp;	 * @param structure The subject to observe
+<i>117</i>&nbsp;	 * @throws IllegalArgumentException the structure is null
+<i>118</i>&nbsp;	 */
+<i>119</i>&nbsp;	public void registerMilestone(Subject structure)
+<i>120</i>&nbsp;	{
+<b class="fc"><i>121</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="fc"><i>122</i>&nbsp;		ObserverMilestone ObMilestone = new ObserverMilestone(structure);</b>
+<b class="fc"><i>123</i>&nbsp;		registrations.add(ObMilestone);</b>
+<b class="fc"><i>124</i>&nbsp;	}</b>
+<i>125</i>&nbsp;	
+<i>126</i>&nbsp;	/**
+<i>127</i>&nbsp;	 * Method to register for a change of a specific milestone in the given subject
+<i>128</i>&nbsp;	 *
+<i>129</i>&nbsp;	 * @param structure The subject to observe
+<i>130</i>&nbsp;	 * @param milestone The milestone to be notified
+<i>131</i>&nbsp;	 * @throws IllegalArgumentException the structure or milestone is null
+<i>132</i>&nbsp;	 */
+<i>133</i>&nbsp;	public void registerSpecificMilestone(Subject structure, Milestone milestone)
+<i>134</i>&nbsp;	{
+<b class="nc"><i>135</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="nc"><i>136</i>&nbsp;		if(milestone == null) throw new IllegalArgumentException(&quot;Milestone cannot be null&quot;);</b>
+<b class="nc"><i>137</i>&nbsp;		ObserverSpecificMilestone ObSMilestone = new ObserverSpecificMilestone(structure, milestone);</b>
+<b class="nc"><i>138</i>&nbsp;		registrations.add(ObSMilestone);</b>
+<b class="nc"><i>139</i>&nbsp;	}</b>
+<i>140</i>&nbsp;	
+<i>141</i>&nbsp;	/**
+<i>142</i>&nbsp;	 * Method to register for a fork of given subject
+<i>143</i>&nbsp;	 *
+<i>144</i>&nbsp;	 * @param structure The subject to observe
+<i>145</i>&nbsp;	 * @throws IllegalArgumentException the structure is null
+<i>146</i>&nbsp;	 */
+<i>147</i>&nbsp;	public void registerFork(Subject structure)
+<i>148</i>&nbsp;	{
+<b class="nc"><i>149</i>&nbsp;		if(structure == null) throw new IllegalArgumentException(&quot;Subject structure cannot be null&quot;);</b>
+<b class="nc"><i>150</i>&nbsp;		ObserverFork ObFork = new ObserverFork(structure);</b>
+<b class="nc"><i>151</i>&nbsp;		registrations.add(ObFork);</b>
+<b class="nc"><i>152</i>&nbsp;	}</b>
+<i>153</i>&nbsp;
+<i>154</i>&nbsp;	/**
+<i>155</i>&nbsp;	 * Method to unregister from a registration
+<i>156</i>&nbsp;	 * 
+<i>157</i>&nbsp;	 * @param registration The observeraspect to unregister
+<i>158</i>&nbsp;	 * 
+<i>159</i>&nbsp;	 * @throws IllegalArgumentException the registration is null
+<i>160</i>&nbsp;	 */
+<i>161</i>&nbsp;	public void unregister(ObserverAspect registration)
+<i>162</i>&nbsp;	{
+<b class="fc"><i>163</i>&nbsp;		if(registration == null) throw new IllegalArgumentException(&quot;The registration cannot be null&quot;);</b>
+<b class="fc"><i>164</i>&nbsp;		if(registrations.contains(registration))</b>
+<b class="fc"><i>165</i>&nbsp;			registration.unbind();</b>
+<i>166</i>&nbsp;		
+<b class="fc"><i>167</i>&nbsp;		registrations.remove(registration);</b>
+<b class="fc"><i>168</i>&nbsp;	}</b>
+<i>169</i>&nbsp;	
+<i>170</i>&nbsp;	/**
+<i>171</i>&nbsp;	 * Method to create and return a new memento object
+<i>172</i>&nbsp;	 *
+<i>173</i>&nbsp;	 * @return the new memento object for this Mailbox
+<i>174</i>&nbsp;     */
+<i>175</i>&nbsp;	@Override
+<i>176</i>&nbsp;	public MailboxMemento createMemento() 
+<i>177</i>&nbsp;	{
+<b class="fc"><i>178</i>&nbsp;		return new MailboxMemento(this);</b>
+<i>179</i>&nbsp;	}
+<i>180</i>&nbsp;
+<i>181</i>&nbsp;	/**
+<i>182</i>&nbsp;	 * Method to restore this object given the memento
+<i>183</i>&nbsp;	 * 
+<i>184</i>&nbsp;	 * @param memento The memento to restore to
+<i>185</i>&nbsp;	 * 
+<i>186</i>&nbsp;	 * @throws IllegalArgumentException the memento is null
+<i>187</i>&nbsp;	 */
+<i>188</i>&nbsp;	@Override
+<i>189</i>&nbsp;	public void restoreMemento(MailboxMemento memento)
+<i>190</i>&nbsp;	{
+<b class="fc"><i>191</i>&nbsp;		if(memento == null) throw new IllegalArgumentException(&quot;The memento cannot be null&quot;);</b>
+<b class="fc"><i>192</i>&nbsp;		this.registrations	= new ArrayList&lt;&gt;(memento.getRegistrations());	</b>
+<b class="fc"><i>193</i>&nbsp;	}</b>
+<i>194</i>&nbsp;	
+<i>195</i>&nbsp;    //Innerclass Memento
+<i>196</i>&nbsp;    /**
+<i>197</i>&nbsp;     * This class provides utility for saving the state of the system at a certain point in time
+<i>198</i>&nbsp;     * during execution of the Bug Trap software.
+<i>199</i>&nbsp;     *
+<i>200</i>&nbsp;     * The mailbox memento saves the state of the following attributes of the mailbox:
+<i>201</i>&nbsp;     * registrations.
+<i>202</i>&nbsp;     *
+<i>203</i>&nbsp;     * This class provides private methods to request the values of the saved fields.
+<i>204</i>&nbsp;     * This wide interface (private getters) is provided to the class Bugreport,
+<i>205</i>&nbsp;     * while the narrow interface (public constructor) is provided to any class.
+<i>206</i>&nbsp;     */
+<b class="fc"><i>207</i>&nbsp;	public class MailboxMemento extends Memento&lt;Mailbox&gt;</b>
+<i>208</i>&nbsp;	{
+<i>209</i>&nbsp;		private List&lt;ObserverAspect&gt; registrations;
+<i>210</i>&nbsp;		
+<i>211</i>&nbsp;		/**
+<i>212</i>&nbsp;    	 * Constructor 
+<i>213</i>&nbsp;    	 * 
+<i>214</i>&nbsp;    	 * @param originator The originator to build a memento from
+<i>215</i>&nbsp;    	 * 
+<i>216</i>&nbsp;    	 * @throws IllegalArgumentException the originator is null
+<i>217</i>&nbsp;    	 */
+<i>218</i>&nbsp;		public MailboxMemento(Mailbox originator) 
+<b class="fc"><i>219</i>&nbsp;		{</b>
+<b class="fc"><i>220</i>&nbsp;			super(originator);</b>
+<b class="fc"><i>221</i>&nbsp;			registrations = originator.getRegistrations();</b>
+<b class="fc"><i>222</i>&nbsp;		}</b>
+<i>223</i>&nbsp;		
+<i>224</i>&nbsp;		private List&lt;ObserverAspect&gt; getRegistrations()
+<i>225</i>&nbsp;		{
+<b class="fc"><i>226</i>&nbsp;			return new ArrayList&lt;&gt;(registrations);</b>
+<i>227</i>&nbsp;		}
+<i>228</i>&nbsp;	}
+<i>229</i>&nbsp;
+<i>230</i>&nbsp;	
+<i>231</i>&nbsp;	//Innerclass observer bug report
+<i>232</i>&nbsp;	/**
+<i>233</i>&nbsp;	 * Inner class observer of a creation of a new bug report
+<i>234</i>&nbsp;	 *
+<i>235</i>&nbsp;	 */
+<i>236</i>&nbsp;	private class ObserverBugReport extends ObserverAspect
+<i>237</i>&nbsp;	{
+<i>238</i>&nbsp;		/**
+<i>239</i>&nbsp;		 * Constructor 
+<i>240</i>&nbsp;		 * 
+<i>241</i>&nbsp;		 * @param structure The subject to observe
+<i>242</i>&nbsp;		 */
+<i>243</i>&nbsp;		public ObserverBugReport(Subject structure)
+<b class="fc"><i>244</i>&nbsp;		{</b>
+<b class="fc"><i>245</i>&nbsp;			super(structure);</b>
+<b class="fc"><i>246</i>&nbsp;		}</b>
+<i>247</i>&nbsp;		
+<i>248</i>&nbsp;		/**
+<i>249</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>250</i>&nbsp;		 * 
+<i>251</i>&nbsp;		 * @param structure The subject
+<i>252</i>&nbsp;		 * @param subject The subject that has change within
+<i>253</i>&nbsp;		 * @param aspect The aspect that has changed
+<i>254</i>&nbsp;		 * 
+<i>255</i>&nbsp;		 * @throws IllegalArgumentException the structure, bug report or aspect is null
+<i>256</i>&nbsp;		 */
+<i>257</i>&nbsp;		@Override
+<i>258</i>&nbsp;		public void update(Subject structure, Subject subject, Object aspect) {
+<b class="fc"><i>259</i>&nbsp;			if(structure == null) throw new IllegalArgumentException(&quot;The structure cannot be null&quot;);</b>
+<b class="fc"><i>260</i>&nbsp;			if(subject == null) throw new IllegalArgumentException(&quot;The subject cannot be null&quot;);</b>
+<b class="fc"><i>261</i>&nbsp;			if(aspect == null) throw new IllegalArgumentException(&quot;The aspect cannot be null&quot;);</b>
+<i>262</i>&nbsp;			
+<b class="fc"><i>263</i>&nbsp;			if(super.structure == structure &amp;&amp; subject instanceof BugReport &amp;&amp; aspect instanceof BugReport)</b>
+<b class="fc"><i>264</i>&nbsp;				notifications.add(new Notification(&quot;New bug report&quot;, subject, super.structure));</b>
+<i>265</i>&nbsp;			
+<b class="fc"><i>266</i>&nbsp;		}</b>
+<i>267</i>&nbsp;
+<i>268</i>&nbsp;		/**
+<i>269</i>&nbsp;		 * Method to get textual representation of this object
+<i>270</i>&nbsp;		 * 
+<i>271</i>&nbsp;		 * @return The String representation of this object
+<i>272</i>&nbsp;		 */
+<i>273</i>&nbsp;		@Override
+<i>274</i>&nbsp;		public String toString() {
+<b class="fc"><i>275</i>&nbsp;			return &quot;Registration for creation of new bug report in \n&quot; + super.structure;</b>
+<i>276</i>&nbsp;		}
+<i>277</i>&nbsp;		
+<i>278</i>&nbsp;	}
+<i>279</i>&nbsp;	
+<i>280</i>&nbsp;	//Innerclass observer bug report
+<i>281</i>&nbsp;	/**
+<i>282</i>&nbsp;	 * Inner class observer of a tag change of a bug report
+<i>283</i>&nbsp;	 *
+<i>284</i>&nbsp;	 */
+<i>285</i>&nbsp;	private class ObserverTag extends ObserverAspect
+<i>286</i>&nbsp;	{		
+<i>287</i>&nbsp;		
+<i>288</i>&nbsp;		/**
+<i>289</i>&nbsp;		 * Constructor 
+<i>290</i>&nbsp;		 * 
+<i>291</i>&nbsp;		 * @param structure The subject to observe
+<i>292</i>&nbsp;		 */
+<i>293</i>&nbsp;		public ObserverTag(Subject structure)
+<b class="fc"><i>294</i>&nbsp;		{</b>
+<b class="fc"><i>295</i>&nbsp;			super(structure);</b>
+<b class="fc"><i>296</i>&nbsp;		}</b>
+<i>297</i>&nbsp;		
+<i>298</i>&nbsp;		/**
+<i>299</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>300</i>&nbsp;		 * 
+<i>301</i>&nbsp;		 * @param structure The subject
+<i>302</i>&nbsp;		 * @param subject The subject that has change within
+<i>303</i>&nbsp;		 * @param aspect The aspect that has changed
+<i>304</i>&nbsp;		 * 
+<i>305</i>&nbsp;		 * @throws IllegalArgumentException the structure, bug report or aspect is null
+<i>306</i>&nbsp;		 */
+<i>307</i>&nbsp;		@Override
+<i>308</i>&nbsp;		public void update(Subject structure, Subject subject, Object aspect) {
+<b class="nc"><i>309</i>&nbsp;			if(structure == null) throw new IllegalArgumentException(&quot;The structure cannot be null&quot;);</b>
+<b class="nc"><i>310</i>&nbsp;			if(subject == null) throw new IllegalArgumentException(&quot;The subject cannot be null&quot;);</b>
+<b class="nc"><i>311</i>&nbsp;			if(aspect == null) throw new IllegalArgumentException(&quot;The aspect cannot be null&quot;);</b>
+<i>312</i>&nbsp;			
+<b class="nc"><i>313</i>&nbsp;			if(super.structure == structure &amp;&amp; subject instanceof BugReport &amp;&amp; aspect instanceof Tag)</b>
+<b class="nc"><i>314</i>&nbsp;				notifications.add(new Notification(&quot;Tag change&quot;, subject, super.structure));</b>
+<i>315</i>&nbsp;			
+<b class="nc"><i>316</i>&nbsp;		}</b>
+<i>317</i>&nbsp;		
+<i>318</i>&nbsp;		/**
+<i>319</i>&nbsp;		 * Method to get textual representation of this object
+<i>320</i>&nbsp;		 * 
+<i>321</i>&nbsp;		 * @return The String representation of this object
+<i>322</i>&nbsp;		 */
+<i>323</i>&nbsp;		@Override
+<i>324</i>&nbsp;		public String toString() {
+<b class="fc"><i>325</i>&nbsp;			return &quot;Registration for change of tag in \n&quot; + super.structure;</b>
+<i>326</i>&nbsp;		}
+<i>327</i>&nbsp;		
+<i>328</i>&nbsp;		
+<i>329</i>&nbsp;	}
+<i>330</i>&nbsp;	
+<i>331</i>&nbsp;	//Innerclass observer bug report
+<i>332</i>&nbsp;	/**
+<i>333</i>&nbsp;	 * Inner class observer of a specific tag change of a bug report
+<i>334</i>&nbsp;	 *
+<i>335</i>&nbsp;	 */
+<i>336</i>&nbsp;	private class ObserverSpecificTag extends ObserverAspect
+<i>337</i>&nbsp;	{
+<i>338</i>&nbsp;		private Class&lt;? extends Tag&gt; tag;
+<i>339</i>&nbsp;		
+<i>340</i>&nbsp;		/**
+<i>341</i>&nbsp;		 * Constructor 
+<i>342</i>&nbsp;		 * 
+<i>343</i>&nbsp;		 * @param structure The subject to observe
+<i>344</i>&nbsp;		 * @param tag The specific tag
+<i>345</i>&nbsp;		 * 
+<i>346</i>&nbsp;		 * @throws IllegalArgumentException the tag class is null
+<i>347</i>&nbsp;		 */
+<i>348</i>&nbsp;		public ObserverSpecificTag(Subject structure, Class&lt;? extends Tag&gt; tag)
+<b class="fc"><i>349</i>&nbsp;		{</b>
+<b class="fc"><i>350</i>&nbsp;			super(structure);</b>
+<i>351</i>&nbsp;			
+<b class="fc"><i>352</i>&nbsp;			if(tag == null) throw new IllegalArgumentException(&quot;The tag class cannot be null&quot;);</b>
+<b class="fc"><i>353</i>&nbsp;			this.tag = tag;</b>
+<b class="fc"><i>354</i>&nbsp;		}</b>
+<i>355</i>&nbsp;		
+<i>356</i>&nbsp;		/**
+<i>357</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>358</i>&nbsp;		 * 
+<i>359</i>&nbsp;		 * @param structure The subject
+<i>360</i>&nbsp;		 * @param subject The subject that has change within
+<i>361</i>&nbsp;		 * @param aspect The aspect that has changed
+<i>362</i>&nbsp;		 * 
+<i>363</i>&nbsp;		 * @throws IllegalArgumentException the structure, bug report or aspect is null
+<i>364</i>&nbsp;		 */
+<i>365</i>&nbsp;		@Override
+<i>366</i>&nbsp;		public void update(Subject structure, Subject subject, Object aspect) {
+<b class="nc"><i>367</i>&nbsp;			if(structure == null) throw new IllegalArgumentException(&quot;The structure cannot be null&quot;);</b>
+<b class="nc"><i>368</i>&nbsp;			if(subject == null) throw new IllegalArgumentException(&quot;The subject cannot be null&quot;);</b>
+<b class="nc"><i>369</i>&nbsp;			if(aspect == null) throw new IllegalArgumentException(&quot;The aspect cannot be null&quot;);</b>
+<i>370</i>&nbsp;			
+<b class="nc"><i>371</i>&nbsp;			if(super.structure == structure &amp;&amp; subject instanceof BugReport </b>
+<b class="nc"><i>372</i>&nbsp;					&amp;&amp; tag.isInstance(aspect))</b>
+<b class="nc"><i>373</i>&nbsp;				notifications.add(new Notification(&quot;Tag change to &quot; + tag, subject, super.structure));</b>
+<i>374</i>&nbsp;			
+<b class="nc"><i>375</i>&nbsp;		}</b>
+<i>376</i>&nbsp;		
+<i>377</i>&nbsp;		/**
+<i>378</i>&nbsp;		 * Method to get textual representation of this object
+<i>379</i>&nbsp;		 * 
+<i>380</i>&nbsp;		 * @return The String representation of this object
+<i>381</i>&nbsp;		 */
+<i>382</i>&nbsp;		@Override
+<i>383</i>&nbsp;		public String toString() {
+<b class="fc"><i>384</i>&nbsp;			return &quot;Registration for changed of tag to &quot; + tag + &quot; in \n&quot; + super.structure;</b>
+<i>385</i>&nbsp;		}
+<i>386</i>&nbsp;		
+<i>387</i>&nbsp;	}
+<i>388</i>&nbsp;	
+<i>389</i>&nbsp;	//Innerclass observer bug report
+<i>390</i>&nbsp;	/**
+<i>391</i>&nbsp;	 * Inner class observer of a new comment in a bug report
+<i>392</i>&nbsp;	 *
+<i>393</i>&nbsp;	 */
+<i>394</i>&nbsp;	private class ObserverComment extends ObserverAspect
+<i>395</i>&nbsp;	{
+<i>396</i>&nbsp;		
+<i>397</i>&nbsp;		/**
+<i>398</i>&nbsp;		 * Constructor 
+<i>399</i>&nbsp;		 * 
+<i>400</i>&nbsp;		 * @param structure The subject to observe
+<i>401</i>&nbsp;		 */
+<i>402</i>&nbsp;		public ObserverComment(Subject structure)
+<b class="fc"><i>403</i>&nbsp;		{</b>
+<b class="fc"><i>404</i>&nbsp;			super(structure);</b>
+<b class="fc"><i>405</i>&nbsp;		}</b>
+<i>406</i>&nbsp;		
+<i>407</i>&nbsp;		/**
+<i>408</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>409</i>&nbsp;		 * 
+<i>410</i>&nbsp;		 * @param structure The subject
+<i>411</i>&nbsp;		 * @param subject The subject that has change within
+<i>412</i>&nbsp;		 * @param aspect The aspect that has changed
+<i>413</i>&nbsp;		 * 
+<i>414</i>&nbsp;		 * @throws IllegalArgumentException the structure, bug report or aspect is null
+<i>415</i>&nbsp;		 */
+<i>416</i>&nbsp;		@Override
+<i>417</i>&nbsp;		public void update(Subject structure, Subject subject, Object aspect) {
+<b class="nc"><i>418</i>&nbsp;			if(structure == null) throw new IllegalArgumentException(&quot;The structure cannot be null&quot;);</b>
+<b class="nc"><i>419</i>&nbsp;			if(subject == null) throw new IllegalArgumentException(&quot;The subject cannot be null&quot;);</b>
+<b class="nc"><i>420</i>&nbsp;			if(aspect == null) throw new IllegalArgumentException(&quot;The aspect cannot be null&quot;);</b>
+<i>421</i>&nbsp;			
+<b class="nc"><i>422</i>&nbsp;			if(super.structure == structure &amp;&amp; subject instanceof BugReport &amp;&amp; aspect instanceof Comment)</b>
+<b class="nc"><i>423</i>&nbsp;				notifications.add(new Notification(&quot;New comment&quot;, subject, super.structure));</b>
+<i>424</i>&nbsp;			
+<b class="nc"><i>425</i>&nbsp;		}</b>
+<i>426</i>&nbsp;		
+<i>427</i>&nbsp;		/**
+<i>428</i>&nbsp;		 * Method to get textual representation of this object
+<i>429</i>&nbsp;		 * 
+<i>430</i>&nbsp;		 * @return The String representation of this object
+<i>431</i>&nbsp;		 */
+<i>432</i>&nbsp;		@Override
+<i>433</i>&nbsp;		public String toString() {
+<b class="fc"><i>434</i>&nbsp;			return &quot;Registration for creation of new comment in \n&quot; + super.structure;</b>
+<i>435</i>&nbsp;		}
+<i>436</i>&nbsp;	}
+<i>437</i>&nbsp;	
+<i>438</i>&nbsp;	
+<i>439</i>&nbsp;	//Innerclass observer
+<i>440</i>&nbsp;	/**
+<i>441</i>&nbsp;	 * Inner class observer of change of milestone
+<i>442</i>&nbsp;	 *
+<i>443</i>&nbsp;	 */
+<i>444</i>&nbsp;	private class ObserverMilestone extends ObserverAspect
+<i>445</i>&nbsp;	{
+<i>446</i>&nbsp;		/**
+<i>447</i>&nbsp;		 * Constructor 
+<i>448</i>&nbsp;		 * 
+<i>449</i>&nbsp;		 * @param structure The subject to observe
+<i>450</i>&nbsp;		 */
+<i>451</i>&nbsp;		public ObserverMilestone(Subject structure)
+<b class="fc"><i>452</i>&nbsp;		{</b>
+<b class="fc"><i>453</i>&nbsp;			super(structure);</b>
+<b class="fc"><i>454</i>&nbsp;		}</b>
+<i>455</i>&nbsp;		
+<i>456</i>&nbsp;		/**
+<i>457</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>458</i>&nbsp;		 * 
+<i>459</i>&nbsp;		 * @param structure The subject
+<i>460</i>&nbsp;		 * @param subject The subject that has change within
+<i>461</i>&nbsp;		 * @param aspect The aspect that has changed
+<i>462</i>&nbsp;		 * 
+<i>463</i>&nbsp;		 * @throws IllegalArgumentException the structure, subject or aspect is null
+<i>464</i>&nbsp;		 */
+<i>465</i>&nbsp;		@Override
+<i>466</i>&nbsp;		public void update(Subject structure, Subject subject, Object aspect) {
+<b class="nc"><i>467</i>&nbsp;			if(structure == null) throw new IllegalArgumentException(&quot;The structure cannot be null&quot;);</b>
+<b class="nc"><i>468</i>&nbsp;			if(subject == null) throw new IllegalArgumentException(&quot;The subject cannot be null&quot;);</b>
+<b class="nc"><i>469</i>&nbsp;			if(aspect == null) throw new IllegalArgumentException(&quot;The aspect cannot be null&quot;);</b>
+<i>470</i>&nbsp;			
+<b class="nc"><i>471</i>&nbsp;			if(super.structure == structure &amp;&amp; aspect instanceof Milestone)</b>
+<b class="nc"><i>472</i>&nbsp;				notifications.add(new Notification(&quot;Milestone achieved&quot;, subject, super.structure));</b>
+<i>473</i>&nbsp;			
+<b class="nc"><i>474</i>&nbsp;		}</b>
+<i>475</i>&nbsp;
+<i>476</i>&nbsp;		/**
+<i>477</i>&nbsp;		 * Method to get textual representation of this object
+<i>478</i>&nbsp;		 * 
+<i>479</i>&nbsp;		 * @return The String representation of this object
+<i>480</i>&nbsp;		 */
+<i>481</i>&nbsp;		@Override
+<i>482</i>&nbsp;		public String toString() {
+<b class="nc"><i>483</i>&nbsp;			return &quot;Registration for an achieved milestone in \n&quot; + super.structure;</b>
+<i>484</i>&nbsp;		}
+<i>485</i>&nbsp;		
+<i>486</i>&nbsp;	}
+<i>487</i>&nbsp;	
+<i>488</i>&nbsp;	//Innerclass observer
+<i>489</i>&nbsp;	/**
+<i>490</i>&nbsp;	 * Inner class observer of a change of a specific milestone
+<i>491</i>&nbsp;	 *
+<i>492</i>&nbsp;	*/
+<i>493</i>&nbsp;	private class ObserverSpecificMilestone extends ObserverAspect
+<i>494</i>&nbsp;	{
+<i>495</i>&nbsp;		private Milestone milestone;
+<i>496</i>&nbsp;		
+<i>497</i>&nbsp;		/**
+<i>498</i>&nbsp;		 * Constructor 
+<i>499</i>&nbsp;		 * 
+<i>500</i>&nbsp;		 * @param structure The subject to observe
+<i>501</i>&nbsp;		 * @param milestone The milestone to be notified
+<i>502</i>&nbsp;		 */
+<i>503</i>&nbsp;		public ObserverSpecificMilestone(Subject structure, Milestone milestone)
+<b class="nc"><i>504</i>&nbsp;		{</b>
+<b class="nc"><i>505</i>&nbsp;			super(structure);</b>
+<b class="nc"><i>506</i>&nbsp;			this.milestone = milestone;</b>
+<i>507</i>&nbsp;		}
+<i>508</i>&nbsp;		
+<i>509</i>&nbsp;		/**
+<i>510</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>511</i>&nbsp;		 * 
+<i>512</i>&nbsp;		 * @param structure The subject
+<i>513</i>&nbsp;		 * @param subject The subject that has change within
+<i>514</i>&nbsp;		 * @param aspect The aspect that has changed
+<i>515</i>&nbsp;		 * 
+<i>516</i>&nbsp;		 * @throws IllegalArgumentException the structure, subject or aspect is null
+<i>517</i>&nbsp;		 */
+<i>518</i>&nbsp;		@Override
+<i>519</i>&nbsp;		public void update(Subject structure, Subject subject, Object aspect) {
+<b class="nc"><i>520</i>&nbsp;			if(structure == null) throw new IllegalArgumentException(&quot;The structure cannot be null&quot;);</b>
+<b class="nc"><i>521</i>&nbsp;			if(subject == null) throw new IllegalArgumentException(&quot;The subject cannot be null&quot;);</b>
+<b class="nc"><i>522</i>&nbsp;			if(aspect == null) throw new IllegalArgumentException(&quot;The aspect cannot be null&quot;);</b>
+<i>523</i>&nbsp;			
+<b class="nc"><i>524</i>&nbsp;			if(super.structure == structure &amp;&amp; aspect instanceof Milestone </b>
+<b class="nc"><i>525</i>&nbsp;					&amp;&amp; this.milestone.equals(aspect))</b>
+<b class="nc"><i>526</i>&nbsp;				notifications.add(new Notification(&quot;Milestone achieved&quot; + this.milestone, subject, super.structure));</b>
+<i>527</i>&nbsp;			
+<i>528</i>&nbsp;		}
+<i>529</i>&nbsp;
+<i>530</i>&nbsp;		/**
+<i>531</i>&nbsp;		 * Method to get textual representation of this object
+<i>532</i>&nbsp;		 * 
+<i>533</i>&nbsp;		 * @return The String representation of this object
+<i>534</i>&nbsp;		 */
+<i>535</i>&nbsp;		@Override
+<i>536</i>&nbsp;		public String toString() {
+<b class="nc"><i>537</i>&nbsp;			return &quot;Registration for an achieved milestone of &quot; + this.milestone + &quot; in \n&quot; + super.structure;</b>
+<i>538</i>&nbsp;		}
+<i>539</i>&nbsp;		
+<i>540</i>&nbsp;	}
+<i>541</i>&nbsp;	
+<i>542</i>&nbsp;	//Because a registration of a forked project actually is the same as versionID update
+<i>543</i>&nbsp;	//We only provide the ObserverFork 
+<i>544</i>&nbsp;	
+<i>545</i>&nbsp;	//Innerclass observer
+<i>546</i>&nbsp;	/**
+<i>547</i>&nbsp;	 * Inner class observer of forked subject
+<i>548</i>&nbsp;	 *
+<i>549</i>&nbsp;	 */
+<i>550</i>&nbsp;	private class ObserverFork extends ObserverAspect
+<i>551</i>&nbsp;	{
+<i>552</i>&nbsp;		
+<i>553</i>&nbsp;		/**
+<i>554</i>&nbsp;		 * Constructor 
+<i>555</i>&nbsp;		 * 
+<i>556</i>&nbsp;		 * @param structure The subject to observe
+<i>557</i>&nbsp;		 */
+<i>558</i>&nbsp;		public ObserverFork(Subject structure)
+<b class="nc"><i>559</i>&nbsp;		{</b>
+<b class="nc"><i>560</i>&nbsp;			super(structure);</b>
+<i>561</i>&nbsp;		}
+<i>562</i>&nbsp;		
+<i>563</i>&nbsp;		/**
+<i>564</i>&nbsp;		 * Method to use when a change occurred in the subject structure.
+<i>565</i>&nbsp;		 * 
+<i>566</i>&nbsp;		 * @param structure The subject
+<i>567</i>&nbsp;		 * @param subject The subject that has change within
+<i>568</i>&nbsp;		 * @param aspect The aspect that has changed
+<i>569</i>&nbsp;		 * 
+<i>570</i>&nbsp;		 * @throws IllegalArgumentException the structure, subject or aspect is null
+<i>571</i>&nbsp;		 */
+<i>572</i>&nbsp;		@Override
+<i>573</i>&nbsp;		public void update(Subject structure, Subject subject, Object aspect) {
+<b class="nc"><i>574</i>&nbsp;			if(structure == null) throw new IllegalArgumentException(&quot;The structure cannot be null&quot;);</b>
+<b class="nc"><i>575</i>&nbsp;			if(subject == null) throw new IllegalArgumentException(&quot;The subject cannot be null&quot;);</b>
+<b class="nc"><i>576</i>&nbsp;			if(aspect == null) throw new IllegalArgumentException(&quot;The aspect cannot be null&quot;);</b>
+<i>577</i>&nbsp;			
+<b class="nc"><i>578</i>&nbsp;			if(super.structure == structure &amp;&amp; aspect instanceof Project)</b>
+<b class="nc"><i>579</i>&nbsp;				notifications.add(new Notification(&quot;Forked project&quot;, (Project) aspect, super.structure));</b>
+<i>580</i>&nbsp;			
+<i>581</i>&nbsp;		}
+<i>582</i>&nbsp;
+<i>583</i>&nbsp;		/**
+<i>584</i>&nbsp;		 * Method to get textual representation of this object
+<i>585</i>&nbsp;		 * 
+<i>586</i>&nbsp;		 * @return The String representation of this object
+<i>587</i>&nbsp;		 */
+<i>588</i>&nbsp;		@Override
+<i>589</i>&nbsp;		public String toString() {
+<b class="nc"><i>590</i>&nbsp;			return &quot;Registration for forked project of \n&quot; + super.structure;</b>
+<i>591</i>&nbsp;		}
+<i>592</i>&nbsp;		
+<i>593</i>&nbsp;	}
+<i>594</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

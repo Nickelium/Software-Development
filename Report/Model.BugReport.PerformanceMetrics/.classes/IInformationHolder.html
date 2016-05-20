@@ -1,0 +1,78 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: IInformationHolder</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Model.BugReport.PerformanceMetrics</a> ]
+</div>
+
+<h1>Coverage Summary for Class: IInformationHolder (Model.BugReport.PerformanceMetrics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">IInformationHolder</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Model.BugReport.PerformanceMetrics;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;// VALUE CLASS
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Value class representing an information holder object.
+<i>7</i>&nbsp; * The information holder object contains a description about a certain way
+<i>8</i>&nbsp; * that a part of a performance metric is measured. The associated value
+<i>9</i>&nbsp; * for that metric is also contained within the object.
+<i>10</i>&nbsp; */
+<i>11</i>&nbsp;public interface IInformationHolder&lt;T&gt; {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    //region getters &amp; setters
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Returns the description of an information holder
+<i>17</i>&nbsp;     *
+<i>18</i>&nbsp;     * @return the description field of the information holder object
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    String getDescription();
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Returns the value of an information holder
+<i>24</i>&nbsp;     *
+<i>25</i>&nbsp;     * @return the value field of the information holder object
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    T getValue();
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    //endregion
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>

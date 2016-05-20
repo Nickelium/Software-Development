@@ -1,0 +1,203 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: UpdateBugReport</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">Controller.UserController.UseCases.IssuerUseCases</a> ]
+</div>
+
+<h1>Coverage Summary for Class: UpdateBugReport (Controller.UserController.UseCases.IssuerUseCases)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UpdateBugReport</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    56,5%
+  </span>
+  <span class="absValue">
+    (26/ 46)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package Controller.UserController.UseCases.IssuerUseCases;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import Controller.Formatter;
+<i>4</i>&nbsp;import Controller.IUI;
+<i>5</i>&nbsp;import CustomExceptions.ReportErrorToUserException;
+<i>6</i>&nbsp;import Model.BugReport.*;
+<i>7</i>&nbsp;import Model.BugReport.TagTypes.*;
+<i>8</i>&nbsp;import Model.Project.ProjectService;
+<i>9</i>&nbsp;import Model.User.User;
+<i>10</i>&nbsp;import Model.User.UserService;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Class extending the issuer use case class, representing an update-bug-report use case.
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;public class UpdateBugReport extends IssuerUseCase {
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    public UpdateBugReport(IUI ui, UserService userService, ProjectService projectService, BugReportService bugReportService, TagAssignmentService tagAssignmentService, User currentUser) {
+<b class="fc"><i>18</i>&nbsp;        super(ui, userService, projectService, bugReportService, tagAssignmentService,currentUser);</b>
+<b class="fc"><i>19</i>&nbsp;        changeSystem = true;</b>
+<b class="fc"><i>20</i>&nbsp;    }</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     *
+<i>24</i>&nbsp;     * Lets a Developer update the tag of a bug report.
+<i>25</i>&nbsp;     *
+<i>26</i>&nbsp;     * 2. Include use case Select Bug Report.
+<i>27</i>&nbsp;     * 3. The developer suggests a new tag for the bug report.
+<i>28</i>&nbsp;     * 4. The system gives the selected bug report the new tag.
+<i>29</i>&nbsp;     *
+<i>30</i>&nbsp;     * @throws ReportErrorToUserException Something went wrong and has to be reported to the user.
+<i>31</i>&nbsp;     * @throws IndexOutOfBoundsException Wrong index was given.
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;    @Override
+<i>34</i>&nbsp;    public void run() throws ReportErrorToUserException, IndexOutOfBoundsException {
+<i>35</i>&nbsp;        // Step 2
+<b class="fc"><i>36</i>&nbsp;        getUi().display(&quot;Please select the bug report that you want to update: &quot;);</b>
+<b class="fc"><i>37</i>&nbsp;        BugReport bugReport = selectBugReport();</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;        // Step 3 + 4 + 5
+<b class="fc"><i>40</i>&nbsp;        Tag tag = this.getTagSuggestion(bugReport);</b>
+<b class="fc"><i>41</i>&nbsp;        getTagAssignmentService().assignTag(getCurrentUser(), bugReport, tag);</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;
+<b class="fc"><i>44</i>&nbsp;        getUi().display(&quot;The tag has successfully been changed.&quot;);</b>
+<b class="fc"><i>45</i>&nbsp;    }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    private Tag getTagSuggestion(BugReport bugReport) throws ReportErrorToUserException {
+<i>48</i>&nbsp;        //Step 4
+<b class="fc"><i>49</i>&nbsp;        getUi().display(&quot;Please specify the new tag for the bug report:&quot;);</b>
+<b class="fc"><i>50</i>&nbsp;        String tag = getUi().readString();</b>
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;        //Step 5
+<b class="fc"><i>53</i>&nbsp;        switch (tag) {</b>
+<i>54</i>&nbsp;            case &quot;Assigned&quot;:
+<b class="fc"><i>55</i>&nbsp;                return requestAssignedTagInfo(bugReport);</b>
+<i>56</i>&nbsp;            case &quot;Closed&quot;:
+<b class="nc"><i>57</i>&nbsp;                return requestCloseTagInfo(bugReport);</b>
+<i>58</i>&nbsp;            case &quot;Duplicate&quot;:
+<b class="nc"><i>59</i>&nbsp;                return requestDuplicateTagInfo(bugReport);</b>
+<i>60</i>&nbsp;            case &quot;NotABug&quot;:
+<b class="nc"><i>61</i>&nbsp;                return requestNotABugTagInfo(bugReport);</b>
+<i>62</i>&nbsp;            case &quot;Resolved&quot;:
+<b class="fc"><i>63</i>&nbsp;                return requestResolvedTagInfo(bugReport);</b>
+<i>64</i>&nbsp;            case &quot;UnderReview&quot;:
+<b class="fc"><i>65</i>&nbsp;                return requestUnderReviewTagInfo(bugReport);</b>
+<i>66</i>&nbsp;            default:
+<b class="nc"><i>67</i>&nbsp;                throw new ReportErrorToUserException(&quot;The tag you entered does not exist.&quot;);</b>
+<i>68</i>&nbsp;        }
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    private Assigned requestAssignedTagInfo(BugReport bugReport) throws ReportErrorToUserException {
+<b class="fc"><i>72</i>&nbsp;        if (!getTagAssignmentService().canAssignTag(getCurrentUser(), bugReport, Assigned.class))</b>
+<b class="fc"><i>73</i>&nbsp;            throw new ReportErrorToUserException(&quot;Cannot preform tag change! No valid permission.&quot;);</b>
+<b class="nc"><i>74</i>&nbsp;        return new Assigned();</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    private Closed requestCloseTagInfo(BugReport bugReport) throws ReportErrorToUserException {
+<b class="nc"><i>78</i>&nbsp;        if (!getTagAssignmentService().canAssignTag(getCurrentUser(), bugReport, Closed.class))</b>
+<b class="nc"><i>79</i>&nbsp;            throw new ReportErrorToUserException(&quot;Cannot preform tag change! No valid permission.&quot;);</b>
+<b class="nc"><i>80</i>&nbsp;        getUi().display(&quot;Please enter a score (1 - 5) for the given solution:&quot;);</b>
+<b class="nc"><i>81</i>&nbsp;        int score = getUi().readInt();</b>
+<b class="nc"><i>82</i>&nbsp;        return new Closed(score);</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    private Duplicate requestDuplicateTagInfo(BugReport bugReport) throws ReportErrorToUserException {
+<b class="nc"><i>86</i>&nbsp;        if (!getTagAssignmentService().canAssignTag(getCurrentUser(), bugReport, Duplicate.class))</b>
+<b class="nc"><i>87</i>&nbsp;            throw new ReportErrorToUserException(&quot;Cannot preform tag change! No valid permission.&quot;);</b>
+<b class="nc"><i>88</i>&nbsp;        getUi().display(&quot;You have to specify the duplicate bug report.&quot;);</b>
+<b class="nc"><i>89</i>&nbsp;        BugReport duplicateBugRep = selectBugReport();</b>
+<b class="nc"><i>90</i>&nbsp;        return new Duplicate(duplicateBugRep);</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;    private NotABug requestNotABugTagInfo(BugReport bugReport) throws ReportErrorToUserException {
+<b class="nc"><i>94</i>&nbsp;        if (!getTagAssignmentService().canAssignTag(getCurrentUser(), bugReport, NotABug.class))</b>
+<b class="nc"><i>95</i>&nbsp;            throw new ReportErrorToUserException(&quot;Cannot preform tag change! No valid permission.&quot;);</b>
+<b class="nc"><i>96</i>&nbsp;        return new NotABug();</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    private Resolved requestResolvedTagInfo(BugReport bugReport) throws ReportErrorToUserException {
+<b class="fc"><i>100</i>&nbsp;        if (!getTagAssignmentService().canAssignTag(getCurrentUser(), bugReport, Resolved.class))</b>
+<b class="nc"><i>101</i>&nbsp;            throw new ReportErrorToUserException(&quot;Cannot preform tag change! No valid permission.&quot;);</b>
+<b class="fc"><i>102</i>&nbsp;        getUi().display(&quot;Please select a patch that satisfies you:&quot;);</b>
+<b class="fc"><i>103</i>&nbsp;        getUi().display(Formatter.formatPatches(bugReport));</b>
+<b class="fc"><i>104</i>&nbsp;        int index = getUi().readInt();</b>
+<b class="fc"><i>105</i>&nbsp;        Patch patch = bugReport.getPatches().get(index);</b>
+<b class="fc"><i>106</i>&nbsp;        return new Resolved(patch);</b>
+<i>107</i>&nbsp;    }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    private UnderReview requestUnderReviewTagInfo(BugReport bugReport) throws ReportErrorToUserException {
+<b class="fc"><i>110</i>&nbsp;        if (!getTagAssignmentService().canAssignTag(getCurrentUser(), bugReport, UnderReview.class))</b>
+<b class="fc"><i>111</i>&nbsp;            throw new ReportErrorToUserException(&quot;Cannot preform tag change! No valid permission.&quot;);</b>
+<b class="nc"><i>112</i>&nbsp;        return new UnderReview();</b>
+<i>113</i>&nbsp;    }
+<i>114</i>&nbsp;    
+<i>115</i>&nbsp;    @Override
+<i>116</i>&nbsp;	public String toString()
+<i>117</i>&nbsp;	{
+<b class="fc"><i>118</i>&nbsp;		return &quot;Update Bugreport&quot;;</b>
+<i>119</i>&nbsp;	}
+<i>120</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-05-20 13:46</div>
+</div>
+</body>
+</html>
