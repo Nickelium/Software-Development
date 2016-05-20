@@ -18,7 +18,7 @@ public class MergeSubSystem extends AdminControllerInit {
 
         assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Merge"));
         
-        int n = projectService.getAllProjects().size();
+        int n = projectService.getAllSubSystems().size();
         
         String[] simulatedUserInput = {
                 "0",
@@ -42,7 +42,7 @@ public class MergeSubSystem extends AdminControllerInit {
     	
     	assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Merge"));
         
-        int n = projectService.getAllProjects().size();
+        int n = projectService.getAllSubSystems().size();
         
         try {
             String[] simulatedUserInput = {
@@ -69,7 +69,7 @@ public class MergeSubSystem extends AdminControllerInit {
     	
     	assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Merge"));
         
-        int n = projectService.getAllProjects().size();
+        int n = projectService.getAllSubSystems().size();
         
         try {
             String[] simulatedUserInput = {
