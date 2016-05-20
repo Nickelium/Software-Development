@@ -19,7 +19,7 @@ public class SplitSubSystem extends AdminControllerInit {
         assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Split1"));
         assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Split2"));
         
-        int n = projectService.getAllProjects().size();
+        int n = projectService.getAllSubSystems().size();
         
         String[] simulatedUserInput = {
                 "0",
@@ -46,7 +46,7 @@ public class SplitSubSystem extends AdminControllerInit {
         assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Split1"));
         assert projectService.getAllProjects().stream().noneMatch(x -> x.getName().equals("Split2"));
         
-        int n = projectService.getAllProjects().size();
+        int n = projectService.getAllSubSystems().size();
         
         String[] simulatedUserInput = {
                 "0",

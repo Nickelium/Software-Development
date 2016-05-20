@@ -29,7 +29,7 @@ public abstract class ObserverAspect implements Observer
      * Method called to notify this observer
      *
 	 * @param structure The subject
-	 * @param bugReport The bug report that has change within
+	 * @param subject Subject that has change within
 	 * @param aspect The aspect that has changed
 	 * 
 	 * @throws IllegalArgumentException the structure, bug report or aspect is null

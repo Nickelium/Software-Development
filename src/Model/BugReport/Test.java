@@ -21,6 +21,7 @@ public class Test {
      * Constructor to create a Test object.
      *
      * @param value the content of the new test
+     * @param user The creator of the test
      */
     Test(String value, User user) {
         this.setValue(value);

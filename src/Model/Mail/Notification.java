@@ -16,7 +16,7 @@ public class Notification
 	 * Constructor of this notification
 	 *
 	 * @param changeDescription A description of this notification
-	 * @param bugReport The bug report that has changed
+	 * @param subject The subject that has changed
 	 * @param structure The subject structure where the change happened
 	 * 
 	 * @throws IllegalArgumentException the description, bureport or structure is null

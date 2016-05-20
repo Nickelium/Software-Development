@@ -18,6 +18,8 @@ public class Patch {
      * Constructor to create a Patch object.
      *
      * @param value the content of the new patch
+     * 
+     * @param user The creator of the patch
      * */
     Patch(String value, User user) {
         this.setValue(value);
