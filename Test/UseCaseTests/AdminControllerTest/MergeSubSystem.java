@@ -83,7 +83,7 @@ public class MergeSubSystem extends AdminControllerInit {
             TestUI ui = new TestUI(input);
 
             UserController adminController = new AdminController(ui, userService, projectService, bugReportService, performanceMetricsService, new Caretaker(projectService, mailboxService), currentUser);
-            adminController.getUseCase(AdminUseCase.SPLIT_SUBSYSTEM.value).run();
+            adminController.getUseCase(AdminUseCase.MERGE_SUBSYSTEM.value).run();
         } catch (ReportErrorToUserException e) {
             assert (e.getMessage().equals("The description is invalid."));
             assert projectService.getAllSubSystems().stream().filter(x -> x.getName().equals("Merge")).collect(Collectors.toList()).size() == 0;
