@@ -115,7 +115,8 @@ public class CreateBugReport extends IssuerUseCase{
         if (!procedure.equals("")) getBugReportService().setProcedureBug(bugReport, procedure);
         if (!stackTrace.equals("")) getBugReportService().setStackTrace(bugReport, stackTrace);
         if (!errorMessage.equals("")) getBugReportService().setErrorMessage(bugReport, errorMessage);
-
+        
+        
         // Step 12
         List<BugReport> possibleDependencies = getBugReportService().getBugReportsForProject(project);
         String possibleDependenciesStr = Formatter.formatBugReportList(possibleDependencies);
